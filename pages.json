@@ -1,0 +1,82 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/my/my",
+			"style": {
+				"navigationBarTitleText": "依辈通",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "依辈通"
+			}
+		}, {
+			"path": "pages/login_tel/login_tel",
+			"style": {
+				"navigationBarTitleText": "依辈通",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/logo/logo",
+			"style": {
+				"navigationBarTitleText": "依辈通",
+				"enablePullDownRefresh": false
+			}
+
+		}
+	],
+	"subPackages": [{
+		"root": "pagesA",
+		"pages": [{
+			"path": "about/about",
+			"style": {
+				"navigationBarTitleText": "关于我们",
+				"enablePullDownRefresh": false
+			}
+
+		}]
+	}],
+
+	"preloadRule": {
+		"pages/index/index": {
+			"network": "all",
+			"packages": ["pagesA"]
+		},
+		"pages/my/my": {
+			"network": "all",
+			"packages": ["pagesA"]
+		}
+
+	},
+	"tabBar": {
+		"color": "#B8B8B8",
+		"selectedColor": "#11A078",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"text": "首页",
+			"iconPath": "static/images/tabbar/tab1.png",
+			"selectedIconPath": "static/images/tabbar/tab12.png"
+		}, {
+			"pagePath": "pages/my/my",
+			"text": "客服",
+			"iconPath": "static/images/tabbar/tab2.png",
+			"selectedIconPath": "static/images/tabbar/tab22.png"
+		}, {
+			"pagePath": "pages/my/my",
+			"text": "我的",
+			"iconPath": "static/images/tabbar/tab3.png",
+			"selectedIconPath": "static/images/tabbar/tab32.png"
+		}]
+	},
+
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "依辈通",
+		"navigationBarBackgroundColor": "#fff",
+		"backgroundColor": "#F8F8F8"
+	}
+}
