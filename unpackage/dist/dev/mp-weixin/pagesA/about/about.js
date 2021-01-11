@@ -158,6 +158,39 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _service = _interopRequireDefault(__webpack_require__(/*! ../../service.js */ 8));
 var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
@@ -179,14 +212,6 @@ var that;var _default =
     console.log(Option);
 
     that.htmlReset = 0;
-    if (Option.type == 'yszc') {
-      that.type = Option.type;
-      that.title = '隐私政策';
-      uni.setNavigationBarTitle({
-        title: '隐私政策' });
-
-      this.getdata('yszc');
-    }
     if (Option.type == 'about') {
       that.type = Option.type;
       that.title = '关于我们';
@@ -194,6 +219,22 @@ var that;var _default =
         title: '关于我们' });
 
       console.log(that.fj_data);
+    }
+    if (Option.type == 'yhxy') {
+      that.type = Option.type;
+      that.title = '用户协议';
+      uni.setNavigationBarTitle({
+        title: '用户协议' });
+
+      // this.getdata('ysxy')
+    }
+    if (Option.type == 'ysxy') {
+      that.type = Option.type;
+      that.title = '隐私协议';
+      uni.setNavigationBarTitle({
+        title: '隐私协议' });
+
+      // this.getdata('ysxy')
     }
     if (Option.type == 'sm') {
       that.type = Option.type;

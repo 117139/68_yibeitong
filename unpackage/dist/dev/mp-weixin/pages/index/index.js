@@ -97,15 +97,6 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var m0 = _vm.htmlReset == 0 && _vm.datas ? _vm.get_fwb(_vm.datas) : null
-  _vm.$mp.data = Object.assign(
-    {},
-    {
-      $root: {
-        m0: m0
-      }
-    }
-  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -157,6 +148,25 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _service = _interopRequireDefault(__webpack_require__(/*! ../../service.js */ 8));
 var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
@@ -175,7 +185,46 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(
 //
 //
 //
-var that;var _default = { data: function data() {return { datas: '', htmlReset: -1 };}, onLoad: function onLoad() {that = this;that.htmlReset = 0;}, methods: {} };exports.default = _default;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var that;var _default = { data: function data() {return { datas: '', htmlReset: -1, cardCur: 0, swiperList: [{ id: 0, type: 'image', url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg' }, { id: 1, type: 'image', url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big37006.jpg' }, { id: 2, type: 'image', url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg' }, { id: 3, type: 'image', url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg' }, { id: 4, type: 'image', url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg' }, { id: 5, type: 'image', url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big21016.jpg' }, { id: 6,
+        type: 'image',
+        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg' }],
+
+
+      dotStyle: true,
+      towerStart: 0,
+      direction: '' };
+
+  },
+  onLoad: function onLoad() {
+    that = this;
+    that.htmlReset = 0;
+    this.TowerSwiper('swiperList');
+    // 初始化towerSwiper 传已有的数组名即可
+  },
+  methods: {
+    // cardSwiper
+    cardSwiper: function cardSwiper(e) {
+      this.cardCur = e.detail.current;
+    } } };exports.default = _default;
 
 /***/ }),
 

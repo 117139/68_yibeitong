@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/my/my",
     "pages/index/index",
+    "pages/my/my",
     "pages/login_tel/login_tel",
     "pages/logo/logo"
   ],
@@ -20,8 +20,8 @@
     "backgroundColor": "#F8F8F8"
   },
   "tabBar": {
-    "color": "#B8B8B8",
-    "selectedColor": "#11A078",
+    "color": "#444444",
+    "selectedColor": "#F54248",
     "backgroundColor": "#ffffff",
     "list": [
       {
@@ -31,16 +31,28 @@
         "selectedIconPath": "static/images/tabbar/tab12.png"
       },
       {
-        "pagePath": "pages/my/my",
-        "text": "客服",
+        "pagePath": "pages/index/index",
+        "text": "分类",
         "iconPath": "static/images/tabbar/tab2.png",
         "selectedIconPath": "static/images/tabbar/tab22.png"
       },
       {
-        "pagePath": "pages/my/my",
-        "text": "我的",
+        "pagePath": "pages/index/index",
+        "text": "购物车",
         "iconPath": "static/images/tabbar/tab3.png",
         "selectedIconPath": "static/images/tabbar/tab32.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "消息",
+        "iconPath": "static/images/tabbar/tab4.png",
+        "selectedIconPath": "static/images/tabbar/tab42.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "static/images/tabbar/tab5.png",
+        "selectedIconPath": "static/images/tabbar/tab52.png"
       }
     ]
   },

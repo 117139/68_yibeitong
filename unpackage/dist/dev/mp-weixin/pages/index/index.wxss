@@ -1,5 +1,54 @@
 
-.minh100.data-v-57280228{
-	background: #F8F8F8;
+.minh100.data-v-57280228 {
+	/* background: #F8F8F8; */
+}
+.index_top.data-v-57280228{
+	width: 100%;
+	padding: 15rpx 30rpx 0;
+}
+.index_top_srk.data-v-57280228{
+	width: 100%;
+	height: 64rpx;
+	background: #F4F4F4;
+	border-radius: 4rpx;
+	font-size: 28rpx;
+	color: #999;
+	padding: 0 20rpx;
+}
+.index_top_srk text.data-v-57280228{
+	font-size: 30rpx;
+	color: #bbb;
+	margin-right: 20rpx;
+}
+.index_zbox.data-v-57280228 {
+	width: 100%;
+	padding: 0 30rpx 15rpx;
+}
+.index_xxtz.data-v-57280228{
+	width: 100%;
+}
+.xxtz_img.data-v-57280228{
+	width: 54rpx;
+	height: 54rpx;
+	margin-right: 14rpx;
+	-webkit-box-flex: 0;
+	-webkit-flex: none;
+	        flex: none;
+}
+.xx_msg_box.data-v-57280228{
+	width: 614rpx;
+	height: 63rpx;
+	background: #FFFFFF;
+	box-shadow: 0px 0px 10rpx 0px rgba(0, 0, 0, 0.1);
+	padding: 15rpx 20rpx;
+	color: #666;
+	font-size: 24rpx;
+}
+.xx_msg_box .iconfont.data-v-57280228{
+	margin-right: 20rpx;
+	-webkit-box-flex: 0;
+	-webkit-flex: none;
+	        flex: none;
+	color: #999;
 }
 

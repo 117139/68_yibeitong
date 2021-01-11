@@ -1,8 +1,8 @@
 <template>
 	<view class="minh100">
 		<view v-if="htmlReset==1" class="zanwu" @tap='onRetry'>请求失败，请点击重试</view>
-		<view v-if="htmlReset==-1"  class="loading_def">
-				<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
+		<view v-if="htmlReset==-1" class="loading_def">
+			<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
 		</view>
 		<block v-if="htmlReset==0">
 			<view v-if="datas" class="xieyi_main" v-html="get_fwb(datas)"></view>
@@ -19,22 +19,115 @@
 							</view>
 						</view>
 						<!-- 签到 -->
-						<view class="top_user dis_flex">
-							<image class="user_tximg" src="../../static/images/tx_m2.jpg" mode="aspectFill"></image>
-							<view class="user_msg">
-								<view class="dis_flex aic">
-									<view class="user_name">依辈通用户</view>
-									<view class="vip_box">
-										<image class="vip_box_bg" src="../../static/images/vip_bg.png" mode=""></image>
-										<view class="vip_box_box">
-											<image src="../../static/images/vip.png" mode=""></image>
-											<text>普通会员</text>
+						<view class="top_user">
+							<view class="dis_flex">
+								<image class="user_tximg" src="../../static/images/tx_m2.jpg" mode="aspectFill"></image>
+								<view class="user_msg">
+									<view class="dis_flex aic">
+										<view class="user_name">依辈通用户</view>
+										<view class="vip_box">
+											<image class="vip_box_bg" src="../../static/images/vip_bg.png" mode=""></image>
+											<view class="vip_box_box">
+												<image src="../../static/images/vip.png" mode=""></image>
+												<text>普通会员</text>
+											</view>
 										</view>
 									</view>
+									<view class="user_tel">电话：16852563542</view>
 								</view>
-								<view class="user_tel">电话：16852563542</view>
+							</view>
+							<view class="dis_flex aic ju_a top_num">
+								<view class="dis_flex_c aic">
+									<view class="top_pri">16579.65</view>
+									<view>我的余额(元)</view>
+								</view>
+								<view class="num_hg"></view>
+								<view class="dis_flex_c aic">
+									<view class="top_pri">0.00</view>
+									<view>当前佣金(元)</view>
+								</view>
 							</view>
 						</view>
+					</view>
+				</view>
+				<!-- 订单 -->
+				<view class="order_box">
+					<view class="order_top dis_flex aic ju_b">
+						<view>我的订单</view>
+						<view class="go_more dis_flex aic">查看全部<text class="iconfont iconnext-m"></text></view>
+					</view>
+					<view class="order_urls dis_flex aic ju_a">
+						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+1">
+							<image src="../../static/images/my_icon_03.jpg" mode="aspectFit"></image>
+							<text>待付款</text>
+						</view>
+						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+2">
+							<image src="../../static/images/my_icon_05.jpg" mode="aspectFit"></image>
+							<text>待发货</text>
+						</view>
+						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+3">
+							<image src="../../static/images/my_icon_07.jpg" mode="aspectFit"></image>
+							<text>待收货</text>
+						</view>
+						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+4">
+							<image src="../../static/images/my_icon_09.jpg" mode="aspectFit"></image>
+							<text>待评价</text>
+						</view>
+						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+5">
+							<image src="../../static/images/my_icon_11.jpg" mode="aspectFit"></image>
+							<text>退款/售后</text>
+						</view>
+					</view>
+				</view>
+				<!-- 服务 -->
+				<view class="fuwu_box">
+					<view class="fuwu_tit">我的服务</view>
+					<view class="fuwu_list">
+						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+1">
+							<image src="../../static/images/my_icon_22.jpg" mode="aspectFit"></image>
+							<text>会员中心</text>
+						</view>
+						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+1">
+							<image src="../../static/images/my_icon_24.jpg" mode="aspectFit"></image>
+							<text>收货地址</text>
+						</view>
+						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+1">
+							<image src="../../static/images/my_icon_19.jpg" mode="aspectFit"></image>
+							<text>我的推广</text>
+						</view>
+						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+1">
+							<image src="../../static/images/my_icon_27.jpg" mode="aspectFit"></image>
+							<text>财务记录</text>
+						</view>
+						<view class="fuwu_li dis_flex_c aic ju_c" @tap="fk_show=true">
+							<image src="../../static/images/my_icon_35.jpg" mode="aspectFit"></image>
+							<text>联系客服</text>
+						</view>
+						<!-- <view class="fuwu_li dis_flex_c aic ju_c" style="position: relative;">
+							<button type="default" style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;opacity: 0;z-index: 10;" open-type="contact"></button>
+							<image src="../../static/images/my_icon_35.jpg" mode="aspectFit"></image>
+							<text>联系客服</text>
+						</view> -->
+						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/about/about?type=about">
+							<image src="../../static/images/my_icon_36.jpg" mode="aspectFit"></image>
+							<text>关于我们</text>
+						</view>
+						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/about/about?type=yhxy">
+							<image src="../../static/images/my_icon_32.jpg" mode="aspectFit"></image>
+							<text>用户协议</text>
+						</view>
+						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/about/about?type=ysxy">
+							<image src="../../static/images/my_icon_34.jpg" mode="aspectFit"></image>
+							<text>隐私协议</text>
+						</view>
+					</view>
+				</view>
+			
+				
+				<view class="zzc_box" v-if="fk_show" @tap="fk_show=false">
+					<view class="fk_box"  @tap.stop="">
+						<view class="d1" @tap.stop="call" data-tel="400-0888-099">客服电话：400-0888-099</view>
+						<view class="d2" @tap="fk_show=false">关闭</view>
 					</view>
 				</view>
 			</block>
@@ -52,32 +145,57 @@
 	export default {
 		data() {
 			return {
-				datas:'',
-				htmlReset:-1,
+				datas: '',
+				htmlReset: -1,
+				fk_show:false
 			}
 		},
 		onLoad() {
-			that=this
-			that.htmlReset=0
+			that = this
+			that.htmlReset = 0
+		},
+		computed: {
+			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas', 'fj_data'])
 		},
 		methods: {
-			
+			...mapMutations(['login', 'logindata', 'logout', 'setplatform']),
+			call(e){
+				console.log(e)
+				service.call(e)
+			},
+			jump(e) {
+				var that = this
+
+				if (that.btnkg == 1) {
+					return
+				} else {
+					that.btnkg = 1
+					setTimeout(function() {
+						that.btnkg = 0
+					}, 1000)
+				}
+
+				service.jump(e)
+			},
 		}
 	}
 </script>
 
 <style scoped>
-	.minh100{
+	.minh100 {
 		background: #F8F8F8;
 	}
-	.my_top{
+
+	.my_top {
 		width: 100%;
 		height: 357upx;
-		
+
 		position: relative;
 		overflow: hidden;
+		margin-bottom: 34upx;
 	}
-	.my_top_bg{
+
+	.my_top_bg {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -86,7 +204,8 @@
 		width: 100%;
 		height: 357upx;
 	}
-	.my_top_box{
+
+	.my_top_box {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -96,7 +215,8 @@
 		height: 357upx;
 		padding: 66upx 63upx 0;
 	}
-	.qiandao_box{
+
+	.qiandao_box {
 		position: absolute;
 		right: -50upx;
 		top: 100upx;
@@ -107,7 +227,8 @@
 		border-radius: 31upx;
 		padding: 5upx;
 	}
-	.qd_nbox{
+
+	.qd_nbox {
 		padding: 0 20upx;
 		height: 50upx;
 		background: #FFFFFF;
@@ -116,38 +237,45 @@
 		display: flex;
 		align-items: center;
 	}
-	.qd_nbox text{
+
+	.qd_nbox text {
 		margin: 0 4upx;
 	}
-	.top_user{
+
+	.top_user {
 		width: 100%;
 	}
-	.user_tximg{
+
+	.user_tximg {
 		width: 118upx;
 		height: 118upx;
 		background: #FFFFFF;
 		border: 2upx solid #CBB180;
 		box-shadow: 0upx 0upx 12upx 0upx rgba(188, 157, 103, 0.2);
 		border-radius: 50%;
-		flex:none;
+		flex: none;
 		margin-right: 15upx;
 	}
-	.user_msg{
+
+	.user_msg {
 		height: 118upx;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 	}
-	.user_name{
+
+	.user_name {
 		font-size: 36upx;
 		color: #fff;
 		margin-right: 8upx;
 	}
-	.user_tel{
+
+	.user_tel {
 		font-size: 28upx;
 		color: #fff;
 	}
-	.vip_box{
+
+	.vip_box {
 		min-width: 151upx;
 		min-height: 44upx;
 		background: #EBE0CE;
@@ -157,7 +285,8 @@
 		position: relative;
 		padding: 4upx 6upx;
 	}
-	.vip_box_bg{
+
+	.vip_box_bg {
 		z-index: 1;
 		position: absolute;
 		width: auto;
@@ -169,7 +298,8 @@
 		left: 4upx;
 		right: 4upx;
 	}
-	.vip_box_box{
+
+	.vip_box_box {
 		position: relative;
 		z-index: 2;
 		font-size: 20upx;
@@ -179,9 +309,149 @@
 		justify-content: center;
 		padding: 2upx 11upx;
 	}
-	.vip_box_box image{
+
+	.vip_box_box image {
 		width: 28upx;
 		height: 25upx;
 		margin-right: 6upx;
+	}
+
+	.top_num {
+		margin-top: 45upx;
+		font-size: 26upx;
+		color: #fff;
+	}
+
+	.top_pri {
+		font-size: 36upx;
+	}
+
+	.num_hg {
+		width: 1px;
+		height: 71upx;
+		background: #FFFFFF;
+		opacity: 0.2;
+	}
+
+	/* order_box */
+	.order_box {
+		width: 690upx;
+		min-height: 247upx;
+		background: #FFFFFF;
+		border-radius: 10upx;
+		margin: 0 auto;
+	}
+
+	.order_top {
+		width: 100%;
+		height: 86upx;
+		padding: 0 30upx;
+		border-bottom: 1px solid #F8F8F8;
+		color: #333;
+		font-weight: bold;
+	}
+
+	.go_more {
+		font-weight: normal;
+		font-size: 28upx;
+		color: #666;
+	}
+
+	.go_more text {
+		font-size: 16upx;
+		color: #666;
+		margin-left: 5upx;
+	}
+
+	.order_urls {
+		width: 100%;
+		height: 160upx;
+	}
+
+	.order_url {
+		font-size: 22upx;
+		color: #333;
+	}
+
+	.order_url image {
+		width: 60upx;
+		height: 60upx;
+		margin-bottom: 15upx;
+	}
+	.fuwu_box{
+		margin: 20upx auto 0;
+		width: 690upx;
+		min-height: 465upx;
+		background: #FFFFFF;
+		border-radius: 10upx;
+	}
+	.fuwu_tit{
+		width: 100%;
+		padding: 0 30upx;
+		height: 100upx;
+		font-size: 32upx;
+		color: #333;
+		display: flex;
+		align-items: center;
+	}
+	.fuwu_list{
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		padding-bottom: 20upx;
+	}
+	.fuwu_li{
+		width: 25%;
+		height: 180upx;
+		font-size: 26upx;
+		color: #333;
+	}
+	.fuwu_li image{
+		width: 75upx;
+		height: 75upx;
+		margin-bottom: 20upx;
+	}
+	
+	.zzc_box{
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 999;
+		background: rgba(0,0,0,.5);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.fk_box{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		width: 404upx;
+		height: 229upx;
+		background: #FFFFFF;
+		border-radius: 10upx;
+		position: relative;
+		padding-bottom: 56upx;
+	}
+	.fk_box .d1{
+		font-size: 28upx;
+		color: #333;
+		/* margin: 60upx auto; */
+	}
+	.fk_box .d2{
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 56upx;
+		font-size: 28upx;
+		color: #666;
+		border-top: 1px solid #E8E8E8;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 </style>
