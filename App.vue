@@ -16,7 +16,7 @@
 			var that =this
 			console.log('App Launch')
 			// #ifdef MP-WEIXIN
-			service.wxlogin()
+			// service.wxlogin()
 			// #endif
 			uni.getSystemInfo({
 				success: function(e) {
@@ -90,6 +90,11 @@
 	}
 	view{
 		box-sizing: border-box;
+	}
+	.clearfix::after{
+		content: '';
+		display: block;
+		clear: both;
 	}
 	.dis_flex{
 		display: flex;

@@ -3,13 +3,18 @@
     "pages/index/index",
     "pages/my/my",
     "pages/login_tel/login_tel",
-    "pages/logo/logo"
+    "pages/logo/logo",
+    "pages/goods_type/goods_type",
+    "pages/car/car"
   ],
   "subPackages": [
     {
       "root": "pagesA",
       "pages": [
-        "about/about"
+        "about/about",
+        "vip_home/vip_home",
+        "my_address/my_address",
+        "my_addressEdit/my_addressEdit"
       ]
     }
   ],
@@ -31,7 +36,7 @@
         "selectedIconPath": "static/images/tabbar/tab12.png"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/goods_type/goods_type",
         "text": "分类",
         "iconPath": "static/images/tabbar/tab2.png",
         "selectedIconPath": "static/images/tabbar/tab22.png"

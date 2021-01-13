@@ -51,4 +51,66 @@
 	        flex: none;
 	color: #999;
 }
+.huodong_tit.data-v-57280228{
+	width: 100%;
+	font-size: 36rpx;
+	color: #333;
+	height: 100rpx;
+	font-weight: bold;
+}
+.huodong_tit_hot.data-v-57280228{
+	position: relative;
+	top: -20rpx;
+	width: 57rpx;
+	height: 30rpx;
+	margin-left: 8rpx;
+}
+.huodong_list.data-v-57280228{
+	width: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	        flex-wrap: wrap;
+}
+.huodong_li.data-v-57280228{
+	width: 338rpx;
+	height: 147rpx;
+	background: -webkit-linear-gradient(48deg, #FE7D6A, #FF9D78);
+	background: linear-gradient(42deg, #FE7D6A, #FF9D78);
+	box-shadow: 0px 0px 10rpx 0px rgba(230, 34, 0, 0.05);
+	border-radius: 10rpx;
+	margin-right: 12rpx;
+	margin-bottom: 12rpx;
+}
+.huodong_li.data-v-57280228:nth-child(2n){
+	margin-right: 0;
+}
+.goods_li.data-v-57280228{
+	width: 327rpx;
+	margin-right: 35rpx;
+	margin-bottom: 20rpx;
+}
+.goods_li.data-v-57280228:nth-child(2n){
+	margin-right: 0;
+}
+.goods_li_img.data-v-57280228{
+	width: 327rpx;
+	height: 404rpx;
+	border-radius: 4px;
+}
+.goods_li_name.data-v-57280228{
+	font-size: 32rpx;
+	line-height: 58rpx;
+	color: #333;
+	margin-top: 15rpx;
+	margin-bottom: 15rpx;
+}
+.goods_li_money.data-v-57280228{
+	font-size: 32rpx;
+	color: #A8896D;
+}
+.goods_li_money text.data-v-57280228{
+	font-size: 26rpx;
+}
 

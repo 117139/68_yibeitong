@@ -3707,8 +3707,8 @@ scroll-view.cu-steps .cu-item {
 	animation: cuIcon-spin 1s infinite steps(8);
 	display: inline-block;
 }
-[class*="cuIcon-"] {
-	font-family: "cuIcon";
+[class*="cuIcon-"],[class*="cuIcon-"][class*="cuIcon-"] {
+	font-family: "cuIcon"!important;
 	font-size: inherit;
 	font-style: normal;
 }
@@ -4681,6 +4681,11 @@ scroll-view.cu-steps .cu-item {
 }
 view{
 	box-sizing: border-box;
+}
+.clearfix::after{
+	content: '';
+	display: block;
+	clear: both;
 }
 .dis_flex{
 	display: -webkit-box;

@@ -83,11 +83,11 @@
 				<view class="fuwu_box">
 					<view class="fuwu_tit">我的服务</view>
 					<view class="fuwu_list">
-						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+1">
+						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/vip_home/vip_home">
 							<image src="../../static/images/my_icon_22.jpg" mode="aspectFit"></image>
 							<text>会员中心</text>
 						</view>
-						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+1">
+						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/my_address/my_address">
 							<image src="../../static/images/my_icon_24.jpg" mode="aspectFit"></image>
 							<text>收货地址</text>
 						</view>

@@ -78,5 +78,12 @@
 		right: 0;
 		bottom: 0;
 		width: 100%;
+		z-index: 990;
+	}
+	.action{
+		z-index: 999;
+	}
+	.content{
+		z-index: 999;
 	}
 </style>
