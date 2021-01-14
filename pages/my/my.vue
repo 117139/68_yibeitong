@@ -54,26 +54,26 @@
 				<view class="order_box">
 					<view class="order_top dis_flex aic ju_b">
 						<view>我的订单</view>
-						<view class="go_more dis_flex aic">查看全部<text class="iconfont iconnext-m"></text></view>
+						<view class="go_more dis_flex aic"  @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+0">查看全部<text class="iconfont iconnext-m"></text></view>
 					</view>
 					<view class="order_urls dis_flex aic ju_a">
-						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+1">
+						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+1">
 							<image src="../../static/images/my_icon_03.jpg" mode="aspectFit"></image>
 							<text>待付款</text>
 						</view>
-						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+2">
+						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+2">
 							<image src="../../static/images/my_icon_05.jpg" mode="aspectFit"></image>
 							<text>待发货</text>
 						</view>
-						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+3">
+						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+3">
 							<image src="../../static/images/my_icon_07.jpg" mode="aspectFit"></image>
 							<text>待收货</text>
 						</view>
-						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+4">
+						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+4">
 							<image src="../../static/images/my_icon_09.jpg" mode="aspectFit"></image>
 							<text>待评价</text>
 						</view>
-						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+5">
+						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList_sh/OrderList_sh?type='+5">
 							<image src="../../static/images/my_icon_11.jpg" mode="aspectFit"></image>
 							<text>退款/售后</text>
 						</view>

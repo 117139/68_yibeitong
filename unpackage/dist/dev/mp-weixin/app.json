@@ -14,7 +14,15 @@
         "about/about",
         "vip_home/vip_home",
         "my_address/my_address",
-        "my_addressEdit/my_addressEdit"
+        "my_addressEdit/my_addressEdit",
+        "Order/Order",
+        "OrderList/OrderList",
+        "OrderPay/OrderPay",
+        "OrderDetails/OrderDetails",
+        "OrderDetails_sh_sq/OrderDetails_sh_sq",
+        "orderDetails_sh_xq/orderDetails_sh_xq",
+        "OrderList_sh/OrderList_sh",
+        "details/details"
       ]
     }
   ],
@@ -42,7 +50,7 @@
         "selectedIconPath": "static/images/tabbar/tab22.png"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/car/car",
         "text": "购物车",
         "iconPath": "static/images/tabbar/tab3.png",
         "selectedIconPath": "static/images/tabbar/tab32.png"
@@ -76,6 +84,8 @@
     }
   },
   "usingComponents": {
+    "van-stepper": "./wxcomponents/vant/stepper/index",
+    "van-popup": "./wxcomponents/vant/popup/index",
     "cu-custom": "/colorui/components/cu-custom",
     "u-parse": "/components/gaoyia-parse/parse"
   }

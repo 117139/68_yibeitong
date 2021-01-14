@@ -77,7 +77,65 @@
 				"enablePullDownRefresh": false
 			}
 
-		}]
+		}, {
+			"path": "Order/Order",
+			"style": {
+				"navigationBarTitleText": "结算台",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "OrderList/OrderList",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "OrderPay/OrderPay",
+			"style": {
+				"navigationBarTitleText": "结算台",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "OrderDetails/OrderDetails",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "OrderDetails_sh_sq/OrderDetails_sh_sq",
+			"style": {
+				"navigationBarTitleText": "申请售后",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "orderDetails_sh_xq/orderDetails_sh_xq",
+			"style": {
+				"navigationBarTitleText": "售后详情",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "OrderList_sh/OrderList_sh",
+			"style": {
+				"navigationBarTitleText": "售后列表",
+				"enablePullDownRefresh": false
+			}
+
+		}    ,{
+                    "path" : "details/details",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
 	}],
 
 	"preloadRule": {
@@ -127,6 +185,11 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "依辈通",
 		"navigationBarBackgroundColor": "#fff",
-		"backgroundColor": "#F8F8F8"
+		"backgroundColor": "#F8F8F8",
+
+		"usingComponents": {
+			"van-stepper": "./wxcomponents/vant/stepper/index",
+			"van-popup": "./wxcomponents/vant/popup/index"
+		}
 	}
 }

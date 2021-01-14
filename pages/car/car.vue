@@ -29,6 +29,24 @@
 				</view>
 			</view>
 		</view>
+		<view style="width: 100%;height: 100upx;"></view>
+		<view class="vbottom" v-if="datas.length!==0">
+			<view class="selecAll" @tap="selecAll">
+				<view class="xuanze1 all " :class="all==true? 'xuanze2':''">
+					<!-- <icon  v-if="all==true" type="success" size="16" color="#FD383B" /> -->
+					<text v-if="all==true" class="iconfont iconduigou-copy active"></text>
+				</view>
+				<!-- <text :class="all==true?'active':''" class="iconfont iconduigou-copy fz26 mr5"></text> -->
+				全选
+			</view>
+			<view class=" flex_1">
+				
+				<!-- <view class="fz22 c9">不含运费</view> -->
+			</view>
+			<view class="heji"><text class="hj_text">合计:</text><text class="hj_rmb">￥</text>{{sum}}</view>
+			<!-- <view class="jiesuan jiesuan1" @tap="cardel">删除</view> -->
+			<view class="jiesuan" @tap="openOrder">结算</view>
+		</view>
 	</view>
 </template>
 
@@ -56,6 +74,8 @@
 				datas: [],
 				listTouchStart: 0,
 				listTouchDirection: null,
+				all:false,
+				sum:0.00
 			}
 		},
 		components: {
@@ -74,6 +94,7 @@
 					gg:['4合1多功能笔','多色'],
 					pri:'39.99',
 					num:1,
+					sku_num:100,
 					id:1
 				},
 				{
@@ -82,6 +103,7 @@
 					gg:['炭黑（春夏款）','42'],
 					pri:'209',
 					num:1,
+					sku_num:100,
 					id:2
 				},
 				{
@@ -90,6 +112,7 @@
 					gg:['#999滋润'],
 					pri:'269',
 					num:1,
+					sku_num:100,
 					id:3
 				}, 
 				{
@@ -98,6 +121,7 @@
 					gg:['4合1多功能笔','多色'],
 					pri:'39.99',
 					num:1,
+					sku_num:100,
 					id:4
 				},
 				{
@@ -106,6 +130,7 @@
 					gg:['#999滋润'],
 					pri:'206',
 					num:1,
+					sku_num:100,
 					id:5
 				},
 				{
@@ -114,6 +139,7 @@
 					gg:['4合1多功能笔', '多色'],
 					pri:'269',
 					num:1,
+					sku_num:100,
 					id:6
 				}, 
 			]
@@ -160,6 +186,60 @@
 				} else {
 					Vue.set(item, 'active', 1)
 				}
+				let qx = true
+				for (let i in that.datas) {
+				  if (!that.datas[i].active) {
+				    qx = false
+				    break
+				  }
+				}
+				console.log(qx)
+				//触发全选
+				if (qx == true) {
+					that.all=true
+				} else {
+					that.all=false
+				}
+				this.countpri()
+			},
+			selecAll() {
+			  let kg
+				var that =this
+			  if (this.all == false) {
+			    kg = true
+			  } else {
+			    kg = false
+			  }
+			  that.all= kg
+			  // this.data.goods_sele[sid].xuan=true
+			  for (var i=0;i<that.datas.length;i++) {
+						
+						if(kg){
+							
+							Vue.set(that.datas[i],'active',true)
+						}else{
+							Vue.set(that.datas[i],'active',kg)
+						}
+			  }
+			  // this.setData({
+			  //   goods_sele: this.goods_sele
+			  // });
+			  //计算总价
+			  this.countpri()
+			},
+			/*计算价格*/
+			countpri() {
+			  let heji = 0
+			  let var2 = this.datas
+			  for (let i in var2) {
+			    if (var2[i].active == true) {
+			      heji += var2[i].num * (var2[i].pri * 100)
+			
+			    }
+			  }
+			
+			  heji = (heji / 100).toFixed(2)
+				this.sum=heji
 			},
 			//加减
 			onNum(item,ad) {
@@ -220,6 +300,69 @@
 				
 			},
 			
+			openOrder() {
+			  // wx.navigateTo({
+			  //   url: '/pages/Order/Order'
+			  // })
+			  // return
+			  let that = this
+			  let xuanG = that.datas
+			  let idG = ''
+			  var xzarr = []
+				var kc_tip=false
+			  // for (let i in xuanG) {
+				for(var i=0; i<xuanG.length;i++){
+			    if (xuanG[i].active) {
+						if(xuanG[i].num>xuanG[i].sku_num){
+							kc_tip=true
+							that.all=false
+							Vue.set(that.datas[i],'xuan',false)
+						}else{
+							if (idG == '') {
+							  idG = xuanG[i].id
+										
+							} else {
+							  idG += ',' + xuanG[i].id
+							}
+						}
+			     
+			      // xzarr.push(that.goods[i])
+			    }
+			
+			    // console.log(idG)
+			  }
+			  // xzarr = JSON.stringify(xzarr)
+			  // console.log(xzarr)
+			  console.log(idG)
+				if(kc_tip&&idG !== ''){
+					uni.showToast({
+						icon:'none',
+						title:'部分商品库存不足已被取消选择'
+					})
+					setTimeout(()=>{
+						wx.navigateTo({
+						  url: '/pagesA/Order/Order?type=2&g_data='+idG
+						})
+					},1500)
+				}else if (idG !== '') {
+			   wx.navigateTo({
+			     url: '/pagesA/Order/Order?type=2&g_data='+idG
+			   })
+			  }else{
+					if(kc_tip){
+						uni.showToast({
+							icon:'none',
+							title:'请选择库存充足的商品'
+						})
+					}else{
+						uni.showToast({
+							icon:'none',
+							title:'请选择商品'
+						})
+					}
+					
+				}
+			},
 			getdata(){
 				// /api/my/myCollect
 				var that =this
@@ -446,6 +589,9 @@
 	.minh100{
 		background: #F6F7F9;
 	}
+	.mr5{
+		margin-right: 5upx;
+	}
 	.car_li{
 		height: 218upx!important;
 		background: #fff;
@@ -520,5 +666,86 @@
 		color: #333;
 		text-align: center;
 		font-weight: bold;
+	}
+	
+	.vbottom{
+		width: 100%;
+		height: 100rpx;
+		position: fixed;
+		bottom: 0;
+		/* #ifdef H5 */
+		bottom: 100upx;
+		/* #endif */
+		z-index: 99;
+		background-color: #fff;
+		display: flex;
+		align-items: center;
+		padding: 0 30upx;
+	}
+	.selecAll{
+		/* padding-left: 28rpx; */
+		margin-right: 30rpx;
+		display: flex;
+		align-items: center;
+		font-size: 24rpx;
+		color: #333333;
+	}
+	.xuanze{
+		width: 30rpx;
+		height: 30rpx;
+		padding: 85rpx 30rpx 85rpx 0rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex:none;
+	}
+	.xuanze1{
+		width: 36rpx;
+		height: 36rpx;
+		border-radius: 50%;
+		margin-right: 20upx;
+		border: 1px solid #CDCDCD;
+		box-shadow: 0px 2upx 10upx 0px rgba(34, 23, 20, 0.1);
+		box-sizing: border-box;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex:none;
+	}
+	.xuanze2{
+		border: 0;
+	}
+	.all.xuanze2{
+		
+		/* border: 1px solid #FE0042; */
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.heji{
+		font-size: 29upx;
+		color: #FD383B;
+		font-weight: bold;
+	}
+	.hj_text{
+		font-size: 27upx;
+		color: #333;
+		margin-right: 22upx;
+		font-weight: normal;
+	}
+	.hj_rmb{
+		font-size: 22upx;
+	}
+	.jiesuan{
+		width: 178upx;
+		height: 61upx;
+		background: #F54248;
+		border-radius: 31upx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 30upx;
+		color: #fff;
+		margin-left: 35upx;
 	}
 </style>

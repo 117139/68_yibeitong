@@ -156,12 +156,15 @@
 				var idx = e.currentTarget.dataset.idx
 				var pages = getCurrentPages(); //当前页面
 				var prevPage = pages[pages.length - 2]; //上一页面
+				// #ifndef H5
 				prevPage.setData({
 					//直接给上一个页面赋值
 					addresschose: that.datas[idx],
 				});
+				// #endif
+				uni.$emit('update_address',{msg:that.datas[idx]})
 
-				wx.navigateBack({
+				uni.navigateBack({
 					//返回
 					delta: 1
 				})
