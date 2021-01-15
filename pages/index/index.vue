@@ -41,7 +41,7 @@
 				
 				<view class="huodong_list">
 					<view  class="goods_li" v-for="(item,index) in goods_list">
-						<image class="goods_li_img" :src="item.g_img" mode="aspectFit" @tap="jump" data-url="/pagesA/my_address/my_address"></image>
+						<image class="goods_li_img" :src="item.g_img" mode="aspectFit" @tap="jump" data-url="/pagesA/details/details"></image>
 						<view class="text-cut goods_li_name">{{item.name}}</view>
 						<view class=" goods_li_money"><text>￥</text>{{item.money}}</view>
 					</view>
@@ -331,7 +331,7 @@
 	.huodong_li{
 		width: 338upx;
 		height: 147upx;
-		background: linear-gradient(42deg, #FE7D6A, #FF9D78);
+		/* background: linear-gradient(42deg, #FE7D6A, #FF9D78); */
 		box-shadow: 0px 0px 10upx 0px rgba(230, 34, 0, 0.05);
 		border-radius: 10upx;
 		margin-right: 12upx;

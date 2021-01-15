@@ -76,8 +76,7 @@
 .huodong_li.data-v-57280228{
 	width: 338rpx;
 	height: 147rpx;
-	background: -webkit-linear-gradient(48deg, #FE7D6A, #FF9D78);
-	background: linear-gradient(42deg, #FE7D6A, #FF9D78);
+	/* background: linear-gradient(42deg, #FE7D6A, #FF9D78); */
 	box-shadow: 0px 0px 10rpx 0px rgba(230, 34, 0, 0.05);
 	border-radius: 10rpx;
 	margin-right: 12rpx;
