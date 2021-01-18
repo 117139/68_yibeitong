@@ -59,11 +59,11 @@
 						 </block>
 						 <block v-else-if="item.order.o_ddstatus==1">
 							 <view  class="qx" @tap.stop="del_order(item.order.o_id)">删除订单</view>
-							 <view @tap.stop="get_goods(item.order.o_id)">查看物流</view>
+							 <view @tap.stop="jump" :data-url="'/pagesA/Order_wuliu/Order_wuliu?id='+item.order.o_id">查看物流</view>
 						 </block>
 						 <block v-else>
 							 <view class="qx"  @tap.stop="get_goods(item.order.o_id)">确认收货</view>
-							 <view @tap.stop="get_goods(item.order.o_id)">查看物流</view>
+							 <view @tap.stop="jump" :data-url="'/pagesA/Order_wuliu/Order_wuliu?id='+item.order.o_id">查看物流</view>
 						 </block>
 		          
 		          <!-- <view v-if="item.order.o_paystatus==1" class="qx" @tap.stop='del_order(item.order.o_id)'>取消订单</view> -->
@@ -85,7 +85,7 @@
 		mapState,
 		mapMutations
 	} from 'vuex'
-	var that =this
+	var that
 	export default {
 		data() {
 			return {

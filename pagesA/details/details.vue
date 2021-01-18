@@ -34,7 +34,8 @@
 					<!-- <block v-for="(item,idx) in goodsData.img"> -->
 					<block v-for="(item,idx) in 3">
 						<swiper-item>
-							<image src="/static/images/goods_01.jpg" class="slide-image" width="355" height="150" :data-curitem="goodsData.img[0]" @tap="pveimg" />
+							<image src="/static/images/goods_01.jpg" class="slide-image" width="355" height="150" :data-curitem="goodsData.img[0]"
+							 @tap="pveimg" />
 							<!-- <image :src="filter.imgIP(item)" class="slide-image" mode="aspectFill" width="355" height="150" :data-src="filter.imgIP(item)"
 							 :data-array="filter.getgimgarrIP(goodsData.img)" @tap.stop="pveimg" /> -->
 						</swiper-item>
@@ -54,14 +55,21 @@
 				</view> -->
 				<view class="goods_name">
 					<text class="goods_name_text">{{goodsData.title}}</text>
-					<view class="goods_share"><text class="iconfont iconfenxiang"></text>
+					<view class="goods_share"><text class="iconfont iconfenxiang"></text></view>
 				</view>
-				<view class="dis_flex">
+				
+				<view class="dis_flex goods_pri_box">
 					<view class="pri"><text>¥</text>268</view>
 					<view class="pri1 scx"><text>¥</text>299</view>
 				</view>
-			</view>
-
+				<view class="sku_box dis_flex">
+					<view class="sku_li dis_flex aic">
+						<text class="sku_bg">库</text>库存：56
+					</view>
+					<view class="sku_li dis_flex aic">
+							<text  class="sku_bg">月</text>月销：983
+					</view>
+				</view>
 			</view>
 			<!-- <view class="goods_xmsg" @tap="jump" data-url="/pagesA/my_yhq/my_yhq"> -->
 			<!-- <view v-if="yh_list.length>0" class="goods_xmsg" @tap="yhq_get">
@@ -74,65 +82,67 @@
 				</view>
 			</view> -->
 			<view class="mt20 goods_xmsg" @tap="sheetshow_fuc">
-				<view class="v1">已选择</view>
+				<view class="v1">选择</view>
 				<view class="v2 v21">{{ggshow1?ggshow1+',':''}}{{cnum>0?cnum+'件':''}}</view>
 				<view class="v3">
 					<text class="iconfont iconnext-m"></text>
 				</view>
 			</view>
+			<view class="hengxian"></view>
 			<!-- 评价 -->
-			<view class="pj_box mt20" v-if="goodsData.comment.comment.length>0">
+			<!-- <view class="pj_box mt20" v-if="goodsData.comment.comment.length>0"> -->
+			<view class="pj_box mt20" >
 				<view class="pj_box_tit">
 					<view class="p_tit_l">商品评价（{{goodsData.comment_count>0?goodsData.comment_count:0}}）</view>
 					<view class="p_tit_r" :data-url="'/pages_goods/details_pl/details_pl?id='+g_id+'&dy_id='+dy_id+'&advocacyviceId='+advocacyviceId"
 					 @tap="jump">查看全部
-						<text class="iconfont iconnext3"></text>
+						<text class="iconfont iconnext-m"></text>
 					</view>
 				</view>
-				<view class="pj_bq">
+				<!-- <view class="pj_bq">
 					<view v-for="(item,idx) in goodsData.comment.tag">{{item.name}}（{{item.number}}）</view>
-				</view>
-				<view class="pj_li" v-for="(item,idx) in goodsData.comment.comment">
+				</view> -->
+				<view v-if="idx<1" class="pj_li" v-for="(item,idx) in goodsData.comment.comment">
 					<view class="pj_d1">
 						<view class="user_tx">
 							<image class="user_tx" :src="filter.imgIP(item.head_portrait)"></image>
 						</view> {{item.nickname}}
 					</view>
 					<view class="pj_d2">{{item.comment}}</view>
+					<view class="pj_d3">
+						<text v-for="(item1,idx1) in item.attr">{{item1.value}}</text>
+					</view>
 				</view>
 			</view>
+			<view class="hengxian"></view>
 			<!-- 详情 -->
 			<view class="goods_xq mt20">
-				<view class="xq_tit">
+				<!-- <view class="xq_tit">
 					<text>-</text>
 					商品详情
 					<text>-</text>
+				</view> -->
+				
+				<view class="pj_box_tit">
+					<view class="p_tit_l">商品详情</view>
+					<view class="p_tit_r" ></view>
 				</view>
 				<!-- <view class="xq_box" v-html="goodsData.content"> -->
-				<view class="xq_box" >
+				<view class="xq_box">
 					<img src="/static/images/goods_xq_04.jpg" mode="aspectFill" style="width:750rpx;height:1264upx;display:block;" />
-					<!-- <image :src="filter.imgIP('/static_s/51daiyan/images/goods_02.jpg')" mode="aspectFill" style="width:750rpx;height:750rpx;display:block;" /> -->
 				</view>
 			</view>
 			<!-- 底部 -->
 			<view class="bottom_box">
+				<view class="kf_btn" style="position: relative;">
+					<button type="default" open-type="share" style="position: absolute;opacity: 0; top: 0;left: 0;right: 0;bottom: 0;" :data-id="item.id"></button>
+					<text class="iconfont iconfenxiang2"></text>
+					<text>分享</text>
+				</view>
+				<view class="sg"></view>
 				<view class="kf_btn" @tap="toroom(goodsData.support_staff)">
 					<text class="iconfont iconkefu"></text>
 					<text>客服</text>
-				</view>
-				<view class="sg"></view>
-				<view v-if="goodsData.is_collect==1" class="kf_btn" @tap="scFuc(g_id,'affirm')">
-					<text class="iconfont iconhongxinicon"></text>
-					<text>收藏</text>
-				</view>
-				<view v-if="goodsData.is_collect==2" class="kf_btn" @tap="scFuc(g_id,'cancel')">
-					<text class="iconfont iconhongxinicon1" style="color: #f00;"></text>
-					<text style="color: #f00;">已收藏</text>
-				</view>
-				<view class="sg"></view>
-				<view class="kf_btn" @tap="jump" :data-url="'/pages_goods/dp_index/dp_index?id='+goodsData.merchant.group_code">
-					<text class="iconfont iconstore"></text>
-					<text data-url="/pages/dp_index/dp_index">店铺</text>
 				</view>
 				<view v-if="goodsData.activity_id==0&&goodsData.is_pond_goods==1" class="buy_btn" @tap="sheetshow_fuc">加入购物车</view>
 				<view class="buy_btn buy_btn1" @tap="sheetshow_fuc">{{goodsData.activity_id==0||goodsData.is_apply==2?'立即购买':'报名购买'}}</view>
@@ -186,20 +196,21 @@
 
 					<view class="popopBox1">
 						<view class="goodsimg">
-							<image v-if="show_img.length>0" :src="filter.imgIP(show_img[0])" :data-src="filter.imgIP(show_img[0])" mode="aspectFill"
+							<!-- <image v-if="show_img.length>0" :src="filter.imgIP(show_img[0])" :data-src="filter.imgIP(show_img[0])" mode="aspectFill"
 							 @tap="pveimg"></image>
 							<image v-else :src="filter.imgIP(goodsData.img[0])" :data-src="filter.imgIP(goodsData.img[0])" mode="aspectFill"
-							 @tap="pveimg"></image>
+							 @tap="pveimg"></image> -->
+							 <image src="/static/images/goods_01.jpg" mode="aspectFill"></image>
 						</view>
 						<view class="goodstkjg">
 
-							<view class="goods_pri_h">￥{{show_pri}}</view>
+							<view class="goods_pri_h">￥<text>{{show_pri}}</text></view>
 							<view class="kucun" v-if="guige_select.length>0">库存{{show_num}}件</view>
 							<view class="tkname oh2">已选择：{{ggshow1}}</view>
 						</view>
 					</view>
 					<block v-if="guige_arr.length>0" v-for="(item,idx) in guige_arr">
-						<view class="tkguigetit">{{item.name}}</view>
+						<view class="tkguigetit">{{item.name}}：</view>
 						<view class="guigeBox">
 							<!-- :class="{ 'cur': guige_select[idx]&&guige_select[idx].value==item1,'goods_null':!ggShow(item.name,item1,idx) }" -->
 							<block v-for="(item1,idx1) in item.value">
@@ -211,9 +222,11 @@
 						</view>
 					</block>
 					<view class="countnum">
-						<text>购买数量</text>
-						<!-- <van-stepper custom-class="steppera" input-class="vanipt" plus-class="vantjia" minus-class="vantjian" v-model="cnum" min="0" :max="goodsData.is_pond_goods==2?1:show_num"
-							@input="onChange" @change="onChange" /> -->
+						<text>选择数量：</text>
+						<!-- #ifdef MP-WEIXIN -->
+						<van-stepper custom-class="steppera" input-class="vanipt" plus-class="vantjia" minus-class="vantjian" v-model="cnum"
+						 min="0" :max="goodsData.is_pond_goods==2?1:show_num" @input="onChange" @change="onChange" />
+						<!-- #endif -->
 						<!-- <van-stepper custom-class="steppera" input-class="vanipt" plus-class="vantjia" minus-class="vantjian" v-model="cnum"
 						 min="0" :max="show_num" @input="onChange" @change="onChange" /> -->
 					</view>
@@ -742,7 +755,7 @@
 				var that = this
 				var resdata = {
 					"support_staff": 3,
-					"title": "华为HONOR/荣耀Play4T Pro 手机新品麒麟810芯片 5荣耀官方旗舰店G正品官网智能机mate30 nova6",
+					"title": "octopusme可拆卸宽松中长款工装棉服女秋冬新款风衣外套",
 					"img": [
 						"/resource/merchant/goods/20200826/3afe80bc7af4be47b2d5209bca1934ec.jpeg"
 					],
@@ -760,10 +773,10 @@
 					"sales_volume": "6004",
 					"attr": {
 						"specification": [{
-								"name": "内存",
+								"name": "尺寸",
 								"value": [
-									"128G",
-									"256G"
+									"XL",
+									"XXL"
 								]
 							},
 							{
@@ -781,8 +794,8 @@
 										"value": "蓝色翡翠"
 									},
 									{
-										"name": "内存",
-										"value": "128G"
+										"name": "尺寸",
+										"value": "XL"
 									}
 								],
 								"number": 4999,
@@ -800,8 +813,8 @@
 										"value": "蓝色翡翠"
 									},
 									{
-										"name": "内存",
-										"value": "256G"
+										"name": "尺寸",
+										"value": "XXL"
 									}
 								],
 								"number": 4002,
@@ -817,8 +830,8 @@
 										"value": "黑色"
 									},
 									{
-										"name": "内存",
-										"value": "128G"
+										"name": "尺寸",
+										"value": "XL"
 									}
 								],
 								"number": 5186,
@@ -834,8 +847,8 @@
 										"value": "黑色"
 									},
 									{
-										"name": "内存",
-										"value": "256G"
+										"name": "尺寸",
+										"value": "XXL"
 									}
 								],
 								"number": 542,
@@ -847,7 +860,34 @@
 						]
 					},
 					"comment": {
-						"comment": [],
+						"comment": [
+							{
+								head_portrait:'/resource/merchant/goods/20200826/3afe80bc7af4be47b2d5209bca1934ec.jpeg',
+								nickname:'昵称',
+								comment:'宝贝收到了，和卖家描述的一样，很漂亮，一直想买这样一个杯子，这个蓝色稍微有点小瑕疵，不过自己用没问题',
+								attr:[
+									{
+										value:'黑色'
+									},
+									{
+										value:'XL'
+									},
+								]
+							},
+							{
+								head_portrait:'/resource/merchant/goods/20200826/3afe80bc7af4be47b2d5209bca1934ec.jpeg',
+								nickname:'昵称1515',
+								comment:'宝贝收到了，和卖家描述的一样，很漂亮，一直想买这样一个杯子，这个蓝色稍微有点小瑕疵，不过自己用没问题',
+								attr:[
+									{
+										value:'黑色'
+									},
+									{
+										value:'XL'
+									},
+								]
+							},
+						],
 						"tag": [{
 								"id": 9,
 								"name": "有图",
@@ -892,7 +932,7 @@
 						"isAttention": 1
 					}
 				}
-				
+
 				var guige_sku = JSON.stringify(resdata.attr.sku_all)
 				var guige_skuarr = JSON.stringify(resdata.attr.specification)
 				console.log(guige_sku)
@@ -1164,6 +1204,10 @@
 					this.cnum = this.show_num
 					return
 				}
+				if (this.cnum <1) {
+					this.cnum = 1
+					return
+				}
 				// this.data.goods_sele[idx].num=e.detail
 				this.cnum = e.detail
 
@@ -1176,6 +1220,11 @@
 				//   })
 				//   return
 				// }
+				that.onClose()
+				wx.showToast({
+					title: '添加成功'
+				})
+				return
 				let that = this
 				if (!that.v_id || that.guige_select.length != that.guige_arr.length) {
 					uni.showToast({
@@ -1282,7 +1331,7 @@
 				// advocacyId:that.dy_id,
 				// advocacyviceId:that.advocacyviceId,
 				uni.navigateTo({
-					url: '/pages/Order/Order?type=1&v_id=' + that.v_id + '&number=' + that.cnum + '&advocacy_user_id=' + that.dyr_type +
+					url: '/pagesA/Order/Order?type=1&v_id=' + that.v_id + '&number=' + that.cnum + '&advocacy_user_id=' + that.dyr_type +
 						'&v_id=' + that.v_id + '&dy_id=' + that.dy_id + '&advocacyviceId=' + that.advocacyviceId
 				})
 			},
@@ -1344,7 +1393,7 @@
 			onClose() {
 				this.sheetshow = false
 				this.sheetshow1 = false
-				this.$refs.popup.close()
+				// this.$refs.popup.close()
 				this.$refs.popup_goods.close()
 			},
 			sheetshow_fuc() {
@@ -1562,7 +1611,7 @@
 
 
 
-	
+
 	.goods_bz {
 		border-top: 1px solid #eee;
 		padding: 20rpx 28rpx 0;
@@ -1671,21 +1720,35 @@
 	}
 
 	.pj_box_tit {
-		padding: 0 28rpx;
+		padding: 0 28upx;
 		box-sizing: border-box;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		font-size: 24rpx;
+		font-size: 24upx;
 		color: #999;
-		height: 75rpx;
+		/* height: 75rpx; */
+		height: 90upx;
 	}
 
 	.p_tit_l {
-		font-size: 28rpx;
+		font-size: 31rpx;
+		font-weight: bold;
 		color: #333;
+		position: relative;
+		padding-left: 27upx;
 	}
-
+	.p_tit_l::before{
+		position: absolute;
+		content: '';
+		width: 7upx;
+		height: 30upx;
+		left: 0;
+		top: 50%;
+		margin-top: -15upx;
+		background: linear-gradient(-25deg, #FF8218, #FBA134);
+		box-shadow: 0px 2upx 5upx 0px rgba(254, 144, 37, 0.46);
+	}
 	.p_tit_r {
 		display: flex;
 		align-items: center;
@@ -1724,8 +1787,8 @@
 	}
 
 	.pj_d1 {
-		font-size: 26rpx;
-		color: #999;
+		font-size: 28rpx;
+		color: #666;
 		display: flex;
 		align-items: center;
 		margin-bottom: 10rpx;
@@ -1734,16 +1797,23 @@
 	.pj_d2 {
 		font-size: 26rpx;
 		color: #333;
+		margin-bottom: 10upx;
 	}
-
+	.pj_d3{
+		font-size: 24upx;
+		color: #666;
+	}
+	.pj_d3 text{
+		margin-right: 8upx;
+	}
 	.user_tx {
-		width: 42rpx;
-		height: 42rpx;
+		width: 65rpx;
+		height: 65rpx;
 		border-radius: 50%;
 	}
 
 	view.user_tx {
-		margin-right: 10rpx;
+		margin-right: 19rpx;
 	}
 
 	/*  */
@@ -2035,17 +2105,19 @@
 		width: 100%;
 		padding: 0 30upx;
 	}
-	.xq_box img{
+
+	.xq_box img {
 		max-width: 100%;
 	}
+
 	/* bottom_box */
 	.bottom_box {
 		position: fixed;
 		bottom: 0;
-		height: 100rpx;
+		height: 90rpx;
 		background: #fff;
 		z-index: 10;
-		padding-right: 28rpx;
+		/* padding-right: 28rpx; */
 		box-sizing: border-box;
 		width: 100%;
 		display: flex;
@@ -2056,19 +2128,20 @@
 	.buy_btn {
 		/* width:192rpx; */
 		flex: 1;
-		height: 74rpx;
-		background: rgba(247, 180, 59, 1);
-		border-radius: 10rpx;
+		height: 90rpx;
+		
+		background: linear-gradient(-25deg, #FF872F, #FF7418);
+		/* border-radius: 10rpx; */
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		font-size: 28rpx;
 		color: #fff;
-		margin-left: 18rpx;
+		/* margin-left: 18rpx; */
 	}
 
 	.buy_btn1 {
-		background: #F73B67;
+		background: linear-gradient(-25deg, #FC4144, #FA272A);
 	}
 
 	.kf_btn {
@@ -2077,11 +2150,11 @@
 		flex-direction: column;
 		align-items: center;
 		font-size: 22rpx;
-		color: #333;
+		color: #666666;
 	}
 
-	.kf_btn text {
-		font-size: 28rpx;
+	.kf_btn text.iconfont {
+		font-size: 40rpx;
 		margin-bottom: 5rpx;
 	}
 
@@ -2173,8 +2246,8 @@
 
 	.goodsimg {
 		margin-top: 16rpx;
-		width: 246rpx;
-		height: 246rpx;
+		width: 235rpx;
+		height: 235rpx;
 		border: 1rpx solid #d2d2d2;
 		border-radius: 16rpx;
 		overflow: hidden;
@@ -2182,8 +2255,8 @@
 	}
 
 	.goodsimg image {
-		width: 246rpx;
-		height: 246rpx;
+		width: 235rpx;
+		height: 235rpx;
 	}
 
 	.goodstkjg {
@@ -2217,14 +2290,16 @@
 	}
 
 	.goods_pri_h {
-		font-size: 34rpx;
-		color: #f75852;
-		/* margin: 80rpx 0 25rpx; */
+		font-size: 24rpx;
+		color: #FF2C2C;
+	}
+	.goods_pri_h text{
+		font-size: 36rpx;
 	}
 
 	.kucun {
-		color: #999999;
-		font-size: 30rpx;
+		color: #333;
+		font-size:26rpx;
 	}
 
 	.tkname {
@@ -2235,7 +2310,7 @@
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
 		line-height: 45rpx;
-		font-size: 30rpx;
+		font-size: 26rpx;
 		color: #333;
 	}
 
@@ -2252,12 +2327,14 @@
 
 	.guigeOne {
 		/* width: 114rpx; */
-		height: 50rpx;
+		min-width: 150upx;
+		height: 56rpx;
 		padding: 0 10rpx;
 		border-radius: 8rpx;
-		border: 1px solid #ddd;
+		/* border: 1px solid #ddd; */
+		background: #F0F0F0;
+		color: #999;
 		font-size: 26rpx;
-		color: #333;
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;
@@ -2266,14 +2343,14 @@
 	}
 
 	.guigeOne.cur {
-		background: rgba(250, 233, 234, 1);
-		border: 1px solid rgba(247, 85, 89, 1);
-		color: #F75559;
+		background: #F84336;
+		/* border: 1px solid #F84336; */
+		color: #fff;
 	}
 
 	.guigeOne.goods_null {
 		background: #eee !important;
-		border: 1px solid #ddd !important;
+		/* border: 1px solid #ddd !important; */
 		color: #ddd !important;
 		text-decoration: line-through;
 	}
@@ -2297,7 +2374,7 @@
 		justify-content: space-around;
 		align-items: center;
 		height: 120rpx;
-		padding: 0 28rpx;
+		/* padding: 0 28rpx; */
 		box-sizing: border-box;
 	}
 
@@ -2305,10 +2382,10 @@
 	.czbtnG .buybtn {
 		width: 338rpx;
 		flex: 1;
-		margin: 0 10rpx;
-		height: 80rpx;
-		background: rgba(247, 180, 59, 1);
-		border-radius: 40rpx;
+		/* margin: 0 10rpx; */
+		height: 90rpx;
+		background: linear-gradient(-25deg, #FF872F, #FF7418);
+		/* border-radius: 40rpx; */
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -2317,7 +2394,7 @@
 	}
 
 	.czbtnG .buybtn {
-		background: #F73B67;
+		background: linear-gradient(-25deg, #FC4144, #FA272A);
 	}
 
 	.shuxian {
@@ -2584,8 +2661,8 @@
 		color: rgb(153, 153, 153);
 		text-decoration: line-through;
 	}
-	
-	
+
+
 	/* new */
 	.goods_name {
 		font-size: 30rpx;
@@ -2600,11 +2677,13 @@
 		align-items: flex-start;
 		justify-content: space-between;
 	}
-	.goods_name_text{
+
+	.goods_name_text {
 		font-size: 34upx;
 		color: #333;
 	}
-	.goods_share{
+
+	.goods_share {
 		flex: none;
 		width: 75upx;
 		height: 75upx;
@@ -2616,22 +2695,60 @@
 		justify-content: center;
 		margin-left: 10upx;
 	}
-	.goods_share text{
+
+	.goods_share text {
 		font-size: 32upx;
 		color: #FC3B27;
+	}
+
+	.goods_pri_box{
+		width: 100%;
+		padding: 0 30upx;
+		align-items: baseline;
 	}
 	.pri {
 		font-size: 40rpx;
 		color: #FD383B;
 	}
-	
-	
-	
+
+
+
 	.pri text {
 		font-size: 27rpx;
 	}
-	.pri1{
+
+	.pri1 {
 		font-size: 20upx;
 		color: #999;
+		margin-left: 15upx;
+	}
+	.sku_box{
+		width: 100%;
+		height: 60upx;
+		align-items: center;
+	}
+	.sku_li{
+		flex:1;
+		padding: 0 30upx;
+		font-size: 24upx;
+		color: #666;
+	}
+	.sku_bg{
+		width: 27upx;
+		height: 27upx;
+		background: linear-gradient(5deg, #FDBA35, #FF901B);
+		border: 1px solid #FFFFFF;
+		border-radius: 4upx;
+		margin-right: 10upx;
+		font-size: 18upx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #fff;
+	}
+	.hengxian{
+		width: 100%;
+		height: 10upx;
+		background: #F5F5F5;
 	}
 </style>

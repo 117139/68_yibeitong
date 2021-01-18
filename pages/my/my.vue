@@ -95,7 +95,7 @@
 							<image src="../../static/images/my_icon_19.jpg" mode="aspectFit"></image>
 							<text>我的推广</text>
 						</view>
-						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+1">
+						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/my_yue/my_yue?type='+1">
 							<image src="../../static/images/my_icon_27.jpg" mode="aspectFit"></image>
 							<text>财务记录</text>
 						</view>

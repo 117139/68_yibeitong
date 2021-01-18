@@ -237,7 +237,7 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(
 
 
 
-var that = void 0;var _default =
+var that;var _default =
 {
   data: function data() {
     return {

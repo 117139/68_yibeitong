@@ -22,7 +22,12 @@
         "OrderDetails_sh_sq/OrderDetails_sh_sq",
         "orderDetails_sh_xq/orderDetails_sh_xq",
         "OrderList_sh/OrderList_sh",
-        "details/details"
+        "details/details",
+        "Order_wuliu/Order_wuliu",
+        "good_list/good_list",
+        "my_yue/my_yue",
+        "my_tx_list/my_tx_list",
+        "my_tx/my_tx"
       ]
     }
   ],
@@ -88,6 +93,5 @@
     "van-popup": "./wxcomponents/vant/popup/index",
     "cu-custom": "/colorui/components/cu-custom",
     "u-parse": "/components/gaoyia-parse/parse"
-  },
-  "sitemapLocation": "sitemap41.json"
+  }
 }

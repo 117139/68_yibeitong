@@ -126,8 +126,47 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "details/details",
+			"style": {
+				"navigationBarTitleText": "商品详情",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "Order_wuliu/Order_wuliu",
+			"style": {
+				"navigationBarTitleText": "物流详情",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "good_list/good_list",
+			"style": {
+				"navigationBarTitleText": "商品列表",
+				"enablePullDownRefresh": true
+			}
+
 		}    ,{
-                    "path" : "details/details",
+                    "path" : "my_yue/my_yue",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "my_tx_list/my_tx_list",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "my_tx/my_tx",
                     "style" :                                                                                    
                 {
                     "navigationBarTitleText": "",

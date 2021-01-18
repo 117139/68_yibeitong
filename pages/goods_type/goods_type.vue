@@ -22,7 +22,7 @@
 								·<text>热门推荐</text>·
 							</view>
 							<view class="goods_type_list">
-								<view class="goods_type_li" v-for="(item,index) in datas">
+								<view class="goods_type_li" v-for="(item,index) in datas" @tap="jump" :data-url="'/pagesA/good_list/good_list?id='+item.id+'&name='+item.name">
 									<image class="goods_type_li_img" :src="item.pic" mode="aspectFit"></image>
 									<view class="goods_type_li_text text-cut">{{item.name}}</view>
 								</view>
@@ -33,7 +33,7 @@
 								·<text>精选专区</text>·
 							</view>
 							<view class="goods_type_list">
-								<view class="goods_type_li" v-for="(item,index) in datas">
+								<view class="goods_type_li" v-for="(item,index) in datas" @tap="jump" :data-url="'/pagesA/good_list/good_list?id='+item.id+'&name='+item.name">
 									<image class="goods_type_li_img" :src="item.pic" mode="aspectFit"></image>
 									<view class="goods_type_li_text text-cut">{{item.name}}</view>
 								</view>
@@ -47,7 +47,7 @@
 								·<text>{{goods_type[l_active].name}}</text>·
 							</view>
 							<view class="goods_type_list">
-								<view class="goods_type_li" v-for="(item,index) in datas">
+								<view class="goods_type_li" v-for="(item,index) in datas" @tap="jump" :data-url="'/pagesA/good_list/good_list?id='+item.id+'&name='+item.name">
 									<image class="goods_type_li_img" :src="item.pic" mode="aspectFit"></image>
 									<view class="goods_type_li_text text-cut">{{item.name}}</view>
 								</view>
@@ -73,6 +73,7 @@
 	export default {
 		data() {
 			return {
+				htmlReset:-1,
 				goods_type:[
 					{
 						name:'服装配饰',
@@ -148,8 +149,6 @@
 		onLoad() {
 			that = this
 			that.htmlReset = 0
-			// this.TowerSwiper('swiperList');
-			// 初始化towerSwiper 传已有的数组名即可
 		},
 		methods: {
 			l_active_fuc(item,index){
@@ -282,6 +281,25 @@
 			},
 			pveimg(e) {
 				service.pveimg(e)
+			},
+			jump(e) {
+				var that = this
+				// if(!that.hasLogin){
+				// 	uni.navigateTo({
+				// 		url:'/pages/login/login'
+				// 	})
+				// 	return
+				// }
+				if (that.btn_kg == 1) {
+					return
+				} else {
+					that.btn_kg = 1
+					setTimeout(function() {
+						that.btn_kg = 0
+					}, 1000)
+				}
+			
+				service.jump(e)
 			},
 		}
 	}

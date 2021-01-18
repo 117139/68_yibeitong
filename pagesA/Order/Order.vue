@@ -150,16 +150,16 @@
 			}
 			that.datas=[
 				{
-					photo:'/static/images/goods_type_03.jpg',
-					title:'MODULE悦写 4合1多功能笔 中性笔 与铅笔结合',
-					attr:['4合1多功能笔','多色'],
+					photo:'/static/images/index_12.jpg',
+					title:'octopusme可拆卸宽松中长款工装棉服女秋冬新款风衣外套',
+					attr:['XL','多色'],
 					price:'39.99',
 					number:1,
 					sku_number:100,
 					id:1
 				},
 				{
-					photo:'/static/images/goods_type_05.jpg',
+					photo:'/static/images/index_15.jpg',
 					title:'FREETIE 固特异工装帆布鞋 高密度飞织春夏款',
 					attr:['炭黑（春夏款）','42'],
 					price:'209',

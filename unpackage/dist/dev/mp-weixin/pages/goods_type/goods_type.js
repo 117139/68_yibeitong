@@ -205,6 +205,7 @@ var that;var _default =
 {
   data: function data() {
     return {
+      htmlReset: -1,
       goods_type: [
       {
         name: '服装配饰',
@@ -280,8 +281,6 @@ var that;var _default =
   onLoad: function onLoad() {
     that = this;
     that.htmlReset = 0;
-    // this.TowerSwiper('swiperList');
-    // 初始化towerSwiper 传已有的数组名即可
   },
   methods: {
     l_active_fuc: function l_active_fuc(item, index) {
@@ -414,6 +413,25 @@ var that;var _default =
     },
     pveimg: function pveimg(e) {
       _service.default.pveimg(e);
+    },
+    jump: function jump(e) {
+      var that = this;
+      // if(!that.hasLogin){
+      // 	uni.navigateTo({
+      // 		url:'/pages/login/login'
+      // 	})
+      // 	return
+      // }
+      if (that.btn_kg == 1) {
+        return;
+      } else {
+        that.btn_kg = 1;
+        setTimeout(function () {
+          that.btn_kg = 0;
+        }, 1000);
+      }
+
+      _service.default.jump(e);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

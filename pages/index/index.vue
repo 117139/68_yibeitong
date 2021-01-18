@@ -5,7 +5,7 @@
 			<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
 		</view>
 		<block v-if="htmlReset==0">
-			<view class="index_top">
+			<view class="index_top"  @tap="jump" data-url="/pagesA/good_list/good_list">
 				<view class="index_top_srk dis_flex aic">
 					<text class="iconfont iconsousuo"></text>
 					<view>请输入关键词进行查找</view>
