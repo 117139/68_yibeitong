@@ -10,9 +10,14 @@
 /* WEBPACK VAR INJECTION */(function(createApp) {__webpack_require__(/*! uni-pages */ 4);var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 5));
 
-var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ 9));
+var _timWxSdk = _interopRequireDefault(__webpack_require__(/*! tim-wx-sdk */ 15));
+
+var _tim = _interopRequireDefault(__webpack_require__(/*! ./common/tim/tim.js */ 16));
+var _common = _interopRequireDefault(__webpack_require__(/*! ./common/common.js */ 18));
+
+var _index = _interopRequireDefault(__webpack_require__(/*! ./store/index.js */ 9));
 var _event = _interopRequireDefault(__webpack_require__(/*! common/event.js */ 11));
-var _base = _interopRequireDefault(__webpack_require__(/*! common/base64.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var cuCustom = function cuCustom() {__webpack_require__.e(/*! require.ensure | colorui/components/cu-custom */ "colorui/components/cu-custom").then((function () {return resolve(__webpack_require__(/*! ./colorui/components/cu-custom.vue */ 188));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uParse = function uParse() {Promise.all(/*! require.ensure | components/gaoyia-parse/parse */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/gaoyia-parse/parse")]).then((function () {return resolve(__webpack_require__(/*! @/components/gaoyia-parse/parse.vue */ 195));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var _base = _interopRequireDefault(__webpack_require__(/*! common/base64.js */ 19));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var cuCustom = function cuCustom() {__webpack_require__.e(/*! require.ensure | colorui/components/cu-custom */ "colorui/components/cu-custom").then((function () {return resolve(__webpack_require__(/*! ./colorui/components/cu-custom.vue */ 289));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uParse = function uParse() {Promise.all(/*! require.ensure | components/gaoyia-parse/parse */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/gaoyia-parse/parse")]).then((function () {return resolve(__webpack_require__(/*! @/components/gaoyia-parse/parse.vue */ 296));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 
 _vue.default.component('cu-custom', cuCustom);
@@ -20,14 +25,17 @@ _vue.default.component('u-parse', uParse);
 
 _vue.default.config.productionTip = false;
 
+_vue.default.prototype.tim = _tim.default.tim; //tim sdk 引入后生成的tim服务
+_vue.default.prototype.$TIM = _timWxSdk.default; //tim 的状态/事件 常量
 _vue.default.prototype.event = _event.default;
 
-_vue.default.prototype.$store = _store.default;
+_vue.default.prototype.$store = _index.default;
+_vue.default.prototype.$common = _common.default;
 
 _App.default.mpType = 'app';
 
 var app = new _vue.default(_objectSpread({
-  store: _store.default },
+  store: _index.default },
 _App.default));
 
 createApp(app).$mount();
@@ -118,7 +126,7 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(
     var that = this;
     console.log('App Launch');
 
-    // service.wxlogin()
+    _service.default.wxlogin();
 
     uni.getSystemInfo({
       success: function success(e) {
@@ -166,8 +174,37 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(
   (0, _vuex.mapState)(['hasLogin', 'forcedLogin', 'loginDatas', 'uuid'])),
 
 
-  methods: _objectSpread({},
-  (0, _vuex.mapMutations)(['login', 'logindata', 'logout', 'setplatform', 'setuuid'])) };exports.default = _default;
+  mounted: function mounted() {var _this = this;
+    /**官网有很多关于关于sdk 其他的监听方法（比如：有新的消息，用户资料更新等等）
+                                                  * 详情可对照： https://imsdk-1252463788.file.myqcloud.com/IM_DOC/Web/SDK.html
+                                                  * 监听的含义：服务端发生了数据变更---前端全局可以接收到变更通知--前端就可以自动触发某个事件来更新相应数据
+                                                  * */
+    // 登录成功后会触发 SDK_READY 事件，该事件触发后，可正常使用 SDK 接口
+    this.tim.on(this.$TIM.EVENT.SDK_READY, this.onReadyStateUpdate, this);
+    // 收到新消息
+    this.tim.on(this.$TIM.EVENT.MESSAGE_RECEIVED, this.onReceiveMessage);
+    // 会话列表更新
+    this.tim.on(this.$TIM.EVENT.CONVERSATION_LIST_UPDATED, function (event) {
+      _this.$store.commit("updateConversationList", event.data);
+    });
+    // 注册 COS SDK 插件
+    // this.tim.registerPlugin({'cos-wx-sdk': this.COS});
+  },
+  methods: _objectSpread(_objectSpread({},
+  (0, _vuex.mapMutations)(['login', 'logout', 'setplatform'])), {}, {
+    onReadyStateUpdate: function onReadyStateUpdate(_ref) {var name = _ref.name;
+      var isSDKReady = name === this.$TIM.EVENT.SDK_READY ? true : false;
+      //自动监听并更新 sdk 的ready 状态 （未登录是 notReady  登录后是ready）
+      this.$store.commit("toggleIsSDKReady", isSDKReady);
+      //sdk ready 后  肯定完成了登录操作    这里可以获取用户存储在im的基础信息/离线消息/黑名单列表
+    },
+
+    onReceiveMessage: function onReceiveMessage(_ref2) {var messageList = _ref2.data;
+      // this.handleAt(messageList);
+      this.$store.commit("pushCurrentMessageList", messageList);
+    }
+    //根据消息列表请求聊天对象的用户信息 并完成数据拼接
+  }) };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

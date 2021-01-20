@@ -140,6 +140,7 @@
 .mx_time.data-v-bff3c6aa{
 	color: #999;
 	font-size: 20rpx;
+	margin-top: 10rpx;
 }
 .mx_pri.data-v-bff3c6aa{
 	color: #FD383B;

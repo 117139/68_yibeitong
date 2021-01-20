@@ -6,7 +6,7 @@ const USERS_KEY = 'USERS_KEY';
 const STATE_KEY = 'STATE_KEY';
 // const IPurl = 'https://datixcx.com.aa.800123456.top/api/';
 // const imgurl = 'https://datixcx.com.aa.800123456.top/';
-const imgurl = 'https://51daiyan.com.aa.800123456.top/';
+const imgurl = 'https://yibeitong.com.aa.800123456.top/';
 const IPurl = imgurl + 'api/'
 // const IPurl='http://192.168.129.246/api/'
 // const adminurl='https://datixcx.com.aa.800123456.top/admin/';
@@ -215,6 +215,12 @@ const call = function(e) {
 const wxlogin = function(num) {
 	var that = this
 	// 获取用户信息
+	if (num == 1) {
+		uni.showLoading({
+			title: '正在登录',
+			mask: true
+		})
+	}
 	uni.getSetting({
 		success: res => {
 			console.log(res)
@@ -253,49 +259,51 @@ const wxlogin = function(num) {
 										success(res) {
 											uni.hideLoading()
 											console.log(res.data)
-											if (res.data.code == -2) {
-												uni.showToast({
-													icon: 'none',
-													title: '请绑定手机号'
-												})
-												setTimeout(() => {
-													if (num == 1) {
 
-														uni.redirectTo({
-															url: '/pages/login_tel/login_tel?nickname=' + uinfo.nickName + '&avatarurl=' + uinfo.avatarUrl
-														})
-													} else {
-														uni.navigateTo({
-															url: '/pages/login_tel/login_tel?nickname=' + uinfo.nickName + '&avatarurl=' + uinfo.avatarUrl
-														})
-													}
-												}, 1000)
-
-												return
-											}
 											if (res.data.code == 1) {
+												uni.setStorageSync('token', res.data.data.userToken)
+												if (!res.data.data.phone) {
+													uni.showToast({
+														icon: 'none',
+														title: '请绑定手机号'
+													})
+													setTimeout(() => {
+														if (num == 1) {
+
+															uni.redirectTo({
+																url: '/pages/login_tel/login_tel'
+															})
+														} else {
+															uni.navigateTo({
+																url: '/pages/login_tel/login_tel'
+															})
+
+														}
+													}, 1000)
+
+													return
+												}
 												console.log('登录成功')
 												console.log(res.data)
-												uni.setStorageSync('token', res.data.data.userToken)
 
 												store.commit('logindata', res.data.data)
 												store.commit('login', res.data.data.nickname)
 												uni.setStorageSync('loginmsg', res.data.data)
 
-												// event.trigger({
-												//     type:'test',
-												//     page:'/pages/index/index',
-												//     //obj和test是举的例子，随意啥都行，这个传过去在on中的args中都可以获取到
-												//     obj:{
+												event.trigger({
+													type: 'test',
+													page: '/pages/index/index',
+													//obj和test是举的例子，随意啥都行，这个传过去在on中的args中都可以获取到
+													obj: {
 
-												//     },
-												//     test:{
-												// 			'loginmsg': res.data.data
-												//     },
-												//     success:function(data){
-												//         //data为on中返回的数据
-												//     }
-												// });
+													},
+													test: {
+														'loginmsg': res.data.data
+													},
+													success: function(data) {
+														//data为on中返回的数据
+													}
+												});
 												// im login
 
 

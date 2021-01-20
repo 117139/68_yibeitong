@@ -139,6 +139,7 @@
 .mx_time.data-v-000f962b{
 	color: #999;
 	font-size: 20rpx;
+	margin-top: 10rpx;
 }
 .mx_pri.data-v-000f962b{
 	color: #FD383B;

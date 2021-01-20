@@ -2,10 +2,11 @@
 	<view class="minh100">
 		<view class="main_box">
 			<view class="tx_int">
-				<text>￥</text><input type="text" />
+				<text>￥</text><input type="number"  v-model="tx_num" confirm-type='done'
+						 @confirm="sub"/>
 			</view>
-			<view class="tx_tip">当前可提现金额：100</view>
-			<view class="tx_btn">提现</view>
+			<view class="tx_tip">当前可提现金额：{{tx_max}}</view>
+			<view class="tx_btn" @tap="sub">提现</view>
 		</view>
 	</view>
 </template>
@@ -23,7 +24,8 @@
 				btnkg:0,
 				htmlReset:-1,
 				data_last:false,
-				
+				tx_num:'',
+				tx_max:100
 			}
 		},
 		computed:{
@@ -68,6 +70,31 @@
 			// this.getdatalist()
 		},
 		methods: {
+			sub(){
+				if(that.tx_num<0){
+					uni.showToast({
+						icon: 'none',
+						title: '请输入金额'
+					})
+					return
+				}
+				if(that.tx_num>that.tx_max){
+					uni.showToast({
+						icon: 'none',
+						title: '提现金额不足'
+					})
+					return
+				}
+				uni.showToast({
+					icon:'none',
+					title:'操作成功'
+				})
+				setTimeout(function() {
+					uni.navigateBack({
+						delta:1
+					})
+				}, 1000)
+			},
 			onRetry(){
 				uni.stopPullDownRefresh()
 				return
@@ -185,7 +212,8 @@
 	}
 	.tx_int input{
 		font-size: 64upx;
-		line-height: 70upx;
+		line-height: 100upx;
+		height: auto;
 		color: 33px;
 	}
 	.tx_tip{

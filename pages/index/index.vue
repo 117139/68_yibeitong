@@ -32,8 +32,8 @@
 					精彩活动
 				</view>
 				<view class="huodong_list">
-					<image class="huodong_li" src="../../static/images/index_03.jpg" mode="aspectFit" @tap="jump" data-url="/pagesA/my_address/my_address"></image>
-					<image class="huodong_li" src="../../static/images/index_05.jpg" mode="aspectFit" @tap="jump" data-url="/pagesA/my_address/my_address"></image>
+					<image class="huodong_li" src="../../static/images/index_03.jpg" mode="aspectFit" @tap="jump" data-url="/pagesA/huafei_cz/huafei_cz"></image>
+					<image class="huodong_li" src="../../static/images/index_05.jpg" mode="aspectFit" @tap="jump" data-url="/pagesA/share_index/share_index"></image>
 				</view>
 				<view class="huodong_tit dis_flex aic">
 					人气推荐<image class="huodong_tit_hot" src="/static/images/HOT.png" mode="aspectFit"></image>
@@ -131,13 +131,104 @@
 		computed: {
 			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas','about_content']),
 		},
+		
+		watch: {
+			isSDKReady(val) {
+				//isSDKReady == true 
+				if (val) {
+					//更新用户自己的基础资料（头像+昵称+个性签名）
+					this.updateUserInfo()
+					//请求会话列表
+					this.getConversationList()
+				}
+			},
+		},
 		onLoad() {
 			that = this
 			that.htmlReset = 0
-			// this.TowerSwiper('swiperList');
-			// 初始化towerSwiper 传已有的数组名即可
+			that.event.on('/pages/index/index', 'test', function(args) {
+				//args为trigger中所有的参数，可自定义数据，除了type和page及success
+				console.log('testindex:' + args);
+				console.log(args);
+				// that.getdata()
+				that.Imlogin()
+				//返回数据，在trigger中success方法可以收到
+				return {
+			
+				};
+			
+			});
 		},
 		methods: {
+			Imlogin(){
+				var that =this
+				var userInfo=this.loginDatas
+				if (userInfo) {
+					let promise = that.tim.login({
+						userID: userInfo.identification_id,
+						userSig: userInfo.IMSign
+					});
+					console.log(that.identification_id+'登录·····')
+					promise.then((res) => {
+						console.log(res)
+						console.log(that.identification_id+'登录成功')
+						//登录成功后 更新登录状态
+						that.$store.commit("toggleIsLogin", true);
+						//自己平台的用户基础信息
+						// uni.setStorageSync('userInfo', JSON.stringify(userInfo))
+						//tim 返回的用户信息
+						uni.setStorageSync('userTIMInfo', JSON.stringify(res.data))
+						console.log('userTIMInfo========>'+JSON.stringify(res.data))
+						// uni.reLaunch({
+						// 	url: '../tim/record'
+						// })
+					}).catch((err) => {
+						console.warn('login error:', err); // 登录失败的相关信息
+					});
+				} else {
+					uni.showToast({
+						icon: 'none',
+						title: '用户不存在',
+						duration: 1500
+					});
+				}
+			},
+			
+			//提交用户的基础信息到Im
+			updateUserInfo() {
+				var that =this
+				//将已经登陆的用户信息 提交到IM中
+				// let userInfo = JSON.parse(uni.getStorageSync('userInfo'))
+				console.log('将已经登陆的用户信息 提交到IM中')
+				let promise = this.tim.updateMyProfile({
+					nick: that.loginDatas.nickname,
+					avatar: that.loginDatas.avatarurl,
+					gender: this.$TIM.TYPES.GENDER_MALE,
+					selfSignature: that.loginDatas.introduction,
+					allowType: this.$TIM.TYPES.ALLOW_TYPE_ALLOW_ANY
+				});
+				promise.then((res) => {
+					console.log('提交资料成功')
+				}).catch((err) => {
+					console.warn('updateMyProfile error:', err); // 更新资料失败的相关信息
+				});
+			},
+			//获取消息列表
+			getConversationList() {
+				// 拉取会话列表
+				let promise = this.tim.getConversationList();
+				promise.then((res) => {
+					let conversationList = res.data.conversationList; // 会话列表，用该列表覆盖原有的会话列表
+					if (conversationList.length>0) {
+			
+						//将返回的会话列表拼接上 用户的基本资料  
+						//说明：如果已经将用户信息 提交到tim服务端了 就不需要再次拼接
+						this.$store.commit("updateConversationList", conversationList);
+					}
+				}).catch((err) => {
+					console.warn('getConversationList error:', err); // 获取会话列表失败的相关信息
+				});
+			},
 			onRetry() {
 				this.page = 1
 				this.datas = []

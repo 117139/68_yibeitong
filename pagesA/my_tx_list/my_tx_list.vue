@@ -5,7 +5,7 @@
 			<view class="tx_list">
 				<view class="tx_li" v-for="(item,index) in 3">
 					<view class="tx_l">
-						<view class="mx_name">在线支出</view>
+						<view class="mx_name">提现</view>
 						<view class="mx_time">2017-02-17</view>
 					</view>
 					<view class="tx_r">
@@ -66,6 +66,9 @@
 		 * 页面相关事件处理函数--监听用户下拉动作
 		 */
 		onPullDownRefresh: function () {
+			
+			uni.stopPullDownRefresh()
+			return
 		  this.onRetry()
 		},
 		/**
@@ -279,6 +282,7 @@
 	.mx_time{
 		color: #999;
 		font-size: 20upx;
+		margin-top: 10upx;
 	}
 	.mx_pri{
 		color: #FD383B;

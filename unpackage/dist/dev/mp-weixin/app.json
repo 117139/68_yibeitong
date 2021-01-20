@@ -1,9 +1,11 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/xiaoxi_list/xiaoxi_list",
+    "pages/xiaoxi_list/room",
     "pages/my/my",
     "pages/login_tel/login_tel",
-    "pages/logo/logo",
+    "pages/login/login",
     "pages/goods_type/goods_type",
     "pages/car/car"
   ],
@@ -27,7 +29,15 @@
         "good_list/good_list",
         "my_yue/my_yue",
         "my_tx_list/my_tx_list",
-        "my_tx/my_tx"
+        "my_tx/my_tx",
+        "share_index/share_index",
+        "huafei_cz/huafei_cz",
+        "tg_list/tg_list",
+        "tgyj_list/tgyj_list",
+        "tg_img/tg_img",
+        "my_qiandao/my_qiandao",
+        "xiaoxi_creat/xiaoxi_creat",
+        "xiaoxi_set/xiaoxi_set"
       ]
     }
   ],
@@ -61,7 +71,7 @@
         "selectedIconPath": "static/images/tabbar/tab32.png"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/xiaoxi_list/xiaoxi_list",
         "text": "消息",
         "iconPath": "static/images/tabbar/tab4.png",
         "selectedIconPath": "static/images/tabbar/tab42.png"

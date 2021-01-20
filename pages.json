@@ -6,6 +6,22 @@
 				"navigationBarTitleText": "依辈通"
 			}
 		}, {
+			"path": "pages/xiaoxi_list/xiaoxi_list",
+			"style": {
+				"navigationBarTitleText": "依辈通",
+				"enablePullDownRefresh": true
+			}
+
+		},
+		{
+			"path": "pages/xiaoxi_list/room",
+			"style": {
+				"navigationBarTitleText": "聊天室",
+				"app-plus": { //修复聊天页 app端输入法上顶问题
+					"softinputMode": "adjustResize"
+				}
+			}
+		}, {
 			"path": "pages/my/my",
 			"style": {
 				"navigationBarTitleText": "依辈通",
@@ -20,7 +36,7 @@
 			}
 
 		}, {
-			"path": "pages/logo/logo",
+			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "依辈通",
 				"enablePullDownRefresh": false
@@ -147,34 +163,84 @@
 				"enablePullDownRefresh": true
 			}
 
-		}    ,{
-                    "path" : "my_yue/my_yue",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "my_tx_list/my_tx_list",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "my_tx/my_tx",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-            ]
+		}, {
+			"path": "my_yue/my_yue",
+			"style": {
+				"navigationBarTitleText": "我的余额",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "my_tx_list/my_tx_list",
+			"style": {
+				"navigationBarTitleText": "提现记录",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "my_tx/my_tx",
+			"style": {
+				"navigationBarTitleText": "提现",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "share_index/share_index",
+			"style": {
+				"navigationBarTitleText": "分享返佣",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "huafei_cz/huafei_cz",
+			"style": {
+				"navigationBarTitleText": "话费充值",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "tg_list/tg_list",
+			"style": {
+				"navigationBarTitleText": "推广人统计",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "tgyj_list/tgyj_list",
+			"style": {
+				"navigationBarTitleText": "佣金明细",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "tg_img/tg_img",
+			"style": {
+				"navigationBarTitleText": "推广名片",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "my_qiandao/my_qiandao",
+			"style": {
+				"navigationBarTitleText": "每日签到",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "xiaoxi_creat/xiaoxi_creat",
+			"style": {
+				"navigationBarTitleText": "建群",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "xiaoxi_set/xiaoxi_set",
+			"style": {
+				"navigationBarTitleText": "管理",
+				"enablePullDownRefresh": false
+			}
+
+		}]
 	}],
 
 	"preloadRule": {
@@ -208,7 +274,7 @@
 			"iconPath": "static/images/tabbar/tab3.png",
 			"selectedIconPath": "static/images/tabbar/tab32.png"
 		}, {
-			"pagePath": "pages/index/index",
+			"pagePath": "pages/xiaoxi_list/xiaoxi_list",
 			"text": "消息",
 			"iconPath": "static/images/tabbar/tab4.png",
 			"selectedIconPath": "static/images/tabbar/tab42.png"

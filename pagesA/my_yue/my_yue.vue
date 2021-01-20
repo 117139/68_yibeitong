@@ -76,6 +76,8 @@
 		 * 页面相关事件处理函数--监听用户下拉动作
 		 */
 		onPullDownRefresh: function () {
+			uni.stopPullDownRefresh()
+			return
 		  this.onRetry()
 		},
 		/**
@@ -290,6 +292,7 @@
 	.mx_time{
 		color: #999;
 		font-size: 20upx;
+		margin-top: 10upx;
 	}
 	.mx_pri{
 		color: #FD383B;

@@ -9,9 +9,9 @@
 			<block v-else>
 				<view class="my_top">
 					<image class="my_top_bg" src="../../static/images/my_bg_02.png" mode=""></image>
-					<view class="my_top_box">
+					<view v-if="hasLogin" class="my_top_box">
 						<!-- 签到 -->
-						<view class="qiandao_box">
+						<view class="qiandao_box" @tap="jump" :data-url="'/pagesA/my_qiandao/my_qiandao?type='+0">
 							<view class="qd_nbox">
 								<text class="iconfont iconqiandao"></text>
 								<text>签到</text>
@@ -49,6 +49,9 @@
 							</view>
 						</view>
 					</view>
+					<view v-else class="my_top_box dis_flex_c aic ju_c">
+						<view class="user_name" data-url="/pages/login/login" @tap='jump'>登录/注册</view>
+					</view>
 				</view>
 				<!-- 订单 -->
 				<view class="order_box">
@@ -83,19 +86,19 @@
 				<view class="fuwu_box">
 					<view class="fuwu_tit">我的服务</view>
 					<view class="fuwu_list">
-						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/vip_home/vip_home">
+						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/vip_home/vip_home" data-login="true" :data-haslogin="hasLogin">
 							<image src="../../static/images/my_icon_22.jpg" mode="aspectFit"></image>
 							<text>会员中心</text>
 						</view>
-						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/my_address/my_address">
+						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/my_address/my_address" data-login="true" :data-haslogin="hasLogin">
 							<image src="../../static/images/my_icon_24.jpg" mode="aspectFit"></image>
 							<text>收货地址</text>
 						</view>
-						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/order_list/order_list?type='+1">
+						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/share_index/share_index?type='+1"  data-login="true" :data-haslogin="hasLogin">
 							<image src="../../static/images/my_icon_19.jpg" mode="aspectFit"></image>
 							<text>我的推广</text>
 						</view>
-						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/my_yue/my_yue?type='+1">
+						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/my_yue/my_yue?type='+1" data-login="true" :data-haslogin="hasLogin">
 							<image src="../../static/images/my_icon_27.jpg" mode="aspectFit"></image>
 							<text>财务记录</text>
 						</view>

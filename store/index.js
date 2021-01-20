@@ -5,6 +5,12 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
+		isLogin: false,
+		isSDKReady: false, // TIM SDK 是否 ready
+		conversationActive: {}, //聊天进行中的会话
+		toUserId: '', //聊天对象id
+		conversationList: [], //会话列表
+		currentMessageList: [], //消息列表
 		/**
 		 * 是否需要强制登录
 		 */
@@ -17,80 +23,19 @@ const store = new Vuex.Store({
 				nickname:'刘明',
 				tel:'1786352362',
 				gs:'智慧家物联网科技有限公司'
-			
 		},
 		company:'',
 		uid:'',
 		phone:'',
 		token:'',
-		laheiArr:[],
 		uuid:'',
-		
-		
-		
-		new_xz:[],    //批量操作
-		new_problem:'' ,//新问题
-		ls_prodata:'',
-		ls_pro_yh:'',
-		fj_data:'',
-		bj_prodata:'',
-		
-		
-		
-		
-		
-		xcx_status:1,     //0 商家端  1 用户端  2智能安装端
 	},
 	mutations: {
-		set_xcx(state, xcx_status){
-			var tip_text='正在切换至'
-			if(xcx_status==0){
-				if(state.loginDatas.is_seller!=1){
-					uni.showToast({
-						icon:'none',
-						title: '暂无权限'
-					});
-					return
-				}
-				tip_text+='商家端'
-			}
-			if(xcx_status==1){
-				if(state.loginDatas.is_owner!=1){
-					uni.showToast({
-						icon:'none',
-						title: '暂无权限'
-					});
-					return
-				}
-				tip_text+='用户端'
-			}
-			if(xcx_status==2){
-				if(state.loginDatas.is_engineer!=1){
-					uni.showToast({
-						icon:'none',
-						title: '暂无权限'
-					});
-					return
-				}
-				tip_text+='智能安装端'
-			}
-			uni.showToast({
-				icon:'none',
-				title:tip_text
-			})
-			state.xcx_status = xcx_status || 0;
-		},
 		login(state, userName) {
 			state.userName = userName || '新用户';
 			state.hasLogin = true;
 			console.log(userName)
 			console.log(state.userName)
-		},
-		lahei(state, id) {
-			// state.userName = userName || '新用户';
-			// state.hasLogin = true;
-			state.laheiArr.push(id)
-			console.log(state.laheiArr)
 		},
 		logindata(state, logindata) {
 			state.loginDatas = logindata || '';
@@ -110,14 +55,70 @@ const store = new Vuex.Store({
 			state.hasLogin = false;
 		},
 		
-		// ****************************************
-		//评论操作
-		setnew_xz(state, new_xz) {
-			state.new_xz = new_xz||[];
+		//更新登录状态
+		toggleIsLogin(state, isLogin) {
+			state.isLogin = typeof isLogin === 'undefined' ? !state.isLogin : isLogin
 		},
-		//新题
-		setnew_problem(state, new_problem) {
-			state.new_problem = new_problem||[] ;
+		//更新TIMSDK状态
+		toggleIsSDKReady(state, isSDKReady) {
+			state.isSDKReady = typeof isSDKReady === 'undefined' ? !state.isSDKReady : isSDKReady
+		},
+		//退出登录重置状态
+		reset(state) {
+			state.isLogin = false
+			state.isSDKReady = false
+		},
+		//选择好友聊天--创建会话/拼接会话id
+		createConversationActive(state, toUserId) {
+			state.conversationActive.conversationID = 'C2C' + toUserId
+			console.log(toUserId)
+			state.toUserId = toUserId
+			state.currentMessageList = []
+		},
+		//选择已有会话聊天--更新选中会话详情
+		updateConversationActive(state, conversationItem) {
+			state.conversationActive = Object.assign({}, conversationItem);
+			if(conversationItem.type=='GROUP'){
+				state.toUserId = conversationItem.groupProfile.groupID
+			}
+			if(conversationItem.type=='C2C'){
+				state.toUserId = conversationItem.userProfile.userID
+			}
+			// state.toUserId = conversationItem.userProfile.userID
+			
+			state.currentMessageList = []
+		},
+		//更新会话列表
+		updateConversationList(state, newConversationList) {
+			state.conversationList = newConversationList
+		},
+		/**
+		 * 将消息插入当前会话列表
+		 * 调用时机：收/发消息事件触发时
+		 * @param {Object} state
+		 * @param {Message[]|Message} data
+		 * @returns
+		 */
+		pushCurrentMessageList(state, data) {
+			// 还没当前会话，则跳过
+			if (Array.isArray(data)) {
+				// 筛选出当前会话的消息
+				const result = data.filter(item => item.conversationID === state.conversationActive.conversationID)
+				state.currentMessageList = [...state.currentMessageList, ...result]
+			} else if (data.conversationID === state.conversationActive.conversationID) {
+				state.currentMessageList = [...state.currentMessageList, data]
+			}
+			console.log('1111')
+			console.log(state.currentMessageList)
+		},
+		/**
+		 * 滑到顶部请求更多的历史消息
+		 * */
+		unshiftCurrentMessageList(state, data) {
+			console.log(data)
+			if (data) {
+				state.currentMessageList = [...data, ...state.currentMessageList]
+			}
 		},
 	}
 })

@@ -21,7 +21,8 @@
 }
 .tx_int input.data-v-e210fd4a{
 	font-size: 64rpx;
-	line-height: 70rpx;
+	line-height: 100rpx;
+	height: auto;
 	color: 33px;
 }
 .tx_tip.data-v-e210fd4a{
