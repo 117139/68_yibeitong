@@ -7,7 +7,7 @@
 					<view class="setting1 " :data-id="item.id" @tap="select_car(item,index)">
 						<text :class="item.active==1?'active':''" class="iconfont iconduigou-copy fz26 mr5"></text>
 					</view>
-					<image class="car_li_img" :src="item.pic" mode="aspectFit"></image>
+					<image class="car_li_img" :src="getimg(item.pic)" mode="aspectFit"></image>
 					<view class="flex_1">
 						<view class="goods_name">{{item.name}}</view>
 						<view class="goods_gg">
@@ -160,6 +160,9 @@
 			// this.getdata()
 		},
 		methods: {
+			getimg(img){
+				return service.getimg(img)
+			},
 			// ListTouch触摸开始
 			ListTouchStart(e) {
 				this.listTouchStart = e.touches[0].pageX

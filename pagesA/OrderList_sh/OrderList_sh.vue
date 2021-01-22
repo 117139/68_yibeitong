@@ -30,7 +30,7 @@
 								</view> -->
 								<view class="goodsImg">
 									<!-- <image class="goodsImg" :src="filter.imgIP(item1.gd_vice_pic)" mode="aspectFill"></image> -->
-									<image class="goodsImg" :src="item1.gd_vice_pic[0]" mode="aspectFill"></image>
+									<image class="goodsImg" :src="getimg(item1.gd_vice_pic[0])" mode="aspectFill"></image>
 								</view>
 								<view class="goodsinr">
 									<!-- <view class="goodsname fz30 c30 oh1">{{item.goods_name}}</view> -->
@@ -151,6 +151,9 @@
 			this.getdatalist()
 		},
 		methods: {
+			getimg(img){
+				return service.getimg(img)
+			},
 			onRetry() {
 				this.datas = []
 				this.page = 1
@@ -752,6 +755,7 @@
 
 	.o_cz .qx {
 		color: #fff;
+		border: 0;
 		background: linear-gradient(-34deg, #FC3B27, #FF6D5A);
 		box-shadow: 0px 3upx 6upx 0px rgba(255, 30, 30, 0.35);
 	}

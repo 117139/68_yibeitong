@@ -6,7 +6,7 @@
 		</view>
 		<view v-if="htmlReset==0">
 			<view class="top_box">
-				<image class="top_box_bg" src="../../static/images/images/js_banner_02.jpg" mode="aspectFit"></image>
+				<image class="top_box_bg" :src="getimg('/static/images/images/js_banner_02.jpg')" mode="aspectFit"></image>
 				<view class="top_msg">您的订单已创建成功，请立即支付！</view>
 			</view>
 			<view class="guige_list">
@@ -44,7 +44,7 @@
 				
 				<view class="guige_li">
 					<view class="guige_l">
-						<view class="guige_l_name"><image src="../../static/images/wxpay.png" mode=""></image>微信支付</view>
+						<view class="guige_l_name"><image :src="getimg('/static/images/wxpay.png')" mode=""></image>微信支付</view>
 						<!-- <view>10元</view> -->
 					</view>
 					<!-- <view class="xuanze1 " :class="my_dou_xuan==true? 'xuanze2':''" @tap.stop="select"> -->
@@ -90,6 +90,9 @@
 			that.htmlReset=0
 		},
 		methods: {
+			getimg(img){
+				return service.getimg(img)
+			},
 			select() {
 			  var that = this
 			  that.my_dou_xuan= !that.my_dou_xuan

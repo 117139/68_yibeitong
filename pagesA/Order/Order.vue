@@ -25,14 +25,14 @@
 		  </view>
 		  <view class="orderbder">
 		    <!-- <image :src="getimg('/static_s/51daiyan/images/orderborder.png')"></image> -->
-		    <image src="/static/images/orderBorder_02.jpg"></image>
+		    <image :src="getimg('/static/images/orderBorder_02.jpg')"></image>
 		  </view>
 			<view class="hengxian"></view>
 		  <view class="goodsBox contbox">
 		    <view class="goods1" v-for="(item,idx) in datas" :data-tab="idx">
 		      <view class="goodsImg">
 		        <!-- <image class="goodsImg" :src="getimg(item.photo[0])" mode="aspectFill"></image> -->
-		        <image class="goodsImg" :src="item.photo" mode="aspectFill"></image>
+		        <image class="goodsImg" :src="getimg(item.photo)" mode="aspectFill"></image>
 		      </view>
 		      <view class="goodsinr">
 		        <view class="goodsname">{{item.title}}</view>

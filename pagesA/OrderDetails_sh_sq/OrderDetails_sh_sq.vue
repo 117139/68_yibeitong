@@ -6,7 +6,7 @@
 			<view v-if="datas" class="goodsBox w100" >
 				<!-- <view class="zanwu" v-if="goods[idx0].length==0">暂无内容</view> -->
 				<view class="order_box1">
-					<image src="/static/images/images/shouhou_bg_02.jpg"></image>
+					<image :src="getimg('/static/images/images/shouhou_bg_02.jpg')"></image>
 					<view class="order_tit">
 				
 						<view class="ot_msg">
@@ -21,7 +21,7 @@
 						<view class="goods1">
 		
 							<view class="goodsImg">
-								<image class="goodsImg" :src="filter.imgIP(datas.gd_vice_pic[0])" mode="aspectFill"></image>
+								<image class="goodsImg" :src="getimg('/static/images/goods_01.jpg')" mode="aspectFill"></image>
 							</view>
 							<view class="goodsinr">
 								<!-- <view class="goodsname fz30 c30 oh1">{{item.goods_name}}</view> -->
@@ -87,13 +87,13 @@
 			<view class="fw_list">
 				<view class="imgbox mb20">
 				  <view class="addimg1" v-for="(item,idx) in imgb" :data-idx="idx" @tap="imgdel">
-				    <image :src="filter.imgIP(item)" :data-src="filter.imgIP(item)" mode="aspectFill"></image>
+				    <image :src="getimg(item)" :data-src="getimg(item)" mode="aspectFill"></image>
 				    <!-- <image :rc="item" :data-src="item" mode="aspectFill"></image> -->
 				  </view>
 				
 				  <view v-if="imgb.length<3" class="addimg" @tap="scpic">
 				
-				    <image src="/static/images/up_pingzheng.png"></image>
+				    <image  :src="getimg('/static/images/up_pingzheng.png')"></image>
 				  </view>
 				</view>
 		    <view class="zp_tip">为了帮您更好的解决问题，请务必上传照片凭证</view>
@@ -201,6 +201,9 @@
 			// this.getOrderList('onshow')
 		},
 		methods: {
+			getimg(img){
+				return service.geimg(img)
+			},
 			//数量
 			onChange(e) {
 				var that =this

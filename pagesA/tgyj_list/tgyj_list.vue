@@ -6,19 +6,19 @@
 		</view>
 		<block v-if="htmlReset==0">
 			<view class="top_box">
-				<image class="top_box_bg" src="../../static/images/images/tg_bg_02.png" mode=""></image>
+				<image class="top_box_bg" :src="getimg('/static/images/images/tg_bg_02.png')" mode=""></image>
 				<view class="top_box_msg">
 					<view class="top_l">
 						<view class="top_l1">当前佣金</view>
 						<view class="top_l2">26</view>
 					</view>
-					<image class="tg_icon" src="../../static/images/tgyj.png" mode="aspectFit"></image>
+					<image class="tg_icon" :src="getimg('/static/images/tgyj.png')" mode="aspectFit"></image>
 				</view>
 			</view>
 			<view class="list_box">
 				<view class="list_tit">
 					<view class="tit_l">
-						<image src="../../static/images/mon_icon.png" mode="aspectFit"></image>明细
+						<image :src="getimg('/static/images/mon_icon.png')" mode="aspectFit"></image>明细
 					</view>
 					<picker  class="dis_flex" @change="bindPickerChange" :value="hetong_index" :range="hetong_list" range-key="title" data-type="3">
 							<view class="tit_r">{{hetong_list[hetong_index].title}}<text class="iconfont iconoff"></text></view>
@@ -98,10 +98,12 @@
 			this.onRetry()
 		},
 		methods: {
+			getimg(img){
+			 return	service.getimg(img)
+			},
 			tab_fuc(num){
 				that.tab_cur=num
 			},
-			
 			bindPickerChange: function(e) {
 					console.log('picker发送选择改变，携带值为', e.currentTarget.dataset)
 					console.log('picker发送选择改变，携带值为', e.target.value)

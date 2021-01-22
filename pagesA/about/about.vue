@@ -10,7 +10,7 @@
 					<view v-if="type=='about'" class="xieyi_main">
 						<!-- <u-parse :content="article" @preview="preview" @navigate="navigate" noData="正在加载中..." /> -->
 						
-						<image src="../../static/images/about_03.jpg" style="width: 100%;height: 1097upx;" mode="aspectFit"></image>
+						<image :src="getimg('/static/images/about_03.jpg')" style="width: 100%;height: 1097upx;" mode="aspectFit"></image>
 					</view>
 					<view v-else-if="type=='yhxy'" class="xieyi_main">
 						<view class="dis_flex aic ju_c" style="font-size: 46upx;color: #444;line-height: 100upx;">“依辈通”用户协议</view>
@@ -122,7 +122,9 @@
 		},
 		
 		methods: {
-			
+			getimg(img){
+				return service.getimg(img)
+			},
 			preview(src, e) {  //事件：点击富文本里的图片
 				// do something
 			},

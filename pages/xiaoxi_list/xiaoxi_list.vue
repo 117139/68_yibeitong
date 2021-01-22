@@ -1,12 +1,12 @@
 <template>
 	<view class="minh100">
-		<image class="jianqun_btn" src="../../static/images/jianqun.png" mode="aspectFit" 
+		<image class="jianqun_btn" :src="getimg('/static/images/jianqun.png')" mode="aspectFit" 
 		  @tap="jump" data-url="/pagesA/xiaoxi_creat/xiaoxi_creat" data-login="true" :data-haslogin="hasLogin"></image>
 		
 		<!-- 聊天记录 会话列表 -->
 		<view class="conversition-box" v-if="hasLogin">
 			
-			<!-- <view class="list-box" >
+			<view class="list-box" >
 				<view v-for="(item,index) in 4" :key="index" @tap="toRoom(item)">
 					<view class="item-box">
 						<view class="item-img">
@@ -29,7 +29,9 @@
 						</view>
 					</view>
 				</view>
-			</view> -->
+			</view>
+		</view>
+		<!-- <view class="conversition-box" v-if="hasLogin">
 			<view class="list-box" v-if="conversationList && conversationList.length>0">
 				<view v-for="(item,index) in conversationList" :key="index" @tap="toRoom(item)">
 					<view class="item-box">
@@ -53,7 +55,7 @@
 							</view>
 						</view>
 						
-						<!-- <view class="item-text">
+						!-- <view class="item-text">
 							<view class="item-user">
 								{{item.userProfile.nick}}
 							</view>
@@ -63,7 +65,7 @@
 						</view>
 						<view class="item-msg">
 							<view class="item-msg-icon" v-if="item.unreadCount">{{item.unreadCount}}</view>
-						</view> -->
+						</view> --
 		
 					</view>
 		
@@ -75,11 +77,11 @@
 		</view>
 		
 		
-		<!-- 好友列表 -->
+		好友列表
 		<view class="user-box" v-if="!hasLogin" style="padding-top: 40%;">
 		
 			<view class="btn" ><button type="default" @tap="jump" data-url="/pages/login/login">授权登录</button></view>
-		</view>
+		</view> -->
 	</view>
 </template>
 

@@ -27,7 +27,6 @@
 				"navigationBarTitleText": "依辈通",
 				"enablePullDownRefresh": false
 			}
-
 		}, {
 			"path": "pages/login_tel/login_tel",
 			"style": {
@@ -237,6 +236,13 @@
 			"path": "xiaoxi_set/xiaoxi_set",
 			"style": {
 				"navigationBarTitleText": "管理",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "xiaoxiao_add/xiaoxiao_add",
+			"style": {
+				"navigationBarTitleText": "选择成员",
 				"enablePullDownRefresh": false
 			}
 

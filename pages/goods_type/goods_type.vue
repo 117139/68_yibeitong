@@ -7,7 +7,7 @@
 		<block v-if="htmlReset==0">
 			<scroll-view class="scroll_L" scroll-y="true" >
 				<view class="scroll_L_list">
-					<view class="l_remen">热门推荐</view>
+					<view class="l_remen"  @tap="l_active_fuc('item',-1)">热门推荐</view>
 					<view v-for="(item,index) in goods_type" class="scroll_L_li" :class="l_active==index?'active':''" @tap="l_active_fuc(item,index)">{{item.name}}</view>
 				</view>
 
@@ -23,7 +23,7 @@
 							</view>
 							<view class="goods_type_list">
 								<view class="goods_type_li" v-for="(item,index) in datas" @tap="jump" :data-url="'/pagesA/good_list/good_list?id='+item.id+'&name='+item.name">
-									<image class="goods_type_li_img" :src="item.pic" mode="aspectFit"></image>
+									<image class="goods_type_li_img" :src="getimg(item.pic)" mode="aspectFit"></image>
 									<view class="goods_type_li_text text-cut">{{item.name}}</view>
 								</view>
 							</view>
@@ -34,7 +34,7 @@
 							</view>
 							<view class="goods_type_list">
 								<view class="goods_type_li" v-for="(item,index) in datas" @tap="jump" :data-url="'/pagesA/good_list/good_list?id='+item.id+'&name='+item.name">
-									<image class="goods_type_li_img" :src="item.pic" mode="aspectFit"></image>
+									<image class="goods_type_li_img" :src="getimg(item.pic)" mode="aspectFit"></image>
 									<view class="goods_type_li_text text-cut">{{item.name}}</view>
 								</view>
 							</view>
@@ -48,7 +48,7 @@
 							</view>
 							<view class="goods_type_list">
 								<view class="goods_type_li" v-for="(item,index) in datas" @tap="jump" :data-url="'/pagesA/good_list/good_list?id='+item.id+'&name='+item.name">
-									<image class="goods_type_li_img" :src="item.pic" mode="aspectFit"></image>
+									<image class="goods_type_li_img" :src="getimg(item.pic)" mode="aspectFit"></image>
 									<view class="goods_type_li_text text-cut">{{item.name}}</view>
 								</view>
 							</view>

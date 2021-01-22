@@ -15,14 +15,14 @@
 			 @change="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
 				<swiper-item v-for="(item,index) in swiperList" :key="index" :class="cardCur==index?'cur':''">
 					<view class="swiper-item">
-						<image :src="item.url" mode="aspectFill" v-if="item.type=='image'"></image>
-						<video :src="item.url" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover" v-if="item.type=='video'"></video>
+						<image :src="getimg(item.url)" mode="aspectFill"></image>
+						<!-- <video :src="getimg(item.url)" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover" v-if="item.type=='video'"></video> -->
 					</view>
 				</swiper-item>
 			</swiper>
 			<view class="index_zbox">
 				<view class="dis_flex aic ju_b index_xxtz">
-					<image class="xxtz_img" src="../../static/images/xxtz.png" mode="aspectFit"></image>
+					<image class="xxtz_img"  :src="getimg('/static/images/xxtz.png')" mode="aspectFit"></image>
 					<view class="xx_msg_box dis_flex aic">
 						<text class="iconfont iconlaba"></text>
 						<text class="flex_1 text-cut">恭喜张三充值100元话费，获得佣金6元获得佣金6元获得佣金6元获得佣金6元</text>
@@ -32,16 +32,16 @@
 					精彩活动
 				</view>
 				<view class="huodong_list">
-					<image class="huodong_li" src="../../static/images/index_03.jpg" mode="aspectFit" @tap="jump" data-url="/pagesA/huafei_cz/huafei_cz"></image>
-					<image class="huodong_li" src="../../static/images/index_05.jpg" mode="aspectFit" @tap="jump" data-url="/pagesA/share_index/share_index"></image>
+					<image class="huodong_li" :src="getimg('/static/images/index_03.jpg')"  mode="aspectFit" @tap="jump" data-url="/pagesA/huafei_cz/huafei_cz"></image>
+					<image class="huodong_li" :src="getimg('/static/images/index_05.jpg')"  mode="aspectFit" @tap="jump" data-url="/pagesA/share_index/share_index"></image>
 				</view>
 				<view class="huodong_tit dis_flex aic">
-					人气推荐<image class="huodong_tit_hot" src="/static/images/HOT.png" mode="aspectFit"></image>
+					人气推荐<image class="huodong_tit_hot" :src="getimg('/static/images/HOT.png')" mode="aspectFit"></image>
 				</view>
 				
 				<view class="huodong_list">
 					<view  class="goods_li" v-for="(item,index) in goods_list">
-						<image class="goods_li_img" :src="item.g_img" mode="aspectFit" @tap="jump" data-url="/pagesA/details/details"></image>
+						<image class="goods_li_img" :src="getimg(item.g_img)" mode="aspectFit" @tap="jump" data-url="/pagesA/details/details"></image>
 						<view class="text-cut goods_li_name">{{item.name}}</view>
 						<view class=" goods_li_money"><text>￥</text>{{item.money}}</view>
 					</view>
@@ -69,31 +69,31 @@
 				swiperList: [{
 						id: 0,
 						type: 'image',
-						url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
+						url: '/static/images/banner_03.jpg'
 					}, {
 						id: 1,
 						type: 'image',
-						url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big37006.jpg',
+						url: '/static/images/banner_03.jpg',
 					}, {
 						id: 2,
 						type: 'image',
-						url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
+						url: '/static/images/banner_03.jpg'
 					}, {
 						id: 3,
 						type: 'image',
-						url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
+						url: '/static/images/banner_03.jpg'
 					}, {
 						id: 4,
 						type: 'image',
-						url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
+						url: '/static/images/banner_03.jpg'
 					}, {
 						id: 5,
 						type: 'image',
-						url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big21016.jpg'
+						url: '/static/images/banner_03.jpg'
 					}, {
 						id: 6,
 						type: 'image',
-						url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg'
+						url: '/static/images/banner_03.jpg'
 					},
 				],
 				dotStyle: true,
@@ -142,6 +142,9 @@
 					this.getConversationList()
 				}
 			},
+		},
+		onShareAppMessage() {
+			
 		},
 		onLoad() {
 			that = this
@@ -317,7 +320,7 @@
 			},
 			
 			getimg(img) {
-				console.log(service.getimg(img))
+				// console.log(service.getimg(img))
 				return service.getimg(img)
 			},
 			pveimg(e) {

@@ -69,7 +69,7 @@
 					width: _this.data.width,
 					height: _this.data.height,
 					element: 'canvas1',
-					background: '#000000',
+					background: '#fff',
 					progress(percent) {},
 					finish(url) {
 						wx.hideLoading();
@@ -110,6 +110,7 @@
 			},
 			async shareFc() {
 				let _this = this;
+				console.log(service.imgurl+'/static/images/share_img_02.jpg')
 				try {
 					this.count++;
 					_app.log('准备生成:' + new Date())
@@ -125,7 +126,8 @@
 						delayTimeScale: 20, //延时系数
 						background: {
 							height: 10,
-							width: 10
+							width: 10,
+							backgroundColor:'#fff'
 						},
 						setCanvasWH({
 							bgObj
@@ -143,7 +145,7 @@
 								{
 									type: 'image',
 									id: 'productImage',
-									url: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201802%2F09%2F20180209120154_oycpr.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613449188&t=6f2f5c5a6150b5cc5e516e7d998bf7b2',
+									url: service.imgurl+'/static/images/share_img_02.jpg',
 									dx: 0,
 									dy: 0,
 									serialNum: 0,
@@ -169,7 +171,8 @@
 										addHeight=404
 										setBgObj({
 											width,
-											height: height + addHeight
+											height: height + addHeight,
+											backgroundColor:'#fff'
 										});
 										return {
 											dWidth: width,

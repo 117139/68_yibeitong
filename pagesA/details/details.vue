@@ -34,7 +34,7 @@
 					<!-- <block v-for="(item,idx) in goodsData.img"> -->
 					<block v-for="(item,idx) in 3">
 						<swiper-item>
-							<image src="/static/images/goods_01.jpg" class="slide-image" width="355" height="150" :data-curitem="goodsData.img[0]"
+							<image :src="getimg('/static/images/goods_01.jpg')" class="slide-image" width="355" height="150" :data-curitem="goodsData.img[0]"
 							 @tap="pveimg" />
 							<!-- <image :src="filter.imgIP(item)" class="slide-image" mode="aspectFill" width="355" height="150" :data-src="filter.imgIP(item)"
 							 :data-array="filter.getgimgarrIP(goodsData.img)" @tap.stop="pveimg" /> -->
@@ -129,7 +129,7 @@
 				</view>
 				<!-- <view class="xq_box" v-html="goodsData.content"> -->
 				<view class="xq_box">
-					<img src="/static/images/goods_xq_04.jpg" mode="aspectFill" style="width:750rpx;height:1264upx;display:block;" />
+					<img :src="getimg('/static/images/goods_xq_04.jpg')" mode="aspectFill" style="width:750rpx;height:1264upx;display:block;" />
 				</view>
 			</view>
 			<!-- 底部 -->
@@ -140,7 +140,9 @@
 					<text>分享</text>
 				</view>
 				<view class="sg"></view>
-				<view class="kf_btn" @tap="toroom(goodsData.support_staff)">
+				<!-- <view class="kf_btn" @tap="toroom(goodsData.support_staff)">/ -->
+				<view class="kf_btn" style="position: relative;">
+					<button type="default" style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;opacity: 0;z-index: 10;" open-type="contact"></button>
 					<text class="iconfont iconkefu"></text>
 					<text>客服</text>
 				</view>
@@ -153,7 +155,7 @@
 		<uni-popup ref="popup_yh" type="center" @change="tkchange0">
 			<!-- <view class="hb_tk" style="background-image: url(../../static/images/get_yh.png);"> -->
 			<view class="hb_tk">
-				<image class="hb_tk_img" :src="filter.imgIP('/static_s/51daiyan/images/get_yh.png')" mode="scaleToFill"></image>
+				<image class="hb_tk_img" :src="getimg('/static/images/get_yh.png')" mode="scaleToFill"></image>
 				<scroll-view style="width: 100%;height: 100%;position: relative;z-index: 9999;" scroll-y>
 					<view class="dis_flex goods_yh_li" v-for="(item,idx) in yh_list">
 						<view class="goods_yh_pri" v-if="item.coupon_setting_type==1">
@@ -190,7 +192,8 @@
 		<uni-popup ref="popup_goods" type="bottom" @change="tkchange">
 			<view class="tk_popup_box">
 				<view class="closebtn" @tap="onClose">
-					<image :src="filter.imgIP('/static_s/51daiyan/images/closebtn_03.jpg')"></image>
+					<!-- <image :src="getimg('/static/images/img_del.png')"></image> -->
+					<text class="iconfont iconguanbi"></text>
 				</view>
 				<scroll-view class=" dyr_scroll" style="height:800rpx;" scroll-y>
 
@@ -200,7 +203,7 @@
 							 @tap="pveimg"></image>
 							<image v-else :src="filter.imgIP(goodsData.img[0])" :data-src="filter.imgIP(goodsData.img[0])" mode="aspectFill"
 							 @tap="pveimg"></image> -->
-							 <image src="/static/images/goods_01.jpg" mode="aspectFill"></image>
+							 <image :src="getimg('/static/images/goods_01.jpg')" mode="aspectFill"></image>
 						</view>
 						<view class="goodstkjg">
 
@@ -380,6 +383,9 @@
 
 		},
 		methods: {
+			getimg(img){
+				return service.getimg(img)
+			},
 			getdatalist() {
 
 				let that = this
@@ -2282,7 +2288,9 @@
 		align-items: center;
 		z-index: 999999;
 	}
-
+	.closebtn text{
+		font-size: 38upx;
+	}
 	.closebtn image {
 		width: 37rpx;
 		height: 37rpx;

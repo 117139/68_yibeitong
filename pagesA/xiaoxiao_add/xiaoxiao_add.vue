@@ -6,7 +6,7 @@
 		</view>
 		<block v-if="htmlReset==0">
 			
-		<input class="qun_name" type="text" v-model="qun_name" placeholder="请输入群名称" />
+		<!-- <input class="qun_name" type="text" v-model="qun_name" placeholder="请输入群名称" /> -->
 		<view class="qunyuan_list">
 			<view class="qunyuan_li_tit">选择群成员</view>
 			<view class="qunyuan_li" v-for="(item,index) in datas" @tap='xz_qy(item)'>
@@ -59,23 +59,21 @@
 			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas','isLogin','isSDKReady','conversationList']),
 		},
 		methods: {
-			createGroup() {
-				let promise = this.tim.createGroup({
-					type: this.$TIM.TYPES.GRP_PUBLIC,
-					name: that.qun_name,
-					memberList: [{
-						userId: '3'
-					}, {
-						userId: '4'
-					}] // 如果填写了 memberList，则必须填写 userID
+			addGroupMember() {
+				let promise = this.tim.addGroupMember({
+					groupID: 'group1',
+					userIDList: ['user1','user2','user3']
 				});
-				promise.then(function(imResponse) { // 创建成功
-					console.log(imResponse.data.group); // 创建的群的资料
-					console.log('sss')
+				promise.then(function(imResponse) {
+				console.log(imResponse.data.successUserIDList); // 添加成功的群成员 userIDList
+				console.log(imResponse.data.failureUserIDList); // 添加失败的群成员 userIDList
+				console.log(imResponse.data.existedUserIDList); // 已在群中的群成员 userIDList
+				console.log(imResponse.data.group); // 添加后的群组信息
 				}).catch(function(imError) {
-					console.warn('createGroup error:', imError); // 创建群组失败的相关信息
+				console.warn('addGroupMember error:', imError); // 错误信息
 				});
 			},
+			
 			getimg(img){
 				return service.getimg(img)
 			},

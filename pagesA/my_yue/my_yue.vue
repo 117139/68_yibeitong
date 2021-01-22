@@ -2,16 +2,16 @@
 	<view class="minh100">
 		<view class="main_box">
 			<view class="top_box">
-				<image class="top_box_img" src="../../static/images/mon_banner_03.jpg" mode="aspectFill"></image>
+				<image class="top_box_img" :src="getimg('/static/images/mon_banner_03.jpg')" mode="aspectFill"></image>
 				<view class="top_box_box">
 					<view class="top_box_btn" @tap="jump" data-url="/pagesA/my_tx/my_tx">
 						提现<text class="iconfont iconnext-m"></text>
 					</view>
 					<view class="top_d1">账户余额(元)</view>
-					<view class="top_d2">0.00</view>
+					<view class="top_d2">{{loginDatas.money?loginDatas.money:'0.00'}}</view>
 				</view>
 			</view>
-			<view class="tixian_tit"><image src="../../static/images/mon_icon.png" mode="aspectFit"></image>明细</view>
+			<view class="tixian_tit"><image :src="getimg('/static/images/mon_icon.png')" mode="aspectFit"></image>明细</view>
 			<view class="tx_list">
 				<view class="tx_li" v-for="(item,index) in 3">
 					<view class="tx_l">
@@ -46,7 +46,7 @@
 		computed:{
 			...mapState([
 				'hasLogin',
-				'loginMsg',
+				'loginDatas',
 				'wxlogin',
 				// 'order_ls_data'
 			]),
@@ -87,6 +87,9 @@
 			// this.getdatalist()
 		},
 		methods: {
+			getimg(img){
+				return service.getimg(img)
+			},
 			onRetry(){
 				uni.stopPullDownRefresh()
 				return

@@ -81,14 +81,23 @@
 		</view>
 		<!-- 抽屉栏 -->
 		<view class="popup-layer" :class="popupLayerClass" @touchmove.stop.prevent="discard">
+			<scroll-view  :class="{hidden:hideEmoji}" scroll-y="true" style="height: 100%;">
+				<view class="rong-emoji-content_list" >
+					<block v-for="(page,pid) in emojiList" :key="pid">
+						<view v-for="(em,eid) in page" :key="eid" @tap="addEmoji(em)" class="rong-emoji-content_li">
+							<image  class='rong-emoji-content' mode="widthFix" :src="filter.imgIP('/static_s/51daiyan/img/emoji/'+em.url)"></image>
+						</view>
+					</block>
+				</view>
+			</scroll-view>
 			<!-- 表情 -->
-			<swiper class="emoji-swiper" :class="{hidden:hideEmoji}" indicator-dots="true" duration="150">
+			<!-- <swiper class="emoji-swiper" :class="{hidden:hideEmoji}" indicator-dots="true" duration="150">
 				<swiper-item v-for="(page,pid) in emojiList" :key="pid">
 					<view v-for="(em,eid) in page" :key="eid" @tap="addEmoji(em)">
 						<image mode="widthFix" :src="filter.imgIP('/static_s/51daiyan/img/emoji/'+em.url)"></image>
 					</view>
 				</swiper-item>
-			</swiper>
+			</swiper> -->
 			<!-- 更多功能 相册-拍照-红包 -->
 			<view class="more-layer" :class="{hidden:hideMore}">
 				<view class="list">
@@ -184,7 +193,24 @@
 				nextReqMessageID: '',
 				count: 15,
 				isCompleted: '',
-				msgList: [],
+				msgList: [
+					{
+						time:'1611316603',
+						flow:'out',
+						type:'TIMTextElem',
+						payload:{
+							text:'你好'
+						}
+					},
+					{
+						time:'1611316613',
+						flow:'',
+						type:'TIMTextElem',
+						payload:{
+							text:'你好'
+						}
+					},
+				],
 				TIM: null,
 
 
@@ -664,15 +690,16 @@
 					this.nextReqMessageID = res.data.nextReqMessageID // 用于续拉，分页续拉时需传入该字段。
 					this.isCompleted = res.data.isCompleted
 					this.scrollToView = res.data.messageList[res.data.messageList.length - 1].ID
-				});
-				// 滚动到底部
-				this.$nextTick(function() {
-					//进入页面滚动到底部
-					this.scrollTop = 9999;
+					// 滚动到底部
 					this.$nextTick(function() {
-						this.scrollAnimation = true;
+						//进入页面滚动到底部
+						this.scrollTop = 9999;
+						this.$nextTick(function() {
+							this.scrollAnimation = true;
+						});
 					});
 				});
+				
 			},
 			//处理图片尺寸，如果不处理宽高，新进入页面加载图片时候会闪
 			setPicSize(content) {
@@ -1155,4 +1182,23 @@
 	.bubble {
 		max-width: 80% !important;
 	}
+	.rong-emoji-content_list{
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.rong-emoji-content_li{
+		width: 12.5%;
+		display: flex;
+		justify-content: center;
+		margin-bottom: 20rpx;
+	}
+	 .rong-emoji-content_list .rong-emoji-content{
+		 width: 50upx;
+		 height: 50upx;
+	 } 
+	 
+	 .msg-list.showLayer{
+	 		 padding-top: 45vh;
+	 		 transform: translate3d(0, -45vh, 0);
+	 }
 </style>

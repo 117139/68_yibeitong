@@ -8,17 +8,22 @@
 			
 		<view class="qy_list">
 			<view class="qy_li"  v-for="(item,index) in datas">
+				<image @tap="qy_del(item)" v-if="cz_jian==true" class="qy_li_del" :src="getimg('/static/images/img_del.png')" mode="aspectFit"></image>
 				<image :src="getimg('/static/images/tx_m2.jpg')" mode="aspectFill"></image>
 				<view>小Q</view>
 			</view>
-			<view class="qy_li">
+			<view v-if="cz_jian==false" class="qy_li" @tap='jump' data-url="/pagesA/xiaoxiao_add/xiaoxiao_add">
 				<image :src="getimg('/static/images/qy_add.png')" mode="aspectFill"></image>
 				<view></view>
 			</view>
-			<view class="qy_li">
+			<view v-if="cz_jian==false" class="qy_li" @tap="cz_jian=true">
 				<image :src="getimg('/static/images/qy_jian.png')" mode="aspectFill"></image>
 				<view></view>
 			</view>
+		</view>
+		<view class="quan_name">
+			<view>群名称</view>
+			<view>物美团购群1</view>
 		</view>
 		<!-- <view class="qunyuan_list">
 			<view class="qunyuan_li_tit">选择群成员</view>
@@ -28,7 +33,8 @@
 				<view class="qunyuan_li_d3">用户{{index+1}}</view>
 			</view>
 		</view> -->
-		<view class="sub_btn" @tap="sub_fuc">完成</view>
+		<view v-if="cz_jian==true" class="sub_btn" @tap="cz_jian=false">取消</view>
+		<view v-else class="sub_btn" @tap="sub_fuc">删除并退出</view>
 		</block>
 	</view>
 </template>
@@ -47,6 +53,7 @@
 				htmlReset: -1,
 				data_last:false,
 				qun_name:'',
+				cz_jian:false,
 				datas:[
 					{name:'用户1'},
 					{name:'用户2'},
@@ -72,6 +79,25 @@
 			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas','isLogin','isSDKReady','conversationList']),
 		},
 		methods: {
+			//删除成员
+			deleteGroupMember(){
+				let promise = tim.deleteGroupMember({groupID: 'group1', userIDList:['user1'], reason: '你违规了，我要踢你！'});
+				promise.then(function(imResponse) {
+				console.log(imResponse.data.group); // 删除后的群组信息
+				console.log(imResponse.data.userIDList); // 被删除的群成员的 userID 列表
+				}).catch(function(imError) {
+				console.warn('deleteGroupMember error:', imError); // 错误信息
+				});
+			},
+			//解散群
+			dismissGroup(){
+				let promise = tim.dismissGroup('group1');
+				promise.then(function(imResponse) { // 解散成功
+				console.log(imResponse.data.groupID); // 被解散的群组 ID
+				}).catch(function(imError) {
+				console.warn('dismissGroup error:', imError); // 解散群组失败的相关信息
+				});
+			},
 			getimg(img){
 				return service.getimg(img)
 			},
@@ -82,25 +108,66 @@
 				}
 				Vue.set(item,'active',type)
 			},
+			qy_del(item){
+				uni.showModal({
+				    title: '提示',
+				    content: '是否删除该成员',
+				    success: function (res) {
+				        if (res.confirm) {
+				            console.log('用户点击确定');
+										uni.showToast({
+											icon:'none',
+											title:'操作成功'
+										})
+										
+				        } else if (res.cancel) {
+				            console.log('用户点击取消');
+				        }
+				    }
+				});
+			},
 			sub_fuc(){
-				if(!that.qun_name){
-					uni.showToast({
-						icon:'none',
-						title:'请输入群名称'
-					})
-					
+				uni.showModal({
+				    title: '提示',
+				    content: '是否退出该群',
+				    success: function (res) {
+				        if (res.confirm) {
+				            console.log('用户点击确定');
+										uni.showToast({
+											icon:'none',
+											title:'操作成功'
+										})
+										setTimeout(()=>{
+											uni.navigateBack({
+												delta:2
+											})
+										},1000)
+				        } else if (res.cancel) {
+				            console.log('用户点击取消');
+				        }
+				    }
+				});
+				
+			},
+			jump(e) {
+				var that = this
+				// if(!that.hasLogin){
+				// 	uni.navigateTo({
+				// 		url:'/pages/login/login'
+				// 	})
+				// 	return
+				// }
+				if (that.btn_kg == 1) {
 					return
+				} else {
+					that.btn_kg = 1
+					setTimeout(function() {
+						that.btn_kg = 0
+					}, 1000)
 				}
-				uni.showToast({
-					icon:'none',
-					title:'操作成功'
-				})
-				setTimeout(()=>{
-					uni.navigateBack({
-						delta:1
-					})
-				},1000)
-			}
+			
+				service.jump(e)
+			},
 		}
 	}
 </script>
@@ -122,11 +189,19 @@
 		flex-direction: column;
 		align-items: center;
 		padding: 14upx 0;
+		position: relative;
 	}
 	.qy_li image{
 		width: 108upx;
 		height: 108upx;
 		border-radius: 50%;
+	}
+	.qy_li .qy_li_del{
+		width: 30upx;
+		height: 30upx;
+		position: absolute;
+		top: 10upx;
+		right: 10upx;
 	}
 	.qy_li view{
 		margin-top: 20upx;
@@ -135,6 +210,17 @@
 		align-items: center;
 		font-size: 22upx;
 		color: #000;
+	}
+	.quan_name{
+		width: 100%;
+		padding: 0 30upx;
+		font-size: 32upx;
+		color: #333;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 100upx;
+		font-weight: bold;
 	}
 	.sub_btn{
 		width: 100%;

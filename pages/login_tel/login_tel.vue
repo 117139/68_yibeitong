@@ -1,13 +1,13 @@
 <template>
 	<view class="login_bg">
 		<view class="login_box dis_flex_c ju_c aic">
-			<image class="logo" src="../../static/logo.png" mode=""></image>
+			<image class="logo" :src="getimg('/static/images/logo.png')" mode=""></image>
 			<text>依辈通</text>
 		</view>
 		<view class="dis_flex aic ju_c login_tip">登录表示您同意<text @tap="jump" data-url="/pagesA/about/about?type=yszc">《法律声明和隐私政策》</text></view>
 		<view class="dis_flex aic ju_c login_btn">
 			<button class='bottom' open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">
-				<image class="wx_icon" src="../../static/images/wx.png"></image>
+				<image class="wx_icon" :src="getimg('/static/images/wx.png')"></image>
 				绑定手机号
 			</button>
 		</view>
@@ -53,6 +53,9 @@
 			])
 		},
 		methods: {
+			getimg(img){
+				return service.getimg(img)
+			},
 			jump(e) {
 				var that = this
 

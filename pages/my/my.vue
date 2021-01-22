@@ -8,7 +8,7 @@
 			<view v-if="datas" class="xieyi_main" v-html="get_fwb(datas)"></view>
 			<block v-else>
 				<view class="my_top">
-					<image class="my_top_bg" src="../../static/images/my_bg_02.png" mode=""></image>
+					<image class="my_top_bg" :src="getimg('/static/images/my_bg_02.png')" mode=""></image>
 					<view v-if="hasLogin" class="my_top_box">
 						<!-- 签到 -->
 						<view class="qiandao_box" @tap="jump" :data-url="'/pagesA/my_qiandao/my_qiandao?type='+0">
@@ -21,29 +21,29 @@
 						<!-- 签到 -->
 						<view class="top_user">
 							<view class="dis_flex">
-								<image class="user_tximg" src="../../static/images/tx_m2.jpg" mode="aspectFill"></image>
+								<image class="user_tximg" :src="getimg(loginDatas.avatarurl)" mode="aspectFill"></image>
 								<view class="user_msg">
 									<view class="dis_flex aic">
-										<view class="user_name">依辈通用户</view>
+										<view class="user_name">{{loginDatas.nickname}}</view>
 										<view class="vip_box">
-											<image class="vip_box_bg" src="../../static/images/vip_bg.png" mode=""></image>
+											<image class="vip_box_bg" :src="getimg('/static/images/vip_bg.png')" mode=""></image>
 											<view class="vip_box_box">
-												<image src="../../static/images/vip.png" mode=""></image>
-												<text>普通会员</text>
+												<image :src="getimg('/static/images/vip.png')" mode=""></image>
+												<text>{{loginDatas.user_grade_value?loginDatas.user_grade_value:'青铜会员'}}</text>
 											</view>
 										</view>
 									</view>
-									<view class="user_tel">电话：16852563542</view>
+									<view class="user_tel" v-if="loginDatas.phone">电话：{{loginDatas.phone}}</view>
 								</view>
 							</view>
 							<view class="dis_flex aic ju_a top_num">
 								<view class="dis_flex_c aic">
-									<view class="top_pri">16579.65</view>
+									<view class="top_pri">{{loginDatas.money}}</view>
 									<view>我的余额(元)</view>
 								</view>
 								<view class="num_hg"></view>
 								<view class="dis_flex_c aic">
-									<view class="top_pri">0.00</view>
+									<view class="top_pri">{{loginDatas.commission}}</view>
 									<view>当前佣金(元)</view>
 								</view>
 							</view>
@@ -61,23 +61,23 @@
 					</view>
 					<view class="order_urls dis_flex aic ju_a">
 						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+1">
-							<image src="../../static/images/my_icon_03.jpg" mode="aspectFit"></image>
+							<image :src="getimg('/static/images/my_icon_03.jpg')" mode="aspectFit"></image>
 							<text>待付款</text>
 						</view>
 						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+2">
-							<image src="../../static/images/my_icon_05.jpg" mode="aspectFit"></image>
+							<image :src="getimg('/static/images/my_icon_05.jpg')" mode="aspectFit"></image>
 							<text>待发货</text>
 						</view>
 						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+3">
-							<image src="../../static/images/my_icon_07.jpg" mode="aspectFit"></image>
+							<image :src="getimg('/static/images/my_icon_07.jpg')" mode="aspectFit"></image>
 							<text>待收货</text>
 						</view>
 						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+4">
-							<image src="../../static/images/my_icon_09.jpg" mode="aspectFit"></image>
+							<image :src="getimg('/static/images/my_icon_09.jpg')" mode="aspectFit"></image>
 							<text>待评价</text>
 						</view>
 						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList_sh/OrderList_sh?type='+5">
-							<image src="../../static/images/my_icon_11.jpg" mode="aspectFit"></image>
+							<image :src="getimg('/static/images/my_icon_11.jpg')" mode="aspectFit"></image>
 							<text>退款/售后</text>
 						</view>
 					</view>
@@ -87,45 +87,45 @@
 					<view class="fuwu_tit">我的服务</view>
 					<view class="fuwu_list">
 						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/vip_home/vip_home" data-login="true" :data-haslogin="hasLogin">
-							<image src="../../static/images/my_icon_22.jpg" mode="aspectFit"></image>
+							<image :src="getimg('/static/images/my_icon_22.jpg')" mode="aspectFit"></image>
 							<text>会员中心</text>
 						</view>
 						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/my_address/my_address" data-login="true" :data-haslogin="hasLogin">
-							<image src="../../static/images/my_icon_24.jpg" mode="aspectFit"></image>
+							<image :src="getimg('/static/images/my_icon_24.jpg')" mode="aspectFit"></image>
 							<text>收货地址</text>
 						</view>
 						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/share_index/share_index?type='+1"  data-login="true" :data-haslogin="hasLogin">
-							<image src="../../static/images/my_icon_19.jpg" mode="aspectFit"></image>
+							<image :src="getimg('/static/images/my_icon_19.jpg')" mode="aspectFit"></image>
 							<text>我的推广</text>
 						</view>
 						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/my_yue/my_yue?type='+1" data-login="true" :data-haslogin="hasLogin">
-							<image src="../../static/images/my_icon_27.jpg" mode="aspectFit"></image>
+							<image :src="getimg('/static/images/my_icon_27.jpg')" mode="aspectFit"></image>
 							<text>财务记录</text>
 						</view>
-						<view class="fuwu_li dis_flex_c aic ju_c" @tap="fk_show=true">
-							<image src="../../static/images/my_icon_35.jpg" mode="aspectFit"></image>
+						<!-- <view class="fuwu_li dis_flex_c aic ju_c" @tap="fk_show=true"> -->
+						<view class="fuwu_li dis_flex_c aic ju_c" @tap="fk_fuc">
+							<image :src="getimg('/static/images/my_icon_35.jpg')" mode="aspectFit"></image>
 							<text>联系客服</text>
 						</view>
 						<!-- <view class="fuwu_li dis_flex_c aic ju_c" style="position: relative;">
 							<button type="default" style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;opacity: 0;z-index: 10;" open-type="contact"></button>
-							<image src="../../static/images/my_icon_35.jpg" mode="aspectFit"></image>
+							<image :src="getimg('/static/images/my_icon_35.jpg')" mode="aspectFit"></image>
 							<text>联系客服</text>
 						</view> -->
 						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/about/about?type=about">
-							<image src="../../static/images/my_icon_36.jpg" mode="aspectFit"></image>
+							<image :src="getimg('/static/images/my_icon_36.jpg')" mode="aspectFit"></image>
 							<text>关于我们</text>
 						</view>
 						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/about/about?type=yhxy">
-							<image src="../../static/images/my_icon_32.jpg" mode="aspectFit"></image>
+							<image :src="getimg('/static/images/my_icon_32.jpg')" mode="aspectFit"></image>
 							<text>用户协议</text>
 						</view>
 						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/about/about?type=ysxy">
-							<image src="../../static/images/my_icon_34.jpg" mode="aspectFit"></image>
+							<image :src="getimg('/static/images/my_icon_34.jpg')" mode="aspectFit"></image>
 							<text>隐私协议</text>
 						</view>
 					</view>
 				</view>
-			
 				
 				<view class="zzc_box" v-if="fk_show" @tap="fk_show=false">
 					<view class="fk_box"  @tap.stop="">
@@ -162,9 +162,28 @@
 		},
 		methods: {
 			...mapMutations(['login', 'logindata', 'logout', 'setplatform']),
+			fk_fuc(){
+				uni.showModal({
+				    title: '提示',
+				    content: '客服电话：400-0888-099',
+						showCancel:false,
+						confirmText:'关闭',
+						
+				    success: function (res) {
+				        if (res.confirm) {
+				            console.log('用户点击确定');
+				        } else if (res.cancel) {
+				            console.log('用户点击取消');
+				        }
+				    }
+				});
+			},
 			call(e){
 				console.log(e)
 				service.call(e)
+			},
+			getimg(img){
+				return service.getimg(img)
 			},
 			jump(e) {
 				var that = this
@@ -358,6 +377,8 @@
 		font-weight: normal;
 		font-size: 28upx;
 		color: #666;
+		display: flex;
+		align-items: center;
 	}
 
 	.go_more text {

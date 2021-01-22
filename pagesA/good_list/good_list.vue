@@ -18,7 +18,7 @@
 				
 				<view class="huodong_list">
 					<view  class="goods_li" v-for="(item,index) in goods_list">
-						<image class="goods_li_img" :src="item.g_img" mode="aspectFit" @tap="jump" data-url="/pagesA/details/details"></image>
+						<image class="goods_li_img" :src="getimg(item.g_img)" mode="aspectFit" @tap="jump" data-url="/pagesA/details/details"></image>
 						<view class="text-cut goods_li_name">{{item.name}}</view>
 						<view class=" goods_li_money"><text>￥</text>{{item.money}}</view>
 					</view>

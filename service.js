@@ -262,7 +262,7 @@ const wxlogin = function(num) {
 
 											if (res.data.code == 1) {
 												uni.setStorageSync('token', res.data.data.userToken)
-												if (!res.data.data.phone) {
+												/*if (!res.data.data.phone) {
 													uni.showToast({
 														icon: 'none',
 														title: '请绑定手机号'
@@ -282,7 +282,7 @@ const wxlogin = function(num) {
 													}, 1000)
 
 													return
-												}
+												}*/
 												console.log('登录成功')
 												console.log(res.data)
 

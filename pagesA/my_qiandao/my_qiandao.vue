@@ -6,7 +6,7 @@
 		</view>
 		<block v-if="htmlReset==0">
 			<view class="top_box">
-				<image class="top_box_bg" src="../../static/images/qiandao_02.jpg" mode=""></image>
+				<image class="top_box_bg" :src="getimg('/static/images/qiandao_02.jpg')" mode=""></image>
 				<view class="top_box_box">
 					<view class="qd_d1">
 						<view class="qd_num">0</view>
@@ -44,7 +44,7 @@
 							</view>
 						</view>
 					</view>
-					<image src="https://i.loli.net/2020/07/16/2MmZsucVTlRjSwK.png" mode="scaleToFill" v-if="collapsible" @click="toggle"
+					<image :src="getimg('https://i.loli.net/2020/07/16/2MmZsucVTlRjSwK.png')" mode="scaleToFill" v-if="collapsible" @click="toggle"
 					 class="weektoggle" :class="{ down: monthOpen }"></image>
 				</view>
 				<!-- <ren-calendar ref='RenCalendar' :markDays='markDays' :headerBar='false' @onDayClick='onDayClick'></ren-calendar>
@@ -140,6 +140,9 @@
 			// this.markDays.push(today);
 		},
 		methods: {
+			getimg(img){
+				return service.getimg(img)
+			},
 			qd_fuc(){
 				uni.showToast({
 					icon:'none',

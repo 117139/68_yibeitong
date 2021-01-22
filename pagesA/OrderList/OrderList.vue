@@ -33,7 +33,7 @@
 		            <view class="goodsImg">
 								<!-- 	<image v-if="item1.gd_vice_pic.length>0" class="goodsImg" :src="getimg(item1.gd_vice_pic[0])" mode="aspectFill"></image>
 									<image v-else class="goodsImg" :src="getimg(item1.gd_mastr_pic[0])" mode="aspectFill"></image> -->
-									<image class="goodsImg" :src="item1.photo" mode="aspectFill"></image>
+									<image class="goodsImg" :src="getimg(item1.photo)" mode="aspectFill"></image>
 		            </view>
 		            <view class="goodsinr">
 		              <view class="goodsname fz30 c30">{{item1.gd_name}}{{type}}</view>
@@ -1222,6 +1222,7 @@ page{
   color: #fff;
   background: linear-gradient(-34deg, #FC3B27, #FF6D5A);
   box-shadow: 0px 3upx 6upx 0px rgba(255, 30, 30, 0.35);
+	border: 0;
 }
 
 

@@ -6,7 +6,7 @@
 		</view>
 		<view v-if="htmlReset==0" class="container">
 			<view class="order_box1">
-				<image src="/static/images/images/order_xq_bg_02.jpg"></image>
+				<image :src="getimg('/static/images/images/order_xq_bg_02.jpg')"></image>
 				<view v-if="datas.o_paystatus==1" class="order_tit">
 
 					<view class="ot_msg">
@@ -51,7 +51,7 @@
 							<view class="goodsImg">
 								<!-- <image v-if="item.gd_vice_pic.length>0" class="goodsImg" :src="getimg(item.gd_vice_pic[0])" mode="aspectFill"></image>
 								<image v-else class="goodsImg" :src="getimg(item.gd_mastr_pic[0])" mode="aspectFill"></image> -->
-								<image class="goodsImg" src="/static/images/index_12.jpg" mode="aspectFill"></image>
+								<image class="goodsImg" :src="getimg('/static/images/index_12.jpg')" mode="aspectFill"></image>
 							</view>
 							<view class="goodsinr">
 								<!-- <view class="goodsname fz30 c30 oh1">{{item.goods_name}}</view> -->
@@ -1244,6 +1244,7 @@
 	}
 	.o_cz .qx{
 	  color: #fff;
+		border: 0;
 	  background: linear-gradient(-34deg, #FC3B27, #FF6D5A);
 	  box-shadow: 0px 3upx 6upx 0px rgba(255, 30, 30, 0.35);
 	}

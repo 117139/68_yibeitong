@@ -6,13 +6,13 @@
 		</view>
 		<block v-if="htmlReset==0">
 			<view class="top_box">
-				<image class="top_box_bg" src="../../static/images/images/tg_bg_02.png" mode=""></image>
+				<image class="top_box_bg" :src="getimg('/static/images/images/tg_bg_02.png')" mode=""></image>
 				<view class="top_box_msg">
 					<view class="top_l">
 						<view class="top_l1">推广人数</view>
 						<view class="top_l2">6<text>人</text></view>
 					</view>
-					<image class="tg_icon" src="../../static/images/tg_num.png" mode="aspectFit"></image>
+					<image class="tg_icon" :src="getimg('/static/images/tg_num.png')" mode="aspectFit"></image>
 				</view>
 			</view>
 			<view class="list_box">
@@ -22,7 +22,7 @@
 				</view>
 				<block v-for="(item,index) in 10">
 					<view class="hy_li">
-						<image class="hy_li_tx" src="/static/images/tx_m2.jpg" mode="aspectFill"></image>
+						<image class="hy_li_tx" :src="getimg('/static/images/tx_m2.jpg')" mode="aspectFill"></image>
 						<view class="hy_li_msg">
 							<view class="hy_li_msg1">
 								<view class="hy_name">会员{{tab_cur}}</view>
@@ -87,6 +87,9 @@
 			this.onRetry()
 		},
 		methods: {
+			getimg(img){
+				return service.getimg(img)
+			},
 			tab_fuc(num){
 				that.tab_cur=num
 			}

@@ -1,37 +1,37 @@
 <template>
 	<view class="minh100">
 		<view class="top_box">
-			<image class="top_box_img" src="../../static/images/share_index_02.jpg" mode="aspectFill"></image>
+			<image class="top_box_img" :src="getimg('/static/images/share_index_02.jpg')" mode="aspectFill"></image>
 			<view class="top_box_box">
 				<view class="top_box_btn" @tap="jump" data-url="/pagesA/my_tx_list/my_tx_list">
 					提现记录<text class="iconfont iconnext-m"></text>
 				</view>
 				<view class="top_d1">当前佣金(元)</view>
-				<view class="top_d2">100.00</view>
+				<view class="top_d2">{{loginDatas.commission}}</view>
 				<view class="dis_flex aic ju_a top_num">
 					<view class="dis_flex_c aic">
 						<view>累计佣金</view>
-						<view class="top_pri">16579.65</view>
+						<view class="top_pri">{{loginDatas.total_commission}}</view>
 					</view>
 					<view class="num_hg"></view>
 					<view class="dis_flex_c aic">
 						<view>累计已提</view>
-						<view class="top_pri">12.00</view>
+						<view class="top_pri">{{loginDatas.submitted_commission}}</view>
 					</view>
 				</view>
 			</view>
 		</view>
 		<view class="main_box">
 			<view class="main_li" @tap="jump" data-url="/pagesA/tg_img/tg_img">
-				<image src="../../static/images/share_index_05.jpg" mode="aspectFit"></image>
+				<image :src="getimg('/static/images/share_index_05.jpg')" mode="aspectFit"></image>
 				<text>推荐名片</text>
 			</view>
 			<view class="main_li" @tap="jump" data-url="/pagesA/tg_list/tg_list">
-				<image src="../../static/images/share_index_07.jpg" mode="aspectFit"></image>
+				<image :src="getimg('/static/images/share_index_07.jpg')" mode="aspectFit"></image>
 				<text>推广人统计</text>
 			</view>
 			<view class="main_li" @tap="jump" data-url="/pagesA/tgyj_list/tgyj_list">
-				<image src="../../static/images/share_index_09.jpg" mode="aspectFit"></image>
+				<image :src="getimg('/static/images/share_index_09.jpg')" mode="aspectFit"></image>
 				<text>佣金明细</text>
 			</view>
 		</view>
@@ -59,7 +59,7 @@
 		computed:{
 			...mapState([
 				'hasLogin',
-				'loginMsg',
+				'loginDatas',
 				'wxlogin',
 				// 'order_ls_data'
 			]),
@@ -98,7 +98,9 @@
 			// this.getdatalist()
 		},
 		methods: {
-			
+			getimg(img){
+				return service.getimg(img)
+			},
 			jump(e) {
 				var that = this
 				// if(!that.hasLogin){

@@ -1,6 +1,6 @@
 <template>
 	<view class="minh100">
-		<image class="cz_bg" src="../../static/images/cz_bg_02.png" mode="aspectFill"></image>
+		<image class="cz_bg" :src="getimg('/static/images/cz_bg_02.png')" mode="aspectFill"></image>
 		<view class="hd_box">
 			<view class="hd_box_bg">
 				<view class="hd_box_tit">
@@ -12,11 +12,11 @@
 				<view class="cz_mon">请选择充值金额</view>
 				<view class="cz_list">
 					<view class="cz_li" :class="cz_cur==index?'cur':''" v-for="(item,index) in cz_list" @tap="cz_cur=index">
-						<image v-if="cz_cur==index" src="../../static/images/cz_select_05.png" mode="aspectFill"></image>
+						<image v-if="cz_cur==index" :src="getimg('/static/images/cz_select_05.png')" mode="aspectFill"></image>
 						<text>{{item.name}}元</text>
 					</view>
 					<view class="cz_li" :class="cz_cur==-1?'cur':''" @tap="cz_cur=-1">
-						<image v-if="cz_cur==index" src="../../static/images/cz_select_05.png" mode="aspectFill"></image>
+						<image v-if="cz_cur==index" :src="getimg('/static/images/cz_select_05.png')" mode="aspectFill"></image>
 						<input class="other_mon" type="number" v-model="other_mon" placeholder="其他金额">
 					</view>
 				</view>
@@ -26,7 +26,7 @@
 		
 		<view v-if="show_tk" class="tk_big_box dis_flex aic ju_c" @touchmove.stop.prevent='test'>
 			<view class="tk_show_box">
-				<image class="tk_imgbg" src="../../static/images/hf_tk_03.jpg" mode="aspectFit"></image>
+				<image class="tk_imgbg" :src="getimg('/static/images/hf_tk_03.jpg')" mode="aspectFit"></image>
 				<view class="tk_show_msg">
 					<view class="tk_msg1">恭喜您获得现金红包</view>
 					<view class="tk_msg2">0.09<text>元</text></view>
@@ -105,6 +105,9 @@
 		},
 		methods: {
 			test() {},
+			getimg(img){
+				return service.getimg(img)
+			},
 			off_fuc(){
 				that.show_tk=false
 			},
