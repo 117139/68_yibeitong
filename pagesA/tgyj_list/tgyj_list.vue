@@ -66,7 +66,11 @@
 					},
 					{
 						title:'二级返佣',
-						id:1
+						id:2
+					},
+					{
+						title:'公司奖励',
+						id:3
 					},
 				],
 				hetong_index:0,

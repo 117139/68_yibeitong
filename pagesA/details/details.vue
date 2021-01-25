@@ -55,7 +55,10 @@
 				</view> -->
 				<view class="goods_name">
 					<text class="goods_name_text">{{goodsData.title}}</text>
-					<view class="goods_share"><text class="iconfont iconfenxiang"></text></view>
+					<view class="goods_share" style="position: relative;">
+						<button type="default" open-type="share" style="position: absolute;opacity: 0; top: 0;left: 0;right: 0;bottom: 0;" :data-id="item.id"></button>
+						<text class="iconfont iconfenxiang"></text>
+					</view>
 				</view>
 				
 				<view class="dis_flex goods_pri_box">
@@ -67,7 +70,7 @@
 						<text class="sku_bg">库</text>库存：56
 					</view>
 					<view class="sku_li dis_flex aic">
-							<text  class="sku_bg">月</text>月销：983
+							<text  class="sku_bg">销</text>销量：983
 					</view>
 				</view>
 			</view>
@@ -94,7 +97,7 @@
 			<view class="pj_box mt20" >
 				<view class="pj_box_tit">
 					<view class="p_tit_l">商品评价（{{goodsData.comment_count>0?goodsData.comment_count:0}}）</view>
-					<view class="p_tit_r" :data-url="'/pages_goods/details_pl/details_pl?id='+g_id+'&dy_id='+dy_id+'&advocacyviceId='+advocacyviceId"
+					<view class="p_tit_r" :data-url="'/pagesA/pl_list/pl_list?id='+g_id+'&dy_id='+dy_id+'&advocacyviceId='+advocacyviceId"
 					 @tap="jump">查看全部
 						<text class="iconfont iconnext-m"></text>
 					</view>
@@ -773,7 +776,7 @@
 					"freight": "0.00",
 					"distribution": "",
 					"total_number": 0,
-					"comment_count": 0,
+					"comment_count": 4,
 					"advocacy_mannumber": 0,
 					"content": "<p><img src=\"http://51daiyan.test.upcdn.net/resource/merchant/editor/img/20200826/7f10d76c3c98e325ec2fb5192dd7e248.jpg\" style=\"max-width:100%;\"></p>",
 					"sales_volume": "6004",

@@ -202,7 +202,7 @@
 		},
 		methods: {
 			getimg(img){
-				return service.geimg(img)
+				return service.getimg(img)
 			},
 			//数量
 			onChange(e) {

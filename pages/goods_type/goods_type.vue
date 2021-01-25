@@ -7,7 +7,8 @@
 		<block v-if="htmlReset==0">
 			<scroll-view class="scroll_L" scroll-y="true" >
 				<view class="scroll_L_list">
-					<view class="l_remen"  @tap="l_active_fuc('item',-1)">热门推荐</view>
+					<!-- <view class="l_remen" :class="l_active==-1?'active':''" @tap="l_active_fuc('item',-1)">热门推荐</view> -->
+					<view class="scroll_L_li" :class="l_active==-1?'active':''" @tap="l_active_fuc('item',-1)">热门推荐</view>
 					<view v-for="(item,index) in goods_type" class="scroll_L_li" :class="l_active==index?'active':''" @tap="l_active_fuc(item,index)">{{item.name}}</view>
 				</view>
 
@@ -343,7 +344,7 @@
 		/* #endif */
 		background: #FFFFFF;
 		box-shadow: 0px 0px 9px 0px rgba(172, 172, 172, 0.11);
-		padding-top: 100upx;
+		/* padding-top: 100upx; */
 		position: relative;
 	}
 	.l_remen{

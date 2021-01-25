@@ -691,13 +691,19 @@
 					this.isCompleted = res.data.isCompleted
 					this.scrollToView = res.data.messageList[res.data.messageList.length - 1].ID
 					// 滚动到底部
-					this.$nextTick(function() {
-						//进入页面滚动到底部
+					setTimeout(function (){
 						this.scrollTop = 9999;
 						this.$nextTick(function() {
 							this.scrollAnimation = true;
 						});
-					});
+					},10)
+					// this.$nextTick(function() {
+					// 	//进入页面滚动到底部
+					// 	this.scrollTop = 9999;
+					// 	this.$nextTick(function() {
+					// 		this.scrollAnimation = true;
+					// 	});
+					// });
 				});
 				
 			},

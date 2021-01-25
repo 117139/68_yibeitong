@@ -246,7 +246,16 @@
 				"enablePullDownRefresh": false
 			}
 
-		}]
+		}    ,{
+                    "path" : "pl_list/pl_list",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
 	}],
 
 	"preloadRule": {

@@ -283,6 +283,7 @@
   position: absolute;
   left: 50%;
   bottom: 0;
+  margin-left: -6rpx;
   pointer-events: none;
 }
 .calendar-wrapper .hide.data-v-1d6284aa {

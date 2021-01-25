@@ -22,7 +22,7 @@
 							</view>
 							<view class="dis_flex ju_b aic">
 								<view class="item-text-info text-cut">
-									<rich-text :nodes="nodesFliter('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')"></rich-text>
+									<rich-text :nodes="nodesFliter('一起去物美团购群')"></rich-text>
 								</view>
 								<view class="weidu_num">3</view>
 							</view>

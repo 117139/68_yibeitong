@@ -534,6 +534,7 @@
 						position: absolute;
 						left: 50%;
 						bottom: 0;
+						
 						pointer-events: none;
 					}
 
@@ -564,6 +565,7 @@
 						position: absolute;
 						left: 50%;
 						bottom: 0;
+						margin-left: -6upx;
 						pointer-events: none;
 					}
 				}
