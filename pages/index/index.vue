@@ -35,17 +35,19 @@
 					<image class="huodong_li" :src="getimg('/static/images/index_03.jpg')"  mode="aspectFit" @tap="jump" data-url="/pagesA/huafei_cz/huafei_cz"></image>
 					<image class="huodong_li" :src="getimg('/static/images/index_05.jpg')"  mode="aspectFit" @tap="jump" data-url="/pagesA/share_index/share_index"></image>
 				</view>
-				<view class="huodong_tit dis_flex aic">
-					人气推荐<image class="huodong_tit_hot" :src="getimg('/static/images/HOT.png')" mode="aspectFit"></image>
-				</view>
-				
-				<view class="huodong_list">
-					<view  class="goods_li" v-for="(item,index) in goods_list">
-						<image class="goods_li_img" :src="getimg(item.g_img)" mode="aspectFit" @tap="jump" data-url="/pagesA/details/details"></image>
-						<view class="text-cut goods_li_name">{{item.name}}</view>
-						<view class=" goods_li_money"><text>￥</text>{{item.money}}</view>
+				<block v-for="(item,index) in index_list">
+					<view class="huodong_tit dis_flex aic">
+						{{item}}<image class="huodong_tit_hot" :src="getimg('/static/images/HOT.png')" mode="aspectFit"></image>
 					</view>
-				</view>
+					
+					<view class="huodong_list">
+						<view  class="goods_li" v-for="(item,index) in goods_list">
+							<image class="goods_li_img" :src="getimg(item.g_img)" mode="aspectFit" @tap="jump" data-url="/pagesA/details/details"></image>
+							<view class="text-cut goods_li_name">{{item.name}}</view>
+							<view class=" goods_li_money"><text>￥</text>{{item.money}}</view>
+						</view>
+					</view>
+				</block>
 				<view v-if="goods_list.length==0" class="zanwu">暂无数据</view>
 				<view v-if="data_last" class="data_last">我可是有底线的哟~~~</view>
 			</view>
@@ -99,6 +101,13 @@
 				dotStyle: true,
 				towerStart: 0,
 				direction: '',
+				index_list:[
+					'人气推荐',
+					'网红商品',
+					'定制商品',
+					'外贸商品',
+					'特价商品',
+				],
 				goods_list:[
 					{
 						name:'Winter潮流男士衣裤',
