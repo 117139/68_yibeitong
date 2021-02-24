@@ -4,7 +4,7 @@
 			<image class="logo" :src="getimg('/static/images/logo.png')" mode=""></image>
 			<text>依辈通</text>
 		</view>
-		<view class="dis_flex aic ju_c login_tip">登录表示您同意<text @tap="jump" data-url="/pagesA/about/about?type=yhxy">《法律声明和隐私政策》</text></view>
+		<view class="dis_flex aic ju_c login_tip">登录表示您同意<text @tap="jump" data-url="/pagesA/about/about?type=ysxy">《法律声明和隐私政策》</text></view>
 		<view class="dis_flex aic ju_c login_btn">
 			<button class='bottom'  open-type="getUserInfo"
 			lang="zh_CN" @getuserinfo="getUserInfo">

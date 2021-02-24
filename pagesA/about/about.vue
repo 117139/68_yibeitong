@@ -70,22 +70,15 @@
 			var that =this
 			console.log(Option)
 			
-			that.htmlReset=0
+			
+			
 			if(Option.type=='about'){
 				that.type=Option.type
 				that.title='关于我们'
 				uni.setNavigationBarTitle({
 					title:'关于我们'
 				})
-				console.log(that.fj_data)
-			}
-			if(Option.type=='yhxy'){
-				that.type=Option.type
-				that.title='用户协议'
-				uni.setNavigationBarTitle({
-					title:'用户协议'
-				})
-				// this.getdata('ysxy')
+				this.getdata('gywm')
 			}
 			if(Option.type=='ysxy'){
 				that.type=Option.type
@@ -93,29 +86,17 @@
 				uni.setNavigationBarTitle({
 					title:'隐私协议'
 				})
-				// this.getdata('ysxy')
+				this.getdata('ysxy')
 			}
-			if(Option.type=='sm'){
-				that.type=Option.type
-				that.title='小程序说明'
-				uni.setNavigationBarTitle({
-					title:'小程序说明'
-				})
-				this.getdata('specification')
-			}
-			if(Option.type=='fw'){
-				that.type=Option.type
-				that.title='用户服务条款'
-				uni.setNavigationBarTitle({
-					title:'用户服务条款'
-				})
-				this.getdata('terms_of_service')
-			}
-			if(Option.type==3){
+			if(Option.type=='yhxy'){
 				that.type=Option.type
 				that.title='用户协议'
+				uni.setNavigationBarTitle({
+					title:'用户协议'
+				})
 				this.getdata('yhxy')
 			}
+			
 		},
 		computed: {
 			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas','fj_data']),
@@ -143,7 +124,7 @@
 				}
 				
 				//selectSaraylDetailByUserCard
-				var jkurl = '/info/list'
+				var jkurl = '/getClause'
 				uni.showLoading({
 					title: '正在获取数据'
 				})
@@ -159,9 +140,9 @@
 							datas = JSON.parse(datas)
 						}
 						if(datas.length>0){
-							that.datas = datas[0].body
+							that.datas = datas[0].content
 						}else{
-							that.datas = datas.body
+							that.datas = datas
 						}
 						
 						console.log(datas)

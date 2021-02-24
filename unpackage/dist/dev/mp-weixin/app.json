@@ -105,6 +105,5 @@
     "van-popup": "./wxcomponents/vant/popup/index",
     "cu-custom": "/colorui/components/cu-custom",
     "u-parse": "/components/gaoyia-parse/parse"
-  },
-  "sitemapLocation": "sitemap80.json"
+  }
 }
