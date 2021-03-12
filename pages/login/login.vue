@@ -6,11 +6,19 @@
 		</view>
 		<view class="dis_flex aic ju_c login_tip">登录表示您同意<text @tap="jump" data-url="/pagesA/about/about?type=ysxy">《法律声明和隐私政策》</text></view>
 		<view class="dis_flex aic ju_c login_btn">
+			<!-- #ifdef MP-WEIXIN -->
 			<button class='bottom'  open-type="getUserInfo"
 			lang="zh_CN" @getuserinfo="getUserInfo">
 				<image class="wx_icon" :src="getimg('/static/images/wx.png')"></image>
 				微信用户一键登录
 			</button>
+			<!-- #endif -->
+			<!-- #ifdef H5 -->
+			<button class='bottom' @tap="login_h5">
+				<image class="wx_icon" :src="getimg('/static/images/wx.png')"></image>
+				用户一键登录
+			</button>
+			<!-- #endif -->
 		</view>
 		<view class="dis_flex aic ju_c goback_btn" @tap="goback()">返回</view>
 	</view>
@@ -36,6 +44,9 @@
 		},
 		methods: {
 			...mapMutations(['wxshouquan','login']),
+			login_h5(){
+				service.wxlogin_ceshi_h5(1)
+			},
 			getimg(img){
 				return service.getimg(img)
 			},

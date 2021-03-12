@@ -22,7 +22,7 @@
         "OrderPay/OrderPay",
         "OrderDetails/OrderDetails",
         "OrderDetails_sh_sq/OrderDetails_sh_sq",
-        "orderDetails_sh_xq/orderDetails_sh_xq",
+        "OrderDetails_sh_xq/OrderDetails_sh_xq",
         "OrderList_sh/OrderList_sh",
         "details/details",
         "Order_wuliu/Order_wuliu",
@@ -102,8 +102,8 @@
   },
   "usingComponents": {
     "van-stepper": "./wxcomponents/vant/stepper/index",
-    "van-popup": "./wxcomponents/vant/popup/index",
     "cu-custom": "/colorui/components/cu-custom",
-    "u-parse": "/components/gaoyia-parse/parse"
+    "u-parse": "/components/gaoyia-parse/parse",
+    "html-loading": "/components/html_loading/html_loading"
   }
 }

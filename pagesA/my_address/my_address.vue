@@ -1,7 +1,6 @@
 <template>
 	<view>
 		<view class="container log-list">
-			<view v-if="datas.length==0" class="zanwu">暂无数据</view>
 			<view class="addressOne " v-for="(item,idx) in datas" @tap="xz_add" :data-idx="idx">
 				<view class="setting1 " :data-id="item.id" @tap="select_del(item)">
 					<text :class="item.active==1?'moren_add':''" class="iconfont iconduigou-copy fz26 mr5"></text>
@@ -22,6 +21,8 @@
 				</view>
 
 			</view>
+			<view v-if="datas.length==0" class="zanwu">暂无数据</view>
+			<view v-if="data_last" class="data_last">我可是有底线的哟~</view>
 			<view class="fixbottom">
 				<view class="addbtn addbtn1" @tap="del_add">删除</view>
 				<navigator class="addbtn" url="/pagesA/my_addressEdit/my_addressEdit">
@@ -54,9 +55,11 @@
 				moren: 1,
 				page: 1,
 				page_size: 20,
+				data_last:false,
 				datas: [],
 				mridx: 0,
-				form_type: 0
+				form_type: 0,
+				show_num:0
 			}
 		},
 		onLoad: function(option) {
@@ -64,44 +67,28 @@
 			if (option.type) {
 				that.form_type = option.type
 			}
-			that.datas = [{
-					name: '徐先生',
-					phone: '17800000330',
-					province: '山东省',
-					city: '青岛市',
-					area: '开发区',
-					address: '青岛经济开发区紫金山支路精图小区1023号',
-					is_default: 1,
-					id: 1
-				},
-				{
-					name: '赵先生',
-					phone: '17800000330',
-					province: '山东省',
-					city: '济南市',
-					area: '历下区',
-					address: '银河南街紫御国际3号楼12 01',
-					is_default: 0,
-					id: 1
-				},
-			]
-			// this.getaddlist()
+			this.getaddlist()
 		},
 		onShow() {
 
-			// this.onRetry()
+			if(that.show_num>1){
+				this.onRetry()
+			}
+		},
+		onHide() {
+			that.show_num++
 		},
 		/**
 		 * 页面相关事件处理函数--监听用户下拉动作
 		 */
 		onPullDownRefresh: function() {
-			// this.onRetry()
+			this.onRetry()
 		},
 		/**
 		 * 页面上拉触底事件的处理函数
 		 */
 		onReachBottom: function() {
-			// this.getaddlist()
+			this.getaddlist()
 		},
 		computed: {
 			...mapState([
@@ -135,10 +122,72 @@
 					})
 					return
 				}
-				uni.showToast({
-					icon:'none',
-					title:'删除'
+				del_list=del_list.join(',')
+				wx.showModal({
+					content: "确定要删除已选中的地址吗?",
+					success(res) {
+						if (res.confirm) {
+							console.log('用户点击确定')
+							if (that.btnkg == 1) {
+								return
+							} else {
+								that.btnkg = 1
+							}
+							var jkurl = '/user/address/del'
+							var data = {
+								token: that.$store.state.loginDatas.userToken||'',
+								id: del_list
+							}
+							service.P_post(jkurl, data).then(res => {
+								that.btn_kg = 0
+								that.htmlReset=0
+								console.log(res)
+								if (res.code == 1) {
+									var datas = res.data
+									console.log(typeof datas)
+										
+									if (typeof datas == 'string') {
+										datas = JSON.parse(datas)
+									}
+									uni.showToast({
+										icon: 'none',
+										title: '操作成功'
+									})
+									that.onRetry()
+										
+										
+								} else {
+									if (res.msg) {
+										uni.showToast({
+											icon: 'none',
+											title: res.msg
+										})
+									} else {
+										uni.showToast({
+											icon: 'none',
+											title: '操作失败'
+										})
+									}
+								}
+							}).catch(e => {
+								that.btn_kg = 0
+								console.log(e)
+								uni.showToast({
+									icon: 'none',
+									title: '操作异常'
+								})
+							})
+							
+				
+						} else if (res.cancel) {
+							console.log('用户点击取消')
+						}
+					}
 				})
+				// uni.showToast({
+				// 	icon:'none',
+				// 	title:'删除'
+				// })
 			},
 			onRetry() {
 				this.datas = []
@@ -184,7 +233,7 @@
 				///address/default
 				var jkurl = '/user/address/default'
 				var data = {
-					token: that.loginMsg.userToken,
+					token: that.$store.state.loginDatas.userToken||'',
 					id: id
 				}
 				service.post(jkurl, data,
@@ -253,7 +302,7 @@
 							}
 							var jkurl = '/user/address/del'
 							var data = {
-								token: that.loginMsg.userToken,
+								token: that.$store.state.loginDatas.userToken||'',
 								id: id
 							}
 							service.post(jkurl, data,
@@ -308,58 +357,70 @@
 				let that = this
 				var jkurl = '/user/address'
 				var data = {
-					token: that.loginMsg.userToken,
-					page: that.page,
-					size: that.page_size
+					token: that.$store.state.loginDatas.userToken||'',
+					page:that.page,
+					per_page:that.pagesize
 				}
-				service.get(jkurl, data,
-					function(res) {
-
-						// if (res.data.code == 1) {
-						if (res.data.code == 1) {
-							var datas = res.data.data
-							// console.log(typeof datas)
-
-							if (typeof datas == 'string') {
-								datas = JSON.parse(datas)
-							}
-							if (that.page == 1) {
-								that.datas = datas.address
-							} else {
-								if (datas.address.length) {
-									uni.showToast({
-										icon: 'none',
-										title: '到底了。。。'
-									})
-									return
-								}
-								that.datas = that.datas.concat(datas.address)
-							}
-							that.page++
-						} else {
-							if (res.data.msg) {
-								uni.showToast({
-									icon: 'none',
-									title: res.data.msg
-								})
-							} else {
-								uni.showToast({
-									icon: 'none',
-									title: '操作失败'
-								})
-							}
+				if(that.btn_kg==1){
+					return
+				}
+				that.btn_kg=1
+				//selectSaraylDetailByUserCard
+				uni.showLoading({
+					title: '正在获取数据'
+				})
+				// setTimeout(()=>{
+				// 	uni.hideLoading()
+				// },1000)
+				// return
+				var page_now=that.page
+				service.P_get(jkurl, data).then(res => {
+					that.btn_kg = 0
+					that.htmlReset=0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+							
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
 						}
-					},
-					function(err) {
-						that.btnkg = 0
-
-						uni.showToast({
-							icon: 'none',
-							title: '获取数据失败'
-						})
-
+						if(page_now==1){
+				
+							that.datas = datas.address
+						} else {
+							if (datas.address.length == 0) {
+								that.data_last = true
+								return
+							}
+							that.data_last = false
+							that.datas = that.datas.concat(datas.address)
+						}
+						that.page++
+						console.log(datas)
+							
+							
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
 					}
-				)
+				}).catch(e => {
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败'
+					})
+				})
 			},
 		}
 	}
@@ -368,6 +429,9 @@
 <style scoped>
 	.container {
 		min-height: 100vh;
+		/* #ifdef H5 */
+		min-height: calc(100vh - 44px - env(safe-area-inset-top));
+		/* #endif */
 		background: #F7F7F7;
 		padding-top: 2rpx;
 		/* padding-bottom: 180rpx; */

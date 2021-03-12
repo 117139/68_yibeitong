@@ -3,7 +3,7 @@
 		<view class="top_box">
 			<image class="top_box_img" :src="getimg('/static/images/share_index_02.jpg')" mode="aspectFill"></image>
 			<view class="top_box_box">
-				<view class="top_box_btn" @tap="jump" data-url="/pagesA/my_tx_list/my_tx_list">
+				<view class="top_box_btn" @tap="jump" data-url="/pagesA/my_tx_list/my_tx_list?type=6">
 					提现记录<text class="iconfont iconnext-m"></text>
 				</view>
 				<view class="top_d1">当前佣金(元)</view>
@@ -35,7 +35,7 @@
 				<text>佣金明细</text>
 			</view>
 		</view>
-		<view class="bottom_box" @tap="jump" data-url="/pagesA/my_tx/my_tx">立即提现</view>
+		<view class="bottom_box" @tap="jump" data-url="/pagesA/my_tx/my_tx?type=2">立即提现</view>
 	</view>
 </template>
 

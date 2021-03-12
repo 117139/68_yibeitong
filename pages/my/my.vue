@@ -1,140 +1,133 @@
 <template>
 	<view class="minh100">
-		<view v-if="htmlReset==1" class="zanwu" @tap='onRetry'>请求失败，请点击重试</view>
-		<view v-if="htmlReset==-1" class="loading_def">
-			<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
-		</view>
-		<block v-if="htmlReset==0">
-			<view v-if="datas" class="xieyi_main" v-html="get_fwb(datas)"></view>
-			<block v-else>
-				<view class="my_top">
-					<image class="my_top_bg" :src="getimg('/static/images/my_bg_02.png')" mode=""></image>
-					<view v-if="hasLogin" class="my_top_box">
-						<!-- 签到 -->
-						<view class="qiandao_box" @tap="jump" :data-url="'/pagesA/my_qiandao/my_qiandao?type='+0">
-							<view class="qd_nbox">
-								<text class="iconfont iconqiandao"></text>
-								<text>签到</text>
-								<text class="iconfont iconqiandao" style="opacity: 0;"></text>
-							</view>
+		<!-- <htmlLoading ref="htmlLoading" @Retry='onRetry' :bj_show="false"> -->
+			<view class="my_top">
+				<image class="my_top_bg" :src="getimg('/static/images/my_bg_02.png')" mode=""></image>
+				<view v-if="hasLogin" class="my_top_box">
+					<!-- 签到 -->
+					<view class="qiandao_box" @tap="jump" :data-url="'/pagesA/my_qiandao/my_qiandao?type='+0">
+						<view class="qd_nbox">
+							<text class="iconfont iconqiandao"></text>
+							<text>签到</text>
+							<text class="iconfont iconqiandao" style="opacity: 0;"></text>
 						</view>
-						<!-- 签到 -->
-						<view class="top_user">
-							<view class="dis_flex">
-								<image class="user_tximg" :src="getimg(loginDatas.avatarurl)" mode="aspectFill"></image>
-								<view class="user_msg">
-									<view class="dis_flex aic">
-										<view class="user_name">{{loginDatas.nickname}}</view>
-										<view class="vip_box">
-											<image class="vip_box_bg" :src="getimg('/static/images/vip_bg.png')" mode=""></image>
-											<view class="vip_box_box">
-												<image :src="getimg('/static/images/vip.png')" mode=""></image>
-												<text>{{loginDatas.user_grade_value?loginDatas.user_grade_value:'青铜会员'}}</text>
-											</view>
+					</view>
+					<!-- 签到 -->
+					<view class="top_user">
+						<view class="dis_flex">
+							<image class="user_tximg" :src="getimg(loginDatas.avatarurl)" mode="aspectFill"></image>
+							<view class="user_msg">
+								<view class="dis_flex aic">
+									<view class="user_name">{{loginDatas.nickname}}</view>
+									<view class="vip_box">
+										<image class="vip_box_bg" :src="getimg('/static/images/vip_bg.png')" mode=""></image>
+										<view class="vip_box_box">
+											<image :src="getimg('/static/images/vip.png')" mode=""></image>
+											<text>{{loginDatas.user_grade_value?loginDatas.user_grade_value:'青铜会员'}}</text>
 										</view>
 									</view>
-									<view class="user_tel" v-if="loginDatas.phone">电话：{{loginDatas.phone}}</view>
 								</view>
-							</view>
-							<view class="dis_flex aic ju_a top_num">
-								<view class="dis_flex_c aic">
-									<view class="top_pri">{{loginDatas.money}}</view>
-									<view>我的余额(元)</view>
-								</view>
-								<view class="num_hg"></view>
-								<view class="dis_flex_c aic">
-									<view class="top_pri">{{loginDatas.commission}}</view>
-									<view>当前佣金(元)</view>
-								</view>
+								<view class="user_tel" v-if="loginDatas.phone">电话：{{loginDatas.phone}}</view>
 							</view>
 						</view>
-					</view>
-					<view v-else class="my_top_box dis_flex_c aic ju_c">
-						<view class="user_name" data-url="/pages/login/login" @tap='jump'>登录/注册</view>
-					</view>
-				</view>
-				<!-- 订单 -->
-				<view class="order_box">
-					<view class="order_top dis_flex aic ju_b">
-						<view>我的订单</view>
-						<view class="go_more dis_flex aic"  @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+0">查看全部<text class="iconfont iconnext-m"></text></view>
-					</view>
-					<view class="order_urls dis_flex aic ju_a">
-						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+1">
-							<image :src="getimg('/static/images/my_icon_03.jpg')" mode="aspectFit"></image>
-							<text>待付款</text>
-						</view>
-						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+2">
-							<image :src="getimg('/static/images/my_icon_05.jpg')" mode="aspectFit"></image>
-							<text>待发货</text>
-						</view>
-						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+3">
-							<image :src="getimg('/static/images/my_icon_07.jpg')" mode="aspectFit"></image>
-							<text>待收货</text>
-						</view>
-						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+4">
-							<image :src="getimg('/static/images/my_icon_09.jpg')" mode="aspectFit"></image>
-							<text>待评价</text>
-						</view>
-						<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList_sh/OrderList_sh?type='+5">
-							<image :src="getimg('/static/images/my_icon_11.jpg')" mode="aspectFit"></image>
-							<text>退款/售后</text>
+						<view class="dis_flex aic ju_a top_num">
+							<view class="dis_flex_c aic">
+								<view class="top_pri">{{loginDatas.money}}</view>
+								<view>我的余额(元)</view>
+							</view>
+							<view class="num_hg"></view>
+							<view class="dis_flex_c aic">
+								<view class="top_pri">{{loginDatas.commission}}</view>
+								<view>当前佣金(元)</view>
+							</view>
 						</view>
 					</view>
 				</view>
-				<!-- 服务 -->
-				<view class="fuwu_box">
-					<view class="fuwu_tit">我的服务</view>
-					<view class="fuwu_list">
-						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/vip_home/vip_home" data-login="true" :data-haslogin="hasLogin">
-							<image :src="getimg('/static/images/my_icon_22.jpg')" mode="aspectFit"></image>
-							<text>会员中心</text>
-						</view>
-						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/my_address/my_address" data-login="true" :data-haslogin="hasLogin">
-							<image :src="getimg('/static/images/my_icon_24.jpg')" mode="aspectFit"></image>
-							<text>收货地址</text>
-						</view>
-						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/share_index/share_index?type='+1"  data-login="true" :data-haslogin="hasLogin">
-							<image :src="getimg('/static/images/my_icon_19.jpg')" mode="aspectFit"></image>
-							<text>我的推广</text>
-						</view>
-						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/my_yue/my_yue?type='+1" data-login="true" :data-haslogin="hasLogin">
-							<image :src="getimg('/static/images/my_icon_27.jpg')" mode="aspectFit"></image>
-							<text>财务记录</text>
-						</view>
-						<!-- <view class="fuwu_li dis_flex_c aic ju_c" @tap="fk_show=true"> -->
-						<view class="fuwu_li dis_flex_c aic ju_c" @tap="fk_fuc">
-							<image :src="getimg('/static/images/my_icon_35.jpg')" mode="aspectFit"></image>
-							<text>联系客服</text>
-						</view>
-						<!-- <view class="fuwu_li dis_flex_c aic ju_c" style="position: relative;">
-							<button type="default" style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;opacity: 0;z-index: 10;" open-type="contact"></button>
-							<image :src="getimg('/static/images/my_icon_35.jpg')" mode="aspectFit"></image>
-							<text>联系客服</text>
-						</view> -->
-						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/about/about?type=about">
-							<image :src="getimg('/static/images/my_icon_36.jpg')" mode="aspectFit"></image>
-							<text>关于我们</text>
-						</view>
-						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/about/about?type=yhxy">
-							<image :src="getimg('/static/images/my_icon_32.jpg')" mode="aspectFit"></image>
-							<text>用户协议</text>
-						</view>
-						<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/about/about?type=ysxy">
-							<image :src="getimg('/static/images/my_icon_34.jpg')" mode="aspectFit"></image>
-							<text>隐私协议</text>
-						</view>
+				<view v-else class="my_top_box dis_flex_c aic ju_c">
+					<view class="user_name" data-url="/pages/login/login" @tap='jump'>登录/注册</view>
+				</view>
+			</view>
+			<!-- 订单 -->
+			<view class="order_box">
+				<view class="order_top dis_flex aic ju_b">
+					<view>我的订单</view>
+					<view class="go_more dis_flex aic"  @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+0">查看全部<text class="iconfont iconnext-m"></text></view>
+				</view>
+				<view class="order_urls dis_flex aic ju_a">
+					<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+1">
+						<image :src="getimg('/static/images/my_icon_03.jpg')" mode="aspectFit"></image>
+						<text>待付款</text>
+					</view>
+					<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+2">
+						<image :src="getimg('/static/images/my_icon_05.jpg')" mode="aspectFit"></image>
+						<text>待发货</text>
+					</view>
+					<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+3">
+						<image :src="getimg('/static/images/my_icon_07.jpg')" mode="aspectFit"></image>
+						<text>待收货</text>
+					</view>
+					<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+4">
+						<image :src="getimg('/static/images/my_icon_09.jpg')" mode="aspectFit"></image>
+						<text>待评价</text>
+					</view>
+					<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList_sh/OrderList_sh?type='+5">
+						<image :src="getimg('/static/images/my_icon_11.jpg')" mode="aspectFit"></image>
+						<text>退款/售后</text>
 					</view>
 				</view>
-				
-				<view class="zzc_box" v-if="fk_show" @tap="fk_show=false">
-					<view class="fk_box"  @tap.stop="">
-						<view class="d1" @tap.stop="call" data-tel="400-0888-099">客服电话：400-0888-099</view>
-						<view class="d2" @tap="fk_show=false">关闭</view>
+			</view>
+			<!-- 服务 -->
+			<view class="fuwu_box">
+				<view class="fuwu_tit">我的服务</view>
+				<view class="fuwu_list">
+					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/vip_home/vip_home" data-login="true" :data-haslogin="hasLogin">
+						<image :src="getimg('/static/images/my_icon_22.jpg')" mode="aspectFit"></image>
+						<text>会员中心</text>
+					</view>
+					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/my_address/my_address" data-login="true" :data-haslogin="hasLogin">
+						<image :src="getimg('/static/images/my_icon_24.jpg')" mode="aspectFit"></image>
+						<text>收货地址</text>
+					</view>
+					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/share_index/share_index?type='+1"  data-login="true" :data-haslogin="hasLogin">
+						<image :src="getimg('/static/images/my_icon_19.jpg')" mode="aspectFit"></image>
+						<text>我的推广</text>
+					</view>
+					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/my_yue/my_yue?type='+1" data-login="true" :data-haslogin="hasLogin">
+						<image :src="getimg('/static/images/my_icon_27.jpg')" mode="aspectFit"></image>
+						<text>财务记录</text>
+					</view>
+					<!-- <view class="fuwu_li dis_flex_c aic ju_c" @tap="fk_show=true"> -->
+					<view class="fuwu_li dis_flex_c aic ju_c" @tap="fk_fuc">
+						<image :src="getimg('/static/images/my_icon_35.jpg')" mode="aspectFit"></image>
+						<text>联系客服</text>
+					</view>
+					<!-- <view class="fuwu_li dis_flex_c aic ju_c" style="position: relative;">
+						<button type="default" style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;opacity: 0;z-index: 10;" open-type="contact"></button>
+						<image :src="getimg('/static/images/my_icon_35.jpg')" mode="aspectFit"></image>
+						<text>联系客服</text>
+					</view> -->
+					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/about/about?type=about">
+						<image :src="getimg('/static/images/my_icon_36.jpg')" mode="aspectFit"></image>
+						<text>关于我们</text>
+					</view>
+					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/about/about?type=yhxy">
+						<image :src="getimg('/static/images/my_icon_32.jpg')" mode="aspectFit"></image>
+						<text>用户协议</text>
+					</view>
+					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/about/about?type=ysxy">
+						<image :src="getimg('/static/images/my_icon_34.jpg')" mode="aspectFit"></image>
+						<text>隐私协议</text>
 					</view>
 				</view>
-			</block>
-		</block>
+			</view>
+			
+			<view class="zzc_box" v-if="fk_show" @tap="fk_show=false">
+				<view class="fk_box"  @tap.stop="">
+					<view class="d1" @tap.stop="call" :data-tel="serviceTel">客服电话：{{serviceTel}}</view>
+					<view class="d2" @tap="fk_show=false">关闭</view>
+				</view>
+			</view>
+		<!-- </htmlLoading> -->
 	</view>
 </template>
 
@@ -156,9 +149,17 @@
 		onLoad() {
 			that = this
 			that.htmlReset = 0
+			
+		},
+		onShow(){
+			
+			
+		},
+		mounted(){
+			
 		},
 		computed: {
-			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas', 'fj_data'])
+			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas', 'serviceTel'])
 		},
 		methods: {
 			...mapMutations(['login', 'logindata', 'logout', 'setplatform']),

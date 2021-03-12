@@ -1437,4 +1437,31 @@ button.data-v-6af8d01e {
 		height: 10rpx;
 		background: #F5F5F5;
 }
+.jian_btn.data-v-6af8d01e{
+		width: 60rpx;
+		height: 60rpx;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		        align-items: center;
+		-webkit-box-pack: center;
+		-webkit-justify-content: center;
+		        justify-content: center;
+		background-color: #f7f8fa;
+		font-size: 20rpx;
+		color: #333;
+		margin: 0 2rpx;
+}
+.js_goods_num.data-v-6af8d01e{
+		min-width: 0;
+		width: 60rpx;
+		height: 60rpx;
+		background-color: #f7f8fa;
+		font-size: 32rpx;
+		text-align: center;
+		color: #333;
+		margin: 0 2rpx;
+}
 

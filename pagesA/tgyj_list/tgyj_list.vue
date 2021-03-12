@@ -1,16 +1,12 @@
 <template>
 	<view class="minh100">
-		<view v-if="htmlReset==1" class="zanwu" @tap='onRetry'>请求失败，请点击重试</view>
-		<view v-if="htmlReset==-1" class="loading_def">
-			<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
-		</view>
-		<block v-if="htmlReset==0">
+		<htmlLoading ref="htmlLoading" @Retry='onRetry' :bj_show="false">
 			<view class="top_box">
 				<image class="top_box_bg" :src="getimg('/static/images/images/tg_bg_02.png')" mode=""></image>
 				<view class="top_box_msg">
 					<view class="top_l">
 						<view class="top_l1">当前佣金</view>
-						<view class="top_l2">26</view>
+						<view class="top_l2">{{loginDatas.commission*1}}</view>
 					</view>
 					<image class="tg_icon" :src="getimg('/static/images/tgyj.png')" mode="aspectFit"></image>
 				</view>
@@ -26,21 +22,21 @@
 					
 				</view>
 				
-				<view class="tx_li" v-for="(item,index) in 3">
+				<view class="tx_li" v-for="(item,index) in datas">
 					<view class="tx_l">
-						<view class="mx_name">提现</view>
-						<view class="mx_time">2017-02-17</view>
+						<view class="mx_name">{{item.change_type_value}}</view>
+						<view class="mx_time">{{item.create_time}}</view>
 					</view>
 					<view class="tx_r">
-						<view  class="mx_pri">+12.00</view>
+						<view  class="mx_pri">{{item.symbol}}{{item.price}}</view>
 					</view>
 				</view>
 				
-				<!-- <view v-if="goods_list.length==0" class="zanwu">暂无数据</view> -->
-				<!-- <view v-if="data_last" class="data_last">我可是有底线的哟~~~</view> -->
+				<view v-if="datas.length==0" class="zanwu">暂无数据</view>
+				<view v-if="data_last" class="data_last">我可是有底线的哟~</view>
 				<!-- <view  class="data_last">我可是有底线的哟~~~</view> -->
 			</view>
-		</block>
+		</htmlLoading>
 		
 	</view>
 </template>
@@ -58,37 +54,33 @@
 				btnkg:0,
 				htmlReset:-1,
 				data_last:false,
-				tab_cur:1,
+				tab_cur:3,
 				hetong_list:[
 					{
 						title:'一级返佣',
-						id:1
+						id:3
 					},
 					{
 						title:'二级返佣',
-						id:2
+						id:4
 					},
 					{
 						title:'公司奖励',
-						id:3
+						id:5
 					},
 				],
 				hetong_index:0,
+				page:1,
+				size:20
 			}
 		},
 		computed:{
 			...mapState([
 				'hasLogin',
-				'loginMsg',
+				'loginDatas',
 				'wxlogin',
 				// 'order_ls_data'
 			]),
-			
-		},
-		onPullDownRefresh() {
-			uni.stopPullDownRefresh()
-		},
-		onReachBottom() {
 			
 		},
 		onLoad(option) {
@@ -98,8 +90,14 @@
 			}
 			that.datas=[]
 			that.htmlReset=0
-			return
+		
 			this.onRetry()
+		},
+		onPullDownRefresh() {
+			that.onRetry()
+		},
+		onReachBottom() {
+			that.getdatalist()
 		},
 		methods: {
 			getimg(img){
@@ -120,10 +118,89 @@
 					}
 					if(datas.type==3){ //合同
 						this.hetong_index = e.target.value
+						that.onRetry()
 						// that.gettaocan(that.hetong_list[e.target.value].id)
 					}
 					
 			},
+			onRetry(){
+				// uni.stopPullDownRefresh()
+				// return
+				this.datas=[]
+				this.page=1
+				this.btnkg=0
+				this.data_last=false
+				this.getdatalist()
+			},
+			getdatalist(){
+				
+				let that =this
+				var jkurl='/user/getMyMoney'
+				var datas={
+					token: that.$store.state.loginDatas.userToken||'',
+					page:that.page,
+					size:that.size,
+					type:that.hetong_list[that.hetong_index].id
+				}
+				if(that.data_last) return
+				uni.showLoading({
+					title: '正在获取数据',
+					mask: true
+				})
+				var page_that = that.page
+				service.P_get(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					that.$refs.htmlLoading.htmlReset_fuc(0)
+					console.log(res)
+					if (res.code == 1) {
+						that.htmlReset = 0
+						var datas = res.data
+						console.log(typeof datas)
+				
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						console.log(res)
+				
+						if (page_that == 1) {
+				
+							that.datas = datas
+						} else {
+							if (datas.length == 0) {
+								that.data_last = true
+								return
+							}
+							that.datas = that.datas.concat(datas)
+						}
+						that.page++
+				
+					} else {
+						that.htmlReset = 1
+					that.$refs.htmlLoading.htmlReset_fuc(1)
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '获取数据失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.htmlReset = 1
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败，请检查您的网络连接'
+					})
+				})
+				
+			},
+			
 		}
 	}
 </script>

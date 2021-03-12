@@ -14,6 +14,13 @@ import uParse from '@/components/gaoyia-parse/parse.vue'
 Vue.component('cu-custom',cuCustom)
 Vue.component('u-parse',uParse)
 
+
+// 页面初始化
+import htmlLoading from '@/components/html_loading/html_loading.vue'
+Vue.component('htmlLoading', htmlLoading)
+
+
+
 Vue.config.productionTip = false
 
 Vue.prototype.tim = tim.tim  			//tim sdk 引入后生成的tim服务

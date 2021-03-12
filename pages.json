@@ -52,7 +52,7 @@
 			"path": "pages/car/car",
 			"style": {
 				"navigationBarTitleText": "依辈通",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true
 			}
 
 		}
@@ -82,7 +82,7 @@
 			"path": "my_address/my_address",
 			"style": {
 				"navigationBarTitleText": "添加地址",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true
 			}
 
 		}, {
@@ -128,7 +128,7 @@
 			}
 
 		}, {
-			"path": "orderDetails_sh_xq/orderDetails_sh_xq",
+			"path": "OrderDetails_sh_xq/OrderDetails_sh_xq",
 			"style": {
 				"navigationBarTitleText": "售后详情",
 				"enablePullDownRefresh": false
@@ -208,7 +208,7 @@
 			"path": "tgyj_list/tgyj_list",
 			"style": {
 				"navigationBarTitleText": "佣金明细",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true
 			}
 
 		}, {
@@ -299,17 +299,20 @@
 			"iconPath": "static/images/tabbar/tab5.png",
 			"selectedIconPath": "static/images/tabbar/tab52.png"
 		}]
-	},
+	}
+	
+	,
 
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "依辈通",
 		"navigationBarBackgroundColor": "#fff",
-		"backgroundColor": "#F8F8F8",
-
-		"usingComponents": {
-			"van-stepper": "./wxcomponents/vant/stepper/index",
-			"van-popup": "./wxcomponents/vant/popup/index"
+		"backgroundColor": "#F8F8F8"
+		// #ifdef MP-WEIXIN
+		,"usingComponents": {
+			"van-stepper": "./wxcomponents/vant/stepper/index"
 		}
+		// #endif
 	}
+	
 }

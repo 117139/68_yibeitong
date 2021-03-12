@@ -57,7 +57,7 @@
 				region: ['北京市', '北京', '东城区'],
 				moren: false,
 				xxaddress: '',
-				areaJson:{},
+				areaJson:'',
 			}
 		},
 		computed: {
@@ -193,17 +193,17 @@
 				} else {
 					that.btnkg = 1
 				}
-				uni.showToast({
-					icon: 'none',
-					title: '操作成功'
-				})
-				setTimeout(() => {
-					uni.navigateBack()
-				}, 1000)
-				return
+				// uni.showToast({
+				// 	icon: 'none',
+				// 	title: '操作成功'
+				// })
+				// setTimeout(() => {
+				// 	uni.navigateBack()
+				// }, 1000)
+				// return
 				var jkurl = '/user/address'
 				var data = {
-					token: that.loginMsg.userToken,
+					token: that.$store.state.loginDatas.userToken||'',
 					name: formresult.name,
 					tel: formresult.tel,
 					province_id: that.region_id[0],
@@ -216,7 +216,7 @@
 					jkurl = '/user/address/amend'
 					data = {
 						id: that.id,
-						token: that.loginMsg.userToken,
+						token: that.$store.state.loginDatas.userToken||'',
 						name: formresult.name,
 						tel: formresult.tel,
 						province_id: that.region_id[0],
@@ -226,48 +226,46 @@
 						is_default: that.moren ? 1 : 0
 					}
 				}
-				service.post(jkurl, data,
-					function(res) {
-						that.btnkg = 0
-						// if (res.data.code == 1) {
-						if (res.data.code == 1) {
-							var datas = res.data.data
-							// console.log(typeof datas)
-
-							if (typeof datas == 'string') {
-								datas = JSON.parse(datas)
-							}
-							uni.showToast({
-								icon: 'none',
-								title: '操作成功'
-							})
-							setTimeout(() => {
-								uni.navigateBack()
-							}, 1000)
-						} else {
-							if (res.data.msg) {
-								uni.showToast({
-									icon: 'none',
-									title: res.data.msg
-								})
-							} else {
-								uni.showToast({
-									icon: 'none',
-									title: '操作失败'
-								})
-							}
+				service.P_post(jkurl, data).then(res => {
+					that.btnkg = 0
+					that.htmlReset=0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+							
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
 						}
-					},
-					function(err) {
-						that.btnkg = 0
-
 						uni.showToast({
 							icon: 'none',
-							title: '获取数据失败'
+							title: '操作成功'
 						})
-
+						setTimeout(() => {
+							uni.navigateBack()
+						}, 1000)
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
 					}
-				)
+				}).catch(e => {
+					that.btnkg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '操作异常'
+					})
+				})
+				
 			}
 		}
 	}

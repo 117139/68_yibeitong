@@ -28,20 +28,21 @@
 		    <image :src="getimg('/static/images/orderBorder_02.jpg')"></image>
 		  </view>
 			<view class="hengxian"></view>
-		  <view class="goodsBox contbox">
-		    <view class="goods1" v-for="(item,idx) in datas" :data-tab="idx">
+		  <view class="goodsBox contbox"  v-for="(item,idx) in data_list" :data-tab="idx">
+				
+		    <view class="goods1" v-for="(item1,idx1) in item.goods" :data-tab="idx1">
 		      <view class="goodsImg">
-		        <!-- <image class="goodsImg" :src="getimg(item.photo[0])" mode="aspectFill"></image> -->
-		        <image class="goodsImg" :src="getimg(item.photo)" mode="aspectFill"></image>
+		        <image class="goodsImg" :src="getimg(item1.photo[0])" mode="aspectFill"></image>
+		        <!-- <image class="goodsImg" :src="getimg(item1.photo[0])" mode="aspectFill"></image> -->
 		      </view>
 		      <view class="goodsinr">
-		        <view class="goodsname">{{item.title}}</view>
+		        <view class="goodsname oh2">{{item1.title}}</view>
 		        <view class="goodspri"><text style="margin-right: 4rpx;" v-for="(item2,idx2) in item.attr">{{item2.value}}</text></view>
 		        <view class="goodspri1">
 		          <!-- <text class="fz36 cf6377a fwb">￥{{filter.moneyFormat('48')}}</text> -->
-		          <view class="goods_pri"><text style="font-size: 22upx;">￥</text>{{item.price}}</view>
+		          <view class="goods_pri"><text style="font-size: 22upx;">￥</text>{{item1.price}}</view>
 		    		
-							<text class="goods_num"><text>×</text>{{item.number}}</text>
+							<text class="goods_num"><text>×</text>{{item1.number}}</text>
 		        </view>
 		      </view>
 		    </view>
@@ -55,7 +56,7 @@
 					  <!-- <view>10元</view> -->
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >￥577.99</view>
+					  <view >￥{{data_list[0].sum_price}}</view>
 					</view>
 				</view>
 		    <view class="guige_li">
@@ -64,7 +65,7 @@
 					  <!-- <view>10元</view> -->
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >￥0.00</view>
+					  <view >{{yunfei.length==0? '免运费':yunfei[0].postage==0? '免运费':'+￥'+yunfei[0].postage}}</view>
 					</view>
 				</view>
 		  </view>
@@ -99,7 +100,6 @@
 				sku_number: '', //数量
 				advocacy_user_id:'',   //代言人
 				dy_id:'',
-				advocacy_user_id:'',
 				use_dou:0,
 				
 				g_data:'',    //1,2（type=2）购物车 c_id
@@ -148,28 +148,28 @@
 				that.g_data=option.g_data
 				
 			}
-			that.datas=[
-				{
-					photo:'/static/images/index_12.jpg',
-					title:'octopusme可拆卸宽松中长款工装棉服女秋冬新款风衣外套',
-					attr:['XL','多色'],
-					price:'39.99',
-					number:1,
-					sku_number:100,
-					id:1
-				},
-				{
-					photo:'/static/images/index_15.jpg',
-					title:'FREETIE 固特异工装帆布鞋 高密度飞织春夏款',
-					attr:['炭黑（春夏款）','42'],
-					price:'209',
-					number:1,
-					sku_number:100,
-					id:2
-				},
-			]
-			that.htmlReset=0
-			return
+			// that.datas=[
+			// 	{
+			// 		photo:'/static/images/index_12.jpg',
+			// 		title:'octopusme可拆卸宽松中长款工装棉服女秋冬新款风衣外套',
+			// 		attr:['XL','多色'],
+			// 		price:'39.99',
+			// 		number:1,
+			// 		sku_number:100,
+			// 		id:1
+			// 	},
+			// 	{
+			// 		photo:'/static/images/index_15.jpg',
+			// 		title:'FREETIE 固特异工装帆布鞋 高密度飞织春夏款',
+			// 		attr:['炭黑（春夏款）','42'],
+			// 		price:'209',
+			// 		number:1,
+			// 		sku_number:100,
+			// 		id:2
+			// 	},
+			// ]
+			// that.htmlReset=0
+			// return
 			that.getdata()
 		},
 		onShow() {
@@ -203,7 +203,7 @@
 		 * 页面相关事件处理函数--监听用户下拉动作
 		 */
 		onPullDownRefresh: function() {
-		  // that.getdata()
+		  that.getdata()
 		},
 		methods: {
 			...mapMutations(['order_ls']),
@@ -269,11 +269,11 @@
 			  let that = this
 				var jkurl = '/makeOrder/show'
 				var datas = {
-					token: that.loginMsg.userToken
+					token: that.$store.state.loginDatas.userToken||'',
 				}
 				if(that.type==1){
 					datas = {
-						token: that.loginMsg.userToken,
+					token: that.$store.state.loginDatas.userToken||'',
 						type:that.type,
 						v_id:that.sku_id,
 						number:that.sku_number
@@ -281,7 +281,7 @@
 				}
 				if(that.type==2){
 					datas = {
-						token: that.loginMsg.userToken,
+					token: that.$store.state.loginDatas.userToken||'',
 						type:that.type,
 						g_data:that.g_data
 					}
@@ -351,7 +351,7 @@
 					newarr.push(new_i)
 				}
 				var datas = {
-					token: that.loginMsg.userToken,
+					token: that.$store.state.loginDatas.userToken||'',
 					data:JSON.stringify(newarr),
 					address_id:that.address.id
 				}

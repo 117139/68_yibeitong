@@ -9,7 +9,7 @@
 				<view class="scroll_L_list">
 					<!-- <view class="l_remen" :class="l_active==-1?'active':''" @tap="l_active_fuc('item',-1)">热门推荐</view> -->
 					<view class="scroll_L_li" :class="l_active==-1?'active':''" @tap="l_active_fuc('item',-1)">热门推荐</view>
-					<view v-for="(item,index) in goods_type" class="scroll_L_li" :class="l_active==index?'active':''" @tap="l_active_fuc(item,index)">{{item.name}}</view>
+					<view v-for="(item,index) in goods_type" class="scroll_L_li" :class="l_active==index?'active':''" @tap="l_active_fuc(item,index)">{{item.title}}</view>
 				</view>
 
 			</scroll-view>
@@ -18,40 +18,44 @@
 			 @refresherabort="onAbort" @scrolltolower="getdata" @scroll="scroll_fuc">
 				<view class="scroll_R_list">
 					<block v-if="l_active==-1">
-						<view class="goods_type_box clearfix">
+						<view v-if="datas.recommendData" class="goods_type_box clearfix">
 							<view class="goods_type_tit">
 								·<text>热门推荐</text>·
 							</view>
 							<view class="goods_type_list">
-								<view class="goods_type_li" v-for="(item,index) in datas" @tap="jump" :data-url="'/pagesA/good_list/good_list?id='+item.id+'&name='+item.name">
-									<image class="goods_type_li_img" :src="getimg(item.pic)" mode="aspectFit"></image>
-									<view class="goods_type_li_text text-cut">{{item.name}}</view>
+								<view class="goods_type_li" v-for="(item,index) in datas.recommendData" @tap="jump" :data-url="'/pagesA/good_list/good_list?id='+item.id+'&name='+item.title">
+									<image class="goods_type_li_img" :src="getimg(item.img)" mode="aspectFit"></image>
+									<view class="goods_type_li_text text-cut">{{item.title}}</view>
 								</view>
 							</view>
+								<!-- <view v-if="datas.recommendData.length==0" class="zanwu">暂无数据</view> -->
 						</view>
 						<view class="goods_type_box clearfix">
 							<view class="goods_type_tit">
 								·<text>精选专区</text>·
 							</view>
 							<view class="goods_type_list">
-								<view class="goods_type_li" v-for="(item,index) in datas" @tap="jump" :data-url="'/pagesA/good_list/good_list?id='+item.id+'&name='+item.name">
-									<image class="goods_type_li_img" :src="getimg(item.pic)" mode="aspectFit"></image>
-									<view class="goods_type_li_text text-cut">{{item.name}}</view>
+								<view class="goods_type_li" v-for="(item,index) in datas.choicenessData" @tap="jump" :data-url="'/pagesA/good_list/good_list?id='+item.id+'&name='+item.title">
+									<image class="goods_type_li_img" :src="getimg(item.img)" mode="aspectFit"></image>
+									<view class="goods_type_li_text text-cut">{{item.title}}</view>
 								</view>
 							</view>
+							<!-- <view v-if="datas.choicenessData.length==0" class="zanwu">暂无数据</view> -->
 						</view>
 					</block>
 					<block v-else>
 						
 						<view class="goods_type_box clearfix">
 							<view class="goods_type_tit">
-								·<text>{{goods_type[l_active].name}}</text>·
+								·<text>{{goods_type[l_active].title}}</text>·
 							</view>
 							<view class="goods_type_list">
-								<view class="goods_type_li" v-for="(item,index) in datas" @tap="jump" :data-url="'/pagesA/good_list/good_list?id='+item.id+'&name='+item.name">
-									<image class="goods_type_li_img" :src="getimg(item.pic)" mode="aspectFit"></image>
-									<view class="goods_type_li_text text-cut">{{item.name}}</view>
+								<view class="goods_type_li" v-for="(item,index) in datas" @tap="jump" :data-url="'/pagesA/good_list/good_list?id='+item.id+'&name='+item.title">
+									<image class="goods_type_li_img" :src="getimg(item.img)" mode="aspectFit"></image>
+									<view class="goods_type_li_text text-cut">{{item.title}}</view>
 								</view>
+								<view v-if="datas.length==0" class="zanwu">暂无数据</view>
+								<!-- <view v-if="data_last" class="data_last">我可是有底线的哟~~~</view> -->
 							</view>
 						</view>
 					</block>
@@ -149,11 +153,25 @@
 		},
 		onLoad() {
 			that = this
-			that.htmlReset = 0
+			// that.htmlReset = 0
+			that.onRetry()
 		},
 		methods: {
+			onRetry() {
+				this.page = 1
+				this.datas = []
+				this.data_last = false
+				that.getcate(0)
+				// this.getdata()
+			},
 			l_active_fuc(item,index){
 				that.l_active=index
+				if(index==-1){
+					that.getcate(-1)
+				}else{
+					that.getcate(item.id)
+				}
+				
 			},
 			onPulling(e) {
 				console.log("onpulling", e);
@@ -179,102 +197,65 @@
 			onAbort() {
 				console.log("onAbort");
 			},
-			onRetry() {
-				this.page = 1
-				this.datas = []
-				this.data_last = false
-				this.getdata()
-			},
-			getdata() {
-				var that = this
-				if(!that.hasLogin){
-					this.htmlReset=0
-					return
-				}
-				if (that.data_last) {
-					return
-				}
-				uni.getLocation({
-				    type: 'gcj02',
-				    success: function (res) {
-				        console.log('当前位置的经度：' + res.longitude);
-								that.longitude=res.longitude
-								that.latitude=res.latitude
-				        console.log('当前位置的纬度：' + res.latitude);
-								var datas = {
-								
-									token: that.loginDatas.token,
-									long:that.longitude,
-									lat:that.latitude,
-									page: that.page,
-									size: that.size,
-									status:''
-								}
-								if (that.btn_kg == 1) {
-									return
-								}
-								that.btn_kg = 1
-								//selectSaraylDetailByUserCard
-								var jkurl = '/engineer/list'
-								uni.showLoading({
-									title: '正在获取数据',
-									mask: true
-								})
-								var page_that = that.page
-								service.P_get(jkurl, datas).then(res => {
-									that.btn_kg = 0
-									console.log(res)
-									if (res.code == 1) {
-										that.htmlReset = 0
-										var datas = res.data
-										console.log(typeof datas)
-								
-										if (typeof datas == 'string') {
-											datas = JSON.parse(datas)
-										}
-										console.log(res)
-								
-										if (page_that == 1) {
-								
-											that.datas = datas
-										} else {
-											if (datas.length == 0) {
-												that.data_last = true
-												return
-											}
-											that.datas = that.datas.concat(datas)
-										}
-										that.page++
-								
-									} else {
-										that.htmlReset = 1
-										if (res.msg) {
-											uni.showToast({
-												icon: 'none',
-												title: res.msg
-											})
-										} else {
-											uni.showToast({
-												icon: 'none',
-												title: '获取数据失败'
-											})
-										}
-									}
-								}).catch(e => {
-									that.htmlReset = 1
-									that.btn_kg = 0
-									console.log(e)
-									uni.showToast({
-										icon: 'none',
-										title: '获取数据失败，请检查您的网络连接'
-									})
-								})
-								
-				    }
-				});
-			
+			getcate(pid){
+				 var data = {
+					 pid:pid
+				 }
+				 			
+				 //selectSaraylDetailByUserCard
+				 var jkurl = '/cate/list'
 				
+				service.P_get(jkurl, data).then(res => {
+				 	that.btn_kg = 0
+				 	console.log(res)
+				 	if (res.code == 1) {
+				 		var datas = res.data
+				 		console.log(typeof datas)
+				 			
+				 		if (typeof datas == 'string') {
+				 			datas = JSON.parse(datas)
+				 		}
+				 			
+				 		if(pid==0){
+							that.goods_type = datas
+							that.l_active=-1
+							that.getcate(-1)
+							// if(datas.length>0){
+							// 	var cate_list=JSON.stringify(datas)
+							// 	uni.setStorageSync('cate_list',cate_list)
+							// }
+						}else{
+							that.htmlReset = 0
+							that.datas = datas
+						}
+						
+				 		console.log(datas)
+				 			
+				 			
+				 	} else {
+				 		if (res.msg) {
+				 			uni.showToast({
+				 				icon: 'none',
+				 				title: res.msg
+				 			})
+				 		} else {
+				 			uni.showToast({
+				 				icon: 'none',
+				 				title: '获取失败'
+				 			})
+				 		}
+				 	}
+				}).catch(e => {
+				 	that.btn_kg = 0
+					that.htmlReset = 1
+				 	console.log(e)
+				 	uni.showToast({
+				 		icon: 'none',
+				 		title: '获取数据失败'
+				 	})
+				})
 			},
+			
 			
 			getimg(img) {
 				console.log(service.getimg(img))

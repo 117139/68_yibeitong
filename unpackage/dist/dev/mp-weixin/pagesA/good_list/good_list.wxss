@@ -29,7 +29,7 @@
 }
 .index_zbox.data-v-f544fa26 {
 	width: 100%;
-	padding: 30rpx 30rpx 15rpx;
+	padding: 15rpx 15rpx 15rpx;
 }
 .index_xxtz.data-v-f544fa26{
 	width: 100%;
@@ -92,16 +92,22 @@
 .huodong_li.data-v-f544fa26:nth-child(2n){
 	margin-right: 0;
 }
+.goods_li_box.data-v-f544fa26{
+	width: 50%;
+	padding: 15rpx;
+}
 .goods_li.data-v-f544fa26{
-	width: 327rpx;
-	margin-right: 35rpx;
-	margin-bottom: 20rpx;
+	/* width: 327upx; */
+	width:100%;
+	/* margin-right: 35upx;
+	margin-bottom: 20upx; */
 }
-.goods_li.data-v-f544fa26:nth-child(2n){
+/* .goods_li:nth-child(2n){
 	margin-right: 0;
-}
+} */
 .goods_li_img.data-v-f544fa26{
-	width: 327rpx;
+	/* width: 327upx; */
+	width:100%;
 	height: 404rpx;
 	border-radius: 4px;
 }

@@ -7,18 +7,18 @@
 					<view class="setting1 " :data-id="item.id" @tap="select_car(item,index)">
 						<text :class="item.active==1?'active':''" class="iconfont iconduigou-copy fz26 mr5"></text>
 					</view>
-					<image class="car_li_img" @tap="jump" data-url="/pagesA/details/details" :src="getimg(item.pic)" mode="aspectFit"></image>
-					<view class="flex_1"  @tap="jump" data-url="/pagesA/details/details">
-						<view class="goods_name">{{item.name}}</view>
-						<view class="goods_gg">
-							<text v-for="(item1,index1) in item.gg">{{item1}}</text>
+					<image class="car_li_img" @tap="jump" :data-url="'/pagesA/details/details?id='+item.id" :src="getimg(item.g_pic[0])" mode="aspectFit"></image>
+					<view class="flex_1">
+						<view class="goods_name oh2"  @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">{{item.g_title}}</view>
+						<view class="goods_gg"  @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">
+							<text v-for="(item1,index1) in item.attr">{{item1.value+';'}}</text>
 						</view>
 						<view class="goods_pri_num dis_flex aic ju_b">
-							<view class="goods_pri">￥<text>{{item.pri}}</text></view>
+							<view class="goods_pri">￥<text>{{item.g_price}}</text></view>
 							<view class="goods_num dis_flex">
 								<text v-if="item.num>1" class="iconfont iconiconset0187" @tap.stop="onNum(item,'-')"></text>
 								<text v-else class="iconfont iconiconset0187 no"></text>
-								<input type="text" v-model="item.num" disabled="">
+								<input type="text" v-model="item.number" disabled="">
 								<text class="iconfont icon54" @tap.stop="onNum(item,'+')"></text>
 							</view>
 						</view>
@@ -29,6 +29,8 @@
 				</view>
 			</view>
 		</view>
+		<view v-if="datas.length==0" class="zanwu">暂无数据</view>
+		<view v-if="data_last" class="data_last">我可是有底线的哟~</view>
 		<view style="width: 100%;height: 100upx;"></view>
 		<view class="vbottom" v-if="datas.length!==0">
 			<view class="selecAll" @tap="selecAll">
@@ -75,7 +77,8 @@
 				listTouchStart: 0,
 				listTouchDirection: null,
 				all:false,
-				sum:0.00
+				sum:0.00,
+				data_last:''
 			}
 		},
 		components: {
@@ -87,69 +90,15 @@
 		},
 		onLoad() {
 			that=this
-			that.datas=[
-				{
-					pic:'/static/images/goods_type_03.jpg',
-					name:'MODULE悦写 4合1多功能笔 中性笔 与铅笔结合',
-					gg:['4合1多功能笔','多色'],
-					pri:'39.99',
-					num:1,
-					sku_num:100,
-					id:1
-				},
-				{
-					pic:'/static/images/goods_type_05.jpg',
-					name:'FREETIE 固特异工装帆布鞋 高密度飞织春夏款',
-					gg:['炭黑（春夏款）','42'],
-					pri:'209',
-					num:1,
-					sku_num:100,
-					id:2
-				},
-				{
-					pic:'/static/images/goods_type_07.jpg',
-					name:'法国Dior迪奥 烈焰蓝金唇膏999滋润3.5g/盒',
-					gg:['#999滋润'],
-					pri:'269',
-					num:1,
-					sku_num:100,
-					id:3
-				}, 
-				{
-					pic:'/static/images/goods_type_03.jpg',
-					name:'MODULE悦写 4合1多功能笔 中性笔 与铅笔结合',
-					gg:['4合1多功能笔','多色'],
-					pri:'39.99',
-					num:1,
-					sku_num:100,
-					id:4
-				},
-				{
-					pic:'/static/images/goods_type_05.jpg',
-					name:'FREETIE 固特异工装帆布鞋 高密度飞织春夏款',
-					gg:['#999滋润'],
-					pri:'206',
-					num:1,
-					sku_num:100,
-					id:5
-				},
-				{
-					pic:'/static/images/goods_type_07.jpg',
-					name:'法国Dior迪奥 烈焰蓝金唇膏999滋润3.5g/盒',
-					gg:['4合1多功能笔', '多色'],
-					pri:'269',
-					num:1,
-					sku_num:100,
-					id:6
-				}, 
-			]
-			// this.getdata()
+			
+			this.getdata()
 		},
 		/**
 		 * 页面相关事件处理函数--监听用户下拉动作
 		 */
 		onPullDownRefresh: function () {
 			this.page=1
+			this.datas=[]
 		  this.getdata()
 		},
 		
@@ -236,7 +185,7 @@
 			  let var2 = this.datas
 			  for (let i in var2) {
 			    if (var2[i].active == true) {
-			      heji += var2[i].num * (var2[i].pri * 100)
+			      heji += var2[i].number * (var2[i].g_price * 100)
 			
 			    }
 			  }
@@ -253,24 +202,25 @@
 			  // let thisidx = e.currentTarget.dataset.idx
 			  // let thisidx1 = e.currentTarget.dataset.idx1
 			
-			  if (item < 2 && ad == '-') {
+			  if (item.number < 2 && ad == '-') {
 			    console.log('禁止')
 			    return false;
 			
 			  }
-				var new_num=item.num
-				if (ad == '-') {
-				  new_num--
-				} else {
-				  new_num++
-				}
-				Vue.set(item, 'num', new_num)
-			  return
+				
+				// var new_num=item.num
+				// if (ad == '-') {
+				//   new_num--
+				// } else {
+				//   new_num++
+				// }
+				// Vue.set(item, 'num', new_num)
+			 //  return
 			  var jkurl= '/cart/incOrDec'
 				var datas={
-					token: that.loginMsg.userToken,
-					g_id:that.data_list[thisidx].g_id,
-					v_id:that.data_list[thisidx].v_id,
+					token: that.$store.state.loginDatas.userToken||'',
+					g_id:item.g_id,
+					v_id:item.v_id,
 					type:ad == '-'?'dec':'inc',
 					sum:1
 				}
@@ -285,12 +235,33 @@
 			 			datas = JSON.parse(datas)
 			 		}
 			 	
-			 		if (ad == '-') {
-			 		  that.data_list[thisidx].number--
-			 		} else {
-			 		  that.data_list[thisidx].number++
-			 		}
-			 	
+			 		// if (ad == '-') {
+			 		//   that.datas[thisidx].number--
+			 		// } else {
+			 		//   that.datas[thisidx].number++
+			 		// }
+					var new_num=item.number--
+					if (ad == '-') {
+					  new_num--
+					} else {
+						if(item.sku_number==item.number){
+							uni.showToast({
+								icon:'none',
+								title:'库存不足'
+							})
+							return
+						}
+						if(item.sku_number<item.number){
+							uni.showToast({
+								icon:'none',
+								title:'库存不足'
+							})
+							Vue.set(item, 'number', item.sku_number)
+							return
+						}
+					  new_num++
+					}
+					Vue.set(item, 'number', new_num)
 			 	}
 			 }).catch(e => {
 			 	that.btn_kg=0
@@ -316,16 +287,16 @@
 			  // for (let i in xuanG) {
 				for(var i=0; i<xuanG.length;i++){
 			    if (xuanG[i].active) {
-						if(xuanG[i].num>xuanG[i].sku_num){
+						if(xuanG[i].number>xuanG[i].sku_number){
 							kc_tip=true
 							that.all=false
 							Vue.set(that.datas[i],'xuan',false)
 						}else{
 							if (idG == '') {
-							  idG = xuanG[i].id
+							  idG = xuanG[i].c_id
 										
 							} else {
-							  idG += ',' + xuanG[i].id
+							  idG += ',' + xuanG[i].c_id
 							}
 						}
 			     
@@ -336,6 +307,7 @@
 			  }
 			  // xzarr = JSON.stringify(xzarr)
 			  // console.log(xzarr)
+			  console.log('idG------------------------------->')
 			  console.log(idG)
 				if(kc_tip&&idG !== ''){
 					uni.showToast({
@@ -366,79 +338,80 @@
 					
 				}
 			},
-			getdata(){
-				// /api/my/myCollect
-				var that =this
+			getdata() {
+				
+				///api/info/list
+				// var that = this
+				console.log(that.$store.state.loginDatas.userToken)
+				// return
 				var data = {
-					token:that.loginDatas.token,
+					token: that.$store.state.loginDatas.userToken||'',
 					page:that.page,
 					per_page:that.pagesize
 				}
-				var jkurl = '/api/my/issue'
-				console.log(that.btnkg)
-				if(that.btnkg==1){
+				if(that.btn_kg==1){
 					return
-				}else{
-					that.btnkg=1
 				}
-				service.post(jkurl, data,
-					function(res) {
-						
-						// if (res.data.code == 1) {
-						if (res.data.code == 1) {
-							
-							var datas = res.data.data.data
-							console.log(typeof datas)
-							
-							if (typeof datas == 'string') {
-								datas = JSON.parse(datas)
-							}
-							if(that.page==1){
-								that.datas=datas
-								that.page++
-								that.btnkg=0
-							}else{
-								that.btnkg=0
-								if(datas.length==0){
-									uni.showToast({
-										icon:'none',
-										title:'暂无更多数据'
-									})
-									return
-								}
-								that.datas=that.datas.concat(datas)
-								that.page++
-							}
-							
-								
-								
-				
-						} else {
-							that.btnkg=0
-							if (res.data.msg) {
-								uni.showToast({
-									icon: 'none',
-									title: res.data.msg
-								})
-							} else {
-								uni.showToast({
-									icon: 'none',
-									title: '操作失败'
-								})
-							}
+				that.btn_kg=1
+				//selectSaraylDetailByUserCard
+				var jkurl = '/cart'
+				uni.showLoading({
+					title: '正在获取数据'
+				})
+				// setTimeout(()=>{
+				// 	uni.hideLoading()
+				// },1000)
+				// return
+				var page_now=that.page
+				service.P_get(jkurl, data).then(res => {
+					that.btn_kg = 0
+					that.htmlReset=0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+			
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
 						}
-					},
-					function(err) {
-						that.btnkg=0
-						
+						if(page_now==1){
+				
+							that.datas = datas
+						} else {
+							if (datas.length == 0) {
+								that.data_last = true
+								return
+							}
+							that.data_last = false
+							that.datas = that.datas.concat(datas)
+						}
+						that.page++
+						console.log(datas)
+			
+			
+					} else {
+						if (res.msg) {
 							uni.showToast({
 								icon: 'none',
-								title: '获取数据失败'
+								title: res.msg
 							})
-					
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
 					}
-				)
+				}).catch(e => {
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败'
+					})
+				})
 			},
+			
 			
 			back_fuc() {
 				uni.navigateBack()

@@ -22,7 +22,7 @@
 		          <text>{{item.store_name}}</text>
 		        </view> -->
 						<block v-for="(item1,idx1) in item.order_goods">
-							<view class="goods1" @tap="jump_sh" :data-url="'/pagesA/orderDetails_sh_xq/orderDetails_sh_xq?id='+item1.id+'&type='+type">
+							<view class="goods1" @tap="jump_sh" :data-url="'/pagesA/OrderDetails_sh_xq/OrderDetails_sh_xq?id='+item1.id+'&type='+type">
 								<!-- <view v-if="type==4}}" class="xuanze" data-selec="idx}}" data-selec1="idx1}}" catchtap="select">
 		            <view class="xuanze1 {{goods_sele[idx][idx1].xuan==true? 'xuanze2':''}}">
 		              <icon v-if="goods_sele[idx][idx1].xuan==true}}" type="success" size="14" color="#F7B43B" />

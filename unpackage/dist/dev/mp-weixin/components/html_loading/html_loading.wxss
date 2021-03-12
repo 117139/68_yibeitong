@@ -1,0 +1,35 @@
+
+.minh100.data-v-59319e84{
+	position: relative;
+	/* z-index: 900; */
+}
+.zanwu.data-v-59319e84{
+	width: 100%;
+	line-height: 240rpx;
+	text-align: center;
+	font-size: 28rpx;
+	color: #999;
+}
+.loading_def.data-v-59319e84{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	background: #fff;
+	z-index: 900;
+}
+.loading_def_img.data-v-59319e84{
+	width: 200rpx!important;
+	height: 200rpx!important
+}
+

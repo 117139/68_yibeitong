@@ -16,7 +16,11 @@
 			var that =this
 			console.log('App Launch')
 			// #ifdef MP-WEIXIN
-			// service.wxlogin()
+			service.wxlogin()
+			// #endif
+			// #ifdef H5
+			// service.wxlogin_ceshi_h5()
+		service.wxlogin('token')
 			// #endif
 			uni.getSystemInfo({
 				success: function(e) {
@@ -103,7 +107,7 @@
 	/*每个页面公共css */
 	@import "colorui/main.css";
 	@import "colorui/icon.css";
-	@import "static/css/iconfont.css";
+	@import "common/font/iconfont.css";
 	.hidden{
 		display: none;
 	}

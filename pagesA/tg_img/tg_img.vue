@@ -74,7 +74,13 @@
 					finish(url) {
 						wx.hideLoading();
 						wx.saveImageToPhotosAlbum({
-							filePath: url
+							filePath: url,
+							success(res) {
+								// _app.showToast('保存成功');
+								uni.showToast({
+									title:'保存成功'
+								});
+							}
 						})
 					},
 					error(res) {}

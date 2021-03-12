@@ -1,36 +1,32 @@
 <template>
 	<view class="minh100">
-		<view v-if="htmlReset==1" class="zanwu" @tap='onRetry'>请求失败，请点击重试</view>
-		<view v-if="htmlReset==-1" class="loading_def">
-			<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
-		</view>
-		<block v-if="htmlReset==0">
+		<htmlLoading ref="htmlLoading" @Retry='onRetry' :bj_show="false">
 			<view class="top_box">
 				<image class="top_box_bg" :src="getimg('/static/images/images/tg_bg_02.png')" mode=""></image>
 				<view class="top_box_msg">
 					<view class="top_l">
 						<view class="top_l1">推广人数</view>
-						<view class="top_l2">6<text>人</text></view>
+						<view class="top_l2">{{datas_z.allCount?datas_z.allCount:0}}<text>人</text></view>
 					</view>
 					<image class="tg_icon" :src="getimg('/static/images/tg_num.png')" mode="aspectFit"></image>
 				</view>
 			</view>
 			<view class="list_box">
 				<view class="list_tit">
-					<view class="list_tab" :class="tab_cur==1?'cur':''" @tap="tab_fuc(1)">一级(6)</view>
-					<view class="list_tab" :class="tab_cur==2?'cur':''" @tap="tab_fuc(2)">二级(0)</view>
+					<view class="list_tab" :class="tab_cur==1?'cur':''" @tap="tab_fuc(1)">一级({{datas_z.yjCount?datas_z.yjCount:0}})</view>
+					<view class="list_tab" :class="tab_cur==2?'cur':''" @tap="tab_fuc(2)">二级({{datas_z.ejCount?datas_z.ejCount:0}})</view>
 				</view>
-				<block v-for="(item,index) in 10">
+				<block v-for="(item,index) in datas">
 					<view class="hy_li">
-						<image class="hy_li_tx" :src="getimg('/static/images/tx_m2.jpg')" mode="aspectFill"></image>
+						<image class="hy_li_tx" :src="getimg(item.head_portrait)" mode="aspectFill"></image>
 						<view class="hy_li_msg">
 							<view class="hy_li_msg1">
-								<view class="hy_name">会员{{tab_cur}}</view>
-								<view>消费：￥98元</view>
+								<view class="hy_name">{{item.nickname}}</view>
+								<view>消费：￥{{item.consume}}元</view>
 							</view>
 							<view class="hy_li_msg2">
 								<view class="hy_time">2020-06-08</view>
-								<view>推广人数：9人</view>
+								<view>推广人数：{{item.user_sum}}人</view>
 							</view>
 						</view>
 					</view>
@@ -40,7 +36,7 @@
 				<!-- <view v-if="data_last" class="data_last">我可是有底线的哟~~~</view> -->
 				<view  class="data_last">我可是有底线的哟~~~</view>
 			</view>
-		</block>
+		</htmlLoading>
 		
 	</view>
 </template>
@@ -58,7 +54,11 @@
 				btnkg:0,
 				htmlReset:-1,
 				data_last:false,
-				tab_cur:1
+				tab_cur:1,
+				datas_z:'',
+				datas:'',
+				page:1,
+				size:20
 			}
 		},
 		computed:{
@@ -71,7 +71,8 @@
 			
 		},
 		onPullDownRefresh() {
-			uni.stopPullDownRefresh()
+			// uni.stopPullDownRefresh()
+			that.onRetry()
 		},
 		onReachBottom() {
 			
@@ -82,17 +83,95 @@
 				this.type=option.type
 			}
 			that.datas=[]
-			that.htmlReset=0
-			return
+			
 			this.onRetry()
 		},
 		methods: {
+			tab_fuc(num){
+				that.tab_cur=num
+				this.onRetry()
+			},
+			onRetry(){
+				// uni.stopPullDownRefresh()
+				// return
+				this.datas=[]
+				this.page=1
+				this.btnkg=0
+				this.data_last=false
+				this.getdatalist()
+			},
+			getdatalist(){
+				
+				let that =this
+				var jkurl='/user/promotionStatis'
+				var datas={
+					token: that.$store.state.loginDatas.userToken||'',
+					page:that.page,
+					size:that.size,
+					type:that.tab_cur
+				}
+				if(that.data_last) return
+				uni.showLoading({
+					title: '正在获取数据',
+					mask: true
+				})
+				var page_that = that.page
+				service.P_get(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					that.$refs.htmlLoading.htmlReset_fuc(0)
+					console.log(res)
+					if (res.code == 1) {
+						that.htmlReset = 0
+						var datas = res.data
+						console.log(typeof datas)
+				
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						console.log(res)
+						that.datas_z=datas
+						if (page_that == 1) {
+							
+							that.datas = datas.list
+						} else {
+							if (datas.list.length == 0) {
+								that.data_last = true
+								return
+							}
+							that.datas = that.datas.concat(datas.list)
+						}
+						that.page++
+				
+					} else {
+						that.htmlReset = 1
+					that.$refs.htmlLoading.htmlReset_fuc(1)
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '获取数据失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.htmlReset = 1
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败，请检查您的网络连接'
+					})
+				})
+				
+			},
+			
 			getimg(img){
 				return service.getimg(img)
 			},
-			tab_fuc(num){
-				that.tab_cur=num
-			}
 		}
 	}
 </script>

@@ -5,7 +5,8 @@
 				<text>￥</text><input type="number"  v-model="tx_num" confirm-type='done'
 						 @confirm="sub"/>
 			</view>
-			<view class="tx_tip">当前可提现金额：{{tx_max}}</view>
+			<view v-if="type==2" class="tx_tip">当前可提现金额：{{loginDatas.commission*1}}</view>
+			<view v-else class="tx_tip">当前可提现金额：{{loginDatas.money*1}}</view>
 			<view class="tx_btn" @tap="sub">提现</view>
 		</view>
 	</view>
@@ -25,13 +26,14 @@
 				htmlReset:-1,
 				data_last:false,
 				tx_num:'',
-				tx_max:100
+				tx_max:100,
+				type:1
 			}
 		},
 		computed:{
 			...mapState([
 				'hasLogin',
-				'loginMsg',
+				'loginDatas',
 				'wxlogin',
 				// 'order_ls_data'
 			]),
@@ -48,20 +50,13 @@
 			this.onRetry()
 		},
 		onShow(){
-			if(this.show_num>1){
-				this.page=1
-				this.goods_sele=[]
-				this.all=false
-				this.onRetry()
-			}
-			this.show_num++
-			// this.getOrderList('onshow')
+			
 		},
 		/**
 		 * 页面相关事件处理函数--监听用户下拉动作
 		 */
 		onPullDownRefresh: function () {
-		  this.onRetry()
+		  
 		},
 		/**
 		 * 页面上拉触底事件的处理函数
@@ -71,7 +66,7 @@
 		},
 		methods: {
 			sub(){
-				if(that.tx_num<0){
+				if(that.tx_num<=0){
 					uni.showToast({
 						icon: 'none',
 						title: '请输入金额'
@@ -85,15 +80,61 @@
 					})
 					return
 				}
-				uni.showToast({
-					icon:'none',
-					title:'操作成功'
-				})
-				setTimeout(function() {
-					uni.navigateBack({
-						delta:1
+				var jkurl='/user/withDrawLooseChange'
+				var datas={
+					token: that.$store.state.loginDatas.userToken||'',
+					money:that.tx_num,
+					type:that.type
+				}
+				service.P_post(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					console.log(res)
+					if (res.code == 1) {
+						that.htmlReset = 0
+						var datas = res.data
+						console.log(typeof datas)
+				
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						console.log(res)
+				
+						uni.showToast({
+							icon:'none',
+							title:'操作成功'
+						})
+						// return
+						service.wxlogin('token')
+						setTimeout(function() {
+							uni.navigateBack({
+								delta:1
+							})
+						}, 1000)
+				
+					} else {
+						that.htmlReset = 1
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '获取数据失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.htmlReset = 1
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败，请检查您的网络连接'
 					})
-				}, 1000)
+				})
+				
 			},
 			onRetry(){
 				uni.stopPullDownRefresh()

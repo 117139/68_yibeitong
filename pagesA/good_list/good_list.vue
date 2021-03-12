@@ -1,10 +1,6 @@
 <template>
 	<view class="minh100">
-		<view v-if="htmlReset==1" class="zanwu" @tap='onRetry'>请求失败，请点击重试</view>
-		<view v-if="htmlReset==-1" class="loading_def">
-			<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
-		</view>
-		<block v-if="htmlReset==0">
+		<htmlLoading ref="htmlLoading" @Retry='onRetry' :bj_show="false">
 			<view class="index_top">
 				<view class="index_top_srk dis_flex aic">
 					<text class="iconfont iconsousuo"></text>
@@ -17,17 +13,20 @@
 				
 				
 				<view class="huodong_list">
-					<view  class="goods_li" v-for="(item,index) in goods_list">
-						<image class="goods_li_img" :src="getimg(item.g_img)" mode="aspectFit" @tap="jump" data-url="/pagesA/details/details"></image>
-						<view class="text-cut goods_li_name">{{item.name}}</view>
-						<view class=" goods_li_money"><text>￥</text>{{item.money}}</view>
+					<view class="goods_li_box" v-for="(item,index) in datas">
+						<view  class="goods_li">
+							<image class="goods_li_img" :src="getimg(item.g_img[0])" mode="aspectFill"@tap="jump"
+									:data-url="'/pagesA/details/details?id='+item.id"></image>
+							<view class="text-cut goods_li_name">{{item.title}}</view>
+							<view class=" goods_li_money"><text>￥</text>{{item.basics_price*1}}</view>
+						</view>
 					</view>
 				</view>
-				<view v-if="goods_list.length==0" class="zanwu">暂无数据</view>
-				<!-- <view v-if="data_last" class="data_last">我可是有底线的哟~~~</view> -->
-				<view  class="data_last">我可是有底线的哟~~~</view>
+				<view v-if="datas.length==0" class="zanwu">暂无数据</view>
+				<view v-if="data_last" class="data_last">我可是有底线的哟~~~</view>
+				<!-- <view  class="data_last">我可是有底线的哟~~~</view> -->
 			</view>
-		</block>
+		</htmlLoading>
 	</view>
 </template>
 
@@ -44,54 +43,12 @@
 			return {
 				id:'',
 				search_key:'',
-				datas: '',
 				htmlReset: -1,
 				cardCur: 0,
 				
-				goods_list:[
-					{
-						name:'Winter潮流男士衣裤',
-						money:'650',
-						id:1,
-						g_img:'/static/images/index_09.jpg'
-					},
-					{
-						name:'Winter潮流女士衣裤',
-						money:'450',
-						id:2,
-						g_img:'/static/images/index_12.jpg'
-					},
-					{
-						name:'Winter潮流女士衣裤',
-						money:'450',
-						id:3,
-						g_img:'/static/images/index_15.jpg'
-					},
-					{
-						name:'Winter潮流男士衣裤',
-						money:'650',
-						id:4,
-						g_img:'/static/images/index_17.jpg'
-					},
-					{
-						name:'Winter潮流女士衣裤',
-						money:'450',
-						id:2,
-						g_img:'/static/images/index_12.jpg'
-					},
-					{
-						name:'Winter潮流女士衣裤',
-						money:'450',
-						id:3,
-						g_img:'/static/images/index_15.jpg'
-					},
-					{
-						name:'Winter潮流男士衣裤',
-						money:'650',
-						id:4,
-						g_img:'/static/images/index_17.jpg'
-					},
-				],
+				datas:[],
+				page:1,
+				size:20,
 				data_last:false
 			}
 		},
@@ -100,18 +57,23 @@
 		},
 		onLoad(option) {
 			that = this
-			that.id=option.id
+			if(option.id){
+				that.id=option.id
+			}
 			if(option.name){
-				that.search_key=option.name
+				// that.search_key=option.name
+				uni.setNavigationBarTitle({
+					title:option.name
+				})
 			}
 			that.htmlReset = 0
 			that.onRetry()
 		},
 		onPullDownRefresh() {
-			uni.stopPullDownRefresh()
+			this.onRetry()
 		},
 		onReachBottom() {
-			
+			this.getdata()
 		},
 		methods: {
 			daiyan_sousuo(e) {
@@ -139,74 +101,25 @@
 				this.getdata()
 			},
 			getdata() {
-				var that = this
-				that.goods_list=[
-					{
-						name:'Winter潮流男士衣裤'+that.search_key,
-						money:'650',
-						id:1,
-						g_img:'/static/images/index_09.jpg'
-					},
-					{
-						name:'Winter衣裤'+that.search_key,
-						money:'450',
-						id:2,
-						g_img:'/static/images/index_12.jpg'
-					},
-					{
-						name:'Winter潮流衣裤'+that.search_key,
-						money:'450',
-						id:3,
-						g_img:'/static/images/index_15.jpg'
-					},
-					{
-						name:'Winter潮流男士衣裤'+that.search_key,
-						money:'650',
-						id:4,
-						g_img:'/static/images/index_17.jpg'
-					},
-					{
-						name:'Winter潮流女士衣裤'+that.search_key,
-						money:'450',
-						id:2,
-						g_img:'/static/images/index_12.jpg'
-					},
-					{
-						name:'Winter潮流女士衣裤'+that.search_key,
-						money:'450',
-						id:3,
-						g_img:'/static/images/index_15.jpg'
-					},
-					{
-						name:'Winter潮流男士衣裤'+that.search_key,
-						money:'650',
-						id:4,
-						g_img:'/static/images/index_17.jpg'
-					},
-				]
-				return
-				if(!that.hasLogin){
-					this.htmlReset=0
-					return
-				}
+				
 				if (that.data_last) {
 					return
 				}
 				var datas = {
 				
-					token: that.loginDatas.token,
-					long:that.longitude,
-					lat:that.latitude,
+					token: that.$store.state.loginDatas.token||'',
+					
 					page: that.page,
 					size: that.size,
-					status:''
+					cate_id:that.id,
+					title:that.search_key
 				}
 				if (that.btn_kg == 1) {
 					return
 				}
 				that.btn_kg = 1
 				//selectSaraylDetailByUserCard
-				var jkurl = '/engineer/list'
+				var jkurl = '/goods'
 				uni.showLoading({
 					title: '正在获取数据',
 					mask: true
@@ -214,6 +127,7 @@
 				var page_that = that.page
 				service.P_get(jkurl, datas).then(res => {
 					that.btn_kg = 0
+					that.$refs.htmlLoading.htmlReset_fuc(0)
 					console.log(res)
 					if (res.code == 1) {
 						that.htmlReset = 0
@@ -239,6 +153,7 @@
 				
 					} else {
 						that.htmlReset = 1
+					that.$refs.htmlLoading.htmlReset_fuc(1)
 						if (res.msg) {
 							uni.showToast({
 								icon: 'none',
@@ -327,7 +242,7 @@
 	}
 	.index_zbox {
 		width: 100%;
-		padding: 30upx 30upx 15upx;
+		padding: 15upx 15upx 15upx;
 	}
 	.index_xxtz{
 		width: 100%;
@@ -384,16 +299,22 @@
 	.huodong_li:nth-child(2n){
 		margin-right: 0;
 	}
+	.goods_li_box{
+		width: 50%;
+		padding: 15upx;
+	}
 	.goods_li{
-		width: 327upx;
-		margin-right: 35upx;
-		margin-bottom: 20upx;
+		/* width: 327upx; */
+		width:100%;
+		/* margin-right: 35upx;
+		margin-bottom: 20upx; */
 	}
-	.goods_li:nth-child(2n){
+	/* .goods_li:nth-child(2n){
 		margin-right: 0;
-	}
+	} */
 	.goods_li_img{
-		width: 327upx;
+		/* width: 327upx; */
+		width:100%;
 		height: 404upx;
 		border-radius: 4px;
 	}

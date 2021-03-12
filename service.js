@@ -211,6 +211,149 @@ const call = function(e) {
 		});
 	}
 }
+const wxlogin_ceshi_h5= function(num) {
+	var that = this
+	// 获取用户信息
+	if (num == 1) {
+		uni.showLoading({
+			title: '正在登录',
+			mask: true
+		})
+	}
+	if (num == 'token') {
+		var data = {
+			token: uni.getStorageSync('token'),
+			type: 4
+		}
+	
+		uni.request({
+			url: IPurl + '/login',
+			data: data,
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			dataType: 'json',
+			method: 'POST',
+			success(res) {
+				uni.hideLoading()
+				console.log(res.data)
+				if (res.data.code == -2) {
+					if (num == 1) {
+						uni.redirectTo({
+							url: '/pages/login_tel/login_tel?nickname=' + uinfo.nickName + '&avatarurl=' + uinfo.avatarUrl
+						})
+					} else {
+						uni.navigateTo({
+							url: '/pages/login_tel/login_tel?nickname=' + uinfo.nickName + '&avatarurl=' + uinfo.avatarUrl
+						})
+					}
+					return
+				}
+				if (res.data.code == 1) {
+					console.log('登录成功')
+					console.log(res.data)
+					uni.setStorageSync('token', res.data.data.userToken)
+	
+					store.commit('logindata', res.data.data)
+					store.commit('login', res.data.data.nickname)
+					uni.setStorageSync('loginmsg', res.data.data)
+	
+				} else {
+					uni.removeStorageSync('userInfo')
+					uni.removeStorageSync('token')
+					uni.showToast({
+						icon: 'none',
+						title: '登录失败',
+					})
+				}
+	
+			},
+			fail() {
+				uni.hideLoading()
+				uni.showToast({
+					icon: 'none',
+					title: '登录失败'
+				})
+			}
+		})
+	} else{
+		let data = {
+			code: '',
+			nickname: '',
+			avatarurl: '',
+			type: 1
+		}
+		
+		uni.request({
+			url: IPurl + '/login',
+			data: data,
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			dataType: 'json',
+			method: 'POST',
+			success(res) {
+				uni.hideLoading()
+				console.log(res.data)
+		
+				if (res.data.code == 1) {
+					uni.setStorageSync('token', res.data.data.userToken)
+					
+					console.log('登录成功')
+					console.log(res.data)
+		
+					store.commit('logindata', res.data.data)
+					store.commit('login', res.data.data.nickname)
+					uni.setStorageSync('loginmsg', res.data.data)
+		
+					event.trigger({
+						type: 'test',
+						page: '/pages/index/index',
+						//obj和test是举的例子，随意啥都行，这个传过去在on中的args中都可以获取到
+						obj: {
+		
+						},
+						test: {
+							'loginmsg': res.data.data
+						},
+						success: function(data) {
+							//data为on中返回的数据
+						}
+					});
+					// im login
+		
+		
+		
+					if (num == 1) {
+						uni.showToast({
+							icon: 'none',
+							title: '登录成功'
+						})
+						setTimeout(() => {
+							uni.navigateBack()
+						}, 1000)
+					}
+				} else {
+					uni.removeStorageSync('userInfo')
+					uni.removeStorageSync('token')
+					uni.showToast({
+						icon: 'none',
+						title: '登录失败',
+					})
+				}
+		
+			},
+			fail() {
+				uni.hideLoading()
+				uni.showToast({
+					icon: 'none',
+					title: '登录失败'
+				})
+			}
+		})
+	}
+	
+}
 
 const wxlogin = function(num) {
 	var that = this
@@ -221,131 +364,190 @@ const wxlogin = function(num) {
 			mask: true
 		})
 	}
-	uni.getSetting({
-		success: res => {
-			console.log(res)
-			if (res.authSetting['scope.userInfo'] == true) {
-				// 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-				console.log('已经授权')
-				uni.getUserInfo({
-					success(res) {
-						var userInfo = res.userInfo
-						console.log(userInfo)
-						uni.setStorageSync('userInfo', res.userInfo)
-						if (!userInfo) {
-
-						} else {
-							uni.login({
-								success: function(res) {
-
-									// 发送 res.code 到后台换取 openId, sessionKey, unionId
-									var uinfo = userInfo
-									let data = {
-										code: res.code,
-										nickname: uinfo.nickName,
-										avatarurl: uinfo.avatarUrl,
-										type: 1
-									}
-									let rcode = res.code
-									console.log(res.code)
-									uni.request({
-										url: IPurl + '/login',
-										data: data,
-										header: {
-											'content-type': 'application/x-www-form-urlencoded'
-										},
-										dataType: 'json',
-										method: 'POST',
-										success(res) {
-											uni.hideLoading()
-											console.log(res.data)
-
-											if (res.data.code == 1) {
-												uni.setStorageSync('token', res.data.data.userToken)
-												/*if (!res.data.data.phone) {
-													uni.showToast({
-														icon: 'none',
-														title: '请绑定手机号'
-													})
-													setTimeout(() => {
-														if (num == 1) {
-
-															uni.redirectTo({
-																url: '/pages/login_tel/login_tel'
-															})
-														} else {
-															uni.navigateTo({
-																url: '/pages/login_tel/login_tel'
-															})
-
-														}
-													}, 1000)
-
-													return
-												}*/
-												console.log('登录成功')
+	if (num == 'token') {
+		var data = {
+			token: uni.getStorageSync('token')||'a9c6ef4ed417102e1dcd6951eeaa5fce',
+			type: 4
+		}
+	
+		uni.request({
+			url: IPurl + '/login',
+			data: data,
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			dataType: 'json',
+			method: 'POST',
+			success(res) {
+				uni.hideLoading()
+				console.log(res.data)
+				if (res.data.code == -2) {
+					if (num == 1) {
+						uni.redirectTo({
+							url: '/pages/login_tel/login_tel?nickname=' + uinfo.nickName + '&avatarurl=' + uinfo.avatarUrl
+						})
+					} else {
+						uni.navigateTo({
+							url: '/pages/login_tel/login_tel?nickname=' + uinfo.nickName + '&avatarurl=' + uinfo.avatarUrl
+						})
+					}
+					return
+				}
+				if (res.data.code == 1) {
+					console.log('登录成功')
+					console.log(res.data)
+					uni.setStorageSync('token', res.data.data.userToken)
+	
+					store.commit('logindata', res.data.data)
+					store.commit('login', res.data.data.nickname)
+					uni.setStorageSync('loginmsg', res.data.data)
+	
+				} else {
+					uni.removeStorageSync('userInfo')
+					uni.removeStorageSync('token')
+					uni.showToast({
+						icon: 'none',
+						title: '登录失败',
+					})
+				}
+	
+			},
+			fail() {
+				uni.hideLoading()
+				uni.showToast({
+					icon: 'none',
+					title: '登录失败'
+				})
+			}
+		})
+	} else{
+		uni.getSetting({
+			success: res => {
+				console.log(res)
+				if (res.authSetting['scope.userInfo'] == true) {
+					// 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+					console.log('已经授权')
+					uni.getUserInfo({
+						success(res) {
+							var userInfo = res.userInfo
+							console.log(userInfo)
+							uni.setStorageSync('userInfo', res.userInfo)
+							if (!userInfo) {
+		
+							} else {
+								uni.login({
+									success: function(res) {
+		
+										// 发送 res.code 到后台换取 openId, sessionKey, unionId
+										var uinfo = userInfo
+										let data = {
+											code: res.code,
+											nickname: uinfo.nickName,
+											avatarurl: uinfo.avatarUrl,
+											type: 1
+										}
+										let rcode = res.code
+										console.log(res.code)
+										uni.request({
+											url: IPurl + '/login',
+											data: data,
+											header: {
+												'content-type': 'application/x-www-form-urlencoded'
+											},
+											dataType: 'json',
+											method: 'POST',
+											success(res) {
+												uni.hideLoading()
 												console.log(res.data)
-
-												store.commit('logindata', res.data.data)
-												store.commit('login', res.data.data.nickname)
-												uni.setStorageSync('loginmsg', res.data.data)
-
-												event.trigger({
-													type: 'test',
-													page: '/pages/index/index',
-													//obj和test是举的例子，随意啥都行，这个传过去在on中的args中都可以获取到
-													obj: {
-
-													},
-													test: {
-														'loginmsg': res.data.data
-													},
-													success: function(data) {
-														//data为on中返回的数据
+		
+												if (res.data.code == 1) {
+													uni.setStorageSync('token', res.data.data.userToken)
+													/*if (!res.data.data.phone) {
+														uni.showToast({
+															icon: 'none',
+															title: '请绑定手机号'
+														})
+														setTimeout(() => {
+															if (num == 1) {
+		
+																uni.redirectTo({
+																	url: '/pages/login_tel/login_tel'
+																})
+															} else {
+																uni.navigateTo({
+																	url: '/pages/login_tel/login_tel'
+																})
+		
+															}
+														}, 1000)
+		
+														return
+													}*/
+													console.log('登录成功')
+													console.log(res.data)
+		
+													store.commit('logindata', res.data.data)
+													store.commit('login', res.data.data.nickname)
+													uni.setStorageSync('loginmsg', res.data.data)
+		
+													event.trigger({
+														type: 'test',
+														page: '/pages/index/index',
+														//obj和test是举的例子，随意啥都行，这个传过去在on中的args中都可以获取到
+														obj: {
+		
+														},
+														test: {
+															'loginmsg': res.data.data
+														},
+														success: function(data) {
+															//data为on中返回的数据
+														}
+													});
+													// im login
+		
+		
+		
+													if (num == 1) {
+														uni.showToast({
+															icon: 'none',
+															title: '登录成功'
+														})
+														setTimeout(() => {
+															uni.navigateBack()
+														}, 1000)
 													}
-												});
-												// im login
-
-
-
-												if (num == 1) {
+												} else {
+													uni.removeStorageSync('userInfo')
+													uni.removeStorageSync('token')
 													uni.showToast({
 														icon: 'none',
-														title: '登录成功'
+														title: '登录失败',
 													})
-													setTimeout(() => {
-														uni.navigateBack()
-													}, 1000)
 												}
-											} else {
-												uni.removeStorageSync('userInfo')
-												uni.removeStorageSync('token')
+		
+											},
+											fail() {
+												uni.hideLoading()
 												uni.showToast({
 													icon: 'none',
-													title: '登录失败',
+													title: '登录失败'
 												})
 											}
-
-										},
-										fail() {
-											uni.hideLoading()
-											uni.showToast({
-												icon: 'none',
-												title: '登录失败'
-											})
-										}
-									})
-								}
-							})
+										})
+									}
+								})
+							}
 						}
-					}
-				})
-
-			} else {
-				uni.hideLoading()
+					})
+		
+				} else {
+					uni.hideLoading()
+				}
 			}
-		}
-	})
+		})
+	}
+	
 }
 
 const setUsermsg = function(data) {
@@ -400,10 +602,12 @@ const wx_upload = function(tximg) {
 			mask: true,
 			title: '正在上传'
 		})
+		// #ifndef H5
+		console.log(tximg)
 		uni.uploadFile({
-			url: IPurl + 'user/upload_img',
+			url: IPurl + 'upload/streamImg',
 			filePath: tximg,
-			name: 'img',
+			name: 'file',
 			formData: {
 				token: uni.getStorageSync('token')
 			},
@@ -446,6 +650,69 @@ const wx_upload = function(tximg) {
 				}
 			}
 		});
+		// #endif
+		// #ifdef H5
+		uni.request({
+				url: tximg,
+				method: 'GET',
+				responseType: 'arraybuffer',
+				success: (res) => {
+						let base64 = wx.arrayBufferToBase64(res.data); //把arraybuffer转成base64
+						console.log('base64')
+						// console.log(base64)
+						base64 = 'data:image/jpeg;base64,' + base64; //不加上这串字符，在页面无法显示
+						// return base64
+						var datas={
+							file:base64,
+							type:1,
+						}
+						var jkurl=IPurl + '/upload/base64Img'
+						console.log('h5 upload')
+						uni.request({
+							url: jkurl,
+							data: datas,
+							method: 'POST',
+							header: header,
+							complete: (res) => {
+								uni.hideLoading();
+								uni.stopPullDownRefresh(); //慎用hideLoading,会关闭wx.showToast弹窗
+								console.log(res)
+								if (res.statusCode == 200) { //请求成功
+									console.log(res)
+									if (res.data.code == 0) {
+										if (res.data.msg) {
+						
+											uni.showToast({
+												icon: 'none',
+												title: res.data.msg
+											})
+										} else {
+						
+											uni.showToast({
+												icon: 'none',
+												title: '操作失败'
+											})
+										}
+									}
+									resolve(res.data)
+								} else {
+									reject(res);
+								}
+							}
+						})
+						// 单个请求
+						// P_post(jkurl, datas).then(res => {
+						// 	resolve(ndata)
+						// }).catch(e => {
+						// 	reject(res);
+						// })
+				},
+				fail: (err) => {
+					console.log(err)
+				}
+		});
+		
+		// #endif
 	})
 
 }
@@ -599,7 +866,11 @@ const getimgarr = function(imgs, type) {
 	if (!type) {
 		type = ','
 	}
-	imgs = imgs.split(type)
+	console.log(type)
+	if(type!='arr'){
+		imgs = imgs.split(type)
+	}
+	
 	// console.log(imgurl+img)
 	var newimgs = []
 	for (var i = 0; i < imgs.length; i++) {
@@ -699,6 +970,63 @@ const getTel = function(num, num1, num2) {
 	var str = num.substring(0, num1) + mg + num.substring(num.length - num2);
 	return str
 }
+
+
+
+//pay
+const wxpay=function (datas,type){
+	if(!datas) return
+	uni.showLoading({
+		mask:true,
+		title:'正在拉起支付'
+	})
+	datas=JSON.parse(datas)
+	return new Promise((resolve,reject)=>{
+		uni.hideLoading()
+		uni.requestPayment({
+		    provider: 'wxpay',
+		    timeStamp: datas.timeStamp||String(Date.now()),
+		    nonceStr:  datas.nonceStr,
+		    package:  datas.package,
+		    signType: datas.signType,
+		    paySign:  datas.paySign,
+		    success: function (res) {
+		        console.log('success:' + JSON.stringify(res));
+						if(!resolve){
+							if(type=='fwb'){
+								uni.showToast({
+									icon: 'none',
+									title: '购买成功'
+								})
+								setTimeout(() => {
+									uni.redirectTo({
+										url: "/pages/my_fwb/my_fwb"
+									})
+								}, 1000)
+							}else{
+								resolve(res)
+							}
+						}else{
+							resolve(res)
+						}
+						
+		    },
+		    fail: function (err) {
+					if(!reject){
+						uni.showToast({
+							icon: 'none',
+							title: '微信支付失败'
+						})
+					}else{
+						
+						reject(err);
+					}
+		        console.log('fail:' + JSON.stringify(err));
+		    }
+		});
+	})
+	
+}
 export default {
 	getUsers,
 	addUser,
@@ -711,6 +1039,7 @@ export default {
 	pveimg,
 	call,
 	wxlogin,
+	wxlogin_ceshi_h5,
 	setUsermsg,
 	P_get,
 	P_post,
@@ -721,5 +1050,6 @@ export default {
 	getimgarr,
 	get_fwb,
 	wx_upload,
-	getTel
+	getTel,
+	wxpay
 }

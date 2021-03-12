@@ -1,19 +1,23 @@
 <template>
 	<view class="minh100">
-		<view class="main_box">
-			
-			<view class="tx_list">
-				<view class="tx_li" v-for="(item,index) in 3">
-					<view class="tx_l">
-						<view class="mx_name">提现</view>
-						<view class="mx_time">2017-02-17</view>
+		<htmlLoading ref="htmlLoading" @Retry='onRetry' :bj_show="false">
+			<view class="main_box">
+				
+				<view class="tx_list">
+					<view class="tx_li" v-for="(item,index) in datas">
+						<view class="tx_l">
+							<view class="mx_name">{{item.change_type_value}}</view>
+							<view class="mx_time">{{item.create_time}}</view>
+						</view>
+						<view class="tx_r">
+							<view  class="mx_pri">{{item.symbol}}{{item.price}}</view>
+						</view>
 					</view>
-					<view class="tx_r">
-						<view  class="mx_pri">-12.00</view>
-					</view>
+					<view v-if="datas.length==0" class="zanwu">暂无数据</view>
+					<view v-if="data_last" class="data_last">我可是有底线的哟~</view>
 				</view>
 			</view>
-		</view>
+		</htmlLoading>
 	</view>
 </template>
 
@@ -30,7 +34,10 @@
 				btnkg:0,
 				htmlReset:-1,
 				data_last:false,
-				
+				datas:'',
+				page:1,
+				size:20,
+				type:2
 			}
 		},
 		computed:{
@@ -48,8 +55,7 @@
 				this.type=option.type
 			}
 			that.datas=[]
-			that.htmlReset=0
-			return
+			
 			this.onRetry()
 		},
 		onShow(){
@@ -67,20 +73,19 @@
 		 */
 		onPullDownRefresh: function () {
 			
-			uni.stopPullDownRefresh()
-			return
+			
 		  this.onRetry()
 		},
 		/**
 		 * 页面上拉触底事件的处理函数
 		 */
 		onReachBottom: function () {
-			// this.getdatalist()
+			this.getdatalist()
 		},
 		methods: {
 			onRetry(){
-				uni.stopPullDownRefresh()
-				return
+				// uni.stopPullDownRefresh()
+				// return
 				this.datas=[]
 				this.page=1
 				this.btnkg=0
@@ -90,68 +95,70 @@
 			getdatalist(){
 				
 				let that =this
-				var jkurl='/order'
-				var data={
-					token:that.loginMsg.userToken,
-					type:that.type==0?99:that.type,
+				var jkurl='/user/getMyMoney'
+				var datas={
+					token: that.$store.state.loginDatas.userToken||'',
 					page:that.page,
-					size:that.size
+					size:that.size,
+					type:that.type
 				}
 				if(that.data_last) return
-				if(that.btnkg==1){
-					return
-				}else{
-					that.btnkg=1
-				}
-				service.get(jkurl, data,
-					function(res) {
-						that.btnkg=0
-						// if (res.data.code == 1) {
-						if (res.data.code == 1) {
-							var datas = res.data.data
-							// console.log(typeof datas)
-							that.htmlReset=0
-							if (typeof datas == 'string') {
-								datas = JSON.parse(datas)
-							}
-							if(that.page==1){
-								that.datas=datas
-							}else{
-								if(datas.length==0){
-								
-									that.data_last=true
-									
-									return
-								}
-								that.datas=that.datas.concat(datas)
-							}
-							that.page++
-						} else {
-							that.htmlReset=1
-							if (res.data.msg) {
-								uni.showToast({
-									icon: 'none',
-									title: res.data.msg
-								})
-							} else {
-								uni.showToast({
-									icon: 'none',
-									title: '操作失败'
-								})
-							}
+				uni.showLoading({
+					title: '正在获取数据',
+					mask: true
+				})
+				var page_that = that.page
+				service.P_get(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					that.$refs.htmlLoading.htmlReset_fuc(0)
+					console.log(res)
+					if (res.code == 1) {
+						that.htmlReset = 0
+						var datas = res.data
+						console.log(typeof datas)
+				
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
 						}
-					},
-					function(err) {
-						that.htmlReset=1
-						that.btnkg=0
-						
+						console.log(res)
+				
+						if (page_that == 1) {
+				
+							that.datas = datas
+						} else {
+							if (datas.length == 0) {
+								that.data_last = true
+								return
+							}
+							that.datas = that.datas.concat(datas)
+						}
+						that.page++
+				
+					} else {
+						that.htmlReset = 1
+					that.$refs.htmlLoading.htmlReset_fuc(1)
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
 							uni.showToast({
 								icon: 'none',
 								title: '获取数据失败'
 							})
-					
+						}
 					}
-				)
+				}).catch(e => {
+					that.htmlReset = 1
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败，请检查您的网络连接'
+					})
+				})
+				
 			},
 			jump(e) {
 				var that = this
