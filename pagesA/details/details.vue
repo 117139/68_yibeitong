@@ -8,7 +8,7 @@
 		<view v-if="htmlReset==2">
 			<view class="zanwu" style="">商品已下架</view>
 			<!-- 猜你喜欢 -->
-			<view class="you_like">
+			<!-- <view class="you_like">
 				<view class="like_tit">
 					<text></text>猜你喜欢<text></text>
 				</view>
@@ -19,13 +19,13 @@
 							<view class="dis_flex aic"><text v-if="item.fk_is_way==2" class="xcxdy_zy_icon">自营</text><text class="flex_1 oh1">{{item.g_title}}</text></view>
 							<view class="goods_pri">
 								<text>￥{{item.g_current_price}}</text>
-								<!-- <text class="pr2">￥{{item.g_original_price}}</text> -->
+								<!-- <text class="pr2">￥{{item.g_original_price}}</text> --
 							</view>
 						</view>
 					</view>
 
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<view v-if="goodsData" :class="sheetshow1||sheetshow?'container-ban':'container'">
 			<view class="swiper_box">
@@ -97,7 +97,7 @@
 			<view class="pj_box mt20" >
 				<view class="pj_box_tit">
 					<view class="p_tit_l">商品评价（{{goodsData.comment_count>0?goodsData.comment_count:0}}）</view>
-					<view v-if="goodsData.comment_count>0" class="p_tit_r" :data-url="'/pagesA/pl_list/pl_list?id='+g_id+'&dy_id='+dy_id+'&advocacyviceId='+advocacyviceId"
+					<view v-if="goodsData.comment_count>0" class="p_tit_r" :data-url="'/pagesA/pl_list/pl_list?id='+g_id"
 					 @tap="jump">查看全部
 						<text class="iconfont iconnext-m"></text>
 					</view>
@@ -204,11 +204,11 @@
 
 					<view class="popopBox1">
 						<view class="goodsimg">
-							<!-- <image v-if="show_img.length>0" :src="getimg(show_img[0])" :data-src="getimg(show_img[0])" mode="aspectFill"
+							<image v-if="show_img.length>0" :src="getimg(show_img[0])" :data-src="getimg(show_img[0])" mode="aspectFill"
 							 @tap="pveimg"></image>
 							<image v-else :src="getimg(goodsData.img[0])" :data-src="getimg(goodsData.img[0])" mode="aspectFill"
-							 @tap="pveimg"></image> -->
-							 <image :src="getimg('/static/images/goods_01.jpg')" mode="aspectFill"></image>
+							 @tap="pveimg"></image>
+							 <!-- <image :src="getimg('/static/images/goods_01.jpg')" mode="aspectFill"></image> -->
 						</view>
 						<view class="goodstkjg">
 
@@ -238,8 +238,8 @@
 							<view class="jian_btn" @tap="goods_num(2)"><text class="iconfont iconjia1"></text></view>
 						</view>
 						<!-- #ifdef MP-WEIXIN -->
-						<van-stepper custom-class="steppera" input-class="vanipt" plus-class="vantjia" minus-class="vantjian" v-model="cnum"
-						 min="0" :max="goodsData.is_pond_goods==2?1:show_num" @input="onChange" @change="onChange" />
+						<!-- <van-stepper custom-class="steppera" input-class="vanipt" plus-class="vantjia" minus-class="vantjian" v-model="cnum"
+						 min="0" :max="goodsData.is_pond_goods==2?1:show_num" @input="onChange" @change="onChange" /> -->
 						<!-- #endif -->
 						<!-- <van-stepper custom-class="steppera" input-class="vanipt" plus-class="vantjia" minus-class="vantjian" v-model="cnum"
 						 min="0" :max="show_num" @input="onChange" @change="onChange" /> -->
@@ -762,197 +762,6 @@
 			},
 			getSku() {
 				var that = this
-				/*var resdata = {
-						"support_staff": 3,
-						"title": "octopusme可拆卸宽松中长款工装棉服女秋冬新款风衣外套",
-						"img": [
-							"/resource/merchant/goods/20200826/3afe80bc7af4be47b2d5209bca1934ec.jpeg"
-						],
-						"current_price": "6000.00",
-						"original_price": "6998.00",
-						"advocacy_price": "180.00",
-						"ship_address": "北京",
-						"freight_type": 2,
-						"freight": "0.00",
-						"distribution": "",
-						"total_number": 0,
-						"comment_count": 4,
-						"advocacy_mannumber": 0,
-						"content": "<p><img src=\"http://51daiyan.test.upcdn.net/resource/merchant/editor/img/20200826/7f10d76c3c98e325ec2fb5192dd7e248.jpg\" style=\"max-width:100%;\"></p>",
-						"sales_volume": "6004",
-						"attr": {
-							"specification": [{
-									"name": "尺寸",
-									"value": [
-										"XL",
-										"XXL"
-									]
-								},
-								{
-									"name": "颜色",
-									"value": [
-										"蓝色翡翠",
-										"黑色"
-									]
-								}
-							],
-							"sku_all": [{
-									"v_id": 200,
-									"sku": [{
-											"name": "颜色",
-											"value": "蓝色翡翠"
-										},
-										{
-											"name": "尺寸",
-											"value": "XL"
-										}
-									],
-									"number": 4999,
-									"current_price": "5500.00",
-									"original_price": "6000.00",
-									"v_img": [
-										"/resource/merchant/goods/20200826/1f40eefb35877c4e78d1691a77e4c949.png"
-									],
-									"advocacy_price": "165.00"
-								},
-								{
-									"v_id": 201,
-									"sku": [{
-											"name": "颜色",
-											"value": "蓝色翡翠"
-										},
-										{
-											"name": "尺寸",
-											"value": "XXL"
-										}
-									],
-									"number": 4002,
-									"current_price": "6599.00",
-									"original_price": "7600.00",
-									"v_img": [],
-									"advocacy_price": "197.97"
-								},
-								{
-									"v_id": 202,
-									"sku": [{
-											"name": "颜色",
-											"value": "黑色"
-										},
-										{
-											"name": "尺寸",
-											"value": "XL"
-										}
-									],
-									"number": 5186,
-									"current_price": "5500.00",
-									"original_price": "6000.00",
-									"v_img": [],
-									"advocacy_price": "165.00"
-								},
-								{
-									"v_id": 203,
-									"sku": [{
-											"name": "颜色",
-											"value": "黑色"
-										},
-										{
-											"name": "尺寸",
-											"value": "XXL"
-										}
-									],
-									"number": 542,
-									"current_price": "6599.00",
-									"original_price": "7500.00",
-									"v_img": [],
-									"advocacy_price": "197.97"
-								}
-							]
-						},
-						"comment": {
-							"comment": [
-								{
-									head_portrait:'/resource/merchant/goods/20200826/3afe80bc7af4be47b2d5209bca1934ec.jpeg',
-									nickname:'昵称',
-									comment:'宝贝收到了，和卖家描述的一样，很漂亮，一直想买这样一个杯子，这个蓝色稍微有点小瑕疵，不过自己用没问题',
-									attr:[
-										{
-											value:'黑色'
-										},
-										{
-											value:'XL'
-										},
-									]
-								},
-								{
-									head_portrait:'/resource/merchant/goods/20200826/3afe80bc7af4be47b2d5209bca1934ec.jpeg',
-									nickname:'昵称1515',
-									comment:'宝贝收到了，和卖家描述的一样，很漂亮，一直想买这样一个杯子，这个蓝色稍微有点小瑕疵，不过自己用没问题',
-									attr:[
-										{
-											value:'黑色'
-										},
-										{
-											value:'XL'
-										},
-									]
-								},
-							],
-							"tag": [{
-									"id": 9,
-									"name": "有图",
-									"number": 0
-								},
-								{
-									"id": 10,
-									"name": "质量很好",
-									"number": 0
-								}
-							]
-						},
-						"later_data": {
-							"comment": [],
-							"tag": [{
-									"id": 9,
-									"name": "有图",
-									"number": 0
-								},
-								{
-									"id": 10,
-									"name": "质量很好",
-									"number": 0
-								}
-							],
-							"count": 0
-						},
-						"is_coupon": 1,
-						"is_collect": 1,
-						"activity_id": 0,
-						"is_apply": 1,
-						"fk_is_way": 2,
-						"is_pond_goods": 1,
-						"city_distribution": "",
-						"merchant": {
-							"group_code": 3,
-							"store_name": "Nick",
-							"head_portrait": "/resource/merchant/head_portrait/20200713/24137047dde648c211008e53f927cbfb.png",
-							"rank": 1,
-							"advocacy_number": 0,
-							"look_back": "0.00",
-							"isAttention": 1
-						}
-					}
-
-					var guige_sku = JSON.stringify(resdata.attr.sku_all)
-					var guige_skuarr = JSON.stringify(resdata.attr.specification)
-					console.log(guige_sku)
-					that.guige = JSON.parse(guige_sku)
-					that.guige_arr_show = JSON.parse(guige_skuarr)
-					that.guige_arr = resdata.attr.specification
-					that.goodsData = resdata
-					that.show_img = resdata.img
-					that.show_pri = resdata.current_price
-					that.show_num = 0
-				*/
 				
 				var datas = {
 					token: that.$store.state.loginDatas.userToken||'',
@@ -1366,7 +1175,7 @@
 				// advocacyviceId:that.advocacyviceId,
 				uni.navigateTo({
 					url: '/pagesA/Order/Order?type=1&v_id=' + that.v_id + '&number=' + that.cnum + '&advocacy_user_id=' + that.dyr_type +
-						'&v_id=' + that.v_id + '&dy_id=' + that.dy_id + '&advocacyviceId=' + that.advocacyviceId
+						 '&dy_id=' + that.dy_id + '&advocacyviceId=' + that.advocacyviceId
 				})
 			},
 			bm_fuc() {

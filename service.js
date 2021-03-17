@@ -366,7 +366,7 @@ const wxlogin = function(num) {
 	}
 	if (num == 'token') {
 		var data = {
-			token: uni.getStorageSync('token')||'a9c6ef4ed417102e1dcd6951eeaa5fce',
+			token: uni.getStorageSync('token')||'f95b9ebdddbe9d2fd12ff5115d5cc35c',
 			type: 4
 		}
 	
@@ -401,7 +401,22 @@ const wxlogin = function(num) {
 					store.commit('logindata', res.data.data)
 					store.commit('login', res.data.data.nickname)
 					uni.setStorageSync('loginmsg', res.data.data)
-	
+					// im login
+					event.trigger({
+						type: 'test',
+						page: '/pages/index/index',
+						//obj和test是举的例子，随意啥都行，这个传过去在on中的args中都可以获取到
+						obj: {
+							
+						},
+						test: {
+							'loginmsg': res.data.data
+						},
+						success: function(data) {
+							//data为on中返回的数据
+						}
+					});
+					// im login
 				} else {
 					uni.removeStorageSync('userInfo')
 					uni.removeStorageSync('token')
@@ -440,10 +455,14 @@ const wxlogin = function(num) {
 		
 										// 发送 res.code 到后台换取 openId, sessionKey, unionId
 										var uinfo = userInfo
+										
+										var pid=uni.getStorageSync('pid')
 										let data = {
 											code: res.code,
 											nickname: uinfo.nickName,
 											avatarurl: uinfo.avatarUrl,
+											
+											pid:pid?pid:'',
 											type: 1
 										}
 										let rcode = res.code
@@ -462,7 +481,7 @@ const wxlogin = function(num) {
 		
 												if (res.data.code == 1) {
 													uni.setStorageSync('token', res.data.data.userToken)
-													/*if (!res.data.data.phone) {
+													if (!res.data.data.phone) {
 														uni.showToast({
 															icon: 'none',
 															title: '请绑定手机号'
@@ -482,7 +501,7 @@ const wxlogin = function(num) {
 														}, 1000)
 		
 														return
-													}*/
+													}
 													console.log('登录成功')
 													console.log(res.data)
 		
@@ -490,6 +509,7 @@ const wxlogin = function(num) {
 													store.commit('login', res.data.data.nickname)
 													uni.setStorageSync('loginmsg', res.data.data)
 		
+													// im login
 													event.trigger({
 														type: 'test',
 														page: '/pages/index/index',
@@ -914,6 +934,7 @@ const gettime = function(mj) {
 	n_date = n_date < 10 ? '0' + n_date : n_date
 	n_hour = n_hour < 10 ? '0' + n_hour : n_hour
 	n_minute = n_minute < 10 ? '0' + n_minute : n_minute
+	
 	if (n_year == year) {
 
 		return {

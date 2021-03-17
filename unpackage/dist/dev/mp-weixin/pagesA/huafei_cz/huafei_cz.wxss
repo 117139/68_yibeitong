@@ -42,7 +42,8 @@
 	margin-left: 35rpx;
 }
 .tel_box.data-v-6c021bad{
-	padding-bottom: 30rpx;
+	padding-top: 20rpx;
+	padding-bottom: 20rpx;
 	border-bottom: 1px solid #0381EB;
 }
 .tel_box input.data-v-6c021bad{

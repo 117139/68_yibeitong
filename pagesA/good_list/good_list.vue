@@ -107,7 +107,7 @@
 				}
 				var datas = {
 				
-					token: that.$store.state.loginDatas.token||'',
+					token: that.$store.state.loginDatas.userToken||'',
 					
 					page: that.page,
 					size: that.size,

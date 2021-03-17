@@ -138,7 +138,7 @@
 			"path": "OrderList_sh/OrderList_sh",
 			"style": {
 				"navigationBarTitleText": "售后列表",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true
 			}
 
 		}, {
@@ -246,16 +246,21 @@
 				"enablePullDownRefresh": false
 			}
 
-		}    ,{
-                    "path" : "pl_list/pl_list",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-            ]
+		}, {
+			"path": "pl_list/pl_list",
+			"style": {
+				"navigationBarTitleText": "评论列表",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "order_pj/order_pj",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}]
 	}],
 
 	"preloadRule": {
@@ -300,7 +305,7 @@
 			"selectedIconPath": "static/images/tabbar/tab52.png"
 		}]
 	}
-	
+
 	,
 
 	"globalStyle": {
@@ -308,11 +313,12 @@
 		"navigationBarTitleText": "依辈通",
 		"navigationBarBackgroundColor": "#fff",
 		"backgroundColor": "#F8F8F8"
-		// #ifdef MP-WEIXIN
-		,"usingComponents": {
+			// #ifdef MP-WEIXIN
+			,
+		"usingComponents": {
 			"van-stepper": "./wxcomponents/vant/stepper/index"
 		}
 		// #endif
 	}
-	
+
 }

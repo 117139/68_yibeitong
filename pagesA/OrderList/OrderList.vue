@@ -13,12 +13,12 @@
 		
 		  </view>
 			<view class="zanwu" v-if="datas.length==0">暂无内容</view>
-		  <view class="goodsBox w100">
+		  <view v-else class="goodsBox w100">
 		    <view class="goodsBox contbox">
 		      <view class="goods" v-for="(item,idx) in datas">
 		        <view class="dianpu_tit">
 		         
-		          <text class="flex_1 ">订单号：{{item.code}}</text>
+		          <text class="flex_1 ">订单号：{{item.order.o_order_num}}</text>
 		          <text v-if="item.order.o_paystatus==1" >待支付</text>
 		          <text v-if="item.order.o_ddstatus==2&&item.order.o_paystatus==2" style="color: #FF4141;">待发货</text>
 		          <text v-if="item.order.o_paystatus==3" style="color: #FF4141;">已退款</text>
@@ -31,16 +31,20 @@
 		          <view class="goods1" @tap="jump" :data-url="'/pagesA/OrderDetails/OrderDetails?id='+item.order.o_id+'&type='+type">
 		           
 		            <view class="goodsImg">
-								<!-- 	<image v-if="item1.gd_vice_pic.length>0" class="goodsImg" :src="getimg(item1.gd_vice_pic[0])" mode="aspectFill"></image>
-									<image v-else class="goodsImg" :src="getimg(item1.gd_mastr_pic[0])" mode="aspectFill"></image> -->
-									<image class="goodsImg" :src="getimg(item1.photo)" mode="aspectFill"></image>
+									<image v-if="item1.gd_vice_pic.length>0" class="goodsImg" :src="getimg(item1.gd_vice_pic[0])" mode="aspectFill"></image>
+									<image v-else class="goodsImg" :src="getimg(item1.gd_mastr_pic[0])" mode="aspectFill"></image>
+									<!-- <image class="goodsImg" :src="getimg(item1.photo)" mode="aspectFill"></image> -->
 		            </view>
 		            <view class="goodsinr">
-		              <view class="goodsname fz30 c30">{{item1.gd_name}}{{type}}</view>
-		              <view class="goodspri"><text v-for="(item2,idx2) in item1.gd_attr">{{item2+' '}}</text></view>
-		              <view class="goodspri1"><text >¥</text>{{item1.price}}</view>
+		              <view class="goodsname fz30 c30">{{item1.gd_name}}</view>
+		              <view class="goodspri"><text v-for="(item2,idx2) in item1.gd_attr">{{item2.value+' '}}</text></view>
+		              <view class="goodspri1"><text >¥</text>{{item1.single_price}}</view>
 		            </view>
 		          </view>
+							<view v-if="item1.is_comment==2||item1.is_advocacy==2" class="o_cz">
+								<view v-if="item1.is_comment==2" @tap.stop="jump" :data-url="'/pagesA/order_pj/order_pj?id='+item1.ov_id">评价</view>
+							  <!-- <view v-if="item1.is_advocacy==2" @tap.stop="jump_fabu(item1)" data-url="/pagesA/daiyan_fabu/daiyan_fabu">我要代言</view> -->
+							</view>
 		        </block>
 		
 		        <view class="o_xj">
@@ -50,21 +54,21 @@
 		          </view>
 		
 		        </view>
-		        <view class="o_cz">
+		        <view  v-if="item.order.o_ddstatus!=3" class="o_cz">
 		          <!-- <view v-if="item1.is_comment==2" @tap.stop="jump" data-url="/pages_goods/goods_pj/goods_pj">评价</view> -->
 		          <!-- <view v-if="type==0||type==4}}" @tap.stop="jump" data-url="/pages/daiyan_fabu/daiyan_fabu">我要代言</view> -->
-		         <block v-if="item.order.o_paystatus==1">
-							 <view class="qx" @tap.stop="order_pay(item.order.o_id)">立即付款</view>
-							 <view  @tap.stop="cancelOrder(item.order.o_id)">取消订单</view>
-						 </block>
-						 <block v-else-if="item.order.o_ddstatus==1">
-							 <view  class="qx" @tap.stop="del_order(item.order.o_id)">删除订单</view>
-							 <view @tap.stop="jump" :data-url="'/pagesA/Order_wuliu/Order_wuliu?id='+item.order.o_id">查看物流</view>
-						 </block>
-						 <block v-else>
-							 <view class="qx"  @tap.stop="get_goods(item.order.o_id)">确认收货</view>
-							 <view @tap.stop="jump" :data-url="'/pagesA/Order_wuliu/Order_wuliu?id='+item.order.o_id">查看物流</view>
-						 </block>
+							 <block v-if="item.order.o_paystatus==1">
+								 <view class="qx" @tap.stop="order_pay(item.order.o_id)">立即付款</view>
+								 <!-- <view  @tap.stop="cancelOrder(item.order.o_id)">取消订单</view> -->
+							 </block>
+							 <block v-else-if="item.order.o_ddstatus==1">
+								 <!-- <view  class="qx" @tap.stop="del_order(item.order.o_id)">删除订单</view> -->
+								 <view @tap.stop="jump" :data-url="'/pagesA/Order_wuliu/Order_wuliu?id='+item.order.o_id">查看物流</view>
+							 </block>
+							 <block v-else>
+								 <view class="qx"  @tap.stop="get_goods(item.order.o_id)">确认收货</view>
+								 <view @tap.stop="jump" :data-url="'/pagesA/Order_wuliu/Order_wuliu?id='+item.order.o_id">查看物流</view>
+							 </block>
 		          
 		          <!-- <view v-if="item.order.o_paystatus==1" class="qx" @tap.stop='del_order(item.order.o_id)'>取消订单</view> -->
 		        </view>
@@ -131,97 +135,8 @@
 			if(option.type){
 				this.type=option.type
 			}
-			that.datas=[
-				{
-					code:'466836816556',
-					id:1,
-					order_goods:[
-						{
-							photo:'/static/images/index_15.jpg',
-							gd_name:'MODULE悦写 4合1多功能笔 中性笔 与铅笔结合',
-							gd_attr:['4合1多功能笔','多色'],
-							price:'39.99',
-							number:1,
-							sku_number:100,
-							code:'466836816556',
-							id:1,
-						}
-					],
-					order:{
-						o_id:1,
-						o_paystatus:1,
-						o_ddstatus:2,
-						o_price:'39.99'
-					}
-				},
-				{
-					code:'466836816556',
-					id:1,
-					order_goods:[
-						{
-							photo:'/static/images/goods_type_05.jpg',
-							gd_name:'MODULE悦写 4合1多功能笔 中性笔 与铅笔结合',
-							gd_attr:['4合1多功能笔','多色'],
-							price:'39.99',
-							number:1,
-							sku_number:100,
-							code:'466836816556',
-							id:1,
-						}
-					],
-					order:{
-						o_id:2,
-						o_paystatus:2,
-						o_ddstatus:2,
-						o_price:'39.99'
-					}
-				},
-				{
-					code:'466836816556',
-					id:1,
-					order_goods:[
-						{
-							photo:'/static/images/goods_type_05.jpg',
-							gd_name:'MODULE悦写 4合1多功能笔 中性笔 与铅笔结合',
-							gd_attr:['4合1多功能笔','多色'],
-							price:'39.99',
-							number:1,
-							sku_number:100,
-							code:'466836816556',
-							id:1,
-						}
-					],
-					order:{
-						o_id:3,
-						o_paystatus:2,
-						o_ddstatus:1,
-						o_price:'39.99'
-					}
-				},
-				{
-					code:'466836816556',
-					id:1,
-					order_goods:[
-						{
-							photo:'/static/images/goods_type_05.jpg',
-							gd_name:'MODULE悦写 4合1多功能笔 中性笔 与铅笔结合',
-							gd_attr:['4合1多功能笔','多色'],
-							price:'39.99',
-							number:1,
-							sku_number:100,
-							code:'466836816556',
-							id:1,
-						}
-					],
-					order:{
-						o_paystatus:2,
-						o_ddstatus:4,
-						o_price:'39.99'
-					}
-				},
-			]
-			that.htmlReset=0
-			return
+		
+			
 			this.onRetry()
 		},
 		onShow(){
@@ -231,8 +146,11 @@
 				this.all=false
 				this.onRetry()
 			}
-			this.show_num++
+			
 			// this.getOrderList('onshow')
+		},
+		onHide() {
+			this.show_num++
 		},
 		/**
 		 * 页面相关事件处理函数--监听用户下拉动作
@@ -252,8 +170,7 @@
 				return service.getimg(img)
 			},
 			onRetry(){
-				uni.stopPullDownRefresh()
-				return
+				
 				this.datas=[]
 				this.page=1
 				this.btnkg=0
@@ -262,14 +179,14 @@
 			},
 			order_pay(id){
 				var that =this
-				uni.showToast({
-					icon: 'none',
-					title: '支付成功'
-				})
-				return
+				// uni.showToast({
+				// 	icon: 'none',
+				// 	title: '支付成功'
+				// })
+				// return
 				var jkurl='/order/goPay'
 				var datas={
-					token:that.loginMsg.userToken,
+					token: that.$store.state.loginDatas.userToken||'',
 					ids:id
 				}
 				if(that.btnkg==1){
@@ -294,6 +211,7 @@
 								icon: 'none',
 								title: '支付成功'
 							})
+							service.wxlogin('token')
 							setTimeout(function() {
 								that.onRetry()
 							}, 1000)
@@ -422,14 +340,14 @@
 			//确认收货
 			get_goods(id){
 				var that =this
-				uni.showToast({
-					icon: 'none',
-					title: '操作成功'
-				})
-				return
+				// uni.showToast({
+				// 	icon: 'none',
+				// 	title: '操作成功'
+				// })
+				// return
 				var jkurl='/order/confirmReceipt'
-				var data={
-					token:that.loginMsg.userToken,
+				var datas={
+					token: that.$store.state.loginDatas.userToken||'',
 					id:id
 				}
 				if(that.btnkg==1){
@@ -437,56 +355,57 @@
 				}else{
 					that.btnkg=1
 				}
-				service.post(jkurl, data,
-					function(res) {
-						that.btnkg=0
-						// if (res.data.code == 1) {
-						if (res.data.code == 1) {
-							
-							var datas = res.data.data
-							// console.log(typeof datas)
-							that.htmlReset=0
-							if (typeof datas == 'string') {
-								datas = JSON.parse(datas)
-							}
+				service.P_post(jkurl, datas).then(res => {
+					that.btnkg = 0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+				
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						console.log(res)
+						uni.showToast({
+							icon: 'none',
+							title: '操作成功'
+						})
+						setTimeout(()=>{
+							that.onRetry()
+						},1000)
+						// for(var i=0; i<that.datas.length;i++){
+						// 	if(that.datas[i].order.o_id==id){
+								
+						// 		// that.datas[i].is_friend=2
+						// 		// that.$set(that.datas,i,that.datas[i])
+						// 		that.datas.splice(i, 1)
+						// 	}
+						// }
+				
+				
+				
+					} else {
+						if (res.msg) {
 							uni.showToast({
 								icon: 'none',
-								title: '操作成功'
+								title: res.msg
 							})
-							for(var i=0; i<that.datas.length;i++){
-								if(that.datas[i].order.o_id==id){
-									
-									// that.datas[i].is_friend=2
-									// that.$set(that.datas,i,that.datas[i])
-									that.datas.splice(i, 1)
-								}
-							}
 						} else {
-							that.htmlReset=1
-							if (res.data.msg) {
-								uni.showToast({
-									icon: 'none',
-									title: res.data.msg
-								})
-							} else {
-								uni.showToast({
-									icon: 'none',
-									title: '操作失败'
-								})
-							}
-						}
-					},
-					function(err) {
-						that.htmlReset=1
-						that.btnkg=0
-						
 							uni.showToast({
 								icon: 'none',
 								title: '操作失败'
 							})
-					
+						}
 					}
-				)
+				}).catch(e => {
+					that.btnkg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '操作失败'
+					})
+				})
+				
 			},
 			getnum(idx){
 				var that =this
@@ -502,7 +421,7 @@
 				let that =this
 				var jkurl='/order'
 				var data={
-					token:that.loginMsg.userToken,
+					token: that.$store.state.loginDatas.userToken||'',
 					type:that.type==0?99:that.type,
 					page:that.page,
 					size:that.size
@@ -1025,7 +944,7 @@ page{
 
 .contbox{
 	width: 100%;
-	padding: 10rpx 0;
+	/* padding: 10rpx 0; */
 	box-sizing: border-box;
 	background-color: #f8f8f8;
 }
@@ -1060,8 +979,11 @@ page{
 	background: #FFFFFF;
 	box-shadow: 0px 5px 11px 0px rgba(192, 192, 192, 0.14);
 	border-radius: 5px 5px 5px 5px;
-  border-bottom: 20rpx solid #F5F5F5;
+  /* border-bottom: 20rpx solid #F5F5F5; */
 	/* margin-bottom: 20rpx; */
+}
+.goods+.goods{
+	margin-top: 20upx;
 }
 .goods1{
 	width: 100%;

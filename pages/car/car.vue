@@ -7,10 +7,10 @@
 					<view class="setting1 " :data-id="item.id" @tap="select_car(item,index)">
 						<text :class="item.active==1?'active':''" class="iconfont iconduigou-copy fz26 mr5"></text>
 					</view>
-					<image class="car_li_img" @tap="jump" :data-url="'/pagesA/details/details?id='+item.id" :src="getimg(item.g_pic[0])" mode="aspectFit"></image>
+					<image class="car_li_img" @tap="jump" :data-url="'/pagesA/details/details?id='+item.g_id" :src="getimg(item.g_pic[0])" mode="aspectFit"></image>
 					<view class="flex_1">
-						<view class="goods_name oh2"  @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">{{item.g_title}}</view>
-						<view class="goods_gg"  @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">
+						<view class="goods_name oh2"  @tap="jump" :data-url="'/pagesA/details/details?id='+item.g_id">{{item.g_title}}</view>
+						<view class="goods_gg"  @tap="jump" :data-url="'/pagesA/details/details?id='+item.g_id">
 							<text v-for="(item1,index1) in item.attr">{{item1.value+';'}}</text>
 						</view>
 						<view class="goods_pri_num dis_flex aic ju_b">

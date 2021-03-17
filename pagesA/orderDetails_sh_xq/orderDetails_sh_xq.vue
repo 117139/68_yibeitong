@@ -32,7 +32,7 @@
 			<view class="goodsBox">
 				<view class="goods">
 					<block  v-if="datas.goods">
-						<view class="goods1" :data-tab="idx" @tap="jump" :data-url="'/pages/details/details?id='+datas.goods.g_id">
+						<view class="goods1" @tap="jump" :data-url="'/pages/details/details?id='+datas.goods.g_id">
 							<view class="goodsImg">
 								<!-- <image v-if="item.gd_vice_pic.length>0" class="goodsImg" :src="getimg(item.gd_vice_pic[0])" mode="aspectFill"></image>
 								<image v-else class="goodsImg" :src="getimg(item.gd_mastr_pic[0])" mode="aspectFill"></image> -->
@@ -47,7 +47,7 @@
 									<view class="goods_pri">
 										￥<text >{{datas.goods.single_price}}</text>
 									</view>
-									<view>×2</view>
+									<view>×{{datas.goods.number}}</view>
 								</view>
 							</view>
 						</view>
@@ -204,7 +204,7 @@
 				</block>
 			</view>
 			<view class="hengxian"></view>
-			<view class="guige_list"  v-if="!datas.logistics_name">
+			<view class="guige_list"  v-if="datas.s_status==2&&datas.type!=1&&datas.logistics_name==''">
 				
 				<picker @change="bindPickerChange" data-type="wl_list" value="" :range="datas.zc_logistics"   class="set_name">
 					<view class="guige_li">
@@ -228,7 +228,7 @@
 			</view>
 			<view class="o_cz">
 				<view v-if="datas.s_status==2&&datas.type!=1&&datas.logistics_name==''"  class="qx" @tap="save_val">提交</view>
-				<view class="qx" @tap="save_val">提交</view>
+				<view v-if="datas.merchant_logistics" class="qx" @tap.stop="jump" :data-url="'/pagesA/Order_wuliu/Order_wuliu?id='+item.id">查看物流</view>
 				
 			</view>
 			<!-- 底部占位 -->
@@ -288,77 +288,7 @@
 				that.h_type = option.type
 
 			}
-			that.datas = {
-        "id": 38,
-        "o_order_sernum": "AEC29A316982967170",
-        "type": 1,
-        "type_value": "仅退款",
-        "number": 1,
-        "img": [
-            "/resource/api/img/20201229/889bd8a7000f27637c3c6832a2f38db1.jpg"
-        ],
-        "explain": "买多了看看买多了看看买多了看看买多了看看买多了看看买多了看看买多了看看",
-        "retreat_price": "0.01",
-        "retreat_bean": "0.00",
-        "create_time": 1609231698,
-        "s_status": 2,
-        "s_status_value": "已同意",
-        "is_return_price": 1,
-        "s_status_time": 1609231705,
-        "s_status_refuse": "",
-        "logistics_name": "",
-        "logistics": "",
-        "merchant_logistics_name": "",
-        "merchant_logistics": "",
-        "merchant": {
-            "group_code": 3,
-            "head_portrait": "/resource/merchant/head_portrait/20200713/24137047dde648c211008e53f927cbfb.png",
-            "store_name": "Nick"
-        },
-        "goods": {
-            "g_id": 24,
-            "gd_name": "Winter潮流男士衣裤 官方旗舰店Winter潮流男士衣裤",
-            "gd_mastr_pic": [
-                "/resource/merchant/goods/20200826/3afe80bc7af4be47b2d5209bca1934ec.jpeg"
-            ],
-            "gd_vice_pic": [
-                "/resource/merchant/goods/20200826/3afe80bc7af4be47b2d5209bca1934ec.jpeg"
-            ],
-            "single_price": "0.01",
-            "number": 1,
-            "may_retreat_number": 1,
-            "gd_attr": [
-                {
-                    "name": "颜色",
-                    "value": "蓝色翡翠"
-                },
-                {
-                    "name": "内存",
-                    "value": "XL"
-                }
-            ]
-        },
-        "zc_logistics": [
-            "韵达快递",
-            "韵达快运",
-            "顺丰",
-            "申通",
-            "圆通",
-            "中通",
-            "中通快运",
-            "汇通快递",
-            "EMS",
-            "广东邮政",
-            "天天",
-            "国通",
-            "德邦",
-            "宅急送",
-            "百世快递",
-            "百世快运"
-        ]
-    }
-			that.htmlReset = 0
-			return
+			
 			that.getdata()
 
 
@@ -398,13 +328,13 @@
 					})
 					return
 				}
-				uni.showToast({
-					icon: 'none',
-					title: '提交成功'
-				})
-				return
+				// uni.showToast({
+				// 	icon: 'none',
+				// 	title: '提交成功'
+				// })
+				// return
 				var datas = {
-					token: this.loginMsg.userToken,
+					token: that.$store.state.loginDatas.userToken||'',
 					id: that.id,
 					logistics_name: that.datas.zc_logistics[that.wl_idx],
 					logistics: this.wl_num,
@@ -435,7 +365,7 @@
 							title: '提交成功'
 						})
 						var pages = getCurrentPages(); //当前页面
-						var prevPage = pages[pages.length - 2]; //上一页面
+						var prevPage = pages[pages.length - 1]; //上一页面
 						prevPage.setData({
 							//直接给上一个页面赋值
 							sh_wl: true,
@@ -587,11 +517,11 @@
 			getdata() {
 				var that = this
 				var datas = {
-					token: that.loginMsg.userToken,
+					token: that.$store.state.loginDatas.userToken||'',
 					id: that.id
 				}
 				// 单个请求
-				service.P_get('/order/details', datas).then(res => {
+				service.P_get('/afterSale/details', datas).then(res => {
 					console.log(res)
 					if (res.code == 1) {
 						that.htmlReset = 0

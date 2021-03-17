@@ -15,7 +15,8 @@
 							<view class="rect5"></view>
 						</view>
 					</view>
-					<view class="row" v-for="(item,index) in msgList" :key="index" :id="item.ID">
+					<view v-if="item.from!='@TIM#SYSTEM'" class="row" v-for="(item,index) in msgList" :key="index" :id="item.ID">
+						<!-- {{item.from!='@TIM#SYSTEM'}} -->
 						<view class="msg_time">
 							<view class="time" v-if="index==0">{{timeFliter(item.time)}}</view>
 							<view class="time" v-else-if="index>0">{{gettime1(index-1)}}</view>
@@ -27,7 +28,8 @@
 								
 								<!-- 左-头像 -->
 								<view v-if="item.flow!='out'" class="left">
-									<image v-if="item.avatar" :src="item.avatar"></image>
+									<image v-if="item.conversationID=='@TIM#SYSTEM'" :src="getimg('/static/images/ybt_group.png')"></image>
+									<image v-else-if="item.avatar"  :src="item.avatar"></image>
 									<image v-else :src="getimg('/static/images/tx_m2.jpg')"></image>
 								</view>
 								<!-- 左-消息 -->
@@ -44,23 +46,18 @@
 									</view>
 									<!-- 自定义消息 -->
 									<view v-if="item.type==TIM.TYPES.MSG_CUSTOM" class="bubble">
-										<view v-if="item.payload.data=='custom'">{{item.payload.data}}</view>
-										<view v-if="item.payload.data=='custom'">{{item.payload.description}}</view>
-										<view v-if="item.payload.data=='custom'">{{item.payload.extension}}</view>
-										<view v-if="item.payload.data=='custom1'">
-											<!-- {{JSON.parse(item.payload.extension)}} -->
-											{{'自定义参数1:'+getarg(item.payload.extension,'a',item.payload.data)}}
-											{{'自定义参数2:'+getarg(item.payload.extension,'a1',item.payload.data)}}
-											{{'自定义参数3:'+getarg(item.payload.extension,'a2',item.payload.data)}}
-											{{'自定义参数4:'+getarg(item.payload.extension,'a3',item.payload.data)}}
-										</view>
+										
+										<view v-if="item.payload.data=='group_create'">{{conversationActive.groupProfile.name+' 建群成功了！'}}</view>
+										<image v-if="item.payload.data=='custom_img'" @tap="previmg" :data-url="item.payload.description"
+										 :src="item.payload.description" mode="aspectFill"
+											style="width: 240upx;height: 240upx;"></image>
+										
 										<view v-if="item.payload.data=='custom_good'" class="chat_box" @tap="jump" :data-url="'/pages/details/details?id='+getarg(item.payload.extension,'a2',item.payload.data)">
 											<image class="chat_img" :src="getarg(item.payload.extension,'a3',item.payload.data)" mode="aspectFill" style="width: 196upx;height: 196upx;"></image>
 											<view class="chat_msg">
 												<view class="gb_name oh2">{{item.payload.description}}</view>
 												<view class="gb_msg  oh1">{{'￥'+getarg(item.payload.extension,'a',item.payload.data)}}</view>
-												<!-- <view class="gb_msg oh1">{{'自定义参数2:'+getarg(item.payload.extension,'a1',item.payload.data)}}</view>
-											<view class="gb_msg oh1">{{'自定义参数3:'+getarg(item.payload.extension,'a2',item.payload.data)}}</view> -->
+												
 											</view>
 										</view>
 									</view>
@@ -85,7 +82,7 @@
 				<view class="rong-emoji-content_list" >
 					<block v-for="(page,pid) in emojiList" :key="pid">
 						<view v-for="(em,eid) in page" :key="eid" @tap="addEmoji(em)" class="rong-emoji-content_li">
-							<image  class='rong-emoji-content' mode="widthFix" :src="filter.imgIP('/static_s/51daiyan/img/emoji/'+em.url)"></image>
+							<image  class='rong-emoji-content' mode="widthFix" :src="filter.imgIP('/static/images/img/emoji/'+em.url)"></image>
 						</view>
 					</block>
 				</view>
@@ -194,7 +191,7 @@
 				count: 15,
 				isCompleted: '',
 				msgList: [
-					{
+					/*{
 						time:'1611316603',
 						flow:'out',
 						type:'TIMTextElem',
@@ -209,7 +206,7 @@
 						payload:{
 							text:'你好'
 						}
-					},
+					},*/
 				],
 				TIM: null,
 
@@ -395,6 +392,7 @@
 
 
 				isShow: false,
+				isFocus:false,
 			};
 		},
 		computed: {
@@ -414,9 +412,7 @@
 			that = this
 			console.log('对方聊天id' + option.id)
 			console.log('对方聊天type' + option.type)
-			uni.setNavigationBarTitle({
-				title: '物美团购群1'
-			})
+			
 			if (!this.hasLogin) {
 				uni.navigateBack({
 					delta: 1
@@ -437,8 +433,13 @@
 				this.msg_type = option.type
 			}
 			this.toUserId = option.id ? option.id : this.$store.state.toUserId
-			console.log('toUserId===============>' + this.toUserId)
+			
 			this.conversationActive = this.$store.state.conversationActive
+			console.log('conversationActive===============>')
+			console.log(this.conversationActive)
+			uni.setNavigationBarTitle({
+				title: this.conversationActive.groupProfile.name
+			})
 			this.TIM = this.$TIM
 			// this.toUserId = 'wenxin'
 			//获取聊天对象的用户信息---有后端的情况这里 使用后端api请求、
@@ -602,17 +603,13 @@
 					sendMinutes = '0' + sendMinutes
 				}
 				// console.log(time)
-				console.log(sendtime)
+				// console.log(sendtime)
 				// console.log(sendtime.getDate())
 				if (sendYear == newYear) {
-
 					// console.log(sendDate, nowDay)
 					if (sendMonth == nowMonth && sendDate == nowDay) {
-
 						return sendHours + ':' + sendMinutes
 					}
-
-
 					return sendMonth + '-' + sendDate + ' ' + sendHours + ':' + sendMinutes
 				} else {
 					return sendYear + '-' + sendMonth + '-' + sendDate + ' ' + sendHours + ':' + sendMinutes
@@ -690,22 +687,14 @@
 					this.nextReqMessageID = res.data.nextReqMessageID // 用于续拉，分页续拉时需传入该字段。
 					this.isCompleted = res.data.isCompleted
 					this.scrollToView = res.data.messageList[res.data.messageList.length - 1].ID
-					// 滚动到底部
-					setTimeout(function (){
-						this.scrollTop = 9999;
-						this.$nextTick(function() {
-							this.scrollAnimation = true;
-						});
-					},10)
-					// this.$nextTick(function() {
-					// 	//进入页面滚动到底部
-					// 	this.scrollTop = 9999;
-					// 	this.$nextTick(function() {
-					// 		this.scrollAnimation = true;
-					// 	});
-					// });
-				});
 				
+					setTimeout(function() {
+						this.scrollTop = 9999;
+						setTimeout(function() {
+							this.scrollAnimation = true;
+						}, 10)
+					}, 10)
+				});
 			},
 			//处理图片尺寸，如果不处理宽高，新进入页面加载图片时候会闪
 			setPicSize(content) {
@@ -766,7 +755,60 @@
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					count: 1,
 					success: (res) => {
-						that.sendMsg(res, 'img');
+						// #ifdef H5
+						uni.request({
+								url: res.tempFilePaths[0],
+								method: 'GET',
+								responseType: 'arraybuffer',
+								success: (res) => {
+										let base64 = uni.arrayBufferToBase64(res.data); //把arraybuffer转成base64
+										console.log('base64')
+										// console.log(base64)
+										base64 = 'data:image/jpeg;base64,' + base64; //不加上这串字符，在页面无法显示
+										// return base64
+										var datas={
+											file:base64,
+											type:1,
+										}
+										var jkurl='/upload/base64Img'
+										console.log('h5 upload')
+										// 单个请求
+										service.P_post(jkurl, datas).then(res => {
+											that.btn_kg=0
+											console.log(res)
+											console.log(res.msg)
+											// var ndata = JSON.parse(res.data)
+											if (res.code == 1) {
+												// console.log(imgs[i], i, res.msg)
+												
+												var img_msg=service.imgurl+res.msg
+												that.sendMsg(img_msg,'img_cu');
+												// that.sendMsg(img_msg,'img');
+												
+											} else {
+												uni.showToast({
+													icon: "none",
+													title: "上传失败"
+												})
+											}
+										}).catch(e => {
+											that.btn_kg=0
+											console.log(e)
+											uni.showToast({
+												icon: 'none',
+												title: '上传数据失败'
+											})
+										})
+								},
+								fail: (err) => {
+									console.log(err)
+								}
+						});
+						
+						// #endif
+						// #ifndef H5
+							that.sendMsg(res, 'img');
+						// #endif
 						return
 						/*for(let i=0;i<res.tempFilePaths.length;i++){
 							uni.getImageInfo({
@@ -828,7 +870,7 @@
 							if (EM.alt == item) {
 								//在线表情路径，图文混排必须使用网络路径，请上传一份表情到你的服务器后再替换此路径 
 								//比如你上传服务器后，你的100.gif路径为https://www.xxx.com/emoji/100.gif 则替换onlinePath填写为https://www.xxx.com/emoji/
-								let onlinePath = 'http://51daiyan.test.upcdn.net/static_s/51daiyan/img/emoji/'
+								let onlinePath = service.imgurl+'/static/images/img/emoji/'
 								// let imgstr = '<img class="emoji_i" src="'+onlinePath+this.onlineEmoji[EM.url]+'">';
 								let imgstr = '<img class="emoji_i" src="' + onlinePath + EM.url + '">';
 								console.log("imgstr: " + imgstr);
@@ -863,6 +905,18 @@
 							file: content
 						}
 					});
+				}else	if(type=='img_cu'){
+					console.log(content)
+					// console.log(content.tempFilePaths[0])
+					message = this.tim.createCustomMessage({
+					  to: this.toUserId,
+					  conversationType: that.$TIM.TYPES.CONV_GROUP,
+					  payload: {
+					   data: 'custom_img',//自定义消息的数据字段
+					   description: content,//自定义消息的说明字段
+					   extension: content,//自定义消息的扩展字段
+					  }
+					});	
 				} else {
 					message = this.tim.createTextMessage({
 						to: this.toUserId,
@@ -885,29 +939,6 @@
 						});
 					},
 					(err) => {
-						var options = {
-							groupID: that.$store.state.toUserId,
-							type: that.$TIM.TYPES.GRP_AVCHATROOM,
-						}
-						let promise = that.tim.joinGroup(options);
-						promise.then(function(imResponse) {
-							switch (imResponse.data.status) {
-								case TIM.TYPES.JOIN_STATUS_WAIT_APPROVAL:
-									console.log('等待管理员同意')
-									break; // 等待管理员同意
-								case TIM.TYPES.JOIN_STATUS_SUCCESS: // 加群成功
-									console.log('加群成功')
-									console.log(imResponse.data.group); // 加入的群组资料
-									break;
-								case TIM.TYPES.JOIN_STATUS_ALREADY_IN_GROUP: // 已经在群中
-									console.log('已经在群中')
-									break;
-								default:
-									break;
-							}
-						}).catch(function(imError) {
-							console.warn('joinGroup error:', imError); // 申请加群失败的相关信息
-						});
 						console.log(err)
 					}
 				)

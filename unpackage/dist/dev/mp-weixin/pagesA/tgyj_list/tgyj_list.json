@@ -1,5 +1,5 @@
 {
   "navigationBarTitleText": "佣金明细",
-  "enablePullDownRefresh": false,
+  "enablePullDownRefresh": true,
   "usingComponents": {}
 }

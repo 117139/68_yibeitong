@@ -1,6 +1,12 @@
+// #ifdef MP-WEIXIN
 import TIM from 'tim-wx-sdk';
 import COS from "cos-wx-sdk-v5";
-
+// #endif
+// #ifdef H5
+import TIM from 'tim-js-sdk';
+import COS from "cos-js-sdk-v5"
+// import TIMUploadPlugin from 'tim-upload-plugin';
+// #endif
 
 const options = {
   SDKAppID: 1400477019 // 接入时需要将0替换为您的即时通信应用的 SDKAppID
@@ -9,8 +15,15 @@ const options = {
 const tim = TIM.create(options); // SDK 实例通常用 tim 表示
 const TIMData = TIM
 // 注册 COS SDK 插件
+// #ifdef MP-WEIXIN
 tim.registerPlugin({'cos-wx-sdk': COS});
+// #endif
 
+// #ifdef H5
+
+tim.registerPlugin({'cos-js-sdk': COS});
+// tim.registerPlugin({'tim-upload-plugin': TIMUploadPlugin});
+// #endif
 
 
 /* eslint-disable require-jsdoc */

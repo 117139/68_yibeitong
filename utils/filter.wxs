@@ -1,4 +1,4 @@
-var imgip ='http://51daiyan.test.upcdn.net/'
+var imgip ='https://yibeitong.com.aa.800123456.top/'
 // filter.wxs
 var dateFormat = function(date) {
     var dates = date.split('/');

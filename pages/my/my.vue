@@ -8,7 +8,8 @@
 					<view class="qiandao_box" @tap="jump" :data-url="'/pagesA/my_qiandao/my_qiandao?type='+0">
 						<view class="qd_nbox">
 							<text class="iconfont iconqiandao"></text>
-							<text>签到</text>
+							<text v-if="loginDatas.is_day_sign">已签到</text>
+							<text v-else>签到</text>
 							<text class="iconfont iconqiandao" style="opacity: 0;"></text>
 						</view>
 					</view>
@@ -31,12 +32,12 @@
 							</view>
 						</view>
 						<view class="dis_flex aic ju_a top_num">
-							<view class="dis_flex_c aic">
+							<view class="dis_flex_c aic" @tap="jump" :data-url="'/pagesA/my_yue/my_yue?type='+1" data-login="true" :data-haslogin="hasLogin">
 								<view class="top_pri">{{loginDatas.money}}</view>
 								<view>我的余额(元)</view>
 							</view>
 							<view class="num_hg"></view>
-							<view class="dis_flex_c aic">
+							<view class="dis_flex_c aic" @tap="jump" :data-url="'/pagesA/share_index/share_index?type='+1"  data-login="true" :data-haslogin="hasLogin">
 								<view class="top_pri">{{loginDatas.commission}}</view>
 								<view>当前佣金(元)</view>
 							</view>

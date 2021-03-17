@@ -1,22 +1,18 @@
 <template>
 	<view class="minh100">
-		<view v-if="htmlReset==1" class="zanwu" @tap='onRetry'>请求失败，请点击重试</view>
-		<view v-if="htmlReset==-1" class="loading_def">
-			<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
-		</view>
-		<block v-if="htmlReset==0">
+		<htmlLoading ref="htmlLoading" @Retry='onRetry' :bj_show="false">
 			
 		<!-- <input class="qun_name" type="text" v-model="qun_name" placeholder="请输入群名称" /> -->
 		<view class="qunyuan_list">
 			<view class="qunyuan_li_tit">选择群成员</view>
 			<view class="qunyuan_li" v-for="(item,index) in datas" @tap='xz_qy(item)'>
 				<view class="qunyuan_li_d1" :class="item.active?'active':''"></view>
-				<image class="qunyuan_li_d2" :src="getimg('/static/images/tx_m2.jpg')" mode=""></image>
-				<view class="qunyuan_li_d3">用户{{index+1}}</view>
+				<image class="qunyuan_li_d2" :src="getimg(item.head_portrait)" mode=""></image>
+				<view class="qunyuan_li_d3">{{item.nickname}}</view>
 			</view>
 		</view>
 		<view class="sub_btn" @tap="sub_fuc">完成</view>
-		</block>
+		</htmlLoading>
 	</view>
 </template>
 
@@ -32,36 +28,114 @@
 		data() {
 			return {
 				htmlReset: -1,
-				data_last:false,
 				qun_name:'',
-				datas:[
-					{name:'用户1'},
-					{name:'用户2'},
-					{name:'用户3'},
-					{name:'用户4'},
-					{name:'用户5'},
-					{name:'用户6'},
-					{name:'用户7'},
-					{name:'用户8'},
-					{name:'用户9'},
-					{name:'用户10'},
-					{name:'用户11'},
-					{name:'用户12'},
-					{name:'用户13'},
-				]
+				conversationActive:'',
+				ids:'',
+				datas:[],
+				page:1,
+				size:20,
+				data_last:false
 			}
 		},
-		onLoad() {
+		onLoad(option) {
 			that = this
-			that.htmlReset = 0
+			that.ids=option.ids
+			console.log(option.ids)
+			
+			this.conversationActive = this.$store.state.conversationActive
+			that.onRetry()
 		},
 		computed: {
 			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas','isLogin','isSDKReady','conversationList']),
 		},
 		methods: {
+			onRetry() {
+				this.page = 1
+				this.goods_list = []
+				this.data_last = false
+				this.getdata()
+			},
+			getdata() {
+				
+				if (that.data_last) {
+					return
+				}
+				var datas = {
+				
+					token: that.$store.state.loginDatas.userToken||'',
+					page: that.page,
+					size: that.size,
+					keyword:'',
+					uids:that.ids
+				}
+				if (that.btn_kg == 1) {
+					return
+				}
+				that.btn_kg = 1
+				console.log('datas>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.')
+				console.log(datas)
+				//selectSaraylDetailByUserCard
+				var jkurl = '/getUserAll'
+				uni.showLoading({
+					title: '正在获取数据',
+					mask: true
+				})
+				var page_that = that.page
+				service.P_get(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					that.$refs.htmlLoading.htmlReset_fuc(0)
+					console.log(res)
+					if (res.code == 1) {
+						that.htmlReset = 0
+						var datas = res.data
+						console.log(typeof datas)
+				
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						console.log(res)
+				
+						if (page_that == 1) {
+				
+							that.datas = datas
+						} else {
+							if (datas.length == 0) {
+								that.data_last = true
+								return
+							}
+							that.datas = that.datas.concat(datas)
+						}
+						that.page++
+				
+					} else {
+						that.htmlReset = 1
+					that.$refs.htmlLoading.htmlReset_fuc(1)
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '获取数据失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.htmlReset = 1
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败，请检查您的网络连接'
+					})
+				})
+			},
+			
 			addGroupMember() {
 				let promise = this.tim.addGroupMember({
-					groupID: 'group1',
+					groupID: that.conversationActive.groupProfile.groupID,
 					userIDList: ['user1','user2','user3']
 				});
 				promise.then(function(imResponse) {
@@ -85,23 +159,46 @@
 				Vue.set(item,'active',type)
 			},
 			sub_fuc(){
-				if(!that.qun_name){
+				var memberList=[]
+				for(var i=0;i<that.datas.length;i++){
+					if(that.datas[i].active){
+						var newlist=that.datas[i].identification_id
+						memberList.push(newlist)
+					}
+				}
+				console.log(memberList)
+				if(memberList.length==0){
 					uni.showToast({
 						icon:'none',
-						title:'请输入群名称'
+						title:'请选择群成员'
 					})
-					
 					return
 				}
-				uni.showToast({
-					icon:'none',
-					title:'操作成功'
+				console.log({
+					groupID: that.conversationActive.groupProfile.groupID,
+					userIDList: memberList
 				})
-				setTimeout(()=>{
-					uni.navigateBack({
-						delta:1
+				let promise = this.tim.addGroupMember({
+					groupID: that.conversationActive.groupProfile.groupID,
+					userIDList: memberList
+				});
+				promise.then(function(imResponse) {
+					console.log(imResponse.data.successUserIDList); // 添加成功的群成员 userIDList
+					console.log(imResponse.data.failureUserIDList); // 添加失败的群成员 userIDList
+					console.log(imResponse.data.existedUserIDList); // 已在群中的群成员 userIDList
+					console.log(imResponse.data.group); // 添加后的群组信息
+					uni.showToast({
+						icon:'none',
+						title:'添加成功'
 					})
-				},1000)
+					setTimeout(()=>{
+						uni.navigateBack({
+							delta:1
+						})
+					},1000)
+				}).catch(function(imError) {
+				console.warn('addGroupMember error:', imError); // 错误信息
+				});
 			}
 		}
 	}

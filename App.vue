@@ -13,6 +13,8 @@
 			};
 		},
 		onLaunch: function() {
+			// BID()wx3a27346174beb872
+			// BSecret()5a4895d4aef1664e26393d31b7e20ade
 			var that =this
 			console.log('App Launch')
 			// #ifdef MP-WEIXIN
@@ -20,7 +22,7 @@
 			// #endif
 			// #ifdef H5
 			// service.wxlogin_ceshi_h5()
-		service.wxlogin('token')
+			service.wxlogin('token')
 			// #endif
 			uni.getSystemInfo({
 				success: function(e) {

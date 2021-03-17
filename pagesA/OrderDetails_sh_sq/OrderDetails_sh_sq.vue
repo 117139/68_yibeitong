@@ -21,7 +21,8 @@
 						<view class="goods1">
 		
 							<view class="goodsImg">
-								<image class="goodsImg" :src="getimg('/static/images/goods_01.jpg')" mode="aspectFill"></image>
+								<image v-if="datas.gd_vice_pic.length>0" class="goodsImg" :src="getimg(datas.gd_vice_pic[0])" mode="aspectFill"></image>
+								<image v-else class="goodsImg" :src="getimg(datas.gd_mastr_pic[0])" mode="aspectFill"></image>
 							</view>
 							<view class="goodsinr">
 								<!-- <view class="goodsname fz30 c30 oh1">{{item.goods_name}}</view> -->
@@ -53,7 +54,7 @@
 						<!-- <van-stepper custom-class="steppera" input-class="vanipt" plus-class="vantjia" minus-class="vantjian" v-model="cnum" min="1" :max="datas.may_retreat_number"
 						  @input="onChange" @change="onChange" /> -->
 							
-							<view class="goods_num dis_flex">
+							<view class="goods_num dis_flex aic">
 								<text v-if="cnum>1" class="iconfont iconiconset0187" @tap.stop="onNum('-')"></text>
 								<text v-else class="iconfont iconiconset0187 no"></text>
 								<input type="text" v-model="cnum" disabled="">
@@ -163,37 +164,6 @@
 				this.datas=JSON.parse(option.item)
 				console.log(option.item)
 			}
-			
-			that.datas= {
-                    "id": 38,
-                    "ov_id": 403,
-                    "g_id": 24,
-                    "gd_name": "华为HONOR/荣耀Play4T Pro 手机新品麒麟810芯片 5荣耀官方旗舰店G正品官网智能机mate30 nova6",
-                    "gd_mastr_pic": [
-                        "/resource/merchant/goods/20200826/3afe80bc7af4be47b2d5209bca1934ec.jpeg"
-                    ],
-                    "gd_vice_pic": [
-                        "/resource/merchant/goods/20200826/3afe80bc7af4be47b2d5209bca1934ec.jpeg"
-                    ],
-                    "gd_attr": [
-                        {
-                            "name": "颜色",
-                            "value": "蓝色翡翠"
-                        },
-                        {
-                            "name": "内存",
-                            "value": "256G"
-                        }
-                    ],
-                    "single_price": "0.01",
-                    "number": 1,
-                    "may_retreat_number": 3,
-                    "s_status": 2,
-                    "s_status_value": "已同意",
-                    "s_status_refuse": "",
-                    "is_return_price": 1
-                }
-			
 		},
 		onShow(){
 		
@@ -293,24 +263,77 @@
 					})
 					return
 				}
-				wx.showToast({
-					icon: 'none',
-					title: '操作成功',
-				})
-				setTimeout(function () {
-				  wx.navigateBack()
-				}, 1000)
-				return
+				// wx.showToast({
+				// 	icon: 'none',
+				// 	title: '操作成功',
+				// })
+				// setTimeout(function () {
+				//   wx.navigateBack()
+				// }, 1000)
+				// return
 				var imgs=that.imgb.join(',')
 				var jkurl='/afterSale/applyAfterSale'
 				var data={
-					token:that.loginMsg.userToken,
+					token: that.$store.state.loginDatas.userToken||'',
 					number:that.cnum,
 					content:that.yname,
 					ov_id:that.datas.id,
 					type:that.index-1+2,
 					pic:imgs
 				}
+				console.log(data)
+				// return
+				service.P_get(jkurl, data).then(res => {
+					that.btn_kg = 0
+					that.htmlReset = 0
+					// that.$refs.htmlLoading.htmlReset_fuc(0)
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+				
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						console.log(res)
+				
+						uni.showToast({
+							title: '提交成功',
+						})
+						// reset_type
+						var pages = getCurrentPages();   //当前页面
+						var prevPage = pages[pages.length - 2];   //上一页面
+						prevPage.setData({
+						  //直接给上一个页面赋值
+						  reset_type: true,
+						});
+						setTimeout(function () {
+						  uni.navigateBack()
+						}, 1000)
+					} else {
+						that.htmlReset = 1
+					// that.$refs.htmlLoading.htmlReset_fuc(1)
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.htmlReset = 1
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '操作异常'
+					})
+				})
 				service.post(jkurl, data,
 					function(res) {
 						
@@ -392,20 +415,35 @@
 			},
 			scpic() {
 			  var that = this
-			  wx.chooseImage({
-			    count: 3,
-			    sizeType: ['original', 'compressed'],
-			    sourceType: ['album', 'camera'],
-			    success(res) {
-			      // tempFilePath可以作为img标签的src属性显示图片
-			      console.log(res)
-			      const tempFilePaths = res.tempFilePaths
-			      
-			      const imglen = that.imgb.length
-			      that.upimg(tempFilePaths, 0)
-			     
-			    }
-			  })
+			  var z_count = 3 - that.imgb.length
+			  uni.showActionSheet({
+			  	itemList: ['拍照', '相册'],
+			  	success: function(res) {
+			  		console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
+			  		var sourceType = ['camera', 'album']
+			  		if (res.tapIndex == 0) {
+			  			sourceType = ['camera']
+			  		} else {
+			  			sourceType = ['album']
+			  		}
+			  		uni.chooseImage({
+			  			count: z_count,
+			  			sizeType: ['original', 'compressed'],
+			  			sourceType: sourceType,
+			  			success: function(res) {
+			  				console.log(res)
+			  				const tempFilePaths = res.tempFilePaths
+			  				
+			  				const imglen = that.imgb.length
+			  				that.upimg(tempFilePaths, 0)
+			  				
+			  			}
+			  		});
+			  	},
+			  	fail: function(res) {
+			  		console.log(res.errMsg);
+			  	}
+			  });
 			},
 			upimg(imgs, i) {
 			  var that = this
@@ -418,14 +456,42 @@
 			    })
 			    return
 			  }
-				var newdata = that.imgb
-				newdata.push(imgs[i])
-				that.imgb= newdata
-				var news1 = that.imgb.length
-				if (news1 < 3&& i<imgs.length-1) {
-				  i++
-				  that.upimg(imgs, i)
-				}
+			  service.wx_upload(imgs[i]).then(res => {
+			  			
+			  	that.btn_kg = 0
+			  	console.log(res)
+			  	if (res.code == 1) {
+			  		var datas = res.msg
+			  		console.log(i)
+			  		var newdata = that.imgb
+			  		newdata.push(datas)
+			  		that.imgb= newdata
+			  		var news1 = that.imgb.length
+			  		if (news1 < 9&& i<imgs.length-1) {
+			  		  i++
+			  		  that.upimg(imgs, i)
+			  		}
+			  	} else {
+			  		if (res.msg) {
+			  			uni.showToast({
+			  				icon: 'none',
+			  				title: res.msg
+			  			})
+			  		} else {
+			  			uni.showToast({
+			  				icon: "none",
+			  				title: "上传失败"
+			  			})
+			  		}
+			  	}
+			  }).catch(e => {
+			  	that.btn_kg = 0
+			  	console.log(e)
+			  	uni.showToast({
+			  		icon: 'none',
+			  		title: '操作失败'
+			  	})
+			  })
 				return
 				/*var newdata = that.imgb
 				console.log(i)

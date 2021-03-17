@@ -202,7 +202,7 @@ page.data-v-fe1d57f6{
 }
 .contbox.data-v-fe1d57f6{
 	width: 100%;
-	padding: 10rpx 0;
+	/* padding: 10rpx 0; */
 	box-sizing: border-box;
 	background-color: #f8f8f8;
 }
@@ -238,8 +238,11 @@ page.data-v-fe1d57f6{
 	background: #FFFFFF;
 	box-shadow: 0px 5px 11px 0px rgba(192, 192, 192, 0.14);
 	border-radius: 5px 5px 5px 5px;
-  border-bottom: 20rpx solid #F5F5F5;
+  /* border-bottom: 20rpx solid #F5F5F5; */
 	/* margin-bottom: 20rpx; */
+}
+.goods+.goods.data-v-fe1d57f6{
+	margin-top: 20rpx;
 }
 .goods1.data-v-fe1d57f6{
 	width: 100%;

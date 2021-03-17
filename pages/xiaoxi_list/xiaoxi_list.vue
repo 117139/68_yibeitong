@@ -4,7 +4,7 @@
 		  @tap="jump" data-url="/pagesA/xiaoxi_creat/xiaoxi_creat" data-login="true" :data-haslogin="hasLogin"></image>
 		
 		<!-- 聊天记录 会话列表 -->
-		<view class="conversition-box" v-if="hasLogin">
+		<!-- <view class="conversition-box" v-if="hasLogin">
 			
 			<view class="list-box" >
 				<view v-for="(item,index) in 4" :key="index" @tap="toRoom(item)">
@@ -30,14 +30,14 @@
 					</view>
 				</view>
 			</view>
-		</view>
-		<!-- <view class="conversition-box" v-if="hasLogin">
-			<view class="list-box" v-if="conversationList && conversationList.length>0">
+		</view> -->
+		<view class="conversition-box" v-if="hasLogin">
+			<view class="list-box" v-if="conversationList.length>0">
 				<view v-for="(item,index) in conversationList" :key="index" @tap="toRoom(item)">
-					<view class="item-box">
+					<view v-if="item.groupProfile" class="item-box">
 						<view class="item-img">
-							<img v-if="item.userProfile" :src="getimg(item.userProfile.avatar)" alt="">
-							<img v-else :src="getimg('/static/images/tx_m2.jpg')" alt="">
+							<img v-if="item.groupProfile.avatar" :src="getimg(item.groupProfile.avatar)" alt="">
+							<img v-else :src="getimg('/static/images/ybt_group.png')" alt="">
 						</view>
 						<view class="item-text">
 							<view class="dis_flex ju_b aic">
@@ -49,13 +49,14 @@
 							</view>
 							<view class="dis_flex ju_b aic">
 								<view class="item-text-info text-cut">
+									<rich-text v-if="item.lastMessage.payload.data=='custom_img'" :nodes="nodesFliter('[图片]')"></rich-text>
 									<rich-text :nodes="nodesFliter(item.lastMessage.messageForShow)"></rich-text>
 								</view>
 								<view class="weidu_num" v-if="item.unreadCount">{{item.unreadCount}}</view>
 							</view>
 						</view>
 						
-						!-- <view class="item-text">
+						<!-- <view class="item-text">
 							<view class="item-user">
 								{{item.userProfile.nick}}
 							</view>
@@ -65,7 +66,7 @@
 						</view>
 						<view class="item-msg">
 							<view class="item-msg-icon" v-if="item.unreadCount">{{item.unreadCount}}</view>
-						</view> --
+						</view> -->
 		
 					</view>
 		
@@ -73,15 +74,12 @@
 				</view>
 			</view>
 		
-			<view class="zanwu" v-else>暂无聊天记录</view>
+			<view class="zanwu" v-else>暂无群聊</view>
 		</view>
-		
-		
-		好友列表
 		<view class="user-box" v-if="!hasLogin" style="padding-top: 40%;">
 		
 			<view class="btn" ><button type="default" @tap="jump" data-url="/pages/login/login">授权登录</button></view>
-		</view> -->
+		</view>
 	</view>
 </template>
 
@@ -135,9 +133,8 @@
 		},
 		onLoad() {
 			that = this
-			that.htmlReset = 0
-			// this.TowerSwiper('swiperList');
-			// 初始化towerSwiper 传已有的数组名即可
+			console.log(that.conversationList)
+			that.getConversationList()
 		},
 		methods: {
 			//时间过滤
@@ -165,25 +162,7 @@
 				this.page = 1
 				this.datas = []
 				this.data_last = false
-				this.getdata()
-			},
-			
-			createGroup() {
-				let promise = this.tim.createGroup({
-					type: this.$TIM.TYPES.GRP_PUBLIC,
-					name: '阿萨德',
-					memberList: [{
-						userId: '3'
-					}, {
-						userId: '4'
-					}] // 如果填写了 memberList，则必须填写 userID
-				});
-				promise.then(function(imResponse) { // 创建成功
-					console.log(imResponse.data.group); // 创建的群的资料
-					console.log('sss')
-				}).catch(function(imError) {
-					console.warn('createGroup error:', imError); // 创建群组失败的相关信息
-				});
+				this.getGroup()
 			},
 			getGroup() {
 				let promise = this.tim.getGroupList();

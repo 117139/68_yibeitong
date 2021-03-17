@@ -189,7 +189,7 @@
 								{
 									type: 'text',
 									id: 'productName',
-									text: '阿一古',
+									text: that.$store.state.loginDatas.nickname,
 									color: '#000',
 									serialNum: 1,
 									allInfoCallback({
@@ -260,30 +260,30 @@
 									}
 								},
 								{
-									type: 'qrcode',
-									text: '123456',
-									serialNum: 4,
-									allInfoCallback({
-										drawArray
-									}) {
-										const productImage = drawArray.find(item => item.id === 'productImage')
-										const addHeight = getBgObj().height - productImage.dHeight;
-										const widthSize = getBgObj().width * .4;
-										const heightSize = addHeight;
-										const countSize = widthSize > heightSize ? heightSize : widthSize;
-										// countSize=172
-										const size = countSize * .9;
-											_app.log(getBgObj().width)
-											_app.log(getBgObj().height)
+									// type: 'qrcode',
+									// text: '123456',
+									// serialNum: 4,
+									
+									type: 'image',
+									id: 'productImage_code',
+									url: service.imgurl+that.$store.state.loginDatas.personal_code,
+									dx:123,
+									dy:979,
+									serialNum: 0,
+									// circleSet:true,
+									infoCallBack(imageInfo) {
+										let width;
+										let height;
+										
+										width=172
+										height=172
+										
 										return {
-											// size: size,
-											// dx: getBgObj().width - countSize * .95,
-											// dy: getBgObj().height - countSize * .95
-											size:172,
-											dx:123,
-											dy:979
+											dWidth: width,
+											dHeight: height
 										}
 									}
+									
 								}
 							]
 						}

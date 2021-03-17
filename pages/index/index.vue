@@ -115,11 +115,13 @@
 			}
 		},
 		computed: {
-			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas', 'about_content']),
+			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas', 'about_content','isSDKReady']),
 		},
 
 		watch: {
 			isSDKReady(val) {
+				console.log('isSDKReady == true>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+				console.log(that.isSDKReady == true)
 				//isSDKReady == true 
 				if (val) {
 					//更新用户自己的基础资料（头像+昵称+个性签名）
@@ -132,8 +134,18 @@
 		onShareAppMessage() {
 
 		},
-		onLoad() {
+		onLoad(options) {
 			that = this
+			if(options.scene){
+				const scene = decodeURIComponent(options.scene)
+				console.log(scene)
+				var arr=scene.split('=')
+				console.log(scene)
+				var obj = {};
+				obj[arr[0]] = arr[1]
+				// this.uid = obj.user_id
+				uni.setStorageSync('pid',obj.user_id)
+			}
 			
 			that.onRetry()
 			that.event.on('/pages/index/index', 'test', function(args) {
@@ -195,7 +207,7 @@
 					nick: that.loginDatas.nickname,
 					avatar: that.loginDatas.avatarurl,
 					gender: this.$TIM.TYPES.GENDER_MALE,
-					selfSignature: that.loginDatas.introduction,
+					selfSignature: that.loginDatas.introduction||'这个人比较懒还没有简介~~',
 					allowType: this.$TIM.TYPES.ALLOW_TYPE_ALLOW_ANY
 				});
 				promise.then((res) => {
@@ -230,7 +242,7 @@
 
 				var datas = {
 
-					token: that.$store.state.loginDatas.token || '',
+					token: that.$store.state.loginDatas.userToken || '',
 					// long:that.longitude,
 					// lat:that.latitude,
 					// page: that.page,

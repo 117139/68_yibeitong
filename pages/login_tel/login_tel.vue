@@ -97,7 +97,6 @@
 									success: (res) => {  
 											if (res.code) {         //微信登录成功 已拿到code  
 													// ...doSomething  
-													
 													var token=uni.getStorageSync('token')
 													var data = {
 														encryptedData:e.detail.encryptedData,

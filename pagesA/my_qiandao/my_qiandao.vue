@@ -9,12 +9,12 @@
 				<image class="top_box_bg" :src="getimg('/static/images/qiandao_02.jpg')" mode=""></image>
 				<view class="top_box_box">
 					<view class="qd_d1">
-						<view class="qd_num">0</view>
+						<view class="qd_num">{{earnings}}</view>
 						<view>我的收益</view>
 					</view>
 					<view class="qd_d2">
 						<view>{{Today_ymd}}</view>
-						<view>已连续签到<text>0</text>天</view>
+						<view>已连续签到<text>{{continuous_day}}</text>天</view>
 					</view>
 				</view>
 			</view>
@@ -94,12 +94,7 @@
 				// 星期几为第一天(0为星期日)
 				weekstart: 0,
 				// 标记的日期
-				markDays: [
-					'2021-01-11',
-					'2021-01-12',
-					'2021-01-13',
-					'2021-01-19',
-				],
+				markDays: [],
 				//是否展示月份切换按钮
 				headerBar:false,
 				// 是否展开
@@ -107,7 +102,11 @@
 				//是否可收缩
 				collapsible:false,
 				//未来日期是否不可点击
-				disabledAfter: true
+				disabledAfter: true,
+				
+				
+				earnings:0,
+				continuous_day:0,
 			}
 		},
 		computed: {
@@ -121,8 +120,10 @@
 			}
 		},
 		created() {
+			that=this
 		    this.dates = this.monthDay(this.y, this.m);
 		    !this.open && this.toggle();
+				that.getdata()
 		},
 		mounted() {
 		    this.choose = this.getToday().date;
@@ -140,13 +141,124 @@
 			// this.markDays.push(today);
 		},
 		methods: {
+			getdata() {
+			
+				var datas = {
+					token: that.$store.state.loginDatas.userToken || '',
+				}
+				if (that.btn_kg == 1) {
+					return
+				}
+				that.btn_kg = 1
+				//selectSaraylDetailByUserCard
+				var jkurl = '/sign/index'
+				uni.showLoading({
+					title: '正在获取数据',
+					mask: true
+				})
+				service.P_get(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					// that.$refs.htmlLoading.htmlReset_fuc(0)
+					console.log(res)
+					if (res.code == 1) {
+						that.htmlReset = 0
+						var datas = res.data
+						console.log(typeof datas)
+			
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						console.log(res)
+						that.earnings = datas.earnings
+						that.continuous_day = datas.continuous_day
+						that.markDays = datas.sign_record_date
+			
+					} else {
+						that.htmlReset = 1
+						// that.$refs.htmlLoading.htmlReset_fuc(1)
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '获取数据失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.htmlReset = 1
+					that.btn_kg = 0
+					// that.$refs.htmlLoading.htmlReset_fuc(1)
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败，请检查您的网络连接'
+					})
+				})
+			},
 			getimg(img){
 				return service.getimg(img)
 			},
 			qd_fuc(){
-				uni.showToast({
-					icon:'none',
-					title:'签到成功'
+				
+				var datas = {
+					token: that.$store.state.loginDatas.userToken || '',
+				}
+				var jkurl = '/sign/signIn'
+				if (that.btn_kg == 1) {
+					return
+				}
+				that.btn_kg = 1
+				uni.showLoading({
+					title: '正在签到',
+					mask: true
+				})
+				service.P_post(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					// that.$refs.htmlLoading.htmlReset_fuc(0)
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+							
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						console.log(res)
+						uni.showToast({
+							icon:'none',
+							title:'签到成功'
+						})
+						service.wxlogin('token')
+						setTimeout(()=>{
+							that.getdata()
+						},1000)
+					} else {
+						// that.$refs.htmlLoading.htmlReset_fuc(1)
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.htmlReset = 1
+					that.btn_kg = 0
+					// that.$refs.htmlLoading.htmlReset_fuc(1)
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '操作失败'
+					})
 				})
 			},
 			onDayClick(data) {

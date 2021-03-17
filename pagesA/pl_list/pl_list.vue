@@ -11,6 +11,8 @@
 				<text v-for="(item1,idx1) in item.attr">{{item1.value}}</text>
 			</view>
 		</view>
+		<view class="zanwu" v-if="datas.length==0">暂无内容</view>
+		<view v-if="data_last" class="data_last">我可是有底线的哟~</view>
 	</view>
 </template>
 
@@ -25,81 +27,108 @@
 	export default {
 		data() {
 			return {
-				datas:''
+				id:'',
+				datas:[],
+				page:1,
+				size:20,
 			}
 		},
-		onLoad() {
+		onLoad(option) {
 			that=this
-			var resdata = [
-						{
-							head_portrait:'/resource/merchant/goods/20200826/3afe80bc7af4be47b2d5209bca1934ec.jpeg',
-							nickname:'昵称',
-							comment:'宝贝收到了，和卖家描述的一样，很漂亮，一直想买这样一个杯子，这个蓝色稍微有点小瑕疵，不过自己用没问题',
-							attr:[
-								{
-									value:'黑色'
-								},
-								{
-									value:'XL'
-								},
-							]
-						},
-						{
-							head_portrait:'/resource/merchant/goods/20200826/3afe80bc7af4be47b2d5209bca1934ec.jpeg',
-							nickname:'昵称1515',
-							comment:'宝贝收到了，和卖家描述的一样，很漂亮，一直想买这样一个杯子，这个蓝色稍微有点小瑕疵，不过自己用没问题',
-							attr:[
-								{
-									value:'黑色'
-								},
-								{
-									value:'XL'
-								},
-							]
-						},
-						{
-							head_portrait:'/resource/merchant/goods/20200826/3afe80bc7af4be47b2d5209bca1934ec.jpeg',
-							nickname:'昵称1515',
-							comment:'宝贝收到了，和卖家描述的一样，很漂亮，一直想买这样一个杯子，这个蓝色稍微有点小瑕疵，不过自己用没问题',
-							attr:[
-								{
-									value:'黑色'
-								},
-								{
-									value:'XL'
-								},
-							]
-						},
-						{
-							head_portrait:'/resource/merchant/goods/20200826/3afe80bc7af4be47b2d5209bca1934ec.jpeg',
-							nickname:'昵称1515',
-							comment:'宝贝收到了，和卖家描述的一样，很漂亮，一直想买这样一个杯子，这个蓝色稍微有点小瑕疵，不过自己用没问题',
-							attr:[
-								{
-									value:'黑色'
-								},
-								{
-									value:'XL'
-								},
-							]
-						},
-						{
-							head_portrait:'/resource/merchant/goods/20200826/3afe80bc7af4be47b2d5209bca1934ec.jpeg',
-							nickname:'昵称1515',
-							comment:'宝贝收到了，和卖家描述的一样，很漂亮，一直想买这样一个杯子，这个蓝色稍微有点小瑕疵，不过自己用没问题',
-							attr:[
-								{
-									value:'黑色'
-								},
-								{
-									value:'XL'
-								},
-							]
-						},
-					]
-			that.datas = resdata
+			
+			that.id=option.id
+			this.onRetry()
+		},
+		/**
+		 * 页面相关事件处理函数--监听用户下拉动作
+		 */
+		onPullDownRefresh: function () {
+		  this.onRetry()
+		},
+		/**
+		 * 页面上拉触底事件的处理函数
+		 */
+		onReachBottom: function () {
+			this.getdatalist()
 		},
 		methods: {
+			getimg(img){
+				return service.getimg(img)
+			},
+			onRetry(){
+				
+				this.datas=[]
+				this.page=1
+				this.btnkg=0
+				this.data_last=false
+				this.getdatalist()
+			},
+			getdatalist(){
+				
+				let that =this
+				var jkurl='/goods/goodsAppraise'
+				var data={
+					token: that.$store.state.loginDatas.userToken||'',
+					gid:that.id,
+					page:that.page,
+					size:that.size
+				}
+				if(that.data_last) return
+				if(that.btnkg==1){
+					return
+				}else{
+					that.btnkg=1
+				}
+				service.get(jkurl, data,
+					function(res) {
+						that.btnkg=0
+						// if (res.data.code == 1) {
+						if (res.data.code == 1) {
+							var datas = res.data.data
+							// console.log(typeof datas)
+							that.htmlReset=0
+							if (typeof datas == 'string') {
+								datas = JSON.parse(datas)
+							}
+							if(that.page==1){
+								that.datas=datas.comment
+							}else{
+								if(datas.comment.length==0){
+								
+									that.data_last=true
+									
+									return
+								}
+								that.datas=that.datas.concat(datas.comment)
+							}
+							that.page++
+						} else {
+							that.htmlReset=1
+							if (res.data.msg) {
+								uni.showToast({
+									icon: 'none',
+									title: res.data.msg
+								})
+							} else {
+								uni.showToast({
+									icon: 'none',
+									title: '操作失败'
+								})
+							}
+						}
+					},
+					function(err) {
+						that.htmlReset=1
+						that.btnkg=0
+						
+							uni.showToast({
+								icon: 'none',
+								title: '获取数据失败'
+							})
+					
+					}
+				)
+			},
 			
 		}
 	}

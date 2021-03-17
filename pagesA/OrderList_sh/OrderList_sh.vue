@@ -22,18 +22,12 @@
 		          <text>{{item.store_name}}</text>
 		        </view> -->
 						<block v-for="(item1,idx1) in item.order_goods">
-							<view class="goods1" @tap="jump_sh" :data-url="'/pagesA/OrderDetails_sh_xq/OrderDetails_sh_xq?id='+item1.id+'&type='+type">
-								<!-- <view v-if="type==4}}" class="xuanze" data-selec="idx}}" data-selec1="idx1}}" catchtap="select">
-		            <view class="xuanze1 {{goods_sele[idx][idx1].xuan==true? 'xuanze2':''}}">
-		              <icon v-if="goods_sele[idx][idx1].xuan==true}}" type="success" size="14" color="#F7B43B" />
-		            </view>
-								</view> -->
+							<view v-if="type==0" class="goods1" @tap="jump" :data-url="'/pagesA/OrderDetails/OrderDetails?id='+item.order.o_id+'&type='+type">
 								<view class="goodsImg">
-									<!-- <image class="goodsImg" :src="filter.imgIP(item1.gd_vice_pic)" mode="aspectFill"></image> -->
-									<image class="goodsImg" :src="getimg(item1.gd_vice_pic[0])" mode="aspectFill"></image>
+									<image v-if="item1.gd_vice_pic.length>0" class="goodsImg" :src="getimg(item1.gd_vice_pic[0])" mode="aspectFill"></image>
+									<image v-else class="goodsImg" :src="getimg(item1.gd_mastr_pic[0])" mode="aspectFill"></image>
 								</view>
 								<view class="goodsinr">
-									<!-- <view class="goodsname fz30 c30 oh1">{{item.goods_name}}</view> -->
 									<view class="goodsname fz30 c30 oh1">{{item1.gd_name}}</view>
 									<view class="goodspri"><text v-for="(item2,idx2) in item1.gd_attr">{{item2.value+' '}}</text></view>
 									<view class="goodspri1">
@@ -41,7 +35,20 @@
 										<text v-if="type==2">{{item1.s_status_value}}</text>
 									</view>
 								</view>
-
+							</view>
+							<view v-else class="goods1" @tap="jump_sh" :data-url="'/pagesA/OrderDetails_sh_xq/OrderDetails_sh_xq?id='+item1.id+'&type='+type">
+								<view class="goodsImg">
+									<image v-if="item1.gd_vice_pic.length>0" class="goodsImg" :src="getimg(item1.gd_vice_pic[0])" mode="aspectFill"></image>
+									<image v-else class="goodsImg" :src="getimg(item1.gd_mastr_pic[0])" mode="aspectFill"></image>
+								</view>
+								<view class="goodsinr">
+									<view class="goodsname fz30 c30 oh1">{{item1.gd_name}}</view>
+									<view class="goodspri"><text v-for="(item2,idx2) in item1.gd_attr">{{item2.value+' '}}</text></view>
+									<view class="goodspri1">
+										<text class="fz24 c6 ">数量：{{item1.may_retreat_number}}</text>
+										<text v-if="type!=0">{{item1.s_status_value}}</text>
+									</view>
+								</view>
 							</view>
 							<block  v-if="type!=2">
 								<view  style="width: 100%;height: 1px;background: #eee;"></view>
@@ -69,6 +76,7 @@
 		mapState,
 		mapMutations
 	} from 'vuex'
+	var that 
 	export default {
 		data() {
 			return {
@@ -105,7 +113,7 @@
 
 		},
 		onLoad(option) {
-
+			that=this
 			this.onRetry()
 		},
 		onShow() {
@@ -163,169 +171,11 @@
 				this.getdatalist()
 			},
 			getdatalist() {
-				this.datas = [{
-						"order": {
-							"group_code": 3,
-							"head_portrait": "/resource/merchant/head_portrait/20200713/24137047dde648c211008e53f927cbfb.png",
-							"store_name": "Nick",
-							"o_id": 396,
-							"o_order_num": "OEC29A316390816551",
-							"o_price": "0.01",
-							"o_totalprice": "0.01"
-						},
-						"order_goods": [{
-							"id": 38,
-							"ov_id": 403,
-							"g_id": 24,
-							"gd_name": "Winter潮流男士衣裤",
-							"gd_mastr_pic": [
-								"/static/images/index_09.jpg"
-							],
-							"gd_vice_pic": [
-								"/static/images/index_09.jpg"
-							],
-							"gd_attr": [{
-									"name": "颜色",
-									"value": "蓝色翡翠"
-								},
-								{
-									"name": "内存",
-									"value": "256G"
-								}
-							],
-							"single_price": "0.01",
-							"number": 1,
-							"may_retreat_number": 1,
-							"s_status": 2,
-							"s_status_value": "已同意",
-							"s_status_refuse": "",
-							"is_return_price": 1
-						}]
-					},
-					{
-						"order": {
-							"group_code": 3,
-							"head_portrait": "/resource/merchant/head_portrait/20200713/24137047dde648c211008e53f927cbfb.png",
-							"store_name": "Nick",
-							"o_id": 395,
-							"o_order_num": "OEC29A312310426719",
-							"o_price": "0.01",
-							"o_totalprice": "0.01"
-						},
-						"order_goods": [{
-							"id": 37,
-							"ov_id": 402,
-							"g_id": 24,
-							"gd_name": "Winter潮流男士衣裤",
-							"gd_mastr_pic": [
-								"/static/images/index_09.jpg"
-							],
-							"gd_vice_pic": [
-								"/static/images/index_09.jpg"
-							],
-							"gd_attr": [{
-									"name": "颜色",
-									"value": "蓝色翡翠"
-								},
-								{
-									"name": "内存",
-									"value": "256G"
-								}
-							],
-							"single_price": "0.01",
-							"number": 1,
-							"may_retreat_number": 1,
-							"s_status": 2,
-							"s_status_value": "已同意",
-							"s_status_refuse": "",
-							"is_return_price": 1
-						}]
-					},
-					{
-						"order": {
-							"group_code": 3,
-							"head_portrait": "/resource/merchant/head_portrait/20200713/24137047dde648c211008e53f927cbfb.png",
-							"store_name": "Nick",
-							"o_id": 382,
-							"o_order_num": "OEC28A461607727830",
-							"o_price": "0.01",
-							"o_totalprice": "0.01"
-						},
-						"order_goods": [{
-							"id": 35,
-							"ov_id": 389,
-							"g_id": 24,
-							"gd_name": "Winter潮流男士衣裤",
-							"gd_mastr_pic": [
-								"/static/images/index_09.jpg"
-							],
-							"gd_vice_pic": [
-								"/static/images/index_09.jpg"
-							],
-							"gd_attr": [{
-									"name": "颜色",
-									"value": "黑色"
-								},
-								{
-									"name": "内存",
-									"value": "128G"
-								}
-							],
-							"single_price": "0.01",
-							"number": 1,
-							"may_retreat_number": 1,
-							"s_status": 2,
-							"s_status_value": "已同意",
-							"s_status_refuse": "",
-							"is_return_price": 1
-						}]
-					},
-					{
-						"order": {
-							"group_code": 3,
-							"head_portrait": "/resource/merchant/head_portrait/20200713/24137047dde648c211008e53f927cbfb.png",
-							"store_name": "Nick",
-							"o_id": 390,
-							"o_order_num": "OEC29A076915933795",
-							"o_price": "0.01",
-							"o_totalprice": "0.01"
-						},
-						"order_goods": [{
-							"id": 33,
-							"ov_id": 397,
-							"g_id": 24,
-							"gd_name": "Winter潮流男士衣裤",
-							"gd_mastr_pic": [
-								"/static/images/index_09.jpg"
-							],
-							"gd_vice_pic": [
-								"/static/images/index_09.jpg"
-							],
-							"gd_attr": [{
-									"name": "颜色",
-									"value": "蓝色翡翠"
-								},
-								{
-									"name": "内存",
-									"value": "128G"
-								}
-							],
-							"single_price": "0.01",
-							"number": 1,
-							"may_retreat_number": 1,
-							"s_status": 2,
-							"s_status_value": "已同意",
-							"s_status_refuse": "",
-							"is_return_price": 1
-						}]
-					}
-				]
-				this.htmlReset = 0
-				return
+				
 				let that = this
 				var jkurl = '/afterSale'
-				var data = {
-					token: that.loginMsg.userToken,
+				var datas = {
+					token: that.$store.state.loginDatas.userToken||'',
 					type: that.type - 1 + 2,
 					page: that.page,
 					size: that.size
@@ -336,55 +186,59 @@
 				} else {
 					that.btnkg = 1
 				}
-				service.get(jkurl, data,
-					function(res) {
-						that.btnkg = 0
-						// if (res.data.code == 1) {
-						if (res.data.code == 1) {
-							var datas = res.data.data
-							// console.log(typeof datas)
-							that.htmlReset = 0
-							if (typeof datas == 'string') {
-								datas = JSON.parse(datas)
-							}
-							if (that.page == 1) {
-								that.datas = datas
-							} else {
-								if (datas.length == 0) {
-
-									that.data_last = true
-
-									return
-								}
-								that.datas = that.datas.concat(datas)
-							}
-							that.page++
-						} else {
-							that.htmlReset = 1
-							if (res.data.msg) {
-								uni.showToast({
-									icon: 'none',
-									title: res.data.msg
-								})
-							} else {
-								uni.showToast({
-									icon: 'none',
-									title: '操作失败'
-								})
-							}
+				var page_that = that.page
+				service.P_get(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					that.htmlReset = 0
+					// that.$refs.htmlLoading.htmlReset_fuc(0)
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+				
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
 						}
-					},
-					function(err) {
+						console.log(res)
+				
+						if (page_that == 1) {
+							that.datas = datas
+						} else {
+							if (datas.length == 0) {
+						
+								that.data_last = true
+						
+								return
+							}
+							that.datas = that.datas.concat(datas)
+						}
+						that.page++
+				
+					} else {
 						that.htmlReset = 1
-						that.btnkg = 0
-
-						uni.showToast({
-							icon: 'none',
-							title: '获取数据失败'
-						})
-
+					// that.$refs.htmlLoading.htmlReset_fuc(1)
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '获取数据失败'
+							})
+						}
 					}
-				)
+				}).catch(e => {
+					that.htmlReset = 1
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败，请检查您的网络连接'
+					})
+				})
+				
 			},
 			del_order(id) {
 				var that = this
@@ -498,6 +352,17 @@
 
 
 			jump(e) {
+				var that = this
+				
+				if (that.btn_kg == 1) {
+					return
+				} else {
+					that.btn_kg = 1
+					setTimeout(function() {
+						that.btn_kg = 0
+					}, 1000)
+				}
+			
 				service.jump(e)
 			},
 			jump_sh(e) {
@@ -581,7 +446,7 @@
 
 	.contbox {
 		width: 100%;
-		padding: 10rpx 0;
+		/* padding: 10rpx 0; */
 		box-sizing: border-box;
 		background-color: #f5f5f5;
 	}

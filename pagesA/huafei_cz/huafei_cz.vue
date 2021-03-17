@@ -4,21 +4,21 @@
 		<view class="hd_box">
 			<view class="hd_box_bg">
 				<view class="hd_box_tit">
-					<view>电话号码</view><text>北京市海淀区移动服务</text>
+					<view>电话号码</view><text>{{tel_fw}}</text>
 				</view>
 				<view class="tel_box">
-					<input type="number" v-model="phone">
+					<input type="number" v-model="phone" @input="daiyan_sousuo"  placeholder="请输入手机号">
 				</view>
 				<view class="cz_mon">请选择充值金额</view>
 				<view class="cz_list">
-					<view class="cz_li" :class="cz_cur==index?'cur':''" v-for="(item,index) in cz_list" @tap="cz_cur=index">
+					<view v-if="item.is_rest==1" class="cz_li" :class="cz_cur==index?'cur':''" v-for="(item,index) in cz_list" @tap="cz_cur=index">
 						<image v-if="cz_cur==index" :src="getimg('/static/images/cz_select_05.png')" mode="aspectFill"></image>
-						<text>{{item.name}}元</text>
+						<text>{{item.recharge_money}}</text>
 					</view>
-					<view class="cz_li" :class="cz_cur==-1?'cur':''" @tap="cz_cur=-1">
+					<!-- <view class="cz_li" :class="cz_cur==-1?'cur':''" @tap="cz_cur=-1">
 						<image v-if="cz_cur==index" :src="getimg('/static/images/cz_select_05.png')" mode="aspectFill"></image>
 						<input class="other_mon" type="number" v-model="other_mon" placeholder="其他金额">
-					</view>
+					</view> -->
 				</view>
 				<view class="cz_btn" @tap="sub">立即充值</view>
 			</view>
@@ -29,7 +29,7 @@
 				<image class="tk_imgbg" :src="getimg('/static/images/hf_tk_03.jpg')" mode="aspectFit"></image>
 				<view class="tk_show_msg">
 					<view class="tk_msg1">恭喜您获得现金红包</view>
-					<view class="tk_msg2">0.09<text>元</text></view>
+					<view class="tk_msg2">{{pr_packet_money}}<text>元</text></view>
 					<view class="tk_msg3">红包已发到你的账户余额，请查收</view>
 				</view>
 			</view>
@@ -45,46 +45,16 @@
 		mapMutations
 	} from 'vuex'
 	var that
+	var inputt
 	export default {
 		data() {
 			return {
 				btnkg:0,
 				htmlReset:-1,
 				phone:'',
-				cz_list:[
-					{
-						name:'10',
-						id:10
-					},
-					{
-						name:'20',
-						id:20
-					},
-					{
-						name:'30',
-						id:30
-					},
-					{
-						name:'50',
-						id:50
-					},
-					{
-						name:'100',
-						id:100
-					},
-					{
-						name:'200',
-						id:200
-					},
-					{
-						name:'300',
-						id:300
-					},
-					{
-						name:'500',
-						id:500
-					},
-				],
+				tel_fw:'',
+				cz_list:[],
+				pr_packet_money:0,
 				cz_cur:0,
 				other_mon:'',
 				show_tk:false
@@ -94,6 +64,7 @@
 			...mapState([
 				'hasLogin',
 				'loginMsg',
+				'loginDatas',
 				'wxlogin',
 				// 'order_ls_data'
 			]),
@@ -101,10 +72,154 @@
 		},
 		onLoad() {
 			that=this
-			that.phone='17898347891'
+			that.phone=that.loginDatas.phone
+			that.gettel()
+			that.getdata()
 		},
 		methods: {
 			test() {},
+			daiyan_sousuo(e) {
+				var that = this
+				console.log(e.detail.value)
+				// this.daiyan_ss=e.detail.value
+				clearInterval(inputt)
+				inputt = setTimeout(function() {
+					// var kw = that.search_key
+					// console.log(kw.length)
+					if (that.phone == '' || !(/^1\d{10}$/.test(that.phone))) {
+					
+			
+						// that.onRetry()
+						
+					} else {
+						that.gettel()
+						// that.qy_show = that.qy_arr3
+					}
+				}, 200)
+			},
+			
+			gettel() {
+			
+				var datas = {
+			
+					token: that.$store.state.loginDatas.userToken || '',
+					mobile:that.phone
+					// long:that.longitude,
+					// lat:that.latitude,
+					// page: that.page,
+					// size: that.size,
+					// status:''
+				}
+				
+				//selectSaraylDetailByUserCard
+				var jkurl = '/mobileAnalysis'
+				uni.showLoading({
+					title: '正在获取数据',
+					mask: true
+				})
+				service.P_get(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					// that.$refs.htmlLoading.htmlReset_fuc(0)
+					console.log(res)
+					if (res.code == 1) {
+						that.htmlReset = 0
+						var datas = res.data
+						console.log(typeof datas)
+			
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						console.log(res)
+						that.tel_fw = datas.province+datas.city+datas.company
+						that.getdata()
+			
+					} else {
+						that.htmlReset = 1
+						// that.$refs.htmlLoading.htmlReset_fuc(1)
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '获取数据失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.htmlReset = 1
+					that.btn_kg = 0
+					// that.$refs.htmlLoading.htmlReset_fuc(1)
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败，请检查您的网络连接'
+					})
+				})
+			
+			
+			},
+			getdata() {
+			
+				var datas = {
+			
+					token: that.$store.state.loginDatas.userToken || '',
+					phone:that.phone
+				
+				}
+				
+				//selectSaraylDetailByUserCard
+				var jkurl = '/prepaid_refill'
+				uni.showLoading({
+					title: '正在获取数据',
+					mask: true
+				})
+				service.P_get(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					// that.$refs.htmlLoading.htmlReset_fuc(0)
+					console.log(res)
+					if (res.code == 1) {
+						that.htmlReset = 0
+						var datas = res.data
+						console.log(typeof datas)
+			
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						console.log(res)
+						that.cz_list = datas
+			
+					} else {
+						that.htmlReset = 1
+						// that.$refs.htmlLoading.htmlReset_fuc(1)
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '获取数据失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.htmlReset = 1
+					that.btn_kg = 0
+					// that.$refs.htmlLoading.htmlReset_fuc(1)
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败，请检查您的网络连接'
+					})
+				})
+			
+			
+			},
+			
 			getimg(img){
 				return service.getimg(img)
 			},
@@ -119,7 +234,85 @@
 					})
 					return
 				}
-				if(that.cz_cur==-1){
+				uni.showLoading({
+					title: '正在拉起支付',
+					mask: true
+				})
+				var jkurl='/prepaid_refill/rechargePay'
+				var datas = {
+							
+					token: that.$store.state.loginDatas.userToken || '',
+					phone:that.phone,
+					id:that.cz_list[that.cz_cur].id
+				
+				}
+				service.P_post(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					// that.$refs.htmlLoading.htmlReset_fuc(0)
+					console.log(res)
+					if (res.code == 1) {
+						that.htmlReset = 0
+						var datas = res.data
+						console.log(typeof datas)
+							
+						// if (typeof datas == 'string') {
+						// 	datas = JSON.parse(datas)
+						// }
+						that.pr_packet_money=res.pr_packet_money
+						console.log(res)
+						service.wxpay(datas).then(res => {
+							
+							// uni.showToast({
+							// 	icon: 'none',
+							// 	title: '购买成功'
+							// })
+							that.show_tk=true
+							service.wxlogin('token')
+							setTimeout(() => {
+								// uni.redirectTo({
+								// 	url:'/pagesA/OrderList/OrderList'
+								// })
+							}, 1000)
+						}).catch(e => {
+							that.btn_kg=0
+							uni.showToast({
+								icon: 'none',
+								title: '微信支付失败'
+							})
+							service.wxlogin()
+							setTimeout(() => {
+								uni.redirectTo({
+									url:'/pagesA/OrderList/OrderList'
+								})
+							}, 1000)
+						})
+							
+					} else {
+						that.htmlReset = 1
+						// that.$refs.htmlLoading.htmlReset_fuc(1)
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.htmlReset = 1
+					that.btn_kg = 0
+					// that.$refs.htmlLoading.htmlReset_fuc(1)
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '操作失败，请检查您的网络连接'
+					})
+				})
+				/*if(that.cz_cur==-1){
 					if(!that.other_mon){
 						uni.showToast({
 							icon:'none',
@@ -150,7 +343,7 @@
 					setTimeout(function(){
 						that.show_tk=true
 					},1000)
-				}
+				}*/
 			}
 		}
 	}
@@ -195,7 +388,8 @@
 		margin-left: 35upx;
 	}
 	.tel_box{
-		padding-bottom: 30upx;
+		padding-top: 20upx;
+		padding-bottom: 20upx;
 		border-bottom: 1px solid #0381EB;
 	}
 	.tel_box input{

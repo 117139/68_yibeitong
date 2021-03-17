@@ -32,9 +32,9 @@
 					</view>
 				</block>
 				
-				<!-- <view v-if="goods_list.length==0" class="zanwu">暂无数据</view> -->
-				<!-- <view v-if="data_last" class="data_last">我可是有底线的哟~~~</view> -->
-				<view  class="data_last">我可是有底线的哟~~~</view>
+				<view v-if="datas.length==0" class="zanwu">暂无数据</view>
+				<view v-if="data_last" class="data_last">我可是有底线的哟~~~</view>
+				<!-- <view  class="data_last">我可是有底线的哟~~~</view> -->
 			</view>
 		</htmlLoading>
 		

@@ -16,7 +16,7 @@
 					  <!-- <view>10元</view> -->
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >1235452151321</view>
+					  <view >{{datas.o_order_num}}</view>
 					</view>
 				</view>
 			  <view class="guige_li">
@@ -25,7 +25,7 @@
 					  <!-- <view>10元</view> -->
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >600</view>
+					  <view >{{datas.money}}</view>
 					</view>
 				</view>
 			  <view class="guige_li">
@@ -34,7 +34,7 @@
 					  <!-- <view>10元</view> -->
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >2019-08-05 12:20:12</view>
+					  <view >{{gettime(datas.create_time)}}</view>
 					</view>
 				</view>
 			</view>
@@ -74,6 +74,8 @@
 			return {
 				htmlReset: -1,
 				my_dou_xuan: true,
+				pay_data:'',
+				datas:''
 			}
 		},
 		computed:{
@@ -85,20 +87,107 @@
 			]),
 			
 		},
-		onLoad() {
+		onLoad(option) {
 			that=this
 			that.htmlReset=0
+			that.getpay(JSON.parse(option.datas))
 		},
 		methods: {
 			getimg(img){
 				return service.getimg(img)
+			},
+			gettime(mj){
+				if (!mj) {
+					return ''
+				}
+			
+				var ntime = new Date(mj * 1000)
+				// console.log(ntime)
+				var n_year = ntime.getFullYear();
+				var n_month = ntime.getMonth() + 1;
+				var n_date = ntime.getDate();
+				var n_hour = ntime.getHours();
+				var n_minute = ntime.getMinutes();
+				return n_year + '-' + n_month + '-' + n_date + n_hour + ':' + n_minute
 			},
 			select() {
 			  var that = this
 			  that.my_dou_xuan= !that.my_dou_xuan
 			  // that.jisuan()
 			},
+			getpay(datas){
+				 let jkurl='/makeOrder'
+				 uni.showLoading({
+				 	mask:true,
+					title:'正在生成订单'
+				 })
+				// 单个请求
+				service.P_post(jkurl, datas).then(res => {
+					that.btnkg=0
+					console.log(res)
+					/*if(res.code==1001){
+						uni.showToast({
+							icon: 'none',
+							title: '购买成功'
+						})
+						service.wxlogin()
+						setTimeout(()=>{
+							uni.hideLoading()
+						
+							that.btnkg=0
+								uni.redirectTo({
+									url:'/pagesA/OrderList/OrderList'
+								})
+						},1000)
+						return
+					}*/
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+							
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						that.pay_data=res.payData
+						that.datas=datas
+					}
+				}).catch(e => {
+					that.btnkg=0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败'
+					})
+				})
+							
+			},
 			pay_fuc(){
+				service.wxpay(that.pay_data).then(res => {
+					
+					uni.showToast({
+						icon: 'none',
+						title: '购买成功'
+					})
+					service.wxlogin('token')
+					setTimeout(() => {
+						uni.redirectTo({
+							url:'/pagesA/OrderList/OrderList'
+						})
+					}, 1000)
+				}).catch(e => {
+					that.btn_kg=0
+					uni.showToast({
+						icon: 'none',
+						title: '微信支付失败'
+					})
+					service.wxlogin()
+					setTimeout(() => {
+						uni.redirectTo({
+							url:'/pagesA/OrderList/OrderList'
+						})
+					}, 1000)
+				})
+				return
 				uni.showToast({
 					icon: 'none',
 					title: '购买成功'

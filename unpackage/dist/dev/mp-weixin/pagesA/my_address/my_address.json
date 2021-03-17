@@ -1,5 +1,5 @@
 {
   "navigationBarTitleText": "添加地址",
-  "enablePullDownRefresh": false,
+  "enablePullDownRefresh": true,
   "usingComponents": {}
 }

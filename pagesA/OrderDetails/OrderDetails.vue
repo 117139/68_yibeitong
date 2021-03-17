@@ -33,7 +33,7 @@
 						<view class="d1">待收货</view>
 					</view>
 				</view>
-				<view v-if="datas.o_ddstatus==1" class="order_tit">
+				<view v-if="datas.o_ddstatus==1&&h_type==4" class="order_tit">
 					<view class="ot_msg">
 						<view class="d1">待评价</view>
 					</view>
@@ -47,11 +47,11 @@
 			<view class="goodsBox">
 				<view class="goods">
 					<block v-for="(item,idx) in datas.order_goods">
-						<view class="goods1" :data-tab="idx" @tap="jump" :data-url="'/pages/details/details?id='+item.g_id">
+						<view class="goods1" :data-tab="idx" @tap="jump" :data-url="'/pagesA/details/details?id='+item.g_id">
 							<view class="goodsImg">
-								<!-- <image v-if="item.gd_vice_pic.length>0" class="goodsImg" :src="getimg(item.gd_vice_pic[0])" mode="aspectFill"></image>
-								<image v-else class="goodsImg" :src="getimg(item.gd_mastr_pic[0])" mode="aspectFill"></image> -->
-								<image class="goodsImg" :src="getimg('/static/images/index_12.jpg')" mode="aspectFill"></image>
+								<image v-if="item.gd_vice_pic.length>0" class="goodsImg" :src="getimg(item.gd_vice_pic[0])" mode="aspectFill"></image>
+								<image v-else class="goodsImg" :src="getimg(item.gd_mastr_pic[0])" mode="aspectFill"></image>
+								<!-- <image class="goodsImg" :src="getimg('/static/images/index_12.jpg')" mode="aspectFill"></image> -->
 							</view>
 							<view class="goodsinr">
 								<!-- <view class="goodsname fz30 c30 oh1">{{item.goods_name}}</view> -->
@@ -62,9 +62,13 @@
 									<view class="goods_pri">
 										￥<text >{{item.single_price}}</text>
 									</view>
-									<view>×2</view>
+									<view>×{{item.number}}</view>
 								</view>
 							</view>
+						</view>
+						<view v-if="item.is_comment==2||item.is_advocacy==2" class="o_cz" style="padding: 0 28rpx 28rpx;">
+							<view v-if="item.is_comment==2" @tap.stop="jump" :data-url="'/pagesA/order_pj/order_pj?id='+item.ov_id">评价</view>
+							<!-- <view v-if="item.is_advocacy==2" @tap.stop="jump_fabu(item)" data-url="/pagesA/daiyan_fabu/daiyan_fabu">我要代言</view> -->
 						</view>
 					</block>
 				</view>
@@ -76,7 +80,7 @@
 					  <!-- <view>10元</view> -->
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >1235452151321</view>
+					  <view >{{datas.o_order_num}}</view>
 					</view>
 				</view>
 			  <view class="guige_li">
@@ -85,7 +89,7 @@
 					  <!-- <view>10元</view> -->
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >2019-08-05 12:20:12</view>
+					  <view >{{filter.getDate_ymd(datas.o_create_time)}}</view>
 					</view>
 				</view>
 			</view>
@@ -158,7 +162,7 @@
 					  <view >{{filter.getDate_ymd(datas.o_create_time)}}</view>
 					</view>
 				</view>
-			  <view class="guige_li" v-if="datas.o_create_time">
+			  <view class="guige_li" v-if="datas.o_pay_addtime">
 					<view class="guige_l">
 					  <view class="guige_l_name">支付时间：</view>
 					</view>
@@ -175,12 +179,14 @@
 					</view>
 				</view>
 			</view>
-			<view class="o_cz">
+			<view class="o_cz" v-if="datas.o_paystatus==1||datas.o_ddstatus==4||datas.o_ddstatus==5">
 				<block v-if="datas.o_paystatus==1">
 					<view class="qx" @tap="order_pay(datas.o_id)">立即付款</view>
 					<view @tap.stop='del_order(item.order.o_id)'>取消订单</view>
 				</block>
 				<view v-if="datas.o_ddstatus==4||datas.o_ddstatus==5" @tap.stop="get_goods(datas.o_id)">确认收货</view>
+				
+				<view style="opacity: 0;"></view>
 				
 			</view>
 			<!-- 底部占位 -->
@@ -239,67 +245,7 @@
 				that.h_type = option.type
 
 			}
-			that.datas = {
-				"group_code": 2,
-				"head_portrait": "/resource/platform/head_portrait/20200714/3e78410fa95c96f38c05eb41d657405e.jpg",
-				"store_name": "闪亮小铺1",
-				"o_id": 31,
-				"o_order_num": "OE820A134270459882",
-				"o_price": "63.00",
-				"o_totalprice": "58.00",
-				"o_discount_coupon_price": "0.00",
-				"use_bean_number_price": "0.00",
-				"o_paystatus": 1,
-				"o_paystatus_value": "待支付",
-				"o_ddstatus": 3,
-				"o_ddstatus_value": "待发货",
-				"is_affirm": 1,
-				"o_name": "冯一",
-				"o_tel": "18310026988",
-				"o_address": "北京市 北京市 海淀区 中关村 中关村e世界大楼 1号 1号楼 1栋",
-				"o_create_time": 1597913427,
-				"o_pay_addtime": "",
-				"o_sub_addtime": "",
-				"o_paytype_value": "",
-				"o_postage_price": "5.00",
-				"order_goods": [{
-					"ov_id": 31,
-					"g_id": 9,
-					"gd_name": "闪亮华为mate30pro手机壳mate30保护套素皮原装超薄硅胶皮套全包防摔5g限量版高档网红潮男外壳por保护套mete",
-					"gd_mastr_pic": [
-						"/resource/merchant/goods/20200710/64049835809f0ba0ccf31c83351a37ce.jpeg",
-						"/resource/merchant/goods/20200710/89d2cf2fc04d8f0a0b8c551f85076758.jpeg",
-						"/resource/merchant/goods/20200807/1a3817eeced5c78abcbec3dd1860e95a.jpeg"
-					],
-					"gd_vice_pic": [
-						"/resource/merchant/goods/20200710/bc7654827f81d4cedbdd1aab01234b0b.jpeg"
-					],
-					"gd_attr": [{
-							"name": "内存",
-							"value": "128G"
-						},
-						{
-							"name": "型号",
-							"value": "mate30Pro"
-						},
-						{
-							"name": "颜色",
-							"value": "蓝色"
-						}
-					],
-					"single_price": "29.00",
-					"number": 2,
-					"is_comment": 1,
-					"is_advocacy": 1,
-					"activity_id": 0,
-					"activity_title": "",
-					"original_price": "30.00",
-					"total_number": 1102,
-					"advocacy_mannumber": 0
-				}]
-			}
-			that.htmlReset = 0
-			return
+		
 			that.getdata()
 
 
@@ -317,6 +263,10 @@
 		},
 		methods: {
 			...mapMutations(['dy_fb_fuc']),
+			
+			onRetry() {
+				this.getdata()
+			},
 			getimg(img) {
 				return service.getimg(img)
 			},
@@ -431,7 +381,7 @@
 			getdata() {
 				var that = this
 				var datas = {
-					token: that.loginMsg.userToken,
+					token: that.$store.state.loginDatas.userToken||'',
 					id: that.id
 				}
 				// 单个请求
@@ -925,9 +875,6 @@
 				var that = this
 				service.Pay(that.order_id, 'info')
 			},
-			onRetry() {
-				this.onLoad()
-			}
 		}
 	}
 </script>

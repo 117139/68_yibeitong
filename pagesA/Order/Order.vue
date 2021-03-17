@@ -37,7 +37,7 @@
 		      </view>
 		      <view class="goodsinr">
 		        <view class="goodsname oh2">{{item1.title}}</view>
-		        <view class="goodspri"><text style="margin-right: 4rpx;" v-for="(item2,idx2) in item.attr">{{item2.value}}</text></view>
+		        <view class="goodspri"><text style="margin-right: 4rpx;" v-for="(item2,idx2) in item1.attr">{{item2.value}}</text></view>
 		        <view class="goodspri1">
 		          <!-- <text class="fz36 cf6377a fwb">￥{{filter.moneyFormat('48')}}</text> -->
 		          <view class="goods_pri"><text style="font-size: 22upx;">￥</text>{{item1.price}}</view>
@@ -198,6 +198,9 @@
 		},
 		onReady() {
 		
+		},
+		onHide() {
+			that.btnkg=0
 		},
 		/**
 		 * 页面相关事件处理函数--监听用户下拉动作
@@ -474,6 +477,8 @@
 				
 				
 				
+				
+				/*
 				uni.showToast({
 					icon: 'none',
 					title: '订单创建成功'
@@ -485,9 +490,10 @@
 					})
 				},1000)
 				return
+				*/
 			  let datas
 			  let jkurl='/makeOrder'
-				var coupon_list=[]
+				/*var coupon_list=[]
 				for(var i=0;i<that.order_ls_data.length;i++){
 					var c_item
 					if(that.order_ls_data[i].yhidx!=-1){
@@ -505,30 +511,30 @@
 					coupon_list=''
 				}else{
 					coupon_list=JSON.stringify(coupon_list)
-				}
+				}*/
 				
 			  if(that.type==1){
 			  	datas = {
-			  		token: that.loginMsg.userToken,
+					token: that.$store.state.loginDatas.userToken||'',
 			  		type:that.type,
 			  		v_id:that.sku_id,
 						address_id:that.address.id,
-						advocacy_bean:that.use_dou,
-						advocacyId:that.dy_id,
-						advocacyviceId:that.advocacyviceId,
-						advocacy_user_id:that.advocacy_user_id,
+						// advocacy_bean:that.use_dou,
+						// advocacyId:that.dy_id,
+						// advocacyviceId:that.advocacyviceId,
+						// advocacy_user_id:that.advocacy_user_id,
 			  		number:that.sku_number,
-						coupon_list:coupon_list
+						// coupon_list:coupon_list
 			  	}
 			  }
 			  if(that.type==2){
 			  	datas = {
-			  		token: that.loginMsg.userToken,
+					token: that.$store.state.loginDatas.userToken||'',
 			  		type:that.type,
 						address_id:that.address.id,
-						advocacy_bean:that.use_dou,
+						// advocacy_bean:that.use_dou,
 			  		g_data:that.g_data,
-						coupon_list:coupon_list
+						// coupon_list:coupon_list
 			  	}
 			  }
 				// return
@@ -537,11 +543,16 @@
 				}else{
 					that.btnkg=1
 				}
+				datas=JSON.stringify(datas)
+				uni.redirectTo({
+					url:'/pagesA/OrderPay/OrderPay?datas='+datas
+				})
+				return
 			  // 单个请求
 			  service.P_post(jkurl, datas).then(res => {
 			  	that.btnkg=0
 			  	console.log(res)
-					if(res.code==1001){
+					/*if(res.code==1001){
 						uni.showToast({
 							icon: 'none',
 							title: '购买成功'
@@ -556,7 +567,7 @@
 								})
 						},1000)
 						return
-					}
+					}*/
 			  	if (res.code == 1) {
 			  		var datas = res.data
 			  		console.log(typeof datas)
@@ -567,6 +578,16 @@
 						service.wxpay(res.data).then(res => {
 							uni.showToast({
 								icon: 'none',
+								title: '订单创建成功'
+							})
+							setTimeout(()=>{
+								uni.hideLoading()
+								uni.redirectTo({
+									url:'/pagesA/OrderPay/OrderPay'
+								})
+							},1000)
+							/*uni.showToast({
+								icon: 'none',
 								title: '购买成功'
 							})
 							service.wxlogin()
@@ -574,7 +595,7 @@
 								uni.redirectTo({
 									url:'/pagesA/OrderList/OrderList'
 								})
-							}, 1000)
+							}, 1000)*/
 						}).catch(e => {
 							that.btn_kg=0
 							uni.showToast({
