@@ -34,6 +34,27 @@
 		<view class="conversition-box" v-if="hasLogin">
 			<view class="list-box" v-if="conversationList.length>0">
 				<view v-for="(item,index) in conversationList" :key="index" @tap="toRoom(item)">
+					<!-- <view v-if="item.conversationID=='@TIM#SYSTEM'"  class="item-box">
+						<view class="item-img">
+							<img :src="getimg('/static/images/ybt_group.png')" alt="">
+						</view>
+						<view class="item-text">
+							<view class="dis_flex ju_b aic">
+								<view class="item-user">
+									群系统通知
+								</view>
+								<view>{{timeFliter(item.lastMessage.lastTime)}}</view>
+								
+							</view>
+							<view class="dis_flex ju_b aic">
+								<view class="item-text-info text-cut">
+									<rich-text v-if="item.lastMessage.payload.data=='custom_img'" :nodes="nodesFliter('[图片]')"></rich-text>
+									<rich-text :nodes="nodesFliter(item.lastMessage.messageForShow)"></rich-text>
+								</view>
+								<view class="weidu_num" v-if="item.unreadCount">{{item.unreadCount}}</view>
+							</view>
+						</view>
+					</view> -->
 					<view v-if="item.groupProfile" class="item-box">
 						<view class="item-img">
 							<img v-if="item.groupProfile.avatar" :src="getimg(item.groupProfile.avatar)" alt="">
@@ -73,8 +94,8 @@
 		
 				</view>
 			</view>
-		
-			<view class="zanwu" v-else>暂无群聊</view>
+			<!-- {{conversationList}} -->
+			<view class="zanwu" v-if="conversationList.length==0">暂无群聊</view>
 		</view>
 		<view class="user-box" v-if="!hasLogin" style="padding-top: 40%;">
 		
@@ -84,6 +105,36 @@
 </template>
 
 <script>
+	
+	[
+	  {
+	    "conversationID": "@TIM#SYSTEM",
+	    "unreadCount": 1,
+	    "type": "@TIM#SYSTEM",
+	    "lastMessage": {
+	      "lastTime": 1615976141,
+	      "lastSequence": 1043367231,
+	      "fromAccount": "@TIM#SYSTEM",
+	      "messageForShow": "[群系统通知]",
+	      "payload": {
+	        "operationType": 8,
+	        "operatorID": "YBT100002",
+	        "messageKey": 1615976141161,
+	        "groupProfile": {
+	          "from": "@TIM#SYSTEM",
+	          "to": "YBT100002",
+	          "name": "奥术大师大",
+	          "groupID": "@TGS#2JLR2JBHN"
+	        }
+	      },
+	      "type": "TIMGroupSystemNoticeElem",
+	      "isRevoked": false
+	    },
+	    "_isInfoCompleted": false,
+	    "peerReadTime": 0,
+	    "groupAtInfoList": []
+	  }
+	]
 	import service from '../../service.js';
 	import {
 		mapState,
@@ -116,10 +167,9 @@
 			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas','isLogin','isSDKReady','conversationList']),
 		},
 		onPullDownRefresh() {
-		
 			if(this.hasLogin){
 				// this.getxcx_msg()
-				if (this.isSDKReady) {
+				if (that.isSDKReady) {
 					console.log('2222')
 					this.getConversationList()
 				} else {

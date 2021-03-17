@@ -366,7 +366,9 @@ const wxlogin = function(num) {
 	}
 	if (num == 'token') {
 		var data = {
-			token: uni.getStorageSync('token')||'f95b9ebdddbe9d2fd12ff5115d5cc35c',
+			// token: uni.getStorageSync('token')||'9f3b1ce7ad14439f2c2c0f15677bdd2f',
+			token: '9f3b1ce7ad14439f2c2c0f15677bdd2f',
+			// token: 'f95b9ebdddbe9d2fd12ff5115d5cc35c',
 			type: 4
 		}
 	
