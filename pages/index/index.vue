@@ -132,10 +132,23 @@
 			},
 		},
 		onShareAppMessage() {
-
+			return {
+				title: '依辈通',
+				path: '/pages/index/index?pid=' + that.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
 		},
 		onLoad(options) {
 			that = this
+			if(options.pid){
+				console.log('pid>>>>>>>>>>>>')
+				
+				console.log(options.pid)
+				console.log('pid>>>>>>>>>>>>>>>>>')
+				uni.setStorageSync('pid',options.pid)
+			}
 			if(options.scene){
 				const scene = decodeURIComponent(options.scene)
 				console.log(scene)
@@ -146,6 +159,7 @@
 				// this.uid = obj.user_id
 				uni.setStorageSync('pid',obj.user_id)
 			}
+			
 			
 			that.onRetry()
 			that.event.on('/pages/index/index', 'test', function(args) {

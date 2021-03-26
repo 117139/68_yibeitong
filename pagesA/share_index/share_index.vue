@@ -76,7 +76,7 @@
 			this.onRetry()
 		},
 		onShow(){
-			if(this.show_num>1){
+			if(this.show_num>0){
 				this.page=1
 				this.goods_sele=[]
 				this.all=false
@@ -241,3 +241,4 @@
 		justify-content: center;
 	}
 </style>
+

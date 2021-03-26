@@ -1,35 +1,41 @@
 <template>
 	<view class="minh100">
-		<view class="zanwu" v-if="!wl_data">暂无数据</view>
-		<view v-else class="main">
-			<view class="wuliu_tit boxsiz dis_flex">
-				<view class="flex_1 dis_flex">
-					<!-- <view class="wl_icon p_img_div" :style="'background-image: url('+filter.imgIP(wl_data.g_img)+');'"></view> -->
-					<view class="dis_flex ju_a wl_tit_msg">
-						<view v-html="wl_data.logistics_name">邮政快递包裹</view>
-						<view class="dis_flex aic">快递单号：
-							<em id="copy1_msg" v-html="wl_data.logistics">9851548135482</em>
-							<!-- <span class="dis_flex aic ju_c"  id="copy1">复制</span> -->
+		<view v-if="htmlReset==1" class="zanwu" @tap='onRetry'>请求失败，请点击重试</view>
+		<view v-if="htmlReset==-1" class="loading_def">
+			<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
+		</view>
+		<view v-if="htmlReset==0" class="main">
+			<block v-if="wl_data.logistics">
+				<view class="wuliu_tit boxsiz dis_flex">
+					<view class="flex_1 dis_flex">
+						<!-- <view class="wl_icon p_img_div" :style="'background-image: url('+filter.imgIP(wl_data.g_img)+');'"></view> -->
+						<view class="dis_flex ju_a wl_tit_msg">
+							<view v-html="wl_data.logistics_name">{{wl_data.logistics_name}}</view>
+							<view class="dis_flex aic">快递单号：
+								<em id="copy1_msg" v-html="wl_data.logistics">{{wl_data.logistics}}</em>
+								<!-- <span class="dis_flex aic ju_c"  id="copy1">复制</span> -->
+							</view>
+						</view>
+					</view>
+					<!-- <view class="flex0 wl_btn dis_flex aic ">
+				    <img src="../../image/wl_kf.png" alt="">
+				    <span>物流服务</span>
+				  </view> -->
+				</view>
+				<view class="wx_list boxsiz">
+					<view class="wx_li boxsiz" v-for="(item,index) in wl_data.wuliu">
+						<view class="wl_time">
+							<view v-html="gettime(item.time,1)">03-11</view>
+							<view v-html="gettime(item.time,2)">08:20</view>
+						</view>
+						<view class="wl_msg boxsiz">
+							<!-- <view>已签收</view> -->
+							<view v-html="item.status">快件到达【山东省潍坊集中中心】，准备发往山东潍坊小区30000 </view>
 						</view>
 					</view>
 				</view>
-				<!-- <view class="flex0 wl_btn dis_flex aic ">
-		      <img src="../../image/wl_kf.png" alt="">
-		      <span>物流服务</span>
-		    </view> -->
-			</view>
-			<view class="wx_list boxsiz">
-				<view class="wx_li boxsiz" v-for="(item,index) in wl_data.wuliu">
-					<view class="wl_time">
-						<view v-html="gettime(item.time,1)">03-11</view>
-						<view v-html="gettime(item.time,2)">08:20</view>
-					</view>
-					<view class="wl_msg boxsiz">
-						<!-- <view>已签收</view> -->
-						<view v-html="item.status">快件到达【山东省潍坊集中中心】，准备发往山东潍坊小区30000 </view>
-					</view>
-				</view>
-			</view>
+			</block>
+			<view v-else class="zanwu">暂无数据</view>
 		</view>
 	</view>
 </template>
@@ -45,55 +51,15 @@
 	export default {
 		data() {
 			return {
+				htmlReset:-1,
 				id: '',
-				wl_data: {
-					"logistics": "4311701734931",
-					"logistics_name": "韵达快递",
-					"wuliu": [{
-						"time": "2021-01-12 20:28:49",
-						"status": "【临汾市】您的快件已被 赵城派出所对面 代签收，地址：赵城镇永安大街64号，如有疑问请电联快递员：续美荣【18835725582】。"
-					}, {
-						"time": "2021-01-12 18:53:54",
-						"status": "【临汾市】山西洪洞县公司赵城镇分部 快递员 续美荣18835725582 正在为您派件【95114\/95121\/95013\/95546为韵达快递员外呼专属号码，请放心接听】"
-					}, {
-						"time": "2021-01-12 16:51:16",
-						"status": "【临汾市】已离开 山西洪洞县公司；发往 山西洪洞县公司赵城镇分部"
-					}, {
-						"time": "2021-01-12 14:36:36",
-						"status": "【临汾市】已到达 山西洪洞县公司"
-					}, {
-						"time": "2021-01-12 07:40:45",
-						"status": "【太原市】已离开 山西太原分拨中心；发往 山西洪洞县公司"
-					}, {
-						"time": "2021-01-12 07:27:46",
-						"status": "【太原市】已到达 山西太原分拨中心"
-					}, {
-						"time": "2021-01-11 02:22:47",
-						"status": "【嘉兴市】已离开 浙江杭州分拨中心；发往 山西太原分拨中心"
-					}, {
-						"time": "2021-01-11 02:19:16",
-						"status": "【嘉兴市】已到达 浙江杭州分拨中心"
-					}, {
-						"time": "2021-01-10 23:29:41",
-						"status": "【嘉兴市】已离开 浙江嘉兴分拨中心；发往 浙江杭州分拨中心"
-					}, {
-						"time": "2021-01-10 23:25:07",
-						"status": "【嘉兴市】已到达 浙江嘉兴分拨中心"
-					}, {
-						"time": "2021-01-10 21:51:01",
-						"status": "【嘉兴市】已离开 浙江桐乡市公司；发往 山西太原分拨中心"
-					}, {
-						"time": "2021-01-10 21:44:42",
-						"status": "【嘉兴市】浙江桐乡市公司 已揽收"
-					}]
-
-				}
+				wl_data: {}
 			}
 		},
 		onLoad(option) {
 			that = this
 			that.id = option.id
-			// that.getMsg()
+			that.getMsg()
 		},
 		computed: {
 			...mapState([
@@ -134,6 +100,7 @@
 				if (that.data_last) return
 				// 单个请求
 				service.P_get(jkurl, datas).then(res => {
+					that.htmlReset=0
 					console.log(res)
 					if (res.code == 1) {
 						var datas = res.data
@@ -146,6 +113,7 @@
 						that.wl_data = datas
 					}
 				}).catch(e => {
+					that.htmlReset=1
 					console.log(e)
 					uni.showToast({
 						icon: 'none',

@@ -30,7 +30,8 @@
 				<view class="tk_show_msg">
 					<view class="tk_msg1">恭喜您获得现金红包</view>
 					<view class="tk_msg2">{{pr_packet_money}}<text>元</text></view>
-					<view class="tk_msg3">红包已发到你的账户余额，请查收</view>
+					<!-- <view class="tk_msg3">红包已发到你的账户余额，请查收</view> -->
+					<view class="tk_msg3">以话费实际到账为准</view>
 				</view>
 			</view>
 			<text class="iconfont iconguanbi off_btn" @tap="off_fuc"></text>

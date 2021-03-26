@@ -79,69 +79,9 @@
 		data() {
 			return {
 				htmlReset:-1,
-				goods_type:[
-					{
-						name:'服装配饰',
-						id:1
-					},
-					{
-						name:'美发护肤',
-						id:2
-					},
-					{
-						name:'男士护肤',
-						id:3
-					},
-					{
-						name:'日用文创',
-						id:4
-					},
-					{
-						name:'谢箱数码',
-						id:5
-					},
-					{
-						name:'运动户外',
-						id:6
-					},
-					{
-						name:'礼物套装',
-						id:7
-					},
-				],
+				goods_type:[],
 				l_active:-1,
-				datas: [
-					{
-						pic:'/static/images/goods_type_03.jpg',
-						name:'笔类',
-						id:1
-					},
-					{
-						pic:'/static/images/goods_type_05.jpg',
-						name:'手表',
-						id:2
-					},
-					{
-						pic:'/static/images/goods_type_07.jpg',
-						name:'行李箱',
-						id:3
-					},
-					{
-						pic:'/static/images/goods_type_12.jpg',
-						name:'男装',
-						id:4
-					},
-					{
-						pic:'/static/images/goods_type_13.jpg',
-						name:'灯具',
-						id:5
-					},
-					{
-						pic:'/static/images/goods_type_14.jpg',
-						name:'鞋子',
-						id:6
-					},
-				],
+				datas: [],
 				page: 1,
 				size: 20,
 				data_last: false,
@@ -151,9 +91,24 @@
 		computed: {
 			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas', 'about_content']),
 		},
-		onLoad() {
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/goods_type/goods_type?pid=' + that.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		onLoad(options) {
 			that = this
-			// that.htmlReset = 0
+			if(options.pid){
+				console.log('pid>>>>>>>>>>>>')
+				
+				console.log(options.pid)
+				console.log('pid>>>>>>>>>>>>>>>>>')
+				uni.setStorageSync('pid',options.pid)
+			}
 			that.onRetry()
 		},
 		methods: {
@@ -166,6 +121,7 @@
 			},
 			l_active_fuc(item,index){
 				that.l_active=index
+				that.datas=[]
 				if(index==-1){
 					that.getcate(-1)
 				}else{

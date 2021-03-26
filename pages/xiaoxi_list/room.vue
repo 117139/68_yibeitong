@@ -190,24 +190,7 @@
 				nextReqMessageID: '',
 				count: 15,
 				isCompleted: '',
-				msgList: [
-					/*{
-						time:'1611316603',
-						flow:'out',
-						type:'TIMTextElem',
-						payload:{
-							text:'你好'
-						}
-					},
-					{
-						time:'1611316613',
-						flow:'',
-						type:'TIMTextElem',
-						payload:{
-							text:'你好'
-						}
-					},*/
-				],
+				msgList: [],
 				TIM: null,
 
 

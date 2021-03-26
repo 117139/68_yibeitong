@@ -55,6 +55,13 @@
 				"enablePullDownRefresh": true
 			}
 
+		}, {
+			"path": "pages/xiaoxi_list/xt_list",
+			"style": {
+				"navigationBarTitleText": "系统通知",
+				"enablePullDownRefresh": false
+			}
+
 		}
 	],
 	"subPackages": [{

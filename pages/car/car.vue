@@ -25,7 +25,7 @@
 					</view>
 				</view>
 				<view class="move">
-					<view class="bg-red" @tap="del_car(item)">删除</view>
+					<view class="bg-red" @tap="del_car(item.c_id)">删除</view>
 				</view>
 			</view>
 		</view>
@@ -78,7 +78,9 @@
 				listTouchDirection: null,
 				all:false,
 				sum:0.00,
-				data_last:''
+				data_last:'',
+				
+				show_num:0
 			}
 		},
 		components: {
@@ -88,10 +90,37 @@
 		computed: {
 			...mapState(['hasLogin', 'forcedLogin', 'userName','loginDatas'])
 		},
-		onLoad() {
-			that=this
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/car/car?pid=' + that.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		onLoad(options) {
+			that = this
+			if(options.pid){
+				console.log('pid>>>>>>>>>>>>')
+				
+				console.log(options.pid)
+				console.log('pid>>>>>>>>>>>>>>>>>')
+				uni.setStorageSync('pid',options.pid)
+			}
 			
 			this.getdata()
+		},
+		onShow() {
+			if(that.show_num>0){
+				this.page=1
+				this.datas=[]
+				this.all=false
+				this.getdata()
+			}
+		},
+		onHide() {
+			that.show_num++
 		},
 		/**
 		 * 页面相关事件处理函数--监听用户下拉动作
@@ -106,7 +135,7 @@
 		 * 页面上拉触底事件的处理函数
 		 */
 		onReachBottom: function () {
-			// this.getdata()
+			this.getdata()
 		},
 		methods: {
 			getimg(img){
@@ -517,10 +546,40 @@
 				    success: function (res) {
 				        if (res.confirm) {
 				            console.log('用户点击确定');
-										uni.showToast({
-											icon:'none',
-											title:'操作成功'
+										var jkurl= '/cart/del'
+										var datas={
+											token: that.$store.state.loginDatas.userToken||'',
+											c_ids:id
+										}
+										service.P_post(jkurl, datas).then(res => {
+											that.btn_kg=0
+											console.log(res)
+											if (res.code == 1) {
+												var datas = res.data
+												// console.log(typeof datas)
+													
+												if (typeof datas == 'string') {
+													datas = JSON.parse(datas)
+												}
+												uni.showToast({
+													icon:'none',
+													title:'操作成功'
+												})
+												setTimeout(()=>{
+													this.page=1
+													this.datas=[]
+													this.getdata()
+												},1000)
+											}
+										}).catch(e => {
+											that.btn_kg=0
+											console.log(e)
+											uni.showToast({
+												icon: 'none',
+												title: '操作失败'
+											})
 										})
+										
 				        } else if (res.cancel) {
 				            console.log('用户点击取消');
 				        }

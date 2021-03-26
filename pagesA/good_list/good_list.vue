@@ -55,15 +55,31 @@
 		computed: {
 			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas','about_content']),
 		},
-		onLoad(option) {
-			that = this
-			if(option.id){
-				that.id=option.id
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pagesA/details/details?pid=' + that.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
 			}
-			if(option.name){
-				// that.search_key=option.name
+		},
+		onLoad(options) {
+			that = this
+			if(options.pid){
+				console.log('pid>>>>>>>>>>>>')
+				
+				console.log(options.pid)
+				console.log('pid>>>>>>>>>>>>>>>>>')
+				uni.setStorageSync('pid',options.pid)
+			}
+			if(options.id){
+				that.id=options.id
+			}
+			if(options.name){
+				// that.search_key=options.name
 				uni.setNavigationBarTitle({
-					title:option.name
+					title:options.name
 				})
 			}
 			that.htmlReset = 0

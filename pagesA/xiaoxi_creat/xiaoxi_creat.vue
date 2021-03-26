@@ -5,6 +5,7 @@
 			<input class="qun_name" type="text" v-model="qun_name" placeholder="请输入群名称" />
 			<view class="qunyuan_list">
 				<view class="qunyuan_li_tit">选择群成员</view>
+				<view v-if="datas.length==0" class="zanwu">暂无数据</view>
 				<view class="qunyuan_li" v-for="(item,index) in datas" @tap='xz_qy(item)'>
 					<view class="qunyuan_li_d1" :class="item.active?'active':''"></view>
 					<image class="qunyuan_li_d2" :src="getimg(item.head_portrait)" mode=""></image>

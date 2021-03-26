@@ -33,15 +33,15 @@
 		</view> -->
 		<view class="conversition-box" v-if="hasLogin">
 			<view class="list-box" v-if="conversationList.length>0">
-				<view v-for="(item,index) in conversationList" :key="index" @tap="toRoom(item)">
-					<!-- <view v-if="item.conversationID=='@TIM#SYSTEM'"  class="item-box">
+				<view v-for="(item,index) in conversationList" :key="index" >
+					<view v-if="item.conversationID=='@TIM#SYSTEM'"  class="item-box" @tap="toxt(item)">
 						<view class="item-img">
 							<img :src="getimg('/static/images/ybt_group.png')" alt="">
 						</view>
 						<view class="item-text">
 							<view class="dis_flex ju_b aic">
 								<view class="item-user">
-									群系统通知
+									系统通知
 								</view>
 								<view>{{timeFliter(item.lastMessage.lastTime)}}</view>
 								
@@ -54,8 +54,8 @@
 								<view class="weidu_num" v-if="item.unreadCount">{{item.unreadCount}}</view>
 							</view>
 						</view>
-					</view> -->
-					<view v-if="item.groupProfile" class="item-box">
+					</view>
+					<view v-if="item.groupProfile" class="item-box" @tap="toRoom(item)">
 						<view class="item-img">
 							<img v-if="item.groupProfile.avatar" :src="getimg(item.groupProfile.avatar)" alt="">
 							<img v-else :src="getimg('/static/images/ybt_group.png')" alt="">
@@ -106,35 +106,6 @@
 
 <script>
 	
-	[
-	  {
-	    "conversationID": "@TIM#SYSTEM",
-	    "unreadCount": 1,
-	    "type": "@TIM#SYSTEM",
-	    "lastMessage": {
-	      "lastTime": 1615976141,
-	      "lastSequence": 1043367231,
-	      "fromAccount": "@TIM#SYSTEM",
-	      "messageForShow": "[群系统通知]",
-	      "payload": {
-	        "operationType": 8,
-	        "operatorID": "YBT100002",
-	        "messageKey": 1615976141161,
-	        "groupProfile": {
-	          "from": "@TIM#SYSTEM",
-	          "to": "YBT100002",
-	          "name": "奥术大师大",
-	          "groupID": "@TGS#2JLR2JBHN"
-	        }
-	      },
-	      "type": "TIMGroupSystemNoticeElem",
-	      "isRevoked": false
-	    },
-	    "_isInfoCompleted": false,
-	    "peerReadTime": 0,
-	    "groupAtInfoList": []
-	  }
-	]
 	import service from '../../service.js';
 	import {
 		mapState,
@@ -150,6 +121,9 @@
 				
 			}
 		},
+		computed: {
+			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas','isLogin','isSDKReady','conversationList']),
+		},
 		watch: {
 			isSDKReady(val) {
 				//isSDKReady == true 
@@ -162,9 +136,6 @@
 			},
 		
 		
-		},
-		computed: {
-			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas','isLogin','isSDKReady','conversationList']),
 		},
 		onPullDownRefresh() {
 			if(this.hasLogin){
@@ -181,8 +152,24 @@
 		onReachBottom() {
 			
 		},
-		onLoad() {
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/xiaoxi_list/xiaoxi_list?pid=' + that.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		onLoad(options) {
 			that = this
+			if(options.pid){
+				console.log('pid>>>>>>>>>>>>')
+				
+				console.log(options.pid)
+				console.log('pid>>>>>>>>>>>>>>>>>')
+				uni.setStorageSync('pid',options.pid)
+			}
 			console.log(that.conversationList)
 			that.getConversationList()
 		},
@@ -198,6 +185,13 @@
 				this.$store.commit('updateConversationActive', item)
 				uni.navigateTo({
 					url: './room'
+				})
+			},
+			toxt(item) {
+				console.log('toRoom')
+				this.$store.commit('updateConversationActive', item)
+				uni.navigateTo({
+					url: './xt_list'
 				})
 			},
 			getimg(img){

@@ -38,6 +38,7 @@
 	position: absolute;
 	top: 10rpx;
 	right: 10rpx;
+	z-index: 10;
 }
 .qy_li view.data-v-317f340b{
 	margin-top: 20rpx;
@@ -50,6 +51,9 @@
 	        align-items: center;
 	font-size: 22rpx;
 	color: #000;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
 }
 .quan_name.data-v-317f340b{
 	width: 100%;

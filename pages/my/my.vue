@@ -147,8 +147,24 @@
 				fk_show:false
 			}
 		},
-		onLoad() {
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/my/my?pid=' + that.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		onLoad(options) {
 			that = this
+			if(options.pid){
+				console.log('pid>>>>>>>>>>>>')
+				
+				console.log(options.pid)
+				console.log('pid>>>>>>>>>>>>>>>>>')
+				uni.setStorageSync('pid',options.pid)
+			}
 			that.htmlReset = 0
 			
 		},

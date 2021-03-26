@@ -59,6 +59,19 @@
 					<br>3.如签到中途中断，则连续签到天数重新计算。
 				</view>
 			</view>
+			
+			<view v-if="show_tk" class="tk_big_box dis_flex aic ju_c" @touchmove.stop.prevent='test'>
+				<view class="tk_show_box">
+					<image class="tk_imgbg" :src="getimg('/static/images/hf_tk_03.jpg')" mode="aspectFit"></image>
+					<view class="tk_show_msg">
+						<view class="tk_msg1">恭喜您获得现金红包</view>
+						<view class="tk_msg2">{{pr_packet_money}}<text>元</text></view>
+						<view class="tk_msg3">红包已发到你的账户余额，请查收</view>
+						<!-- <view class="tk_msg3">以话费实际到账为准</view> -->
+					</view>
+				</view>
+				<text class="iconfont iconguanbi off_btn" @tap="show_tk=false"></text>
+			</view>
 		</block>
 	</view>
 </template>
@@ -107,6 +120,8 @@
 				
 				earnings:0,
 				continuous_day:0,
+				show_tk:false,
+				pr_packet_money:''
 			}
 		},
 		computed: {
@@ -141,6 +156,7 @@
 			// this.markDays.push(today);
 		},
 		methods: {
+			test(){},
 			getdata() {
 			
 				var datas = {
@@ -228,12 +244,14 @@
 							datas = JSON.parse(datas)
 						}
 						console.log(res)
-						uni.showToast({
-							icon:'none',
-							title:'签到成功'
-						})
-						service.wxlogin('token')
+						// uni.showToast({
+						// 	icon:'none',
+						// 	title:'签到成功'
+						// })
+						that.pr_packet_money=datas.send_money
+						that.show_tk=true
 						setTimeout(()=>{
+						service.wxlogin('token')
 							that.getdata()
 						},1000)
 					} else {
@@ -542,6 +560,68 @@
 		font-size: 26upx;
 		color: #333;
 		line-height: 35upx;
+	}
+	
+	
+	.tk_big_box {
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 990;
+		background: rgba(0, 0, 0, .8);
+		flex-direction: column;
+	}
+	.tk_show_box{
+		width: 570upx;
+		position: relative;
+	}
+	.tk_imgbg{
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		width: 570upx;
+		height: 671upx;
+		z-index: 991;
+	}
+	.tk_show_msg{
+		position: relative;
+		z-index: 992;
+		width: 570upx;
+		height: 671upx;
+		border-radius: 15upx;
+		padding-top: 130upx;
+		padding-bottom: 45upx;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.tk_msg1{
+		font-size: 20upx;
+		color: #CFAA5F;
+	}
+	.tk_msg2{
+		font-size: 60upx;
+		color: #D72022;
+		display: flex;
+		align-items: baseline;
+		margin-top: 30upx;
+	}
+	.tk_msg2 text{
+		font-size: 22upx;
+	}
+	.tk_msg3{
+		font-size: 22upx;
+		color: #FFE9B7;
+		margin-top: 335upx;
+	}
+	.off_btn{
+		font-size: 42upx;
+		color: #DFDFDF;
+		margin-top: 30upx;
 	}
 </style>
 <style lang="scss" scoped>

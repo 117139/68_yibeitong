@@ -7,7 +7,8 @@
     "pages/login_tel/login_tel",
     "pages/login/login",
     "pages/goods_type/goods_type",
-    "pages/car/car"
+    "pages/car/car",
+    "pages/xiaoxi_list/xt_list"
   ],
   "subPackages": [
     {
@@ -106,6 +107,5 @@
     "cu-custom": "/colorui/components/cu-custom",
     "u-parse": "/components/gaoyia-parse/parse",
     "html-loading": "/components/html_loading/html_loading"
-  },
-  "sitemapLocation": "sitemap.json"
+  }
 }

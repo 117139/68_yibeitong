@@ -34,7 +34,7 @@
 					<!-- <block v-for="(item,idx) in goodsData.img"> -->
 					<block v-for="(item,idx) in goodsData.img">
 						<swiper-item>
-							<image :src="getimg(item)" class="slide-image" width="355" height="150" :data-src="getimg(item)" :data-array="getimgarr(goodsData.img)"
+							<image :src="getimg(item)" class="slide-image" width="355" height="150" mode="aspectFill" :data-src="getimg(item)" :data-array="getimgarr(goodsData.img)"
 							 @tap="pveimg" />
 							<!-- <image :src="getimg(item)" class="slide-image" mode="aspectFill" width="355" height="150" :data-src="getimg(item)"
 							 :data-array="filter.getgimgarrIP(goodsData.img)" @tap.stop="pveimg" /> -->
@@ -105,7 +105,7 @@
 				<!-- <view class="pj_bq">
 					<view v-for="(item,idx) in goodsData.comment.tag">{{item.name}}（{{item.number}}）</view>
 				</view> -->
-				<view v-if="idx<1" class="pj_li" v-for="(item,idx) in goodsData.comment.comment">
+				<view v-if="goodsData.comment_count>0&&idx<1" class="pj_li" v-for="(item,idx) in goodsData.comment.comment">
 					<view class="pj_d1">
 						<view class="user_tx">
 							<image class="user_tx" :src="getimg(item.head_portrait)"></image>
@@ -120,11 +120,6 @@
 			<view class="hengxian"></view>
 			<!-- 详情 -->
 			<view class="goods_xq mt20">
-				<!-- <view class="xq_tit">
-					<text>-</text>
-					商品详情
-					<text>-</text>
-				</view> -->
 				
 				<view class="pj_box_tit">
 					<view class="p_tit_l">商品详情</view>
@@ -159,7 +154,7 @@
 		<!-- tk -->
 		<uni-popup ref="popup_yh" type="center" @change="tkchange0">
 			<!-- <view class="hb_tk" style="background-image: url(../../static/images/get_yh.png);"> -->
-			<view class="hb_tk">
+			<view v-if="yh_list.length>0" class="hb_tk">
 				<image class="hb_tk_img" :src="getimg('/static/images/get_yh.png')" mode="scaleToFill"></image>
 				<scroll-view style="width: 100%;height: 100%;position: relative;z-index: 9999;" scroll-y>
 					<view class="dis_flex goods_yh_li" v-for="(item,idx) in yh_list">
@@ -206,8 +201,11 @@
 						<view class="goodsimg">
 							<image v-if="show_img.length>0" :src="getimg(show_img[0])" :data-src="getimg(show_img[0])" mode="aspectFill"
 							 @tap="pveimg"></image>
-							<image v-else :src="getimg(goodsData.img[0])" :data-src="getimg(goodsData.img[0])" mode="aspectFill"
-							 @tap="pveimg"></image>
+							<block  v-else>
+								
+								<image v-if="goodsData.img&&goodsData.img.length>0" :src="getimg(goodsData.img[0])" :data-src="getimg(goodsData.img[0])" mode="aspectFill"
+								 @tap="pveimg"></image>
+							</block>
 							 <!-- <image :src="getimg('/static/images/goods_01.jpg')" mode="aspectFill"></image> -->
 						</view>
 						<view class="goodstkjg">
@@ -347,8 +345,24 @@
 		/**
 		 * 生命周期函数--监听页面加载
 		 */
-		onLoad: function(options) {
-			that=this
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pagesA/details/details?pid=' + that.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		onLoad(options) {
+			that = this
+			if(options.pid){
+				console.log('pid>>>>>>>>>>>>')
+				
+				console.log(options.pid)
+				console.log('pid>>>>>>>>>>>>>>>>>')
+				uni.setStorageSync('pid',options.pid)
+			}
 			if(options.id){
 				that.g_id = options.id
 			}
@@ -374,13 +388,6 @@
 			if (this.htmlReset == 2) {
 				this.getdatalist()
 			}
-		},
-
-		/**
-		 * 用户点击右上角分享
-		 */
-		onShareAppMessage: function() {
-
 		},
 		methods: {
 			getimg(img){

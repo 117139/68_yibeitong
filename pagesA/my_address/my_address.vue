@@ -71,7 +71,7 @@
 		},
 		onShow() {
 
-			if(that.show_num>1){
+			if(that.show_num>0){
 				this.onRetry()
 			}
 		},
