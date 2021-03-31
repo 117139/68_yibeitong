@@ -38,7 +38,8 @@
 	background: -webkit-linear-gradient(323deg, #F9676C, #F54248);
 	background: linear-gradient(127deg, #F9676C, #F54248);
 	border: 1px solid #FFFFFF;
-	border-radius: 31rpx;
+	-webkit-border-radius: 31rpx;
+	        border-radius: 31rpx;
 	padding: 5rpx;
 }
 .qd_nbox.data-v-0be17cc6 {
@@ -46,7 +47,8 @@
 	height: 50rpx;
 	background: #FFFFFF;
 	border: 1px solid #FFFFFF;
-	border-radius: 26px;
+	-webkit-border-radius: 26px;
+	        border-radius: 26px;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -65,8 +67,10 @@
 	height: 118rpx;
 	background: #FFFFFF;
 	border: 2rpx solid #CBB180;
-	box-shadow: 0rpx 0rpx 12rpx 0rpx rgba(188, 157, 103, 0.2);
-	border-radius: 50%;
+	-webkit-box-shadow: 0rpx 0rpx 12rpx 0rpx rgba(188, 157, 103, 0.2);
+	        box-shadow: 0rpx 0rpx 12rpx 0rpx rgba(188, 157, 103, 0.2);
+	-webkit-border-radius: 50%;
+	        border-radius: 50%;
 	-webkit-box-flex: 0;
 	-webkit-flex: none;
 	        flex: none;
@@ -99,8 +103,10 @@
 	min-height: 44rpx;
 	background: #EBE0CE;
 	border: 2px solid #FFFFFF;
-	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-	border-radius: 22px;
+	-webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+	        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+	-webkit-border-radius: 22px;
+	        border-radius: 22px;
 	position: relative;
 	padding: 4rpx 6rpx;
 }
@@ -110,7 +116,8 @@
 	width: auto;
 	height: auto;
 	background: #DB3535;
-	border-radius: 18rpx;
+	-webkit-border-radius: 18rpx;
+	        border-radius: 18rpx;
 	top: 2rpx;
 	bottom: 2rpx;
 	left: 4rpx;
@@ -157,7 +164,8 @@
 	width: 690rpx;
 	min-height: 247rpx;
 	background: #FFFFFF;
-	border-radius: 10rpx;
+	-webkit-border-radius: 10rpx;
+	        border-radius: 10rpx;
 	margin: 0 auto;
 }
 .order_top.data-v-0be17cc6 {
@@ -202,7 +210,8 @@
 	width: 690rpx;
 	min-height: 465rpx;
 	background: #FFFFFF;
-	border-radius: 10rpx;
+	-webkit-border-radius: 10rpx;
+	        border-radius: 10rpx;
 }
 .fuwu_tit.data-v-0be17cc6{
 	width: 100%;
@@ -272,7 +281,8 @@
 	width: 404rpx;
 	height: 229rpx;
 	background: #FFFFFF;
-	border-radius: 10rpx;
+	-webkit-border-radius: 10rpx;
+	        border-radius: 10rpx;
 	position: relative;
 	padding-bottom: 56rpx;
 }

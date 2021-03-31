@@ -41,7 +41,8 @@
         "xiaoxi_set/xiaoxi_set",
         "xiaoxiao_add/xiaoxiao_add",
         "pl_list/pl_list",
-        "order_pj/order_pj"
+        "order_pj/order_pj",
+        "huafei_list/huafei_list"
       ]
     }
   ],
@@ -107,5 +108,6 @@
     "cu-custom": "/colorui/components/cu-custom",
     "u-parse": "/components/gaoyia-parse/parse",
     "html-loading": "/components/html_loading/html_loading"
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

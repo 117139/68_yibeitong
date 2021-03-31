@@ -22,11 +22,17 @@
 				</swiper-item>
 			</swiper>
 			<view class="index_zbox">
-				<view v-if="messageDataArr.content" class="dis_flex aic ju_b index_xxtz">
+				<view v-if="messageDataArr.length>0" class="dis_flex aic ju_b index_xxtz">
 					<image class="xxtz_img" :src="getimg('/static/images/xxtz.png')" mode="aspectFit"></image>
 					<view class="xx_msg_box dis_flex aic">
-						<text class="iconfont iconlaba"></text>
-						<text class="flex_1 text-cut">{{messageDataArr.content}}</text>
+						<swiper class="card-swiper1" :indicator-dots="false" :circular="true" :vertical="true" :autoplay="true" interval="5000"
+							duration="500" indicator-color="#8799a3" indicator-active-color="#0081ff">
+							<swiper-item class="dis_flex aic" v-for="(item,index) in messageDataArr">
+								<text class="iconfont iconlaba"></text>
+								<text class="flex_1 text-cut">{{item.content}}</text>
+							</swiper-item>
+						</swiper>
+						
 					</view>
 				</view>
 				<view class="huodong_tit dis_flex aic">
@@ -140,8 +146,16 @@
 				}
 			}
 		},
+		onShareTimeline(){
+			return {
+				title:'依辈通',
+				query:'pid=' + that.loginDatas.id
+			}
+		},
 		onLoad(options) {
 			that = this
+			console.log(this.IPurl)
+			
 			if(options.pid){
 				console.log('pid>>>>>>>>>>>>')
 				
@@ -405,11 +419,15 @@
 		color: #666;
 		font-size: 24upx;
 	}
-
+	.card-swiper1{
+		width: 100%;
+		height: 63upx;
+	}
 	.xx_msg_box .iconfont {
-		margin-right: 20upx;
+		margin-right: 15upx;
 		flex: none;
 		color: #999;
+		position: relative;top: 1px;
 	}
 
 	.huodong_tit {

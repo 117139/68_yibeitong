@@ -69,7 +69,18 @@
 		components: {
 			regionPicker
 		},
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/index/index?pid=' + that.$store.state.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		
 		onLoad: function(option) {
+			
 			this.getarea()
 			if (option.address) {
 				console.log(option.address)

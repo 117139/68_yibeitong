@@ -158,8 +158,19 @@
 			]),
 			
 		},
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/index/index?pid=' + that.$store.state.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		
 		onLoad: function (option) {
 			that =this
+			
 			if(option.item){
 				this.datas=JSON.parse(option.item)
 				console.log(option.item)
@@ -301,8 +312,8 @@
 							title: '提交成功',
 						})
 						// reset_type
-						var pages = getCurrentPages();   //当前页面
-						var prevPage = pages[pages.length - 2];   //上一页面
+						var pages = getCurrentPages();   //当前页面
+						var prevPage = pages[pages.length - 2];   //上一页面
 						prevPage.setData({
 						  //直接给上一个页面赋值
 						  reset_type: true,
@@ -349,8 +360,8 @@
 								title: '操作成功',
 							})
 							// reset_type
-							var pages = getCurrentPages();   //当前页面
-							var prevPage = pages[pages.length - 2];   //上一页面
+							var pages = getCurrentPages();   //当前页面
+							var prevPage = pages[pages.length - 2];   //上一页面
 							prevPage.setData({
 							  //直接给上一个页面赋值
 							  reset_type: true,

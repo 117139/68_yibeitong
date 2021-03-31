@@ -58,8 +58,19 @@
 			}
 		},
 		props: ['postersData'],
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/index/index?pid=' + that.$store.state.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		
 		created() {
 			that = this;
+			
 			this.shareFc();
 		},
 		methods: {
@@ -202,13 +213,13 @@
 										const addHeight = getBgObj().height - productImage.dHeight;
 										console.log('allInfoCallback', 3)
 										return {
-											size: 26,
+											size: 32,
 											lineFeed: {
-												maxWidth: 200,
+												maxWidth: 350,
 												lineNum: 1
 											},
-											dx:312,
-											dy:1033
+											dx:352,
+											dy:1043
 										}
 									}
 								},
@@ -226,11 +237,11 @@
 											size: 26,
 											color:'#999999',
 											lineFeed: {
-												maxWidth: 300,
+												maxWidth: 350,
 												lineNum: 1
 											},
-											dx:312,
-											dy:1101
+											dx:352,
+											dy:1111
 										}
 									}
 								},
@@ -255,7 +266,7 @@
 											dx:350,
 											// dx:0,
 											// dy:1175
-											dy:1200
+											dy:1250
 										}
 									}
 								},
@@ -267,7 +278,7 @@
 									type: 'image',
 									id: 'productImage_code',
 									url: service.imgurl+that.$store.state.loginDatas.personal_code,
-									dx:123,
+									dx:93,
 									dy:979,
 									serialNum: 0,
 									// circleSet:true,
@@ -275,8 +286,8 @@
 										let width;
 										let height;
 										
-										width=172
-										height=172
+										width=235
+										height=235
 										
 										return {
 											dWidth: width,

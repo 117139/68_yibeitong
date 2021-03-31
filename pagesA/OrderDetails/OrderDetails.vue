@@ -235,8 +235,19 @@
 			]),
 
 		},
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/index/index?pid=' + that.$store.state.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		
 		onLoad: function(option) {
 			that = this
+			
 			if (option.id) {
 				// uni.showLoading({
 				// 	title:'正在加载中'

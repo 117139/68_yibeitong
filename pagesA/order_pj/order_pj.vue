@@ -70,7 +70,18 @@
 				'wxlogin'
 			])
 		},
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/index/index?pid=' + that.$store.state.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		
 		onLoad: function (option) {
+			
 			// this.getCate()
 			if(option.id){
 				this.ov_id=option.id

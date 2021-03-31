@@ -42,7 +42,8 @@
 	width: 690rpx;
 	height: 85rpx;
 	background: #F84336;
-	border-radius: 43rpx;
+	-webkit-border-radius: 43rpx;
+	        border-radius: 43rpx;
 	margin: 600rpx auto 0;
 	display: -webkit-box;
 	display: -webkit-flex;

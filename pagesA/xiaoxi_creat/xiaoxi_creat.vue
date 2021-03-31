@@ -36,9 +36,19 @@
 				data_last:false
 			}
 		},
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/index/index?pid=' + that.$store.state.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		
 		onLoad() {
 			that = this
-			
+		
 			that.onRetry()
 		},
 		computed: {

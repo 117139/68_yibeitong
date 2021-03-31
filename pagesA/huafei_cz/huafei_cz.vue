@@ -71,8 +71,19 @@
 			]),
 			
 		},
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/index/index?pid=' + that.$store.state.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		
 		onLoad() {
 			that=this
+			
 			that.phone=that.loginDatas.phone
 			that.gettel()
 			that.getdata()
@@ -131,7 +142,7 @@
 							datas = JSON.parse(datas)
 						}
 						console.log(res)
-						that.tel_fw = datas.province+datas.city+datas.company
+						that.tel_fw = datas.game_area
 						that.getdata()
 			
 					} else {

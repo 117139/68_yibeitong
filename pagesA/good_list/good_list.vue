@@ -49,7 +49,8 @@
 				datas:[],
 				page:1,
 				size:20,
-				data_last:false
+				data_last:false,
+				title:''
 			}
 		},
 		computed: {
@@ -58,14 +59,16 @@
 		onShareAppMessage() {
 			return {
 				title: '依辈通',
-				path: '/pagesA/details/details?pid=' + that.loginDatas.id,
+				path: '/pagesA/good_list/good_list?pid=' + that.$store.state.loginDatas.id+'&id='+that.id+'&name='+that.title,
 				success: function(res) {
 					console.log('成功', res)
 				}
 			}
 		},
+		
 		onLoad(options) {
 			that = this
+			
 			if(options.pid){
 				console.log('pid>>>>>>>>>>>>')
 				
@@ -77,6 +80,7 @@
 				that.id=options.id
 			}
 			if(options.name){
+				that.title=options.name
 				// that.search_key=options.name
 				uni.setNavigationBarTitle({
 					title:options.name

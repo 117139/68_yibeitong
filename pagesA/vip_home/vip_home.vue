@@ -20,12 +20,12 @@
 		<view v-if="htmlReset==0" style="position: relative;z-index: 100;">
 			
 			<swiper class="card-swiper" :indicator-dots="false" :circular="false" :autoplay="false" interval="5000" duration="500"
-			 @change="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
+			 @change="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff" :current='cardCur'>
 				<swiper-item v-for="(item,index) in swiperList" :key="item.id" :class="cardCur==index?'cur':''">
 					<view class="swiper-item">
-						<image :src="getimg(item.url)" mode="aspectFill" v-if="item.type=='image'"></image>
-						<video :src="getimg(item.url)" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover" v-if="item.type=='video'"></video>
-						<block v-if="cardCur==myvip-1&&cardCur==index">
+						<image :src="getimg(item.g_pic)" mode="aspectFill" ></image>
+						
+						<block v-if="item.id==myvip">
 							<view v-if="index==1" class="lv_tip" style="color:#7F4718">您已经达到该等级</view>
 							<view v-else-if="index==2" class="lv_tip" style="color:#393361">您已经达到该等级</view>
 							<view v-else-if="index==3" class="lv_tip" style="color:#F5E4D6">您已经达到该等级</view>
@@ -36,9 +36,9 @@
 				</swiper-item>
 			</swiper>
 			<view class="vip_box">
-				<image class="vip_box_qy" :src="getimg(swiperList[cardCur].qy)" mode="aspectFill"></image>
+				<image class="vip_box_qy" :src="getimg(swiperList[cardCur].g_equity_pic)" mode="aspectFill"></image>
 				<view class="vip_gz">会员规则</view>
-				<view class="vip_gz_box">{{swiperList[cardCur].yq}}</view>
+				<view class="vip_gz_box" v-html="swiperList[cardCur].g_rule"></view>
 			</view>
 		</view>
 	</view>
@@ -130,15 +130,94 @@
 				})
 			}
 		},
-		onLoad() {
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/index/index?pid=' + that.$store.state.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		
+		onLoad(option) {
 			that = this
+			if(option.pid){
+				console.log('pid')
+				console.log(option.pid)
+				uni.switchTab({
+					url:'/pages/index/index?pid=' +option.pid
+				})
+				return
+			}
 			that.htmlReset = 0
 			that.myvip=that.loginDatas.user_grade_id
 			this.TowerSwiper('swiperList');
 			// 初始化towerSwiper 传已有的数组名即可
+			that.getdata()
 		},
 		methods: {
 			...mapMutations(['login', 'logindata', 'logout', 'setplatform']),
+			getdata(){
+				// /user/getUserGradeInfo
+				var datas = {
+							
+					// token: that.$store.state.loginDatas.userToken || '',
+				
+				}
+				// https://yibeitong.com.aa.800123456.top/api//getUserGrade
+				// https://yibeitong.com.aa.800123456.top/api/getUserGrade?token=1ea004ec129fa9389c86206cc85c98a0
+				//selectSaraylDetailByUserCard
+				var jkurl = '/getUserGrade'
+				uni.showLoading({
+					title: '正在获取数据',
+					mask: true
+				})
+				service.P_get(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					// that.$refs.htmlLoading.htmlReset_fuc(0)
+					console.log(res)
+					if (res.code == 1) {
+						that.htmlReset = 0
+						var datas = res.data
+						console.log(typeof datas)
+							
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						console.log(res)
+						that.swiperList = datas
+							for(var i=0;i<datas.length;i++){
+								if(datas[i].id==that.myvip){
+									that.cardCur=i
+								}
+							}
+					} else {
+						that.htmlReset = 1
+						// that.$refs.htmlLoading.htmlReset_fuc(1)
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '获取数据失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.htmlReset = 1
+					that.btn_kg = 0
+					// that.$refs.htmlLoading.htmlReset_fuc(1)
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败，请检查您的网络连接'
+					})
+				})
+			},
 			getimg(img){
 				return service.getimg(img)
 			},

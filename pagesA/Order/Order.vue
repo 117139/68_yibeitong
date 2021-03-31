@@ -128,14 +128,19 @@
 			]),
 			
 		},
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/index/index?pid=' + that.$store.state.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		
 		onLoad(option) {
 			that =this
-			// uni.showLoading({
-			// 	title:'正在加载中'
-			// })
-			// uni.setNavigationBarTitle({
-			// 	title:'正在加载中...'
-			// })
+			
 			if(option.type==1){
 				that.type=option.type
 				that.sku_id=option.v_id

@@ -72,6 +72,15 @@
 					<view class="sku_li dis_flex aic">
 							<text  class="sku_bg">销</text>销量：{{goodsData.sales_volume}}
 					</view>
+					<view class="sku_li dis_flex aic">
+							<text  class="sku_bg">返</text>购物返现：￥{{goodsData.consumer_rebate}}
+					</view>
+					<view class="sku_li dis_flex aic">
+							<text  class="sku_bg">返</text>一级返佣：￥{{goodsData.superior_rebate}}
+					</view>
+					<view class="sku_li dis_flex aic">
+							<text  class="sku_bg">返</text>二级返佣：￥{{goodsData.up_superior_rebate}}
+					</view>
 				</view>
 			</view>
 			<!-- <view class="goods_xmsg" @tap="jump" data-url="/pagesA/my_yhq/my_yhq"> -->
@@ -84,6 +93,7 @@
 					<text class="iconfont iconcaozuo"></text>
 				</view>
 			</view> -->
+			
 			<view class="mt20 goods_xmsg" @tap="sheetshow_fuc">
 				<view class="v1">选择</view>
 				<view class="v2 v21">{{ggshow1?ggshow1+',':''}}{{cnum>0?cnum+'件':''}}</view>
@@ -348,14 +358,21 @@
 		onShareAppMessage() {
 			return {
 				title: '依辈通',
-				path: '/pagesA/details/details?pid=' + that.loginDatas.id,
+				path: '/pagesA/details/details?pid=' + that.loginDatas.id+'&id='+that.g_id,
 				success: function(res) {
 					console.log('成功', res)
 				}
 			}
 		},
+		onShareTimeline(){
+			return {
+				title:'依辈通',
+				query:'pid=' + that.loginDatas.id+'&id=' + that.g_id
+			}
+		},
 		onLoad(options) {
 			that = this
+			
 			if(options.pid){
 				console.log('pid>>>>>>>>>>>>')
 				
@@ -2576,14 +2593,16 @@
 	}
 	.sku_box{
 		width: 100%;
-		height: 60upx;
+		min-height: 60upx;
 		align-items: center;
+		flex-wrap: wrap;
 	}
 	.sku_li{
-		flex:1;
+		width: 50%;
 		padding: 0 30upx;
 		font-size: 24upx;
 		color: #666;
+		height: 40upx;
 	}
 	.sku_bg{
 		width: 27upx;

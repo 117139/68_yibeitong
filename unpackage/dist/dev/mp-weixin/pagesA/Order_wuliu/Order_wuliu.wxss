@@ -2,19 +2,23 @@
 #wrap.data-v-244001bf {
 	width: 100%;
 
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+
+	        box-sizing: border-box;
 	background: #FBFBFB;
 }
 .main.data-v-244001bf {
 	width: 100%;
 	padding: 20rpx 30rpx 0;
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
 }
 .wuliu_tit.data-v-244001bf {
 	width: 100%;
 	padding: 15rpx;
 	background: rgba(255, 255, 255, 1);
-	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	        border-radius: 2px;
 	margin-bottom: 20rpx;
 	border-bottom: 1px solid #ddd;
 }
@@ -34,7 +38,8 @@
 .wl_icon.data-v-244001bf {
 	width: 10rpx;
 	height: 10rpx;
-	border-radius: 4rpx;
+	-webkit-border-radius: 4rpx;
+	        border-radius: 4rpx;
 	margin-right: 20rpx;
 }
 .wl_tit_msg.data-v-244001bf {
@@ -48,7 +53,8 @@
 .wl_tit_msg ._span.data-v-244001bf {
 	width: 66rpx;
 	height: 30rpx;
-	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	        border-radius: 3px;
 	border: 1px solid #000;
 	margin-left: 20rpx;
 }
@@ -56,7 +62,8 @@
 	width: 100%;
 	padding: 40rpx 24rpx 50rpx 100rpx;
 	background: #fff;
-	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	        border-radius: 2px;
 }
 .wx_li.data-v-244001bf {
 	border-left: 1px solid #C4C4C4;
@@ -72,7 +79,8 @@
 	width: 10rpx;
 	height: 10rpx;
 	background: #C4C4C4;
-	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	        border-radius: 50%;
 }
 .wx_li.data-v-244001bf:first-child::before {
 	content: '';

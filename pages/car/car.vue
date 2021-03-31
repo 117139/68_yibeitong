@@ -99,8 +99,15 @@
 				}
 			}
 		},
+		// onShareTimeline(){
+		// 	return {
+		// 		title:'依辈通',
+		// 		query:'pid=' + that.loginDatas.id
+		// 	}
+		// },
 		onLoad(options) {
 			that = this
+		
 			if(options.pid){
 				console.log('pid>>>>>>>>>>>>')
 				

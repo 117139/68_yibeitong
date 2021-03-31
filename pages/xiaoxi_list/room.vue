@@ -391,8 +391,19 @@
 				this.screenMsg(newVal, oldVal)
 			},
 		},
-		onLoad(option) {
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/index/index?pid=' + that.$store.state.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		
+		onLoad(option) { 
 			that = this
+			
 			console.log('对方聊天id' + option.id)
 			console.log('对方聊天type' + option.type)
 			
@@ -454,6 +465,7 @@
 			}, 500)
 		},
 		onUnload() {
+		// onHide() {
 			//退出页面 将所有的会话内的消息设置为已读
 			let promise = this.tim.setMessageRead({
 				conversationID: this.conversationActive.conversationID

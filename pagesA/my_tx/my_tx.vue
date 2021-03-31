@@ -2,7 +2,7 @@
 	<view class="minh100">
 		<view class="main_box">
 			<view class="tx_int">
-				<text>￥</text><input type="number"  v-model="tx_num" confirm-type='done'
+				<text>￥</text><input type="digit"  v-model="tx_num" confirm-type='done'
 						 @confirm="sub"/>
 			</view>
 			<view v-if="type==2" class="tx_tip">当前可提现金额：{{loginDatas.commission*1}}</view>
@@ -39,8 +39,19 @@
 			]),
 			
 		},
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/index/index?pid=' + that.$store.state.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		
 		onLoad(option) {
 			that=this
+			
 			if(option.type){
 				this.type=option.type
 			}

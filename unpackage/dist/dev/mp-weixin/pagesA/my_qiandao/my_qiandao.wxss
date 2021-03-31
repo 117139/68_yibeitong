@@ -84,7 +84,8 @@
 	background: #ED0611;
 	width: 690rpx;
 	height: 90rpx;
-	border-radius: 45rpx;
+	-webkit-border-radius: 45rpx;
+	        border-radius: 45rpx;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -151,7 +152,8 @@
 	z-index: 992;
 	width: 570rpx;
 	height: 671rpx;
-	border-radius: 15rpx;
+	-webkit-border-radius: 15rpx;
+	        border-radius: 15rpx;
 	padding-top: 130rpx;
 	padding-bottom: 45rpx;
 	display: -webkit-box;
@@ -248,7 +250,8 @@
   font-size: 28rpx;
   font-weight: normal;
   padding: 8rpx 15rpx;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
   border: 2rpx solid #dcdfe6;
 }
 .calendar-wrapper .header .pre.data-v-1d6284aa {
@@ -309,7 +312,12 @@
   height: 60rpx;
   line-height: 60rpx;
   overflow: hidden;
-  border-radius: 60rpx;
+  -webkit-border-radius: 60rpx;
+          border-radius: 60rpx;
+}
+.calendar-wrapper .content .days .item .day.day1.data-v-1d6284aa {
+  background-color: #FFCC0F;
+  color: #fff;
 }
 .calendar-wrapper .content .days .item .day.choose.data-v-1d6284aa {
   background-color: #4d7df9;
@@ -327,7 +335,8 @@
   width: 8rpx;
   height: 8rpx;
   background: #fa7268;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -342,7 +351,8 @@
   width: 8rpx;
   height: 8rpx;
   background: #4d7df9;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -353,7 +363,8 @@
   width: 12rpx;
   height: 12rpx;
   background: #F50014;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
   position: absolute;
   left: 50%;
   bottom: 0;

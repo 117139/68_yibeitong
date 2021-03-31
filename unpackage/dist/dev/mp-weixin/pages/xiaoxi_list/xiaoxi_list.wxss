@@ -6,8 +6,10 @@
 	width: 105rpx;
 	height: 105rpx;
 	background: #F54248;
-	box-shadow: 1px 3px 10px 0px rgba(0, 0, 0, 0.1);
-	border-radius: 50%;
+	-webkit-box-shadow: 1px 3px 10px 0px rgba(0, 0, 0, 0.1);
+	        box-shadow: 1px 3px 10px 0px rgba(0, 0, 0, 0.1);
+	-webkit-border-radius: 50%;
+	        border-radius: 50%;
 	position: fixed;
 	bottom: 150rpx;
 	right: 50rpx;
@@ -44,7 +46,8 @@
 .item-img ._img.data-v-b0ce103c {
 	width: 88rpx;
 	height: 88rpx;
-	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	        border-radius: 50%;
 }
 .item-text.data-v-b0ce103c {
 	-webkit-box-flex: 1;
@@ -83,7 +86,8 @@
 	width: 37rpx;
 	height: 37rpx;
 	background: #FF4F11;
-	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	        border-radius: 50%;
 	color: #fff;
 	display: -webkit-box;
 	display: -webkit-flex;

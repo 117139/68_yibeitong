@@ -23,7 +23,8 @@ image.data-v-495f7789{
 	width: 100%;
 	min-height: 200rpx;
 	padding:28rpx;
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
 	background-color: #fff;
 	-webkit-box-align: center;
 	-webkit-align-items: center;
@@ -32,10 +33,13 @@ image.data-v-495f7789{
 .address_icon.data-v-495f7789{
 	width: 47rpx;
 	height: 47rpx;
+	background: -webkit-gradient(linear, left bottom, left top, from(#FF3131), to(#FF5757));
 	background: -webkit-linear-gradient(bottom, #FF3131, #FF5757);
 	background: linear-gradient(0deg, #FF3131, #FF5757);
-	box-shadow: 0px 2rpx 6rpx 0px rgba(255, 43, 43, 0.35);
-	border-radius: 50%;
+	-webkit-box-shadow: 0px 2rpx 6rpx 0px rgba(255, 43, 43, 0.35);
+	        box-shadow: 0px 2rpx 6rpx 0px rgba(255, 43, 43, 0.35);
+	-webkit-border-radius: 50%;
+	        border-radius: 50%;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -116,7 +120,8 @@ image.data-v-495f7789{
 .goods1.data-v-495f7789{
 	width: 100%;
 	padding:19rpx 0;
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -213,7 +218,8 @@ text.data-v-495f7789{
 	height: 100rpx;
 	
 	background: #FFFFFF;
-	box-shadow: 0px 0px 9rpx 0px rgba(195, 195, 195, 0.49);
+	-webkit-box-shadow: 0px 0px 9rpx 0px rgba(195, 195, 195, 0.49);
+	        box-shadow: 0px 0px 9rpx 0px rgba(195, 195, 195, 0.49);
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;

@@ -32,12 +32,12 @@
 							</view>
 						</view>
 						<view class="dis_flex aic ju_a top_num">
-							<view class="dis_flex_c aic" @tap="jump" :data-url="'/pagesA/my_yue/my_yue?type='+1" data-login="true" :data-haslogin="hasLogin">
+							<view class="dis_flex_c aic" @tap="jump" :data-url="'/pagesA/my_yue/my_yue?type='+1" :data-login="true" :data-haslogin="hasLogin">
 								<view class="top_pri">{{loginDatas.money}}</view>
 								<view>我的余额(元)</view>
 							</view>
 							<view class="num_hg"></view>
-							<view class="dis_flex_c aic" @tap="jump" :data-url="'/pagesA/share_index/share_index?type='+1"  data-login="true" :data-haslogin="hasLogin">
+							<view class="dis_flex_c aic" @tap="jump" :data-url="'/pagesA/share_index/share_index?type='+1"  :data-login="true" :data-haslogin="hasLogin">
 								<view class="top_pri">{{loginDatas.commission}}</view>
 								<view>当前佣金(元)</view>
 							</view>
@@ -49,29 +49,29 @@
 				</view>
 			</view>
 			<!-- 订单 -->
-			<view class="order_box">
+			<view class="order_box" v-if="hasLogin">
 				<view class="order_top dis_flex aic ju_b">
 					<view>我的订单</view>
-					<view class="go_more dis_flex aic"  @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+0">查看全部<text class="iconfont iconnext-m"></text></view>
+					<view class="go_more dis_flex aic"  @tap="jump" :data-login="true" :data-haslogin="hasLogin" :data-url="'/pagesA/OrderList/OrderList?type='+0">查看全部<text class="iconfont iconnext-m"></text></view>
 				</view>
 				<view class="order_urls dis_flex aic ju_a">
-					<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+1">
+					<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-login="true" :data-haslogin="hasLogin" :data-url="'/pagesA/OrderList/OrderList?type='+1">
 						<image :src="getimg('/static/images/my_icon_03.jpg')" mode="aspectFit"></image>
 						<text>待付款</text>
 					</view>
-					<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+2">
+					<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-login="true" :data-haslogin="hasLogin" :data-url="'/pagesA/OrderList/OrderList?type='+2">
 						<image :src="getimg('/static/images/my_icon_05.jpg')" mode="aspectFit"></image>
 						<text>待发货</text>
 					</view>
-					<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+3">
+					<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-login="true" :data-haslogin="hasLogin" :data-url="'/pagesA/OrderList/OrderList?type='+3">
 						<image :src="getimg('/static/images/my_icon_07.jpg')" mode="aspectFit"></image>
 						<text>待收货</text>
 					</view>
-					<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList/OrderList?type='+4">
+					<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-login="true" :data-haslogin="hasLogin" :data-url="'/pagesA/OrderList/OrderList?type='+4">
 						<image :src="getimg('/static/images/my_icon_09.jpg')" mode="aspectFit"></image>
 						<text>待评价</text>
 					</view>
-					<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/OrderList_sh/OrderList_sh?type='+5">
+					<view class="order_url dis_flex_c aic ju_c" @tap="jump" :data-login="true" :data-haslogin="hasLogin" :data-url="'/pagesA/OrderList_sh/OrderList_sh?type='+5">
 						<image :src="getimg('/static/images/my_icon_11.jpg')" mode="aspectFit"></image>
 						<text>退款/售后</text>
 					</view>
@@ -81,19 +81,23 @@
 			<view class="fuwu_box">
 				<view class="fuwu_tit">我的服务</view>
 				<view class="fuwu_list">
-					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/vip_home/vip_home" data-login="true" :data-haslogin="hasLogin">
+					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/vip_home/vip_home"  :data-login="true" :data-haslogin="hasLogin">
 						<image :src="getimg('/static/images/my_icon_22.jpg')" mode="aspectFit"></image>
 						<text>会员中心</text>
 					</view>
-					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/my_address/my_address" data-login="true" :data-haslogin="hasLogin">
+					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/huafei_list/huafei_list"  :data-login="true" :data-haslogin="hasLogin">
+						<image :src="getimg('/static/images/huafei.png')" mode="aspectFit"></image>
+						<text>话费订单</text>
+					</view>
+					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/my_address/my_address"  :data-login="true" :data-haslogin="hasLogin">
 						<image :src="getimg('/static/images/my_icon_24.jpg')" mode="aspectFit"></image>
 						<text>收货地址</text>
 					</view>
-					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/share_index/share_index?type='+1"  data-login="true" :data-haslogin="hasLogin">
+					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/share_index/share_index?type='+1"   :data-login="true" :data-haslogin="hasLogin">
 						<image :src="getimg('/static/images/my_icon_19.jpg')" mode="aspectFit"></image>
 						<text>我的推广</text>
 					</view>
-					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/my_yue/my_yue?type='+1" data-login="true" :data-haslogin="hasLogin">
+					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/my_yue/my_yue?type='+1"  :data-login="true" :data-haslogin="hasLogin">
 						<image :src="getimg('/static/images/my_icon_27.jpg')" mode="aspectFit"></image>
 						<text>财务记录</text>
 					</view>
@@ -144,7 +148,8 @@
 			return {
 				datas: '',
 				htmlReset: -1,
-				fk_show:false
+				fk_show:false,
+				show_num:0
 			}
 		},
 		onShareAppMessage() {
@@ -156,8 +161,21 @@
 				}
 			}
 		},
+		// onShareTimeline(){
+		// 	return {
+		// 		title:'依辈通',
+		// 		query:'pid=' + that.loginDatas.id
+		// 	}
+		// },
+		onPullDownRefresh() {
+			if(that.hasLogin){
+				uni.stopPullDownRefresh()
+				service.wxlogin('token')
+			}
+		},
 		onLoad(options) {
 			that = this
+			
 			if(options.pid){
 				console.log('pid>>>>>>>>>>>>')
 				
@@ -169,8 +187,16 @@
 			
 		},
 		onShow(){
+			if(that.show_num>0){
+				if(that.hasLogin){
+					uni.stopPullDownRefresh()
+					service.wxlogin('token')
+				}
+			}
 			
-			
+		},
+		onHide() {
+			that.show_num++
 		},
 		mounted(){
 			
@@ -180,6 +206,7 @@
 		},
 		methods: {
 			...mapMutations(['login', 'logindata', 'logout', 'setplatform']),
+			
 			fk_fuc(){
 				uni.showModal({
 				    title: '提示',

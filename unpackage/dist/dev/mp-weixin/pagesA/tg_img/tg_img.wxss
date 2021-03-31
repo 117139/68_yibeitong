@@ -64,7 +64,8 @@
 	background-color: white;
 }
 .border_radius_10px {
-	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	        border-radius: 10px;
 }
 .padding1vh {
 	padding: 1vh;
@@ -103,6 +104,7 @@
 	width: 600rpx;
 	height: 1067rpx;
 	margin: 0 auto 30rpx;
-	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+	        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
 }
 

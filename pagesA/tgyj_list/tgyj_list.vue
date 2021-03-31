@@ -21,7 +21,6 @@
 					</picker>
 					
 				</view>
-				
 				<view class="tx_li" v-for="(item,index) in datas">
 					<view class="tx_l">
 						<view class="mx_name">{{item.change_type_value}}</view>
@@ -69,6 +68,7 @@
 						id:5
 					},
 				],
+				datas:[],
 				hetong_index:0,
 				page:1,
 				size:20
@@ -83,8 +83,19 @@
 			]),
 			
 		},
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/index/index?pid=' + that.$store.state.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		
 		onLoad(option) {
 			that=this
+			
 			if(option.type){
 				this.type=option.type
 			}

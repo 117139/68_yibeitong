@@ -367,7 +367,7 @@ const wxlogin = function(num) {
 	if (num == 'token') {
 		var data = {
 			token: uni.getStorageSync('token'),
-			// token: '69dc896f2061638e99c885f72db5ced2',
+			// token: '4e8047dd513ab474c10e2ce861b50763',
 			// token: 'f95b9ebdddbe9d2fd12ff5115d5cc35c',
 			type: 4
 		}
@@ -1051,6 +1051,21 @@ const wxpay=function (datas,type){
 	
 }
 export default {
+	// onShareTimeline(res) {//分享到朋友圈
+	// 		console.log(res)
+	// 		return {}
+	// },
+	created(option) {
+			//#ifdef MP-WEIXIN
+			// wx.showShareMenu({
+			// 		withShareTicket: true,
+			// 		menus: ['shareAppMessage', 'shareTimeline']
+			// });
+			//#endif
+			console.log('created')
+			
+	},
+	
 	getUsers,
 	addUser,
 	get,

@@ -14,6 +14,8 @@ import uParse from '@/components/gaoyia-parse/parse.vue'
 Vue.component('cu-custom',cuCustom)
 Vue.component('u-parse',uParse)
 
+// import service from './service.js'
+// Vue.mixin(service)
 
 // 页面初始化
 import htmlLoading from '@/components/html_loading/html_loading.vue'

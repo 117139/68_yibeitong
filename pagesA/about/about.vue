@@ -66,8 +66,20 @@
 				article: '<p>html代码，具体参见https://github.com/gaoyia/parse/tree/1.0.7/parse-demo中的demo</p>'
 			}
 		},
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/about/about?pid=' + that.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		
+		
 		onLoad(Option) {
-			var that =this
+			that =this
+		
 			console.log(Option)
 			
 			

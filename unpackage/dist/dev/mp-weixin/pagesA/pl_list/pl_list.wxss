@@ -5,7 +5,8 @@
 .pj_li.data-v-019ef122 {
 	width: 100%;
 	padding: 20rpx 28rpx;
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
 	border-bottom: 1px solid #eee;
 }
 .pj_d1.data-v-019ef122 {
@@ -34,7 +35,8 @@
 .user_tx.data-v-019ef122 {
 	width: 65rpx;
 	height: 65rpx;
-	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	        border-radius: 50%;
 }
 view.user_tx.data-v-019ef122 {
 	margin-right: 19rpx;

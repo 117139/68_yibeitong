@@ -25,7 +25,7 @@
 			"path": "pages/my/my",
 			"style": {
 				"navigationBarTitleText": "依辈通",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/login_tel/login_tel",
@@ -267,7 +267,16 @@
 				"enablePullDownRefresh": false
 			}
 
-		}]
+		}    ,{
+                    "path" : "huafei_list/huafei_list",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "话费订单",
+                    "enablePullDownRefresh": true
+                }
+                
+                }
+            ]
 	}],
 
 	"preloadRule": {

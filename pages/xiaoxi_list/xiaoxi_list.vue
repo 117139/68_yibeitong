@@ -155,14 +155,21 @@
 		onShareAppMessage() {
 			return {
 				title: '依辈通',
-				path: '/pages/xiaoxi_list/xiaoxi_list?pid=' + that.loginDatas.id,
+				path: '/pages/xiaoxi_list/xiaoxi_list?pid=' + that.$store.state.loginDatas.id,
 				success: function(res) {
 					console.log('成功', res)
 				}
 			}
 		},
+		// onShareTimeline(){
+		// 	return {
+		// 		title:'依辈通',
+		// 		query:'pid=' + that.loginDatas.id
+		// 	}
+		// },
 		onLoad(options) {
 			that = this
+			
 			if(options.pid){
 				console.log('pid>>>>>>>>>>>>')
 				

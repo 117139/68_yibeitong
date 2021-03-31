@@ -31,7 +31,7 @@
 					<view :class="{ hide: !monthOpen }" class="content" :style="{ height: height }">
 						<view :style="{ top: positionTop + 'rpx' }" class="days">
 							<view class="item" v-for="(item, index) in dates" :key="index">
-								<view class="day" @click="selectOne(item, $event)" :class="{
+								<view v-if="isMarkDay(item.year, item.month, item.date)&&item.isCurM" class="day day1" @click="selectOne(item, $event)" :class="{
 					                        choose: choose == `${item.year}-${item.month}-${item.date}`&&item.isCurM,
 					                        nolm: !item.isCurM,
 					                        today: isToday(item.year, item.month, item.date),
@@ -39,7 +39,15 @@
 					                    }">
 									{{ Number(item.date) }}
 								</view>
-								<view class="markDay" v-if="isMarkDay(item.year, item.month, item.date)&&item.isCurM"></view>
+								<view v-else class="day" @click="selectOne(item, $event)" :class="{
+					                        choose: choose == `${item.year}-${item.month}-${item.date}`&&item.isCurM,
+					                        nolm: !item.isCurM,
+					                        today: isToday(item.year, item.month, item.date),
+					                        isWorkDay: isWorkDay(item.year, item.month, item.date)
+					                    }">
+									{{ Number(item.date) }}
+								</view>
+								<!-- <view class="markDay" v-if="isMarkDay(item.year, item.month, item.date)&&item.isCurM"></view> -->
 								<!-- <view class="today-text" v-if="isToday(item.year, item.month, item.date)">今</view> -->
 							</view>
 						</view>
@@ -134,8 +142,19 @@
 			    return (this.dates.length / 7) * 80 + 'rpx';
 			}
 		},
+		onShareAppMessage() {
+			return {
+				title: '依辈通',
+				path: '/pages/index/index?pid=' + that.$store.state.loginDatas.id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
+		},
+		
 		created() {
 			that=this
+			
 		    this.dates = this.monthDay(this.y, this.m);
 		    !this.open && this.toggle();
 				that.getdata()
@@ -701,7 +720,10 @@
 						line-height: 60rpx;
 						overflow: hidden;
 						border-radius: 60rpx;
-
+						&.day1{
+							background-color: #FFCC0F;
+							color: #fff;
+						}
 						&.choose {
 							background-color: #4d7df9;
 							color: #fff;
@@ -712,7 +734,7 @@
 							opacity: 0.3;
 						}
 					}
-
+					
 					.isWorkDay {
 						color: #42464a;
 					}
