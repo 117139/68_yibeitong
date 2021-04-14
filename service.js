@@ -438,6 +438,119 @@ const wxlogin = function(num) {
 			}
 		})
 	} else{
+		var userInfo = uni.getStorageSync('userInfo')
+		if (!userInfo) {
+				
+		} else {
+			uni.login({
+				success: function(res) {
+				
+					// 发送 res.code 到后台换取 openId, sessionKey, unionId
+					var uinfo = userInfo
+					
+					var pid=uni.getStorageSync('pid')
+					let data = {
+						code: res.code,
+						nickname: uinfo.nickName,
+						avatarurl: uinfo.avatarUrl,
+						
+						pid:pid?pid:'',
+						type: 1
+					}
+					let rcode = res.code
+					console.log(res.code)
+					uni.request({
+						url: IPurl + '/login',
+						data: data,
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						dataType: 'json',
+						method: 'POST',
+						success(res) {
+							uni.hideLoading()
+							console.log(res.data)
+				
+							if (res.data.code == 1) {
+								uni.setStorageSync('token', res.data.data.userToken)
+								if (!res.data.data.phone) {
+									uni.showToast({
+										icon: 'none',
+										title: '请绑定手机号'
+									})
+									setTimeout(() => {
+										if (num == 1) {
+				
+											uni.redirectTo({
+												url: '/pages/login_tel/login_tel'
+											})
+										} else {
+											uni.navigateTo({
+												url: '/pages/login_tel/login_tel'
+											})
+				
+										}
+									}, 1000)
+				
+									return
+								}
+								console.log('登录成功')
+								console.log(res.data)
+				
+								store.commit('logindata', res.data.data)
+								store.commit('login', res.data.data.nickname)
+								uni.setStorageSync('loginmsg', res.data.data)
+				
+								// im login
+								event.trigger({
+									type: 'test',
+									page: '/pages/index/index',
+									//obj和test是举的例子，随意啥都行，这个传过去在on中的args中都可以获取到
+									obj: {
+				
+									},
+									test: {
+										'loginmsg': res.data.data
+									},
+									success: function(data) {
+										//data为on中返回的数据
+									}
+								});
+								// im login
+				
+				
+				
+								if (num == 1) {
+									uni.showToast({
+										icon: 'none',
+										title: '登录成功'
+									})
+									setTimeout(() => {
+										uni.navigateBack()
+									}, 1000)
+								}
+							} else {
+								uni.removeStorageSync('userInfo')
+								uni.removeStorageSync('token')
+								uni.showToast({
+									icon: 'none',
+									title: '登录失败',
+								})
+							}
+				
+						},
+						fail() {
+							uni.hideLoading()
+							uni.showToast({
+								icon: 'none',
+								title: '登录失败'
+							})
+						}
+					})
+				}
+			})
+		}
+		return
 		uni.getSetting({
 			success: res => {
 				console.log(res)
