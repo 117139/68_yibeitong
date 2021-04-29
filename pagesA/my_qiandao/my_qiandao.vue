@@ -618,7 +618,7 @@
 		flex-direction: column;
 		align-items: center;
 	}
-	.tk_msg1{
+	/* .tk_msg1{
 		font-size: 20upx;
 		color: #CFAA5F;
 	}
@@ -636,7 +636,7 @@
 		font-size: 22upx;
 		color: #FFE9B7;
 		margin-top: 335upx;
-	}
+	} */
 	.off_btn{
 		font-size: 42upx;
 		color: #DFDFDF;

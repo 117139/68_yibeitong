@@ -1,7 +1,7 @@
 <template>
 	<view class="minh100">
 		<image class="jianqun_btn" :src="getimg('/static/images/jianqun.png')" mode="aspectFit" 
-		  @tap="jump" data-url="/pagesA/xiaoxi_creat/xiaoxi_creat" data-login="true" :data-haslogin="hasLogin"></image>
+		  @tap="jump" data-url="/pagesA/xiaoxi_creat/xiaoxi_creat" :data-login="true" :data-haslogin="hasLogin"></image>
 		
 		<!-- 聊天记录 会话列表 -->
 		<!-- <view class="conversition-box" v-if="hasLogin">

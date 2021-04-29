@@ -4,11 +4,11 @@
 			<view class="pj_d1">
 				<view class="user_tx">
 					<image class="user_tx" :src="filter.imgIP(item.head_portrait)"></image>
-				</view> {{item.nickname}}
+				</view> {{item.nickname}} <text style="font-size: 20upx;color: #999;margin-left: 10px;">{{item.create_time}}</text>
 			</view>
 			<view class="pj_d2">{{item.comment}}</view>
 			<view class="pj_d3">
-				<text v-for="(item1,idx1) in item.attr">{{item1.value}}</text>
+				<text v-for="(item1,idx1) in item.gd_attr">{{item1.value}}</text>
 			</view>
 		</view>
 		<view class="zanwu" v-if="datas.length==0">暂无内容</view>

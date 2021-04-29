@@ -33,8 +33,7 @@ image.data-v-43b5cbeb {
 	width: 100%;
 	background-color: #fff;
 	padding: 30rpx 28rpx 30rpx;
-	-webkit-box-sizing: border-box;
-	        box-sizing: border-box;
+	box-sizing: border-box;
 }
 .goods.data-v-43b5cbeb {
 	width: 100%;
@@ -45,8 +44,7 @@ image.data-v-43b5cbeb {
 .goods1.data-v-43b5cbeb {
 	width: 100%;
 	padding: 28rpx;
-	-webkit-box-sizing: border-box;
-	        box-sizing: border-box;
+	box-sizing: border-box;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -144,8 +142,7 @@ image.data-v-43b5cbeb {
 	width: 100%;
 	min-height: 200rpx;
 	padding:28rpx;
-	-webkit-box-sizing: border-box;
-	        box-sizing: border-box;
+	box-sizing: border-box;
 	background-color: #fff;
 	-webkit-box-align: center;
 	-webkit-align-items: center;
@@ -154,13 +151,10 @@ image.data-v-43b5cbeb {
 .address_icon.data-v-43b5cbeb{
 	width: 47rpx;
 	height: 47rpx;
-	background: -webkit-gradient(linear, left bottom, left top, from(#FF3131), to(#FF5757));
 	background: -webkit-linear-gradient(bottom, #FF3131, #FF5757);
 	background: linear-gradient(0deg, #FF3131, #FF5757);
-	-webkit-box-shadow: 0px 2rpx 6rpx 0px rgba(255, 43, 43, 0.35);
-	        box-shadow: 0px 2rpx 6rpx 0px rgba(255, 43, 43, 0.35);
-	-webkit-border-radius: 50%;
-	        border-radius: 50%;
+	box-shadow: 0px 2rpx 6rpx 0px rgba(255, 43, 43, 0.35);
+	border-radius: 50%;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -320,25 +314,21 @@ height: 163rpx;
   -webkit-flex-direction: row-reverse;
           flex-direction: row-reverse;  
   padding: 20rpx 28rpx 40rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 	position: fixed;
 	bottom: 0;
 	left: 0;
 	background: #fff;
 	z-index: 990;
 	
-	-webkit-box-shadow: 0px 0px 9rpx 0px rgba(195, 195, 195, 0.49);
-	
-	        box-shadow: 0px 0px 9rpx 0px rgba(195, 195, 195, 0.49);
+	box-shadow: 0px 0px 9rpx 0px rgba(195, 195, 195, 0.49);
 }
 .o_cz view.data-v-43b5cbeb{
  width: 128rpx;
  height: 59rpx;
  background: #FFFFFF;
  border: 1px solid #666666;
- -webkit-border-radius: 5rpx;
-         border-radius: 5rpx;
+ border-radius: 5rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -357,7 +347,6 @@ height: 163rpx;
 	border: 0;
   background: -webkit-linear-gradient(124deg, #FC3B27, #FF6D5A);
   background: linear-gradient(-34deg, #FC3B27, #FF6D5A);
-  -webkit-box-shadow: 0px 3rpx 6rpx 0px rgba(255, 30, 30, 0.35);
-          box-shadow: 0px 3rpx 6rpx 0px rgba(255, 30, 30, 0.35);
+  box-shadow: 0px 3rpx 6rpx 0px rgba(255, 30, 30, 0.35);
 }
 

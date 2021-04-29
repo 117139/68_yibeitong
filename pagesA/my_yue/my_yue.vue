@@ -2,17 +2,43 @@
 	<view class="minh100">
 		<htmlLoading ref="htmlLoading" @Retry='onRetry' :bj_show="false">
 			<view class="main_box">
-				<view class="top_box">
-					<image class="top_box_img" :src="getimg('/static/images/mon_banner_03.jpg')" mode="aspectFill"></image>
-					<view class="top_box_box">
-						<view class="top_box_btn" @tap="jump" data-url="/pagesA/my_tx/my_tx?type=1">
-							提现<text class="iconfont iconnext-m"></text>
+				<view class="w100 dis_flex aic ju_b">
+					<view class="top_box dis_flex ju_b">
+						<image class="top_box_img" :src="getimg('/static/images/mon_banner_03.jpg')" mode="aspectFill"></image>
+						<view class="top_box_box">
+							<view class="top_d1">账户余额(元)</view>
+							<view class="top_d2">{{loginDatas.money?loginDatas.money:'0.00'}}</view>
+							<view class="dis_flex aic">
+								<view  v-if="type==2" class="top_box_btn">
+									明细<text class="iconfont iconnext-m"></text>
+								</view>
+								<view class="top_box_btn" @tap="jump" data-url="/pagesA/my_tx/my_tx?type=1">
+									提现<text class="iconfont iconnext-m"></text>
+								</view>
+							</view>
 						</view>
-						<view class="top_d1">账户余额(元)</view>
-						<view class="top_d2">{{loginDatas.money?loginDatas.money:'0.00'}}</view>
+						<view v-if="type==1" class="top_box_box">
+							<view class="top_d1">累计已提(元)</view>
+							<view class="top_d2">{{loginDatas.submitted_money?loginDatas.submitted_money:'0.00'}}</view>
+							<view class="top_box_btn" @tap="jump" data-url="/pagesA/my_ytx/my_ytx">
+								明细<text class="iconfont iconnext-m"></text>
+							</view>
+						</view>
+						<view v-if="type==2" class="top_box_box">
+							<view class="top_d1">我的佣金(元)</view>
+							<view class="top_d2">{{loginDatas.commission?loginDatas.commission:'0.00'}}</view>
+							<view class="dis_flex aic">
+								<view class="top_box_btn" @tap="jump" data-url="/pagesA/tgyj_list/tgyj_list">
+									明细<text class="iconfont iconnext-m"></text>
+								</view>
+								<view class="top_box_btn" @tap="jump" data-url="/pagesA/my_tx/my_tx?type=2">
+									提现<text class="iconfont iconnext-m"></text>
+								</view>
+							</view>
+						</view>
 					</view>
 				</view>
-				<view class="tixian_tit"><image :src="getimg('/static/images/mon_icon.png')" mode="aspectFit"></image>明细</view>
+				<view class="tixian_tit"><image :src="getimg('/static/images/mon_icon.png')" mode="aspectFit"></image>余额明细</view>
 				<view class="tx_list">
 					<view class="tx_li" v-for="(item,index) in datas">
 						<view class="tx_l">
@@ -46,7 +72,8 @@
 				data_last:false,
 				datas:'',
 				page:1,
-				size:20
+				size:20,
+				type:1
 			}
 		},
 		computed:{
@@ -73,6 +100,11 @@
 			
 			if(option.type){
 				this.type=option.type
+				if(option.type==2){
+					uni.setNavigationBarTitle({
+						title:'财务记录'
+					})
+				}
 			}
 			that.datas=[]
 			
@@ -228,32 +260,35 @@
 		border-radius: 27upx;
 	}
 	.top_box_box{
-		width: 100%;
+		width: 49%;
 		position: relative;
 		z-index: 10;
 		min-height: 296upx;
-		padding: 30upx;
+		/* padding:60upx 30upx 30upx; */
+		padding:30upx;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: space-around;
 	}
 	.top_box_btn{
-		position: absolute;
+		/* position: absolute;
 		top: 27upx;
-		right: 30upx;
+		right: 30upx; */
 		width: 126upx;
 		height: 40upx;
-		background: #FFFFFF;
+		/* background: #FFFFFF; */
 		border-radius: 20upx;
 		font-size: 24upx;
-		color: #FC6956;
+		/* color: #FC6956; */
+		color: #fff;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
 	.top_box_btn text{
-		color: #FC6855;
+		/* color: #FC6855; */
+		color: #fff;
 		font-size: 20upx;
 		margin-left: 8upx;
 	}

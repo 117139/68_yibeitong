@@ -96,10 +96,8 @@
 	height: 30rpx;
 	background: #FFFFFF;
 	border: 1px solid #C7C7C7;
-	-webkit-border-radius: 50%;
-	        border-radius: 50%;
-	-webkit-box-sizing: border-box;
-	        box-sizing: border-box;
+	border-radius: 50%;
+	box-sizing: border-box;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -123,8 +121,7 @@
 	width: 690rpx;
 	height: 85rpx;
 	background: #F84336;
-	-webkit-border-radius: 43rpx;
-	        border-radius: 43rpx;
+	border-radius: 43rpx;
 	position: fixed;
 	bottom: 30px;
 	left: 30rpx;

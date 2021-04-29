@@ -27,8 +27,7 @@
 
 
 	background: #FFFFFF;
-	-webkit-box-shadow: 0px 0px 9px 0px rgba(172, 172, 172, 0.11);
-	        box-shadow: 0px 0px 9px 0px rgba(172, 172, 172, 0.11);
+	box-shadow: 0px 0px 9px 0px rgba(172, 172, 172, 0.11);
 	/* padding-top: 100upx; */
 	position: relative;
 }
@@ -36,10 +35,8 @@
 	width: 175rpx;
 	height: 90rpx;
 	background: #FE3C3D;
-	-webkit-box-shadow: 1px 3px 5px 0px rgba(255, 30, 30, 0.35);
-	        box-shadow: 1px 3px 5px 0px rgba(255, 30, 30, 0.35);
-	-webkit-border-radius: 0 0 30rpx 0;
-	        border-radius: 0 0 30rpx 0;
+	box-shadow: 1px 3px 5px 0px rgba(255, 30, 30, 0.35);
+	border-radius: 0 0 30rpx 0;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -83,10 +80,8 @@
 .goods_type_box.data-v-dfa08134{
 	width: 100%;
 	background: #FFFFFF;
-	-webkit-box-shadow: 0px 0px 9rpx 0px rgba(172, 172, 172, 0.11);
-	        box-shadow: 0px 0px 9rpx 0px rgba(172, 172, 172, 0.11);
-	-webkit-border-radius: 5rpx;
-	        border-radius: 5rpx;
+	box-shadow: 0px 0px 9rpx 0px rgba(172, 172, 172, 0.11);
+	border-radius: 5rpx;
 	padding: 0 35rpx;
 }
 .goods_type_box+.goods_type_box.data-v-dfa08134{
@@ -132,10 +127,8 @@
 	width: 126rpx;
 	height: 126rpx;
 	background: #FFFFFF;
-	-webkit-box-shadow: 0px 0px 10rpx 0px rgba(192, 192, 192, 0.4);
-	        box-shadow: 0px 0px 10rpx 0px rgba(192, 192, 192, 0.4);
-	-webkit-border-radius: 5rpx;
-	        border-radius: 5rpx;
+	box-shadow: 0px 0px 10rpx 0px rgba(192, 192, 192, 0.4);
+	border-radius: 5rpx;
 }
 .goods_type_li_text.data-v-dfa08134{
 	font-size: 24rpx;

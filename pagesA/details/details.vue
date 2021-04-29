@@ -62,16 +62,16 @@
 				</view>
 				
 				<view class="dis_flex goods_pri_box">
-					<view class="pri"><text>¥</text>{{goodsData.current_price}}</view>
-					<view class="pri1 scx"><text>¥</text>{{goodsData.original_price}}</view>
+					<view class="pri">会员价：<text>¥</text>{{goodsData.current_price*1}}</view>
+					<view class="pri1 " v-if="goodsData.original_price">市场价：<text>¥</text><text class="scx">{{goodsData.original_price*1}}</text></view>
 				</view>
 				<view class="sku_box dis_flex">
-					<view class="sku_li dis_flex aic">
+					<!-- <view class="sku_li dis_flex aic">
 						<text class="sku_bg">库</text>库存：{{goodsData.total_number}}
 					</view>
 					<view class="sku_li dis_flex aic">
 							<text  class="sku_bg">销</text>销量：{{goodsData.sales_volume}}
-					</view>
+					</view> -->
 					<view class="sku_li dis_flex aic">
 							<text  class="sku_bg">返</text>购物返现：￥{{goodsData.consumer_rebate}}
 					</view>
@@ -221,7 +221,7 @@
 						<view class="goodstkjg">
 
 							<view class="goods_pri_h">￥<text>{{show_pri}}</text></view>
-							<view class="kucun" v-if="guige_select.length>0">库存{{show_num}}件</view>
+							<!-- <view class="kucun" v-if="guige_select.length>0">库存{{show_num}}件</view> -->
 							<view class="tkname oh2">已选择：{{ggshow1}}</view>
 						</view>
 					</view>
@@ -2587,7 +2587,7 @@
 	}
 
 	.pri1 {
-		font-size: 20upx;
+		font-size: 35upx;
 		color: #999;
 		margin-left: 15upx;
 	}

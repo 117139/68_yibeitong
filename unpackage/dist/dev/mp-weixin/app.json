@@ -21,6 +21,7 @@
         "Order/Order",
         "OrderList/OrderList",
         "OrderPay/OrderPay",
+        "OrderPay/OrderPay1",
         "OrderDetails/OrderDetails",
         "OrderDetails_sh_sq/OrderDetails_sh_sq",
         "OrderDetails_sh_xq/OrderDetails_sh_xq",
@@ -34,6 +35,8 @@
         "share_index/share_index",
         "huafei_cz/huafei_cz",
         "tg_list/tg_list",
+        "tg_list/tg_list1",
+        "tg_list/tg_list2",
         "tgyj_list/tgyj_list",
         "tg_img/tg_img",
         "my_qiandao/my_qiandao",
@@ -42,7 +45,8 @@
         "xiaoxiao_add/xiaoxiao_add",
         "pl_list/pl_list",
         "order_pj/order_pj",
-        "huafei_list/huafei_list"
+        "huafei_list/huafei_list",
+        "my_ytx/my_ytx"
       ]
     }
   ],

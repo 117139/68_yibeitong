@@ -17,7 +17,8 @@
 			</view>
 		</view> -->
 		<image :src="poster.finalPath || ''" mode="widthFix" class="posterImage1"></image>
-		<button type="primary" size="default" @tap.prevent.stop="saveImage()">保存图片</button>
+		<!-- <button type="primary" size="default" @tap.prevent.stop="saveImage()">保存图片</button> -->
+		<button type="primary" size="default" @tap.prevent.stop="saveImage()">分享给朋友</button>
 		<!-- 画布 -->
 		<view class="hideCanvasView">
 			<canvas class="hideCanvas" canvas-id="default_PosterCanvasId" :style="{width: (poster.width||10) + 'px', height: (poster.height||10) + 'px'}"></canvas>
@@ -74,57 +75,7 @@
 			this.shareFc();
 		},
 		methods: {
-			drawImage() {
-				let _this = this;
-				var drawimg = new Wxml2Canvas({
-					width: _this.data.width,
-					height: _this.data.height,
-					element: 'canvas1',
-					background: '#fff',
-					progress(percent) {},
-					finish(url) {
-						wx.hideLoading();
-						wx.saveImageToPhotosAlbum({
-							filePath: url,
-							success(res) {
-								// _app.showToast('保存成功');
-								uni.showToast({
-									title:'保存成功'
-								});
-							}
-						})
-					},
-					error(res) {}
-				});
-
-				let data = {
-					list: [{ //绘制矩形
-							type: 'rect',
-							x: 0,
-							y: 50,
-							style: {
-								width: _this.data.width,
-								height: _this.data.height - 60,
-								fill: '#fff'
-							}
-						},
-						{ //根据wxml绘制,
-							type: 'wxml',
-							class: '.hb_canvas .draw_canvas',
-							limit: '.hb_canvas',
-							x: 5,
-							y: 70
-						}
-					]
-				}
-				drawimg.draw(data);
-			},
-			getPosterHandle() {
-				wx.showLoading({
-					title: '海报生成中...',
-				})
-				this.drawImage();
-			},
+			
 			async shareFc() {
 				let _this = this;
 				console.log(service.imgurl+'/static/images/share_img_02.jpg')
@@ -213,12 +164,12 @@
 										const addHeight = getBgObj().height - productImage.dHeight;
 										console.log('allInfoCallback', 3)
 										return {
-											size: 32,
+											size: 36,
 											lineFeed: {
 												maxWidth: 350,
 												lineNum: 1
 											},
-											dx:352,
+											dx:359,
 											dy:1043
 										}
 									}
@@ -234,13 +185,13 @@
 										const productImage = drawArray.find(item => item.id === 'productImage')
 										const addHeight = getBgObj().height - productImage.dHeight;
 										return {
-											size: 26,
+											size: 30,
 											color:'#999999',
 											lineFeed: {
 												maxWidth: 350,
 												lineNum: 1
 											},
-											dx:352,
+											dx:362,
 											dy:1111
 										}
 									}
@@ -266,7 +217,7 @@
 											dx:350,
 											// dx:0,
 											// dy:1175
-											dy:1250
+											dy:1290
 										}
 									}
 								},
@@ -278,16 +229,16 @@
 									type: 'image',
 									id: 'productImage_code',
 									url: service.imgurl+that.$store.state.loginDatas.personal_code,
-									dx:93,
-									dy:979,
+									dx:23,
+									dy:950,
 									serialNum: 0,
 									// circleSet:true,
 									infoCallBack(imageInfo) {
 										let width;
 										let height;
 										
-										width=235
-										height=235
+										width=300
+										height=300
 										
 										return {
 											dWidth: width,

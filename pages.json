@@ -121,6 +121,13 @@
 			}
 
 		}, {
+			"path": "OrderPay/OrderPay1",
+			"style": {
+				"navigationBarTitleText": "支付订单",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
 			"path": "OrderDetails/OrderDetails",
 			"style": {
 				"navigationBarTitleText": "我的订单",
@@ -172,7 +179,7 @@
 		}, {
 			"path": "my_yue/my_yue",
 			"style": {
-				"navigationBarTitleText": "我的余额",
+				"navigationBarTitleText": "账户余额",
 				"enablePullDownRefresh": true
 			}
 
@@ -208,6 +215,20 @@
 			"path": "tg_list/tg_list",
 			"style": {
 				"navigationBarTitleText": "推广人统计",
+				"enablePullDownRefresh": true
+			}
+
+		},{
+			"path": "tg_list/tg_list1",
+			"style": {
+				"navigationBarTitleText": "推广人统计",
+				"enablePullDownRefresh": true
+			}
+
+		},{
+			"path": "tg_list/tg_list2",
+			"style": {
+				"navigationBarTitleText": "我的团队",
 				"enablePullDownRefresh": true
 			}
 
@@ -272,6 +293,15 @@
                     "style" :                                                                                    
                 {
                     "navigationBarTitleText": "话费订单",
+                    "enablePullDownRefresh": true
+                }
+                
+                }
+                ,{
+                    "path" : "my_ytx/my_ytx",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "提现明细",
                     "enablePullDownRefresh": true
                 }
                 

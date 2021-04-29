@@ -127,7 +127,7 @@
 					  <view class="guige_l_name">商品运费：</view>
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >+ {{datas.o_price}}</view>
+					  <view >+ {{datas.o_postage_price}}</view>
 					</view>
 				</view>
 			  <view class="guige_li">
@@ -181,7 +181,7 @@
 			</view>
 			<view class="o_cz" v-if="datas.o_paystatus==1||datas.o_ddstatus==4||datas.o_ddstatus==5">
 				<block v-if="datas.o_paystatus==1">
-					<view class="qx" @tap="order_pay(datas.o_id)">立即付款</view>
+					<view class="qx" @tap="order_pay(datas)">立即付款</view>
 					<view @tap.stop='del_order(item.order.o_id)'>取消订单</view>
 				</block>
 				<view v-if="datas.o_ddstatus==4||datas.o_ddstatus==5" @tap.stop="get_goods(datas.o_id)">确认收货</view>
@@ -281,7 +281,12 @@
 			getimg(img) {
 				return service.getimg(img)
 			},
-			order_pay(id) {
+			order_pay(datas) {
+				datas=JSON.stringify(datas)
+				uni.redirectTo({
+					url:'/pagesA/OrderPay/OrderPay1?datas='+datas
+				})
+				return
 				var that = this
 				var jkurl = '/order/goPay'
 				var datas = {

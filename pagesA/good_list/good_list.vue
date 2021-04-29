@@ -18,7 +18,10 @@
 							<image class="goods_li_img" :src="getimg(item.g_img[0])" mode="aspectFill"@tap="jump"
 									:data-url="'/pagesA/details/details?id='+item.id"></image>
 							<view class="text-cut goods_li_name">{{item.title}}</view>
-							<view class=" goods_li_money"><text>￥</text>{{item.basics_price*1}}</view>
+							<view class=" goods_li_money">
+								<text>￥</text>{{item.basics_price*1}}
+								<text v-if="item1.basics_original_price" class="scx" style="color: #999;margin-left: 10upx;">￥{{item1.basics_original_price*1}}</text>
+							</view>
 						</view>
 					</view>
 				</view>

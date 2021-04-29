@@ -242,4 +242,74 @@
 		min-height: 100vh;
 		background: #fff;
 	}
+	.scx{
+		text-decoration:line-through;
+	}
+	
+	
+	
+	
+	.tk_big_box {
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 990;
+		background: rgba(0, 0, 0, .8);
+		flex-direction: column;
+	}
+	.tk_show_box{
+		width: 570upx;
+		position: relative;
+	}
+	.tk_imgbg{
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		width: 570upx;
+		height: 671upx;
+		z-index: 991;
+	}
+	.tk_show_msg{
+		position: relative;
+		z-index: 992;
+		width: 570upx;
+		height: 671upx;
+		border-radius: 15upx;
+		padding-top: 130upx;
+		padding-bottom: 45upx;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.tk_msg1{
+		/* font-size: 20upx; */
+		font-size: 30upx;
+		color: #CFAA5F;
+	}
+	.tk_msg2{
+		font-size: 60upx;
+		color: #D72022;
+		display: flex;
+		align-items: baseline;
+		margin-top: 30upx;
+	}
+	.tk_msg2 text{
+		/* font-size: 22upx; */
+		font-size: 32upx;
+	}
+	.tk_msg3{
+		/* font-size: 22upx; */
+		font-size: 32upx;
+		color: #FFE9B7;
+		margin-top: 335upx;
+	}
+	.off_btn{
+		font-size: 42upx;
+		color: #DFDFDF;
+		margin-top: 30upx;
+	}
 </style>

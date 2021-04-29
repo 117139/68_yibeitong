@@ -84,8 +84,7 @@
 	background: #ED0611;
 	width: 690rpx;
 	height: 90rpx;
-	-webkit-border-radius: 45rpx;
-	        border-radius: 45rpx;
+	border-radius: 45rpx;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -152,8 +151,7 @@
 	z-index: 992;
 	width: 570rpx;
 	height: 671rpx;
-	-webkit-border-radius: 15rpx;
-	        border-radius: 15rpx;
+	border-radius: 15rpx;
 	padding-top: 130rpx;
 	padding-bottom: 45rpx;
 	display: -webkit-box;
@@ -167,29 +165,26 @@
 	-webkit-align-items: center;
 	        align-items: center;
 }
-.tk_msg1.data-v-1d6284aa{
-	font-size: 20rpx;
+
+/* .tk_msg1{
+	font-size: 20upx;
 	color: #CFAA5F;
 }
-.tk_msg2.data-v-1d6284aa{
-	font-size: 60rpx;
+.tk_msg2{
+	font-size: 60upx;
 	color: #D72022;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: baseline;
-	-webkit-align-items: baseline;
-	        align-items: baseline;
-	margin-top: 30rpx;
+	align-items: baseline;
+	margin-top: 30upx;
 }
-.tk_msg2 text.data-v-1d6284aa{
-	font-size: 22rpx;
+.tk_msg2 text{
+	font-size: 22upx;
 }
-.tk_msg3.data-v-1d6284aa{
-	font-size: 22rpx;
+.tk_msg3{
+	font-size: 22upx;
 	color: #FFE9B7;
-	margin-top: 335rpx;
-}
+	margin-top: 335upx;
+} */
 .off_btn.data-v-1d6284aa{
 	font-size: 42rpx;
 	color: #DFDFDF;
@@ -250,8 +245,7 @@
   font-size: 28rpx;
   font-weight: normal;
   padding: 8rpx 15rpx;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
   border: 2rpx solid #dcdfe6;
 }
 .calendar-wrapper .header .pre.data-v-1d6284aa {
@@ -312,8 +306,7 @@
   height: 60rpx;
   line-height: 60rpx;
   overflow: hidden;
-  -webkit-border-radius: 60rpx;
-          border-radius: 60rpx;
+  border-radius: 60rpx;
 }
 .calendar-wrapper .content .days .item .day.day1.data-v-1d6284aa {
   background-color: #FFCC0F;
@@ -335,8 +328,7 @@
   width: 8rpx;
   height: 8rpx;
   background: #fa7268;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -351,8 +343,7 @@
   width: 8rpx;
   height: 8rpx;
   background: #4d7df9;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -363,8 +354,7 @@
   width: 12rpx;
   height: 12rpx;
   background: #F50014;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
   position: absolute;
   left: 50%;
   bottom: 0;

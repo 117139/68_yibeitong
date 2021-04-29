@@ -37,8 +37,7 @@
 	width: 25rpx;
 	height: 25rpx;
 	border: 1px solid #999999;
-	-webkit-border-radius: 50%;
-	        border-radius: 50%;
+	border-radius: 50%;
 	margin-right: 47rpx;
 	-webkit-box-flex: 0;
 	-webkit-flex: none;
@@ -51,8 +50,7 @@
 .qunyuan_li_d2.data-v-43bec42b{
 	width: 88rpx;
 	height: 88rpx;
-	-webkit-border-radius: 50%;
-	        border-radius: 50%;
+	border-radius: 50%;
 	margin-right: 12rpx;
 	-webkit-box-flex: 0;
 	-webkit-flex: none;

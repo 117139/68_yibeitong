@@ -27,7 +27,7 @@
 }
 .tx_tip.data-v-e210fd4a{
 	color: #999999;
-	font-size: 28rpx;
+	font-size: 38rpx;
 	height: 90rpx;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -42,8 +42,7 @@
 	width: 690rpx;
 	height: 85rpx;
 	background: #F84336;
-	-webkit-border-radius: 43rpx;
-	        border-radius: 43rpx;
+	border-radius: 43rpx;
 	margin: 600rpx auto 0;
 	display: -webkit-box;
 	display: -webkit-flex;

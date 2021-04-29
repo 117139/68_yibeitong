@@ -58,7 +58,7 @@
 		          <!-- <view v-if="item1.is_comment==2" @tap.stop="jump" data-url="/pages_goods/goods_pj/goods_pj">评价</view> -->
 		          <!-- <view v-if="type==0||type==4}}" @tap.stop="jump" data-url="/pages/daiyan_fabu/daiyan_fabu">我要代言</view> -->
 							 <block v-if="item.order.o_paystatus==1">
-								 <view class="qx" @tap.stop="order_pay(item.order.o_id)">立即付款</view>
+								 <view class="qx" @tap.stop="order_pay(item.order)">立即付款</view>
 								 <!-- <view  @tap.stop="cancelOrder(item.order.o_id)">取消订单</view> -->
 							 </block>
 							 <block v-else-if="item.order.o_ddstatus==1">
@@ -188,17 +188,22 @@
 				this.data_last=false
 				this.getdatalist()
 			},
-			order_pay(id){
+			order_pay(datas){
 				var that =this
 				// uni.showToast({
 				// 	icon: 'none',
 				// 	title: '支付成功'
 				// })
-				// return
+				datas=JSON.stringify(datas)
+				uni.navigateTo({
+					url:'/pagesA/OrderPay/OrderPay1?datas='+datas
+				})
+				return
 				var jkurl='/order/goPay'
 				var datas={
 					token: that.$store.state.loginDatas.userToken||'',
-					ids:id
+					ids:id,
+					pay_type:1
 				}
 				if(that.btnkg==1){
 					return

@@ -25,7 +25,7 @@
 				<view v-if="messageDataArr.length>0" class="dis_flex aic ju_b index_xxtz">
 					<image class="xxtz_img" :src="getimg('/static/images/xxtz.png')" mode="aspectFit"></image>
 					<view class="xx_msg_box dis_flex aic">
-						<swiper class="card-swiper1" :indicator-dots="false" :circular="true" :vertical="true" :autoplay="true" interval="5000"
+						<swiper class="card-swiper1" :indicator-dots="false" :circular="true" :vertical="false" :autoplay="true" interval="5000"
 							duration="500" indicator-color="#8799a3" indicator-active-color="#0081ff">
 							<swiper-item class="dis_flex aic" v-for="(item,index) in messageDataArr">
 								<text class="iconfont iconlaba"></text>
@@ -58,7 +58,11 @@
 								<image class="goods_li_img" :src="getimg(item1.g_img[0])" mode="aspectFill" @tap="jump"
 									:data-url="'/pagesA/details/details?id='+item1.id"></image>
 								<view class="text-cut goods_li_name">{{item1.title}}</view>
-								<view class=" goods_li_money"><text>￥</text>{{item1.basics_price}}</view>
+								<view class=" goods_li_money">
+									<text>￥</text>{{item1.basics_price*1}}
+									
+									<text v-if="item1.basics_original_price" class="scx" style="color: #999;margin-left: 10upx;">￥{{item1.basics_original_price*1}}</text>
+								</view>
 							</view>
 						</view>
 					</view>
@@ -303,7 +307,8 @@
 						that.swiperList = datas.bannerData
 						that.messageDataArr = datas.messageDataArr
 						that.datas = datas.cateTagData
-						that.serviceTel_fuc=datas.serviceTel
+						// that.serviceTel_fuc(datas.serviceTel)
+						that.$store.commit("serviceTel_fuc", datas.serviceTel);
 
 					} else {
 						that.htmlReset = 1

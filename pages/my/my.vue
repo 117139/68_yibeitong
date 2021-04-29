@@ -34,7 +34,7 @@
 						<view class="dis_flex aic ju_a top_num">
 							<view class="dis_flex_c aic" @tap="jump" :data-url="'/pagesA/my_yue/my_yue?type='+1" :data-login="true" :data-haslogin="hasLogin">
 								<view class="top_pri">{{loginDatas.money}}</view>
-								<view>我的余额(元)</view>
+								<view>账户余额(元)</view>
 							</view>
 							<view class="num_hg"></view>
 							<view class="dis_flex_c aic" @tap="jump" :data-url="'/pagesA/share_index/share_index?type='+1"  :data-login="true" :data-haslogin="hasLogin">
@@ -97,7 +97,15 @@
 						<image :src="getimg('/static/images/my_icon_19.jpg')" mode="aspectFit"></image>
 						<text>我的推广</text>
 					</view>
-					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/my_yue/my_yue?type='+1"  :data-login="true" :data-haslogin="hasLogin">
+					<view v-if="loginDatas.user_grade_id>4" class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/tg_list/tg_list2'"   :data-login="true" :data-haslogin="hasLogin">
+						<image :src="'/static/images/my_team.png'" mode="aspectFit"></image>
+						<text>我的团队</text>
+					</view>
+					<view v-else class="fuwu_li dis_flex_c aic ju_c" @tap="ntlj" :data-url="'/pagesA/tg_list/tg_list2'"   :data-login="true" :data-haslogin="hasLogin">
+						<image :src="'/static/images/my_team.png'" mode="aspectFit"></image>
+						<text>我的团队</text>
+					</view>
+					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/my_yue/my_yue?type='+2"  :data-login="true" :data-haslogin="hasLogin">
 						<image :src="getimg('/static/images/my_icon_27.jpg')" mode="aspectFit"></image>
 						<text>财务记录</text>
 					</view>
@@ -206,17 +214,26 @@
 		},
 		methods: {
 			...mapMutations(['login', 'logindata', 'logout', 'setplatform']),
-			
+			ntlj(){
+				uni.showToast({
+					title:'您还不是区域经理，无查看权限',
+					icon:'none'
+				})
+			},
 			fk_fuc(){
 				uni.showModal({
 				    title: '提示',
-				    content: '客服电话：400-0888-099',
-						showCancel:false,
-						confirmText:'关闭',
+				    content: '客服电话：'+that.serviceTel,
+						// showCancel:false,
+						confirmText:'拨打',
+						// confirmText:'关闭',
 						
 				    success: function (res) {
 				        if (res.confirm) {
 				            console.log('用户点击确定');
+										wx.makePhoneCall({
+											phoneNumber: that.serviceTel + ''
+										})
 				        } else if (res.cancel) {
 				            console.log('用户点击取消');
 				        }

@@ -135,6 +135,7 @@
 		onPullDownRefresh: function () {
 			this.page=1
 			this.datas=[]
+			this.all=false
 		  this.getdata()
 		},
 		

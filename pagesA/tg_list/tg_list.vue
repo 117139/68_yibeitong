@@ -16,7 +16,22 @@
 					<view class="list_tab" :class="tab_cur==1?'cur':''" @tap="tab_fuc(1)">一级({{datas_z.yjCount?datas_z.yjCount:0}})</view>
 					<view class="list_tab" :class="tab_cur==2?'cur':''" @tap="tab_fuc(2)">二级({{datas_z.ejCount?datas_z.ejCount:0}})</view>
 				</view>
-				<block v-for="(item,index) in datas">
+				<block v-if="tab_cur==1" v-for="(item,index) in datas">
+					<view class="hy_li" @tap="jump" :data-url="'/pagesA/tg_list/tg_list1?id='+item.id+'&name='+item.nickname">
+						<image class="hy_li_tx" :src="getimg(item.head_portrait)" mode="aspectFill"></image>
+						<view class="hy_li_msg">
+							<view class="hy_li_msg1">
+								<view class="hy_name">{{item.nickname}}</view>
+								<view>消费：￥{{item.consume}}元</view>
+							</view>
+							<view class="hy_li_msg2">
+								<view class="hy_time">{{item.time}}</view>
+								<view>推广人数：{{item.user_sum}}人</view>
+							</view>
+						</view>
+					</view>
+				</block>
+				<block v-if="tab_cur==2" v-for="(item,index) in datas">
 					<view class="hy_li">
 						<image class="hy_li_tx" :src="getimg(item.head_portrait)" mode="aspectFill"></image>
 						<view class="hy_li_msg">
@@ -25,7 +40,7 @@
 								<view>消费：￥{{item.consume}}元</view>
 							</view>
 							<view class="hy_li_msg2">
-								<view class="hy_time">2020-06-08</view>
+								<view class="hy_time">{{item.time}}</view>
 								<view>推广人数：{{item.user_sum}}人</view>
 							</view>
 						</view>
@@ -98,6 +113,20 @@
 			this.onRetry()
 		},
 		methods: {
+			jump(e) {
+				var that = this
+			
+				if (that.btnkg == 1) {
+					return
+				} else {
+					that.btnkg = 1
+					setTimeout(function() {
+						that.btnkg = 0
+					}, 1000)
+				}
+			
+				service.jump(e)
+			},
 			tab_fuc(num){
 				that.tab_cur=num
 				this.onRetry()

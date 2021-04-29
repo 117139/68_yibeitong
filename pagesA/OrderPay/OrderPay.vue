@@ -47,9 +47,19 @@
 						<view class="guige_l_name"><image :src="getimg('/static/images/wxpay.png')" mode=""></image>微信支付</view>
 						<!-- <view>10元</view> -->
 					</view>
-					<!-- <view class="xuanze1 " :class="my_dou_xuan==true? 'xuanze2':''" @tap.stop="select"> -->
-					<view class="xuanze1 " :class="my_dou_xuan==true? 'xuanze2':''">
-						<text v-if="my_dou_xuan==true" class="iconfont iconduigou-copy active"></text>
+					<view class="xuanze1 " :class="my_dou_xuan==1? 'xuanze2':''" @tap.stop="select(1)">
+					<!-- <view class="xuanze1 " :class="my_dou_xuan==true? 'xuanze2':''"> -->
+						<text v-if="my_dou_xuan==1" class="iconfont iconduigou-copy active"></text>
+					</view>
+				</view>
+				<view class="guige_li">
+					<view class="guige_l">
+						<view class="guige_l_name"><image src="/static/images/ye_pay.png" mode=""></image>余额支付</view>
+						<!-- <view>10元</view> -->
+					</view>
+					<view class="xuanze1 " :class="my_dou_xuan==2? 'xuanze2':''" @tap.stop="select(2)">
+					<!-- <view class="xuanze1 " :class="my_dou_xuan==true? 'xuanze2':''"> -->
+						<text v-if="my_dou_xuan==2" class="iconfont iconduigou-copy active"></text>
 					</view>
 				</view>
 			</view>
@@ -58,6 +68,19 @@
 			<view class="pay_btn" @tap="pay_fuc">立即支付</view>
 		</view>
 		
+		
+		<view v-if="show_tk" class="tk_big_box dis_flex aic ju_c" @touchmove.stop.prevent='test'>
+			<view class="tk_show_box">
+				<image class="tk_imgbg" :src="getimg('/static/images/hf_tk_03.jpg')" mode="aspectFit"></image>
+				<view class="tk_show_msg">
+					<view class="tk_msg1">恭喜您获得现金红包</view>
+					<view class="tk_msg2">{{hb_money}}<text>元</text></view>
+					<!-- <view class="tk_msg3">红包已发到你的账户余额，请查收</view> -->
+					<view class="tk_msg3">以红包实际到账为准</view>
+				</view>
+			</view>
+			<text class="iconfont iconguanbi off_btn" @tap="off_fuc"></text>
+		</view>
 	</view>
 </template>
 
@@ -73,9 +96,11 @@
 		data() {
 			return {
 				htmlReset: -1,
-				my_dou_xuan: true,
+				my_dou_xuan: 1,
 				pay_data:'',
-				datas:''
+				datas:'',
+				show_tk:false,
+				hb_money:''
 			}
 		},
 		computed:{
@@ -104,6 +129,7 @@
 			that.getpay(JSON.parse(option.datas))
 		},
 		methods: {
+			test() {},
 			getimg(img){
 				return service.getimg(img)
 			},
@@ -121,9 +147,9 @@
 				var n_minute = ntime.getMinutes();
 				return n_year + '-' + n_month + '-' + n_date + n_hour + ':' + n_minute
 			},
-			select() {
+			select(num) {
 			  var that = this
-			  that.my_dou_xuan= !that.my_dou_xuan
+			  that.my_dou_xuan= num
 			  // that.jisuan()
 			},
 			getpay(datas){
@@ -161,6 +187,7 @@
 						}
 						that.pay_data=res.payData
 						that.datas=datas
+						that.hb_money=datas.o_consumer_rebate_sum
 					}
 				}).catch(e => {
 					that.btnkg=0
@@ -173,25 +200,30 @@
 							
 			},
 			pay_fuc(){
+				if(that.my_dou_xuan==2){
+					that.yue_pay()
+					return
+				}
 				service.wxpay(that.pay_data).then(res => {
 					
 					uni.showToast({
 						icon: 'none',
 						title: '购买成功'
 					})
+					that.show_tk=true
 					service.wxlogin('token')
-					setTimeout(() => {
-						uni.redirectTo({
-							url:'/pagesA/OrderList/OrderList'
-						})
-					}, 1000)
+					// setTimeout(() => {
+					// 	uni.redirectTo({
+					// 		url:'/pagesA/OrderList/OrderList'
+					// 	})
+					// }, 1000)
 				}).catch(e => {
 					that.btn_kg=0
 					uni.showToast({
 						icon: 'none',
 						title: '微信支付失败'
 					})
-					service.wxlogin()
+					// service.wxlogin('token')
 					setTimeout(() => {
 						uni.redirectTo({
 							url:'/pagesA/OrderList/OrderList'
@@ -199,33 +231,19 @@
 					}, 1000)
 				})
 				return
-				uni.showToast({
-					icon: 'none',
-					title: '购买成功'
-				})
-				setTimeout(()=>{
-					uni.hideLoading()
 				
-					that.btnkg=0
-						uni.redirectTo({
-							url:'/pagesA/OrderList/OrderList'
-						})
-				},1000)
-				return
-				var datas = {
-			  		token: that.loginMsg.userToken,
-			  		type:that.type,
-						address_id:that.address.id,
-						advocacy_bean:that.use_dou,
-			  		g_data:that.g_data,
-						coupon_list:coupon_list
-			  	}
-				let jkurl='/makeOrder'
-				if(that.btnkg==1){
-					return
-				}else{
-					that.btnkg=1
-				}
+			},
+			yue_pay(){
+				let jkurl='/order/goPay'
+				 uni.showLoading({
+				 	mask:true,
+					title:'正在提交'
+				 })
+				 var datas={
+					 token: that.$store.state.loginDatas.userToken||'',
+					 	pay_type:2,
+						ids:that.datas.o_id
+				 }
 				// 单个请求
 				service.P_post(jkurl, datas).then(res => {
 					that.btnkg=0
@@ -235,15 +253,9 @@
 							icon: 'none',
 							title: '购买成功'
 						})
-						service.wxlogin()
-						setTimeout(()=>{
-							uni.hideLoading()
-						
-							that.btnkg=0
-								uni.redirectTo({
-									url:'/pagesA/OrderList/OrderList'
-								})
-						},1000)
+						that.hb_money=res.o_consumer_rebate_sum
+						that.show_tk=true
+						service.wxlogin('token')
 						return
 					}
 					if (res.code == 1) {
@@ -253,30 +265,12 @@
 						if (typeof datas == 'string') {
 							datas = JSON.parse(datas)
 						}
-						service.wxpay(res.data).then(res => {
-							uni.showToast({
-								icon: 'none',
-								title: '购买成功'
-							})
-							service.wxlogin()
-							setTimeout(() => {
-								uni.redirectTo({
-									url:'/pagesA/OrderList/OrderList'
-								})
-							}, 1000)
-						}).catch(e => {
-							that.btn_kg=0
-							uni.showToast({
-								icon: 'none',
-								title: '微信支付失败'
-							})
-							service.wxlogin()
-							setTimeout(() => {
-								uni.redirectTo({
-									url:'/pagesA/OrderList/OrderList'
-								})
-							}, 1000)
+						uni.showToast({
+							icon: 'none',
+							title: '购买成功'
 						})
+						that.show_tk=true
+						service.wxlogin('token')
 					}
 				}).catch(e => {
 					that.btnkg=0
@@ -285,6 +279,12 @@
 						icon: 'none',
 						title: '获取数据失败'
 					})
+				})
+			},
+			off_fuc(){
+				that.show_tk=false
+				uni.redirectTo({
+					url:'/pagesA/OrderList/OrderList'
 				})
 			}
 		}

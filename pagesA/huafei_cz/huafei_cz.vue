@@ -509,7 +509,8 @@
 		align-items: center;
 	}
 	.tk_msg1{
-		font-size: 20upx;
+		/* font-size: 20upx; */
+		font-size: 30upx;
 		color: #CFAA5F;
 	}
 	.tk_msg2{
@@ -520,10 +521,12 @@
 		margin-top: 30upx;
 	}
 	.tk_msg2 text{
-		font-size: 22upx;
+		/* font-size: 22upx; */
+		font-size: 32upx;
 	}
 	.tk_msg3{
-		font-size: 22upx;
+		/* font-size: 22upx; */
+		font-size: 32upx;
 		color: #FFE9B7;
 		margin-top: 335upx;
 	}
