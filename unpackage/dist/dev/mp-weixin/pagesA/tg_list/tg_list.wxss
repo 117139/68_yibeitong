@@ -115,6 +115,7 @@
 	-webkit-box-flex: 1;
 	-webkit-flex: 1;
 	        flex: 1;
+	/* width: 50%; */
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -159,4 +160,5 @@
 .hy_time.data-v-25b78d7e{
 	font-size: 24rpx;
 }
+
 

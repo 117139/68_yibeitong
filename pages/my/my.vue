@@ -97,7 +97,7 @@
 						<image :src="getimg('/static/images/my_icon_19.jpg')" mode="aspectFit"></image>
 						<text>我的推广</text>
 					</view>
-					<view v-if="loginDatas.user_grade_id>4" class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/tg_list/tg_list2'"   :data-login="true" :data-haslogin="hasLogin">
+					<view v-if="loginDatas.user_grade_id>3" class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/tg_list/tg_list2'"   :data-login="true" :data-haslogin="hasLogin">
 						<image :src="'/static/images/my_team.png'" mode="aspectFit"></image>
 						<text>我的团队</text>
 					</view>
@@ -216,7 +216,7 @@
 			...mapMutations(['login', 'logindata', 'logout', 'setplatform']),
 			ntlj(){
 				uni.showToast({
-					title:'您还不是区域经理，无查看权限',
+					title:'您还不是区域经理或代理，无查看权限',
 					icon:'none'
 				})
 			},

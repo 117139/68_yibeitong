@@ -9,7 +9,7 @@
 				<view class="tel_box">
 					<input type="number" v-model="phone" @input="daiyan_sousuo"  placeholder="请输入手机号">
 				</view>
-				<view class="cz_mon">请选择充值金额</view>
+				<view class="cz_mon">请选择充值金额<text style="color: #f00;">(暂不支持携号转网)</text></view>
 				<view class="cz_list">
 					<view v-if="item.is_rest==1" class="cz_li" :class="cz_cur==index?'cur':''" v-for="(item,index) in cz_list" @tap="cz_cur=index">
 						<image v-if="cz_cur==index" :src="getimg('/static/images/cz_select_05.png')" mode="aspectFill"></image>

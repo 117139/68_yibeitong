@@ -5,12 +5,31 @@
 				<image class="top_box_bg" :src="getimg('/static/images/images/tg_bg_02.png')" mode=""></image>
 				<view class="top_box_msg">
 					<view class="top_l">
-						<view class="top_l1">总人数</view>
-						<view class="top_l2">{{datas_z.yjCount?datas_z.yjCount:0}}<text>人</text></view>
+						<view class="top_l1" style="font-size: 36upx;">总人数</view>
+						<view class="top_l2 dis_flex ju_c">{{datas_z.yjCount?datas_z.yjCount:0}}<text>人</text></view>
 					</view>
 					<image class="tg_icon" :src="getimg('/static/images/tg_num.png')" mode="aspectFit"></image>
+					<view class="top_l ">
+						<view class="top_l1">消费业绩<br><text>￥</text>{{datas_z.dd_consume_all?datas_z.dd_consume_all:0}}</view>
+						<view class="top_l1">话费业绩<br><text>￥</text>{{datas_z.cz_consume_all?datas_z.cz_consume_all:0}}</view>
+						<!-- <view class="top_l2 dis_flex ju_c"><text>￥</text>{{datas_z.dd_consume_all?datas_z.dd_consume_all:0}}</view> -->
+					</view>
+					<!-- <view class="top_l">
+						<view class="top_l1">总话费业绩<text>￥</text>{{datas_z.cc_consume_all?datas_z.cc_consume_all:0}}</view>
+						<view class="top_l2 dis_flex ju_c"><text>￥</text>{{datas_z.cc_consume_all?datas_z.cc_consume_all:0}}</view>
+					</view> -->
 				</view>
 			</view>
+			<picker mode="date" fields="month" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
+				<view class="dis_flex aic ju_b" style="width: 750upx; padding: 30upx">
+					<view>筛选</view>
+					<view class="dis_flex aic li_tit">
+						<view class="li_time">{{gettime(date)}}</view>
+						<text class="iconfont iconoff" style="font-size: 20upx;margin-left: 10upx;"></text>
+								
+					</view>
+				</view>
+			</picker>
 			<view class="list_box">
 				<!-- <view class="list_tit">
 					<view class="list_tab" :class="tab_cur==1?'cur':''" @tap="tab_fuc(1)">一级({{datas_z.yjCount?datas_z.yjCount:0}})</view>
@@ -23,14 +42,14 @@
 							<view class="hy_li_msg1">
 								<view class="hy_name">{{item.nickname}}</view>
 								<!-- <view v-if="item.dd_consume">消费业绩：￥{{item.dd_consume*1}}元</view> -->
-								<view v-if="item.dd_consume">消费业绩：￥{{item.dd_consume*1}}</view>
+								<view v-if="item.dd_consume" class="hy_r_d"><text>消费业绩：</text>￥{{item.dd_consume*1}}</view>
 								
 							</view>
 							<view class="hy_li_msg2">
 								<!-- <view class="hy_time">{{item.time}}</view> -->
 								<view>推广人数：{{item.user_sum}}人</view>
 								<!-- <view v-if="item.cz_consume">话费业绩：￥{{item.cz_consume*1}}元</view> -->
-								<view v-if="item.cz_consume">话费业绩：￥{{item.cz_consume*1}}</view>
+								<view v-if="item.cz_consume"class="hy_r_d"><text>话费业绩：</text>￥{{item.cz_consume*1}}</view>
 							</view>
 						</view>
 					</view>
@@ -64,7 +83,10 @@
 				page:1,
 				size:20,
 				id:'',
-				name:''
+				name:'',
+				
+				
+				date:''
 			}
 		},
 		computed:{
@@ -74,7 +96,12 @@
 				'wxlogin',
 				// 'order_ls_data'
 			]),
-			
+			startDate() {
+				return this.getDate('start');
+			},
+			endDate() {
+				return this.getDate('end');
+			}
 		},
 		onPullDownRefresh() {
 			// uni.stopPullDownRefresh()
@@ -114,6 +141,52 @@
 			this.onRetry()
 		},
 		methods: {
+			bindDateChange: function(e) {
+				console.log(e)
+				this.date = e.target.value
+				this.onRetry()
+			},
+			gettime(value,type) {
+			  var seperator1 = "-";
+			  if(!value){
+					value = new Date()
+				}else{
+					value = new Date(value)
+				}
+			
+			  var year = value.getFullYear();
+			  console.log(year)
+			  var month = value.getMonth() + 1;
+			  var strDate = value.getDate();
+			  if (month >= 1 && month <= 9) {
+			    month = "0" + month;
+			  }
+			  if (strDate >= 0 && strDate <= 9) {
+			    strDate = "0" + strDate;
+			  }
+				if(type=='now'){
+					return year+'-'+month
+				}
+					
+			  // var currentdate = year + '年' + month + '月';
+			  var currentdate = year + '-' + month ;
+			  return currentdate
+			},
+			getDate(type) {
+				const date = new Date();
+				let year = date.getFullYear();
+				let month = date.getMonth() + 1;
+				let day = date.getDate();
+			
+				if (type === 'start') {
+					year = year - 60;
+				} else if (type === 'end') {
+					year = year + 2;
+				}
+				month = month > 9 ? month : '0' + month;;
+				day = day > 9 ? day : '0' + day;
+				return `${year}年${month}月`;
+			},
 			tab_fuc(num){
 				that.tab_cur=num
 				this.onRetry()
@@ -135,7 +208,8 @@
 					token: that.$store.state.loginDatas.userToken||'',
 					page:that.page,
 					size:that.size,
-					type:that.tab_cur,
+					// type:that.tab_cur,
+					month_date:that.gettime(that.date)
 					// user_id:that.id
 				}
 				if(that.data_last) return
@@ -229,19 +303,23 @@
 		display: flex;
 		justify-content: space-between;
 		padding-left: 40upx;
-		padding-right: 80upx;
+		padding-right: 40upx;
 		align-items: center;
 	}
 	.tg_icon{
 		width: 150upx;
 		height: 150upx;
 	}
+	.top_l{
+		padding-top: 30upx;
+	}
 	.top_l1{
 		font-size: 28upx;
 		color: #fff;
+		flex:1;
 	}
 	.top_l2{
-		font-size: 70upx;
+		font-size: 40upx;
 		color: #fff;
 		display: flex;
 		align-items: baseline;

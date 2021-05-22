@@ -7,8 +7,8 @@
 			</view>
 			<view v-if="type==2" class="tx_tip">当前可提现金额：{{loginDatas.commission*1}}</view>
 			<view v-else class="tx_tip">当前可提现金额：{{loginDatas.money*1}}</view>
-			<view class="tx_tip">手续费(%):{{loginDatas.service_charge_radio}}</view>
-			<view class="tx_btn" @tap="sub">提现</view>
+			<view class="tx_tip cf00">手续费(%):{{loginDatas.service_charge_radio}}</view>
+			<view class="tx_btn cf00" @tap="sub">提现</view>
 		</view>
 	</view>
 </template>
@@ -116,12 +116,16 @@
 							title:'操作成功'
 						})
 						// return
-						service.wxlogin('token')
+						
+						setTimeout(function() {
+							service.wxlogin('token')
+							
+						}, 1800)
 						setTimeout(function() {
 							uni.navigateBack({
 								delta:1
 							})
-						}, 1000)
+						}, 2000)
 				
 					} else {
 						that.htmlReset = 1
@@ -247,6 +251,9 @@
 </script>
 
 <style scoped>
+	.cf00{
+		/* color: #f00; */
+	}
 	.main_box{
 		width: 100%;
 		padding: 30upx;

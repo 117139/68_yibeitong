@@ -312,4 +312,16 @@
 		color: #DFDFDF;
 		margin-top: 30upx;
 	}
+	
+	
+	
+	
+	.hy_r_d{
+		width: 320upx;
+		
+	}
+	.hy_r_d text{
+		width: 5em;
+		display: inline-flex;
+	}
 </style>

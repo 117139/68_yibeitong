@@ -22,11 +22,15 @@
 						<view class="hy_li_msg">
 							<view class="hy_li_msg1">
 								<view class="hy_name">{{item.nickname}}</view>
-								<view>消费：￥{{item.consume}}元</view>
+								<view class="hy_r_d"><text>消费业绩：</text>￥{{item.dd_consume}}元</view>
+							</view>
+							<view class="hy_li_msg1">
+								<view class="hy_name">{{item.nickname}}</view>
+								<view class="hy_r_d"><text>话费业绩：</text>￥{{item.cz_consume}}元</view>
 							</view>
 							<view class="hy_li_msg2">
 								<view class="hy_time">{{item.time}}</view>
-								<view>推广人数：{{item.user_sum}}人</view>
+								<view class="hy_r_d"><text>推广人数：</text>{{item.user_sum}}人</view>
 							</view>
 						</view>
 					</view>
@@ -37,11 +41,15 @@
 						<view class="hy_li_msg">
 							<view class="hy_li_msg1">
 								<view class="hy_name">{{item.nickname}}</view>
-								<view>消费：￥{{item.consume}}元</view>
+								<view class="hy_r_d"><text>消费业绩：</text>￥{{item.dd_consume}}元</view>
+							</view>
+							<view class="hy_li_msg1">
+								<view class="hy_name">{{item.nickname}}</view>
+								<view class="hy_r_d"><text>话费业绩：</text>￥{{item.cz_consume}}元</view>
 							</view>
 							<view class="hy_li_msg2">
 								<view class="hy_time">{{item.time}}</view>
-								<view>推广人数：{{item.user_sum}}人</view>
+								<view class="hy_r_d"><text>推广人数：</text>{{item.user_sum}}人</view>
 							</view>
 						</view>
 					</view>
@@ -306,6 +314,7 @@
 	}
 	.hy_li_msg{
 		flex: 1;
+		/* width: 50%; */
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -331,4 +340,5 @@
 	.hy_time{
 		font-size: 24upx;
 	}
+	
 </style>

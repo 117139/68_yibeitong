@@ -12,7 +12,7 @@
 					<view>请输入关键词进行查找</view>
 				</view>
 			</view>
-			<swiper class="card-swiper" :indicator-dots="false" :circular="true" :autoplay="true" interval="5000"
+			<swiper class="card-swiper" :indicator-dots="false" :circular="true" :autoplay="true" interval="4000"
 				duration="500" @change="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
 				<swiper-item v-for="(item,index) in swiperList" :key="index" :class="cardCur==index?'cur':''">
 					<view class="swiper-item">
@@ -25,7 +25,7 @@
 				<view v-if="messageDataArr.length>0" class="dis_flex aic ju_b index_xxtz">
 					<image class="xxtz_img" :src="getimg('/static/images/xxtz.png')" mode="aspectFit"></image>
 					<view class="xx_msg_box dis_flex aic">
-						<swiper class="card-swiper1" :indicator-dots="false" :circular="true" :vertical="false" :autoplay="true" interval="5000"
+						<swiper class="card-swiper1" :indicator-dots="false" :circular="true" :vertical="false" :autoplay="true" interval="6000"
 							duration="500" indicator-color="#8799a3" indicator-active-color="#0081ff">
 							<swiper-item class="dis_flex aic" v-for="(item,index) in messageDataArr">
 								<text class="iconfont iconlaba"></text>
