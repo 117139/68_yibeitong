@@ -18,6 +18,7 @@
 			var that =this
 			console.log('App Launch')
 			// #ifdef MP-WEIXIN
+			// service.wxlogin('token')
 			service.wxlogin()
 			// #endif
 			// #ifdef H5
@@ -110,6 +111,7 @@
 	@import "colorui/main.css";
 	@import "colorui/icon.css";
 	@import "common/font/iconfont.css";
+	@import "common/font/iconfont1.css";
 	.hidden{
 		display: none;
 	}
@@ -216,8 +218,8 @@
 	
 	
 	
-	.xmfwb_box image,.xmfwb_box img,.xmfwb_box table,
-	rich-text p,rich-text img,rich-text table{
+	.xmfwb_box /deep/ image,.xmfwb_box /deep/ img,.xmfwb_box /deep/ table,
+	rich-text /deep/ p,rich-text /deep/ img,rich-text /deep/ table{
 		max-width: 100%!important;
 	}
 	.xcx_fwb_img{

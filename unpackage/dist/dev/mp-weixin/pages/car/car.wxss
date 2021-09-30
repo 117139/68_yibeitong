@@ -13,20 +13,14 @@
 .car_l.data-v-51e9b630{
 	width: 100vw;
 	padding: 26rpx 30rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	align-items: center;
 }
 .setting1.data-v-51e9b630 {
 	font-size: 36rpx;
 	color: #F1F1F1;
 	margin-right: 25rpx;
-	-webkit-box-flex: 0;
-	-webkit-flex: none;
-	        flex: none;
+	flex: none;
 }
 .active.data-v-51e9b630 {
 	color: #FD383B;
@@ -35,7 +29,6 @@
 	width: 164rpx;
 }
 .cu-list>.cu-item.data-v-51e9b630{
-	-webkit-transition: all .3s ease-in-out 0s;
 	transition: all .3s ease-in-out 0s;
 }
 .cu-list>.cu-item.move-cur.data-v-51e9b630 {
@@ -96,23 +89,15 @@
 
 	z-index: 99;
 	background-color: #fff;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	align-items: center;
 	padding: 0 30rpx;
 }
 .selecAll.data-v-51e9b630{
 	/* padding-left: 28rpx; */
 	margin-right: 30rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	align-items: center;
 	font-size: 24rpx;
 	color: #333333;
 }
@@ -120,18 +105,10 @@
 	width: 30rpx;
 	height: 30rpx;
 	padding: 85rpx 30rpx 85rpx 0rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-flex:0;
-	-webkit-flex:none;
-	        flex:none;
+	justify-content: center;
+	align-items: center;
+	flex:none;
 }
 .xuanze1.data-v-51e9b630{
 	width: 36rpx;
@@ -141,18 +118,10 @@
 	border: 1px solid #CDCDCD;
 	box-shadow: 0px 2rpx 10rpx 0px rgba(34, 23, 20, 0.1);
 	box-sizing: border-box;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-flex:0;
-	-webkit-flex:none;
-	        flex:none;
+	justify-content: center;
+	align-items: center;
+	flex:none;
 }
 .xuanze2.data-v-51e9b630{
 	border: 0;
@@ -160,15 +129,9 @@
 .all.xuanze2.data-v-51e9b630{
 	
 	/* border: 1px solid #FE0042; */
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	justify-content: center;
+	align-items: center;
 }
 .heji.data-v-51e9b630{
 	font-size: 29rpx;
@@ -189,15 +152,9 @@
 	height: 61rpx;
 	background: #F54248;
 	border-radius: 31rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+	align-items: center;
+	justify-content: center;
 	font-size: 30rpx;
 	color: #fff;
 	margin-left: 35rpx;

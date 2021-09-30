@@ -31,9 +31,7 @@
 	width: 54rpx;
 	height: 54rpx;
 	margin-right: 14rpx;
-	-webkit-box-flex: 0;
-	-webkit-flex: none;
-	        flex: none;
+	flex: none;
 }
 .xx_msg_box.data-v-57280228 {
 	width: 614rpx;
@@ -50,9 +48,7 @@
 }
 .xx_msg_box .iconfont.data-v-57280228 {
 	margin-right: 15rpx;
-	-webkit-box-flex: 0;
-	-webkit-flex: none;
-	        flex: none;
+	flex: none;
 	color: #999;
 	position: relative;top: 1px;
 }
@@ -76,11 +72,8 @@
 }
 .huodong_list.data-v-57280228 {
 	width: 100%;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-flex-wrap: wrap;
-	        flex-wrap: wrap;
+	flex-wrap: wrap;
 }
 .huodong_li.data-v-57280228 {
 	width: 338rpx;

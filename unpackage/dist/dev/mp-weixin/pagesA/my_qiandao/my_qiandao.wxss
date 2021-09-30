@@ -20,33 +20,17 @@
 	height: 511rpx;
 	z-index: 1;
 	padding-top: 238rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	flex-direction: column;
+	align-items: center;
 }
 .qd_d1.data-v-1d6284aa {
 	width: 210rpx;
 	height: 210rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 	font-size: 26rpx;
 	color: #333;
 	font-weight: bold;
@@ -58,15 +42,9 @@
 }
 .qd_d2.data-v-1d6284aa {
 	width: 100%;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: justify;
-	-webkit-justify-content: space-between;
-	        justify-content: space-between;
+	align-items: center;
+	justify-content: space-between;
 	padding: 0 60rpx;
 	font-size: 26rpx;
 }
@@ -85,15 +63,9 @@
 	width: 690rpx;
 	height: 90rpx;
 	border-radius: 45rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+	align-items: center;
+	justify-content: center;
 	font-size: 30rpx;
 	color: #fff;
 	margin: 30rpx auto;
@@ -104,12 +76,8 @@
 }
 .dq_tip_tit.data-v-1d6284aa{
 	width: 100%;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	align-items: center;
 	height: 100rpx;
 	font-size: 28rpx;
 	color: #333;
@@ -127,10 +95,7 @@
 	right: 0;
 	z-index: 990;
 	background: rgba(0, 0, 0, .8);
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
+	flex-direction: column;
 }
 .tk_show_box.data-v-1d6284aa{
 	width: 570rpx;
@@ -154,16 +119,9 @@
 	border-radius: 15rpx;
 	padding-top: 130rpx;
 	padding-bottom: 45rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	flex-direction: column;
+	align-items: center;
 }
 
 /* .tk_msg1{
@@ -224,15 +182,9 @@
   padding-bottom: 10rpx;
 }
 .calendar-wrapper .header.data-v-1d6284aa {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   height: 88rpx;
   color: #42464A;
   font-size: 32rpx;
@@ -255,40 +207,27 @@
   margin-left: 30rpx;
 }
 .calendar-wrapper .week.data-v-1d6284aa {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   height: 80rpx;
   line-height: 80rpx;
   border-bottom: 1rpx solid rgba(255, 255, 255, 0.2);
   color: #F50014;
 }
 .calendar-wrapper .week view.data-v-1d6284aa {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
+  flex: 1;
 }
 .calendar-wrapper .content.data-v-1d6284aa {
   position: relative;
   overflow: hidden;
-  -webkit-transition: height 0.4s ease;
   transition: height 0.4s ease;
   background-color: #fff;
 }
 .calendar-wrapper .content .days.data-v-1d6284aa {
-  -webkit-transition: top 0.3s;
   transition: top 0.3s;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  align-items: center;
+  flex-wrap: wrap;
   position: relative;
 }
 .calendar-wrapper .content .days .item.data-v-1d6284aa {

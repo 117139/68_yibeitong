@@ -1,0 +1,33 @@
+.border-box{
+	box-sizing: border-box;
+}
+.content-box{
+	box-sizing: content-box;
+}
+.wCon{
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0 30rpx;
+}
+.mb39{
+	margin-bottom: 39rpx;
+}
+.pl25{
+	padding-left: 25rpx;
+}
+.pr25{
+	padding-right: 25rpx;
+}
+
+.pl29{
+	padding-left: 29rpx;
+}
+.pr29{
+	padding-right: 29rpx;
+}
+.mb20{
+	margin-bottom: 20rpx;
+}
+.border-bottomf81{
+	border-bottom: 1px solid #F8F8F8;
+}

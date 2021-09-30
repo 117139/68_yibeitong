@@ -9,19 +9,10 @@
 	z-index: -99999;
 }
 .flex_row_c_c {
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-orient: horizontal;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: row;
-	        flex-direction: row;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 }
 .modalView {
 	width: 100%;
@@ -38,7 +29,6 @@
 	-webkit-perspective: 2500rpx;
 	        perspective: 2500rpx;
 	background: rgba(0, 0, 0, 0.6);
-	-webkit-transition: all .3s ease-in-out;
 	transition: all .3s ease-in-out;
 	pointer-events: none;
 	-webkit-backface-visibility: hidden;
@@ -52,13 +42,8 @@
 	pointer-events: auto;
 }
 .flex_column {
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
+	flex-direction: column;
 }
 .backgroundColor-white {
 	background-color: white;
@@ -73,28 +58,16 @@
 	width: 60vw;
 }
 .flex_row {
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-orient: horizontal;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: row;
-	        flex-direction: row;
+	flex-direction: row;
 }
 .marginTop2vh {
 	margin-top: 2vh;
 }
 .minh100{
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	flex-direction: column;
+	align-items: center;
 	padding: 30rpx;
 	
 	/* justify-content: center; */

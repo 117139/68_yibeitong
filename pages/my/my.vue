@@ -97,13 +97,21 @@
 						<image :src="getimg('/static/images/my_icon_19.jpg')" mode="aspectFit"></image>
 						<text>我的推广</text>
 					</view>
-					<view v-if="loginDatas.user_grade_id>3" class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/tg_list/tg_list2'"   :data-login="true" :data-haslogin="hasLogin">
+					<view v-if="loginDatas.user_grade_id>3" class="fuwu_li dis_flex_c aic ju_c" @tap="jump"  :data-url="'/pagesA/tg_list/tg_list2'"  :data-login="true" :data-haslogin="hasLogin">
 						<image :src="'/static/images/my_team.png'" mode="aspectFit"></image>
 						<text>我的团队</text>
 					</view>
 					<view v-else class="fuwu_li dis_flex_c aic ju_c" @tap="ntlj" :data-url="'/pagesA/tg_list/tg_list2'"   :data-login="true" :data-haslogin="hasLogin">
 						<image :src="'/static/images/my_team.png'" mode="aspectFit"></image>
 						<text>我的团队</text>
+					</view>
+					<view v-if="loginDatas.is_partner>0" class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/hehuo/hehuo'"   :data-login="true" :data-haslogin="hasLogin">
+						<image :src="'/static/images/my_hhr.png'" mode="aspectFit"></image>
+						<text>合伙人</text>
+					</view>
+					<view v-else class="fuwu_li dis_flex_c aic ju_c" @tap="ntlj1" :data-url="'/pagesA/tg_list/tg_list2'"   :data-login="true" :data-haslogin="hasLogin">
+						<image :src="'/static/images/my_hhr.png'" mode="aspectFit"></image>
+						<text>合伙人</text>
 					</view>
 					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" :data-url="'/pagesA/my_yue/my_yue?type='+2"  :data-login="true" :data-haslogin="hasLogin">
 						<image :src="getimg('/static/images/my_icon_27.jpg')" mode="aspectFit"></image>
@@ -217,6 +225,12 @@
 			ntlj(){
 				uni.showToast({
 					title:'您还不是区域经理或代理，无查看权限',
+					icon:'none'
+				})
+			},
+			ntlj1(){
+				uni.showToast({
+					title:'您还不是合伙人，无查看权限',
 					icon:'none'
 				})
 			},

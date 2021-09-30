@@ -1,390 +1,269 @@
 <template>
-	<view class="minh100">
-		<image class="jianqun_btn" :src="getimg('/static/images/jianqun.png')" mode="aspectFit" 
-		  @tap="jump" data-url="/pagesA/xiaoxi_creat/xiaoxi_creat" :data-login="true" :data-haslogin="hasLogin"></image>
-		
-		<!-- 聊天记录 会话列表 -->
-		<!-- <view class="conversition-box" v-if="hasLogin">
-			
-			<view class="list-box" >
-				<view v-for="(item,index) in 4" :key="index" @tap="toRoom(item)">
-					<view class="item-box">
-						<view class="item-img">
-							<img  :src="getimg('/static/images/tx_m2.jpg')" alt="">
-						</view>
-						<view class="item-text">
-							<view class="dis_flex ju_b aic">
-								<view class="item-user">
-									{{'物美团购群1'}}
-								</view>
-								<view>昨天</view>
-								
-							</view>
-							<view class="dis_flex ju_b aic">
-								<view class="item-text-info text-cut">
-									<rich-text :nodes="nodesFliter('一起去物美团购群')"></rich-text>
-								</view>
-								<view class="weidu_num">3</view>
-							</view>
-						</view>
-					</view>
+
+	<view class="content">
+		<view class="contentRow"  @click="jump" :data-url="`/pagesLzc/newList/newList?type=系统消息`">
+			<view class="contentRow1 dis_flex ju_b ais">
+				<image src="../../static/images/liu/sort/newsIcon.png" mode="aspectFill" class="headImg" v-if="Newtype==1">
+				</image>
+				<!-- <image src="/static/images/liu/sort/xi.png" mode="aspectFill" class="headImg" v-if="Newtype==1"> -->
+				</image>
+				<view class="conView dis_flex_c ju_b">
+					<view class="conView1 dis_flex_c ju_c">系统消息</view>
+					<view class="conView2 oh1">系统消息</view>
+				</view>
+				<view class="conTime">
+					
 				</view>
 			</view>
+		</view>
+		<view class="contentRow" v-for="(item,index) in shuju" :key="index" v-if="shuju.length>0" @click="jump"
+			:data-url="`/pagesLzc/newList/newList?id=${item.id}&type=${item.name}`">
+			<view class="contentRow1 dis_flex ju_b ais">
+				<image src="/static/images/liu/sort/xi.png" mode="aspectFill" class="headImg" v-if="type==0">
+				</image>
+				<!-- <image src="/static/images/liu/sort/xi.png" mode="aspectFill" class="headImg" v-if="item.type==1"> -->
+				</image>
+				<view class="conView  dis_flex_c ju_b">
+					<view class="conView1 dis_flex_c ju_c">{{item.name}}</view>
+					<view v-if="item.article" class="conView2 oh1">{{item.article.title}}</view>
+				</view>
+				<!-- <view class="conTime">
+					{{item.time}}
+				</view> -->
+			</view>
+		</view>
+		
+		<!-- <view class="contentRow" v-for="(item,index) in news" :key="index" v-if="news.length>0">
+			<view class="contentRow1 dis_flex ju_b aic">
+				<image src="/static/images/liu/sort/xi.png" mode="aspectFill" class="headImg" v-if="Newtype==1">
+				</image>
+				<view class="conView" style="display: flex; align-items: center;">
+					<text class="conView3 oh1">{{item}}</text>
+				</view>
+				<view class="conTime">
+					{{item.time}}
+				</view>
+			</view>
+
 		</view> -->
-		<view class="conversition-box" v-if="hasLogin">
-			<view class="list-box" v-if="conversationList.length>0">
-				<view v-for="(item,index) in conversationList" :key="index" >
-					<view v-if="item.conversationID=='@TIM#SYSTEM'"  class="item-box" @tap="toxt(item)">
-						<view class="item-img">
-							<img :src="getimg('/static/images/ybt_group.png')" alt="">
-						</view>
-						<view class="item-text">
-							<view class="dis_flex ju_b aic">
-								<view class="item-user">
-									系统通知
-								</view>
-								<view>{{timeFliter(item.lastMessage.lastTime)}}</view>
-								
-							</view>
-							<view class="dis_flex ju_b aic">
-								<view class="item-text-info text-cut">
-									<rich-text v-if="item.lastMessage.payload.data=='custom_img'" :nodes="nodesFliter('[图片]')"></rich-text>
-									<rich-text :nodes="nodesFliter(item.lastMessage.messageForShow)"></rich-text>
-								</view>
-								<view class="weidu_num" v-if="item.unreadCount">{{item.unreadCount}}</view>
-							</view>
-						</view>
-					</view>
-					<view v-if="item.groupProfile" class="item-box" @tap="toRoom(item)">
-						<view class="item-img">
-							<img v-if="item.groupProfile.avatar" :src="getimg(item.groupProfile.avatar)" alt="">
-							<img v-else :src="getimg('/static/images/ybt_group.png')" alt="">
-						</view>
-						<view class="item-text">
-							<view class="dis_flex ju_b aic">
-								<view class="item-user">
-									{{item.groupProfile.name}}
-								</view>
-								<view>{{timeFliter(item.lastMessage.lastTime)}}</view>
-								
-							</view>
-							<view class="dis_flex ju_b aic">
-								<view class="item-text-info text-cut">
-									<rich-text v-if="item.lastMessage.payload.data=='custom_img'" :nodes="nodesFliter('[图片]')"></rich-text>
-									<rich-text :nodes="nodesFliter(item.lastMessage.messageForShow)"></rich-text>
-								</view>
-								<view class="weidu_num" v-if="item.unreadCount">{{item.unreadCount}}</view>
-							</view>
-						</view>
-						
-						<!-- <view class="item-text">
-							<view class="item-user">
-								{{item.userProfile.nick}}
-							</view>
-							<view class="item-text-info">
-								<rich-text :nodes="nodesFliter(item.lastMessage.messageForShow)"></rich-text>
-							</view>
-						</view>
-						<view class="item-msg">
-							<view class="item-msg-icon" v-if="item.unreadCount">{{item.unreadCount}}</view>
-						</view> -->
-		
-					</view>
-		
-		
-				</view>
-			</view>
-			<!-- {{conversationList}} -->
-			<view class="zanwu" v-if="conversationList.length==0">暂无群聊</view>
+		<view class="zanwu" v-if="news.length==0">
+			暂无最新消息
 		</view>
-		<view class="user-box" v-if="!hasLogin" style="padding-top: 40%;">
-		
-			<view class="btn" ><button type="default" @tap="jump" data-url="/pages/login/login">授权登录</button></view>
-		</view>
+		<view class="" style="background-color: #fff;height: 100rpx;width: 750rpx;"></view>
 	</view>
 </template>
 
 <script>
-	
 	import service from '../../service.js';
+	var that
 	import {
 		mapState,
 		mapMutations
 	} from 'vuex'
-	var that
 	export default {
 		data() {
 			return {
-				datas: '',
-				htmlReset: -1,
-				data_last:false
-				
+				shuju: [],
+				page: 1,
+				size: 10,
+				type: 0,
+				Newtype: 1,
+				news: []
 			}
 		},
+		onHide() {
+
+		},
+		onLoad() {
+			that = this;
+			that.getData();
+			that.getNew()
+
+		},
+		onShow() {
+
+		},
+
 		computed: {
-			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas','isLogin','isSDKReady','conversationList']),
-		},
-		watch: {
-			isSDKReady(val) {
-				//isSDKReady == true 
-				if (val) {
-					//更新用户自己的基础资料（头像+昵称+个性签名）
-					this.updateUserInfo()
-					//请求会话列表
-					this.getConversationList()
-				}
-			},
-		
-		
-		},
-		onPullDownRefresh() {
-			if(this.hasLogin){
-				// this.getxcx_msg()
-				if (that.isSDKReady) {
-					console.log('2222')
-					this.getConversationList()
-				} else {
-					console.log('333333')
-					uni.stopPullDownRefresh();
-				}
-			}
-		},
-		onReachBottom() {
-			
-		},
-		onShareAppMessage() {
-			return {
-				title: '依辈通',
-				path: '/pages/xiaoxi_list/xiaoxi_list?pid=' + that.$store.state.loginDatas.id,
-				success: function(res) {
-					console.log('成功', res)
-				}
-			}
-		},
-		// onShareTimeline(){
-		// 	return {
-		// 		title:'依辈通',
-		// 		query:'pid=' + that.loginDatas.id
-		// 	}
-		// },
-		onLoad(options) {
-			that = this
-			
-			if(options.pid){
-				console.log('pid>>>>>>>>>>>>')
-				
-				console.log(options.pid)
-				console.log('pid>>>>>>>>>>>>>>>>>')
-				uni.setStorageSync('pid',options.pid)
-			}
-			console.log(that.conversationList)
-			that.getConversationList()
+			...mapState(['hasLogin', 'forcedLogin', 'userinfo'])
 		},
 		methods: {
-			//时间过滤
-			timeFliter(timer){
-				let timeData = new Date(timer*1000)
-				let str = this.$common.dateTimeFliter(timeData)		 
-				return str
-			},
-			toRoom(item) {
-				console.log('toRoom')
-				this.$store.commit('updateConversationActive', item)
-				uni.navigateTo({
-					url: './room'
-				})
-			},
-			toxt(item) {
-				console.log('toRoom')
-				this.$store.commit('updateConversationActive', item)
-				uni.navigateTo({
-					url: './xt_list'
-				})
-			},
-			getimg(img){
+			...mapMutations(['logout', 'login']),
+			getimg(img) {
 				return service.getimg(img)
 			},
-			//聊天的节点加上外层的div
-			nodesFliter(str) {
-				let nodeStr = '<div style="align-items: center;word-wrap:break-word;">' + str + '</div>'
-				return nodeStr
-			},
-			onRetry() {
-				this.page = 1
-				this.datas = []
-				this.data_last = false
-				this.getGroup()
-			},
-			getGroup() {
-				let promise = this.tim.getGroupList();
-				promise.then(function(imResponse) {
-					console.log('群组')
-					console.log(imResponse.data.groupList); // 群组列表
-				}).catch(function(imError) {
-					console.warn('getGroupList error:', imError); // 获取群组列表失败的相关信息
-				});
-			},
-			//注销登录
-			outLoginBtn() {
-				let promise = this.tim.logout();
-				promise.then(res => {
-					this.$store.commit('reset')
-					uni.reLaunch({
-						url: '../index/index'
-					})
-				}).catch(err => {
-					console.log('退出失败')
-				});
-			},
-			//提交用户的基础信息到Im
-			updateUserInfo() {
-				//将已经登陆的用户信息 提交到IM中
-				let userInfo = JSON.parse(uni.getStorageSync('userInfo'))
-				let promise = this.tim.updateMyProfile({
-					nick: userInfo.user,
-					avatar: userInfo.img,
-					gender: this.$TIM.TYPES.GENDER_MALE,
-					selfSignature: '暂无个性签名',
-					allowType: this.$TIM.TYPES.ALLOW_TYPE_ALLOW_ANY
-				});
-				promise.then((res) => {
-					console.log('提交资料成功')
-				}).catch((err) => {
-					console.warn('updateMyProfile error:', imError); // 更新资料失败的相关信息
-				});
-			},
-			//获取消息列表
-			getConversationList() {
-				// 拉取会话列表
-				let promise = this.tim.getConversationList();
-				promise.then((res) => {
-						uni.stopPullDownRefresh();
-					let conversationList = res.data.conversationList; // 会话列表，用该列表覆盖原有的会话列表
-					if (conversationList.length>0) {
-						//将返回的会话列表拼接上 用户的基本资料  
-						//说明：如果已经将用户信息 提交到tim服务端了 就不需要再次拼接
-						this.$store.commit("updateConversationList", conversationList);
-					}
-				}).catch((err) => {
-					uni.stopPullDownRefresh();
-					console.warn('getConversationList error:', err); // 获取会话列表失败的相关信息
-				});
+			gettime(time) {
+				return service.gettime(time)
 			},
 			jump(e) {
-				var that = this
-				// if(!that.hasLogin){
-				// 	uni.navigateTo({
-				// 		url:'/pages/login/login'
-				// 	})
-				// 	return
-				// }
-				if (that.btn_kg == 1) {
-					return
-				} else {
-					that.btn_kg = 1
-					setTimeout(function() {
-						that.btn_kg = 0
-					}, 1000)
-				}
-			
-				service.jump(e)
+				return service.jump(e)
 			},
+			getData() {
+				var jkurl = "article.Article/cate";
+				var data = {
+					token: that.$store.state.loginDatas.userToken || '',
+				}
+				service.P_get(jkurl, data).then(res => {
+					var data = res.data;
+					console.log(data)
+					this.shuju = [];
+					if (res.code == 1) {
+						this.shuju = res.data;
+					}
+				}).catch(e => {
+					console.log(e)
+				})
+			},
+			getNew() {
+				var jkurl = "User/message";
+				var data = {
+					token: that.$store.state.loginDatas.userToken || '',
+					page: that.page,
+					size: that.size
+				}
+				service.P_get(jkurl, data).then(res => {
+					var data = res.data;
+					console.log(data)
+					if (res.code == 1) {
+						var data = res.data;
+						if (typeof data == 'string') {
+							data = JSON.parse(data)
+						}
+						if (this.page == 1) {
+							this.news = data;
+							if (data.length != 0) {
+								this.page++
+							}
+						} else {
+							if (data.length != 0) {
+								that.news.concat(data)
+								this.myPage++
+							} else {
+								// this.more = "到底了"
+								// that.data_last = true
+							}
+						}
+					}
+				}).catch(e => {
+					console.log(e)
+				})
+			}
 		}
 	}
 </script>
 
 <style scoped>
-	.minh100{
-		padding: 0 30upx;
-	}
-	.jianqun_btn{
-		width: 105upx;
-		height: 105upx;
-		background: #F54248;
-		box-shadow: 1px 3px 10px 0px rgba(0, 0, 0, 0.1);
-		border-radius: 50%;
-		position: fixed;
-		bottom: 150upx;
-		right: 50upx;
-	}
+	@import url("/static/css/commin.css");
 
-	
-	
-	.list-box {
+	page {
+		background-color: #fff;
 		width: 100%;
-		margin: 0rpx auto;
-	}
-	
-	.item-box {
-		width: auto;
-		min-height: 130rpx;
-		padding: 20rpx;
-		overflow: hidden;
-		border-bottom: 1px solid #eee;
-		display: flex;
-		align-items: stretch;
-		justify-content: space-between;
-	}
-	
-	.item-img {
-		
-		width: 88upx;
-		height: 88upx;
-		flex: none;
-		margin-right: 18upx;
-	}
-	
-	.item-img img {
-		width: 88upx;
-		height: 88upx;
-		border-radius: 50%;
-	}
-	
-	.item-text {
-		flex: 1;
-		height: 88rpx;
-		color: #999;
-		font-size: 24rpx;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		align-items: stretch;
-	}
-	
-	.item-user {
-		color: #000;
-		font-size: 32rpx;
-		font-weight: bold;
-	}
-	
-	.item-text-info {
-		width: 475upx;
-		height: 30rpx;
-		line-height: 30rpx;
-		color: #666;
-		font-szie: 24rpx;
-	}
-	.weidu_num{
-		width: 37upx;
-		height: 37upx;
-		background: #FF4F11;
-		border-radius: 50%;
-		color: #fff;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-	.user-box {
-		width: auto;
-		height: 80rpx;
-		padding: 0 20rpx;
+		height: 100%;
+		margin: 0;
+		padding: 0;
 	}
 
-	
-	
-	
-	.clear-box {
-		clear: both;
+	.content {
+		background-color: #fff;
+		width: 100%;
+		min-height: 100vh;
+		margin: 0;
+		padding: 0;
+	}
+
+	.contentRow {
+		width: 100vw;
+		height: 140rpx;
+		background-color: #fff;
+		box-sizing: border-box;
+		padding: 22rpx 24rpx 20rpx 29rpx;
+		border-bottom: 1px solid #eee;
+		position: relative;
+	}
+
+	.contentRow:last-child {
+		border: none;
+	}
+
+	.headImg {
+		width: 82rpx;
+		height: 82rpx;
+		border-radius: 50%;
+		min-width: 82rpx;
+		position: relative;
+	}
+
+	.dain {
+		position: absolute;
+		width: 20rpx;
+		height: 20rpx;
+		background-color: #fff;
+		left: 92rpx;
+		top: 30rpx;
+		border-radius: 50%;
+	}
+
+	.conView {
+		/* width: 550rpx; */
+		flex:1;
+		height: 100%;
+		/* min-width: 550rpx; */
+		box-sizing: border-box;
+		padding-left: 19rpx;
+	}
+
+	.conView1 {
+		font-size: 34rpx;
+		font-family: PingFangSC;
+		font-weight: 400;
+		color: #333333;
+		line-height: 38rpx;
+		height: 38rpx;
+		margin-top: 5rpx;
+	}
+
+	.conView2 {
+		font-size: 28rpx;
+		font-family: PingFangSC;
+		font-weight: 400;
+		color: #999999;
+		line-height: 32rpx;
+		/* margin-top: 17rpx; */
+		height: 32rpx;
+		/* position: absolute;
+		bottom: 20rpx; */
+		padding-right: 30rpx;
+	}
+
+	.conView3 {
+		font-size: 28rpx;
+		font-family: PingFangSC;
+		font-weight: 400;
+		color: #999999;
+		line-height: 28rpx;
+		/* margin-top: 17rpx; */
+		height: 28rpx;
+	}
+
+	.conTime {
+		/* width: 100%; */
+		height: 100%;
+		font-size: 24rpx;
+		font-family: PingFangSC;
+		font-weight: 400;
+		color: #999999;
+		line-height: 23rpx;
+		min-width: 100rpx;
+	}
+
+	.dianNew {
+		position: absolute;
+		bottom: 2rpx;
+		right: 30rpx;
+		background-color: #007AFF;
 	}
 	
+	.contentRow1{
+		width: 100%;
+	}
 </style>

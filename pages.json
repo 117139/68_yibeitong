@@ -12,15 +12,6 @@
 				"enablePullDownRefresh": true
 			}
 
-		},
-		{
-			"path": "pages/xiaoxi_list/room",
-			"style": {
-				"navigationBarTitleText": "聊天室",
-				"app-plus": { //修复聊天页 app端输入法上顶问题
-					"softinputMode": "adjustResize"
-				}
-			}
 		}, {
 			"path": "pages/my/my",
 			"style": {
@@ -45,7 +36,7 @@
 			"path": "pages/goods_type/goods_type",
 			"style": {
 				"navigationBarTitleText": "分类",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true
 			}
 
 		}, {
@@ -218,14 +209,14 @@
 				"enablePullDownRefresh": true
 			}
 
-		},{
+		}, {
 			"path": "tg_list/tg_list1",
 			"style": {
 				"navigationBarTitleText": "推广人统计",
 				"enablePullDownRefresh": true
 			}
 
-		},{
+		}, {
 			"path": "tg_list/tg_list2",
 			"style": {
 				"navigationBarTitleText": "我的团队",
@@ -288,25 +279,80 @@
 				"enablePullDownRefresh": false
 			}
 
-		}    ,{
-                    "path" : "huafei_list/huafei_list",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "话费订单",
-                    "enablePullDownRefresh": true
-                }
-                
-                }
-                ,{
-                    "path" : "my_ytx/my_ytx",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "提现明细",
-                    "enablePullDownRefresh": true
-                }
-                
-                }
-            ]
+		}, {
+			"path": "huafei_list/huafei_list",
+			"style": {
+				"navigationBarTitleText": "话费订单",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "my_ytx/my_ytx",
+			"style": {
+				"navigationBarTitleText": "提现明细",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "hehuo/hehuo",
+			"style": {
+				"navigationBarTitleText": "合伙人",
+				"enablePullDownRefresh": false
+			}
+
+		}]
+	}, {
+		"root": "pagesLzc",
+		"pages": [{
+			"path": "deatil/deatil",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "baos/baos",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "orderLzc/orderLzc",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "orderPay/orderPay",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "orderPay1/orderPay1",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "newList/newList",
+			"style": {
+				"navigationBarTitleText": "新闻列表",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "newDetail/newDetail",
+			"style": {
+				"navigationBarTitleText": "新闻详情",
+				"enablePullDownRefresh": false
+			}
+
+		}]
 	}],
 
 	"preloadRule": {

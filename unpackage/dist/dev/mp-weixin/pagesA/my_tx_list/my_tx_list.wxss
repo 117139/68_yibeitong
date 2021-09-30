@@ -25,18 +25,10 @@
 	z-index: 10;
 	min-height: 296rpx;
 	padding: 30rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-justify-content: space-around;
-	        justify-content: space-around;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
 }
 .top_box_btn.data-v-000f962b{
 	position: absolute;
@@ -48,15 +40,9 @@
 	border-radius: 20rpx;
 	font-size: 24rpx;
 	color: #FC6956;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+	align-items: center;
+	justify-content: center;
 }
 .top_box_btn text.data-v-000f962b{
 	color: #FC6855;
@@ -76,12 +62,8 @@
 .tixian_tit.data-v-000f962b{
 	width: 100%;
 	height: 100rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	align-items: center;
 	color: #FD383B;
 	font-size: 28rpx;
 }
@@ -97,40 +79,22 @@
 .tx_li.data-v-000f962b{
 	width: 100%;
 	padding: 15rpx 0;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: stretch;
-	-webkit-align-items: stretch;
-	        align-items: stretch;
-	-webkit-box-pack: justify;
-	-webkit-justify-content: space-between;
-	        justify-content: space-between;
+	align-items: stretch;
+	justify-content: space-between;
 }
 .tx_li+.tx_li.data-v-000f962b{
 	margin-top: 12rpx;
 }
 .tx_l.data-v-000f962b{
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
-	-webkit-justify-content: space-around;
-	        justify-content: space-around;
+	flex-direction: column;
+	justify-content: space-around;
 }
 .tx_r.data-v-000f962b{
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
-	-webkit-justify-content: space-around;
-	        justify-content: space-around;
+	flex-direction: column;
+	justify-content: space-around;
 }
 .mx_name.data-v-000f962b{
 	color: #292929;

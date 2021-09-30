@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import App from './App'
 
-import TIM from 'tim-wx-sdk'
+// import TIM from 'tim-wx-sdk'
 
-import tim from './common/tim/tim.js'
+// import tim from './common/tim/tim.js'
 import common from './common/common.js'
 
 import store from './store/index.js'
@@ -25,8 +25,8 @@ Vue.component('htmlLoading', htmlLoading)
 
 Vue.config.productionTip = false
 
-Vue.prototype.tim = tim.tim  			//tim sdk 引入后生成的tim服务
-Vue.prototype.$TIM = TIM				//tim 的状态/事件 常量
+// Vue.prototype.tim = tim.tim  			//tim sdk 引入后生成的tim服务
+// Vue.prototype.$TIM = TIM				//tim 的状态/事件 常量
 Vue.prototype.event = event;
 
 Vue.prototype.$store = store

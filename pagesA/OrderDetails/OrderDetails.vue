@@ -46,153 +46,165 @@
 			</view>
 			<view class="goodsBox">
 				<view class="goods">
-					<block v-for="(item,idx) in datas.order_goods">
-						<view class="goods1" :data-tab="idx" @tap="jump" :data-url="'/pagesA/details/details?id='+item.g_id">
+					<block v-for="(item,idx) in datas.order_goods" :key="idx">
+						<view class="goods1" :data-tab="idx" @tap="jump"
+							:data-url="'/pagesA/details/details?id='+item.g_id">
 							<view class="goodsImg">
-								<image v-if="item.gd_vice_pic.length>0" class="goodsImg" :src="getimg(item.gd_vice_pic[0])" mode="aspectFill"></image>
-								<image v-else class="goodsImg" :src="getimg(item.gd_mastr_pic[0])" mode="aspectFill"></image>
+								<image v-if="item.gd_vice_pic.length>0" class="goodsImg"
+									:src="getimg(item.gd_vice_pic[0])" mode="aspectFill"></image>
+								<image v-else class="goodsImg" :src="getimg(item.gd_mastr_pic[0])" mode="aspectFill">
+								</image>
 								<!-- <image class="goodsImg" :src="getimg('/static/images/index_12.jpg')" mode="aspectFill"></image> -->
 							</view>
 							<view class="goodsinr">
 								<!-- <view class="goodsname fz30 c30 oh1">{{item.goods_name}}</view> -->
 								<view class="goodsname">{{item.gd_name}}</view>
-								<view class="goodspri"><text v-for="(item1,idx1) in item.gd_attr">{{item1.value+' '}}</text></view>
+								<view class="goodspri"><text v-for="(item1,idx1) in item.gd_attr"
+										:key="idx1">{{item1.value+' '}}</text></view>
 								<view class="goodspri1">
 									<!-- <text class="fz36 cf6377a fwb">￥{{filter.moneyFormat('48')}}</text> -->
 									<view class="goods_pri">
-										￥<text >{{item.single_price}}</text>
+										￥<text>{{item.single_price}}</text>
 									</view>
 									<view>×{{item.number}}</view>
 								</view>
 							</view>
 						</view>
-						<view v-if="item.is_comment==2||item.is_advocacy==2" class="o_cz" style="padding: 0 28rpx 28rpx;">
-							<view v-if="item.is_comment==2" @tap.stop="jump" :data-url="'/pagesA/order_pj/order_pj?id='+item.ov_id">评价</view>
+						<view v-if="item.is_comment==2||item.is_advocacy==2" class="o_cz"
+							style="padding: 0 28rpx 28rpx;">
+							<view v-if="item.is_comment==2" @tap.stop="jump"
+								:data-url="'/pagesA/order_pj/order_pj?id='+item.ov_id">评价</view>
 							<!-- <view v-if="item.is_advocacy==2" @tap.stop="jump_fabu(item)" data-url="/pagesA/daiyan_fabu/daiyan_fabu">我要代言</view> -->
 						</view>
 					</block>
 				</view>
 			</view>
 			<view class="guige_list">
-			  <view class="guige_li">
+				<view class="guige_li">
 					<view class="guige_l">
-					  <view class="guige_l_name">订单号：</view>
-					  <!-- <view>10元</view> -->
+						<view class="guige_l_name">订单号：</view>
+						<!-- <view>10元</view> -->
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >{{datas.o_order_num}}</view>
+						<view>{{datas.o_order_num}}</view>
 					</view>
 				</view>
-			  <view class="guige_li">
+				<view class="guige_li">
 					<view class="guige_l">
-					  <view class="guige_l_name">下单时间：</view>
-					  <!-- <view>10元</view> -->
+						<view class="guige_l_name">下单时间：</view>
+						<!-- <view>10元</view> -->
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >{{filter.getDate_ymd(datas.o_create_time)}}</view>
+						<view>{{filter.getDate_ymd(datas.o_create_time)}}</view>
 					</view>
 				</view>
 			</view>
-			
+
 			<view class="hengxian"></view>
 			<view class="address">
 				<view class="address_icon">
 					<text class="iconfont icondizhi "></text>
 				</view>
-			  <view class="add_l">
-			    <view class="al_1">{{datas.o_name}}
-			      <text class="l_tel">{{datas.o_tel}}</text>
-			    </view>
-			    <view class="al_2">{{datas.o_address}}</view>
-			  </view>
-				
-			  <!-- <view class="add_r"> -->
-			  <!-- <text class="iconfont iconnext-m add_r"></text> -->
-			  <!-- </view> -->
+				<view class="add_l">
+					<view class="al_1">{{datas.o_name}}
+						<text class="l_tel">{{datas.o_tel}}</text>
+					</view>
+					<view class="al_2">{{datas.o_address}}</view>
+				</view>
+
+				<!-- <view class="add_r"> -->
+				<!-- <text class="iconfont iconnext-m add_r"></text> -->
+				<!-- </view> -->
 			</view>
-			
+
 			<view class="hengxian"></view>
-			
+
 			<view class="guige_list">
-			  <view class="guige_li">
+				<view class="guige_li">
 					<view class="guige_l">
-					  <view class="guige_l_name">商品价格：</view>
+						<view class="guige_l_name">商品价格：</view>
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >{{datas.o_totalprice}}</view>
+						<view>{{datas.o_totalprice}}</view>
 					</view>
 				</view>
-			  <view class="guige_li">
+				<view class="guige_li">
 					<view class="guige_l">
-					  <view class="guige_l_name">商品运费：</view>
+						<view class="guige_l_name">商品运费：</view>
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >+ {{datas.o_postage_price}}</view>
+						<view>+ {{datas.o_postage_price}}</view>
 					</view>
 				</view>
-			  <view class="guige_li">
+				<view class="guige_li">
 					<view class="guige_l">
-					  <view class="guige_l_name"><text>实付款：</text></view>
+						<view class="guige_l_name"><text>实付款：</text></view>
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view ><text style="color: #FF4A4A;">￥</text><text style="color: #FF4A4A;font-size: 30upx;">{{datas.o_price}}</text></view>
+						<view><text style="color: #FF4A4A;">￥</text><text
+								style="color: #FF4A4A;font-size: 30upx;">{{datas.o_price}}</text></view>
 					</view>
 				</view>
-			  <view class="guige_li">
+				<view class="guige_li">
 					<view class="guige_l">
-					  <view class="guige_l_name">支付方式：</view>
+						<view class="guige_l_name">支付方式：</view>
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >{{datas.o_paytype_value?datas.o_paytype_value:'微信支付'}}</view>
+						<view>{{datas.o_paytype_value?datas.o_paytype_value:'微信支付'}}</view>
 					</view>
 				</view>
-			  <view class="guige_li">
+				<view class="guige_li">
 					<view class="guige_l">
-					  <view class="guige_l_name">订单编号：</view>
+						<view class="guige_l_name">订单编号：</view>
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >{{datas.o_order_num}}</view>
+						<view>{{datas.o_order_num}}</view>
 					</view>
 				</view>
-			  <view class="guige_li">
+				<view class="guige_li">
 					<view class="guige_l">
-					  <view class="guige_l_name">创建时间：</view>
+						<view class="guige_l_name">创建时间：</view>
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >{{filter.getDate_ymd(datas.o_create_time)}}</view>
+						<view>{{filter.getDate_ymd(datas.o_create_time)}}</view>
 					</view>
 				</view>
-			  <view class="guige_li" v-if="datas.o_pay_addtime">
+				<view class="guige_li" v-if="datas.o_pay_addtime">
 					<view class="guige_l">
-					  <view class="guige_l_name">支付时间：</view>
+						<view class="guige_l_name">支付时间：</view>
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >{{filter.getDate_ymd(datas.o_pay_addtime)}}</view>
+						<view>{{filter.getDate_ymd(datas.o_pay_addtime)}}</view>
 					</view>
 				</view>
-			  <view class="guige_li" v-if="datas.o_sub_addtime">
+				<view class="guige_li" v-if="datas.o_sub_addtime">
 					<view class="guige_l">
-					  <view class="guige_l_name">收货时间：</view>
+						<view class="guige_l_name">收货时间：</view>
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >{{filter.getDate_ymd(datas.o_sub_addtime)}}</view>
+						<view>{{filter.getDate_ymd(datas.o_sub_addtime)}}</view>
 					</view>
 				</view>
 			</view>
 			<view class="o_cz" v-if="datas.o_paystatus==1||datas.o_ddstatus==4||datas.o_ddstatus==5">
 				<block v-if="datas.o_paystatus==1">
 					<view class="qx" @tap="order_pay(datas)">立即付款</view>
-					<view @tap.stop='del_order(item.order.o_id)'>取消订单</view>
+					<view @tap.stop='del_order(id,datas.o_order_num)'>取消订单</view>
 				</block>
-				<view v-if="datas.o_ddstatus==4||datas.o_ddstatus==5" @tap.stop="get_goods(datas.o_id)">确认收货</view>
-				
+				<block v-if="datas.o_paystatus==2">
+					<!-- <view class="qx" @tap="order_pay(datas)">立即付款</view> -->
+					<view @tap.stop='del_order(id,datas.o_order_num)'>取消订单</view>
+				</block>
+				<view v-if="datas.o_ddstatus==4||datas.o_ddstatus==5"
+					@tap.stop="get_goods(datas.o_id,datas.o_order_num)">确认收货</view>
+
 				<view style="opacity: 0;"></view>
-				
+
 			</view>
 			<!-- 底部占位 -->
 			<view class="o_cz" style="position: relative;z-index: 1;opacity: 0;">
-			
-				<view ></view>
+
+				<view></view>
 				<!-- <view v-if="item.order.o_paystatus==1" class="qx" @tap.stop='del_order(item.order.o_id)'>取消订单</view> -->
 			</view>
 
@@ -221,8 +233,8 @@
 				h_type: "",
 				btnkg: 0,
 				htmlkg: 0,
-
 				datas: '',
+				isJd: 1
 
 			}
 		},
@@ -244,19 +256,19 @@
 				}
 			}
 		},
-		
+
 		onLoad: function(option) {
 			that = this
-			
+			console.log(option, "11111111111111111111111111")
 			if (option.id) {
 				// uni.showLoading({
 				// 	title:'正在加载中'
 				// })
 				that.id = option.id
 				that.h_type = option.type
-
+				that.isJd = parseInt(option.is_jd)
 			}
-		
+
 			that.getdata()
 
 
@@ -274,7 +286,7 @@
 		},
 		methods: {
 			...mapMutations(['dy_fb_fuc']),
-			
+
 			onRetry() {
 				this.getdata()
 			},
@@ -282,9 +294,10 @@
 				return service.getimg(img)
 			},
 			order_pay(datas) {
-				datas=JSON.stringify(datas)
+				console.log(datas)
+				datas = JSON.stringify(datas)
 				uni.redirectTo({
-					url:'/pagesA/OrderPay/OrderPay1?datas='+datas
+					url: "/pagesLzc/orderPay1/orderPay1?datas=" + datas
 				})
 				return
 				var that = this
@@ -396,12 +409,25 @@
 			},
 			getdata() {
 				var that = this
-				var datas = {
-					token: that.$store.state.loginDatas.userToken||'',
-					id: that.id
+				var jkurl;
+				var datas;
+				console.log(typeof(that.isJd), that.isJd)
+				if (that.isJd == 1) {
+					jkurl = service.IP_lzc + "jd.JdOrder/details"
+					datas = {
+						token: that.$store.state.loginDatas.userToken || '',
+						o_id: that.id
+					}
+				} else {
+					jkurl = "/order/details"
+					datas = {
+						token: that.$store.state.loginDatas.userToken || '',
+						id: that.id
+					}
 				}
+
 				// 单个请求
-				service.P_get('/order/details', datas).then(res => {
+				service.P_get(jkurl, datas).then(res => {
 					console.log(res)
 					if (res.code == 1) {
 						that.htmlReset = 0
@@ -424,7 +450,8 @@
 
 
 
-			del_order(id) {
+			del_order(id, o_order_num) {
+				// console.log(o_order_num)
 				var that = this
 				uni.showModal({
 					title: '提示',
@@ -432,53 +459,93 @@
 					success: function(res) {
 						if (res.confirm) {
 							console.log('用户点击确定');
-							var jkurl = '/order/cancel'
-							var data = {
-								token: that.loginMsg.userToken,
-								id: id
-							}
-							service.post(jkurl, data,
-								function(res) {
-
-									// if (res.data.code == 1) {
-									if (res.data.code == 1) {
-										var datas = res.data.data
-										// console.log(typeof datas)
-										that.htmlReset = 0
-										if (typeof datas == 'string') {
-											datas = JSON.parse(datas)
-										}
+							if (that.isJd == 1) {
+								var jkurl = service.IP_lzc + "jd.JdOrder/cancelOrder";
+								var data = {
+									token: that.$store.state.loginDatas.userToken || '',
+									o_order_num: o_order_num
+								}
+								service.P_get(jkurl, data).then(res => {
+									if (res.code == 1) {
+										that.htmlReset = 0;
 										uni.showToast({
-											icon: 'none',
-											title: '操作成功'
+											title: "取消成功",
+											icon: "none",
+											success() {
+												setTimeout(() => {
+													uni.redirectTo({
+														url: "/pagesA/OrderList/OrderList"
+													})
+												}, 1000)
+											}
 										})
-										that.onRetry()
 									} else {
-										that.htmlReset = 1
-										if (res.data.msg) {
+										if (res.msg) {
 											uni.showToast({
-												icon: 'none',
-												title: res.data.msg
+												title: res.msg,
+												icon: "none"
 											})
 										} else {
 											uni.showToast({
 												icon: 'none',
-												title: '操作失败'
+												title: '操作异常'
 											})
 										}
 									}
-								},
-								function(err) {
-									that.htmlReset = 1
+								}).catch(e => {
+									console.log(e)
 									that.btnkg = 0
-
 									uni.showToast({
 										icon: 'none',
 										title: '操作失败'
 									})
+								})
 
+							} else {
+								var jkurl = '/order/cancel'
+								var data = {
+									token: that.$store.state.loginDatas.userToken || '',
+									id: id
 								}
-							)
+								service.P_post(jkurl, data).then(res => {
+									if (res.code == 1) {
+										that.htmlReset = 0;
+										uni.showToast({
+											title: "取消成功",
+											icon: "none",
+											success() {
+												setTimeout(() => {
+													uni.redirectTo({
+														url: "/pagesA/OrderList/OrderList"
+													})
+												}, 1000)
+											}
+										})
+									} else {
+										if (res.msg) {
+											uni.showToast({
+												title: res.msg,
+												icon: "none"
+											})
+										} else {
+											uni.showToast({
+												icon: 'none',
+												title: '操作异常'
+											})
+										}
+									}
+								}).catch(e => {
+									console.log(e)
+									that.btnkg = 0
+									uni.showToast({
+										icon: 'none',
+										title: '操作失败'
+									})
+								})
+
+							}
+
+
 						} else if (res.cancel) {
 							console.log('用户点击取消');
 						}
@@ -487,41 +554,31 @@
 			},
 
 			//确认收货
-			get_goods(id) {
+			get_goods(id,o_order_num) {
 				var that = this
-				var jkurl = '/order/confirmReceipt'
-				var data = {
-					token: that.loginMsg.userToken,
-					id: id
-				}
 				if (that.btnkg == 1) {
 					return
 				} else {
 					that.btnkg = 1
 				}
-				service.post(jkurl, data,
-					function(res) {
+				if (that.isJd == 1) {
+					var jkurl = 'jd.JdOrder/confirmReceivedOrder'
+					var data = {
+						token: that.$store.state.loginDatas.userToken || '',
+						o_order_num: o_order_num
+					}
+					service.P_get(jkurl,data).then(res=>{
 						that.btnkg = 0
-						// if (res.data.code == 1) {
-						if (res.data.code == 1) {
-
-							var datas = res.data.data
-							// console.log(typeof datas)
-							that.htmlReset = 0
-							if (typeof datas == 'string') {
-								datas = JSON.parse(datas)
-							}
+						if(res.code == 1){
 							uni.showToast({
 								icon: 'none',
 								title: '操作成功'
 							})
-							that.onRetry()
-						} else {
-							that.htmlReset = 1
-							if (res.data.msg) {
+						}else{
+							if (res.msg) {
 								uni.showToast({
 									icon: 'none',
-									title: res.data.msg
+									title: res.msg
 								})
 							} else {
 								uni.showToast({
@@ -530,18 +587,65 @@
 								})
 							}
 						}
-					},
-					function(err) {
-						that.htmlReset = 1
+					}).catch(e=>{
 						that.btnkg = 0
-
 						uni.showToast({
 							icon: 'none',
 							title: '操作失败'
 						})
-
+					})
+				} else {
+					var jkurl = '/order/confirmReceipt'
+					var data = {
+						token: that.$store.state.loginDatas.userToken || '',
+						id: id
 					}
-				)
+					
+					service.post(jkurl, data,
+						function(res) {
+							that.btnkg = 0
+							// if (res.data.code == 1) {
+							if (res.data.code == 1) {
+
+								var datas = res.data.data
+								// console.log(typeof datas)
+								that.htmlReset = 0
+								if (typeof datas == 'string') {
+									datas = JSON.parse(datas)
+								}
+								uni.showToast({
+									icon: 'none',
+									title: '操作成功'
+								})
+								that.onRetry()
+							} else {
+								that.htmlReset = 1
+								if (res.data.msg) {
+									uni.showToast({
+										icon: 'none',
+										title: res.data.msg
+									})
+								} else {
+									uni.showToast({
+										icon: 'none',
+										title: '操作失败'
+									})
+								}
+							}
+						},
+						function(err) {
+							that.htmlReset = 1
+							that.btnkg = 0
+
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+
+						}
+					)
+				}
+
 			},
 			bindPickerChange(e) {
 				console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -911,7 +1015,7 @@
 
 
 
-	
+
 
 	.orderbder {
 		width: 100%;
@@ -924,10 +1028,10 @@
 		padding: 0;
 	}
 
-	
 
 
-	
+
+
 
 
 	.slh2 {
@@ -1010,7 +1114,7 @@
 	}
 
 
-	
+
 
 
 	/*  */
@@ -1027,7 +1131,7 @@
 		left: 0;
 		bottom: 0;
 		width: 100%;
-		
+
 		padding-left: 50rpx;
 		display: flex;
 		align-items: center;
@@ -1053,21 +1157,22 @@
 	.ot_msg .d2 {
 		font-size: 24rpx;
 	}
-	
-	
+
+
 	/* new */
-	
-	.address{
+
+	.address {
 		display: flex;
 		width: 100%;
 		min-height: 200rpx;
-		padding:28rpx;
+		padding: 28rpx;
 		box-sizing: border-box;
 		background-color: #fff;
 		align-items: center;
-		
+
 	}
-	.address_icon{
+
+	.address_icon {
 		width: 47upx;
 		height: 47upx;
 		background: linear-gradient(0deg, #FF3131, #FF5757);
@@ -1079,11 +1184,13 @@
 		margin-right: 28upx;
 		flex: none;
 	}
-	.address_icon text{
+
+	.address_icon text {
 		font-size: 26upx;
 		color: #fff;
 	}
-	.add_l{
+
+	.add_l {
 		max-width: 595upx;
 		/* height: 80%; */
 		min-height: 100upx;
@@ -1094,53 +1201,61 @@
 		font-size: 26upx;
 		color: #666;
 	}
-	.al_1{
+
+	.al_1 {
 		font-size: 30rpx;
 		color: #000033;
 		font-weight: bold;
 	}
-	.l_tel{
+
+	.l_tel {
 		margin-left: 27rpx;
 		font-size: 26upx;
 		color: #666;
 		font-weight: normal;
 	}
-	.al_2{
+
+	.al_2 {
 		font-size: 24rpx;
 		color: #999;
-		
+
 	}
-	.add_r{
+
+	.add_r {
 		width: 23rpx;
 		height: 40rpx;
 		margin-left: 50upx;
 		flex: none;
 	}
+
 	.goodsInr {
 		width: 500rpx;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-	
+
 		font-size: 28rpx;
 		color: #999;
 		flex: 1;
 	}
-	
-	.goods_pri{
+
+	.goods_pri {
 		font-size: 22upx;
 		color: #FD383B;
 		font-weight: bold;
 	}
-	.goods_pri text{
+
+	.goods_pri text {
 		font-size: 28upx;
 	}
-	.guige_list{
+
+	.guige_list {
 		width: 100%;
 		padding: 0 30upx;
 		background: #fff;
 	}
-	.guige_li{
+
+	.guige_li {
 		width: 100%;
 		height: 100rpx;
 		display: flex;
@@ -1148,67 +1263,74 @@
 		align-items: center;
 		border-bottom: 1px solid #EEEEEE;
 	}
-	.guige_l{
+
+	.guige_l {
 		display: flex;
 		align-items: center;
 		font-size: 28rpx;
 		color: #333;
 	}
-	.guige_l_name{
+
+	.guige_l_name {
 		color: #333;
 		margin-right: 25rpx;
 	}
-	.guige_r{
+
+	.guige_r {
 		font-size: 26upx;
 		color: #666;
 	}
-	
-	.hengxian{
+
+	.hengxian {
 		width: 100%;
 		height: 10upx;
 		background: #F1F1F1;
 	}
+
 	.goodsImg {
-	width: 163upx;
-	height: 163upx;
+		width: 163upx;
+		height: 163upx;
 		margin-right: 30rpx;
-		flex:none;
+		flex: none;
 	}
+
 	.goodsImg image {
 		width: 100%;
 		height: 100%;
 	}
-	
-	.o_cz{
-	  width: 100%;
-	  display: flex;
-	  align-items: center;
-	  flex-direction: row-reverse;  
-	  padding: 20rpx 28rpx 40upx;
-	  box-sizing: border-box;
+
+	.o_cz {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		flex-direction: row-reverse;
+		padding: 20rpx 28rpx 40upx;
+		box-sizing: border-box;
 		position: fixed;
 		bottom: 0;
 		left: 0;
 		background: #fff;
 		z-index: 990;
 	}
-	.o_cz view{
-	 width: 128upx;
-	 height: 59upx;
-	 background: #FFFFFF;
-	 border: 1px solid #666666;
-	 border-radius: 5upx;
-	  display: flex;
-	  align-items: center;
-	  justify-content: center;
-	  color: #666666;
-	  font-size: 22rpx;
-	  margin-left: 20rpx;
+
+	.o_cz view {
+		width: 128upx;
+		height: 59upx;
+		background: #FFFFFF;
+		border: 1px solid #666666;
+		border-radius: 5upx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #666666;
+		font-size: 22rpx;
+		margin-left: 20rpx;
 	}
-	.o_cz .qx{
-	  color: #fff;
+
+	.o_cz .qx {
+		color: #fff;
 		border: 0;
-	  background: linear-gradient(-34deg, #FC3B27, #FF6D5A);
-	  box-shadow: 0px 3upx 6upx 0px rgba(255, 30, 30, 0.35);
+		background: linear-gradient(-34deg, #FC3B27, #FF6D5A);
+		box-shadow: 0px 3upx 6upx 0px rgba(255, 30, 30, 0.35);
 	}
 </style>

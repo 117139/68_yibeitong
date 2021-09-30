@@ -12,24 +12,16 @@
 }
 .qunyuan_li_tit.data-v-43bec42b{
 	width: 100%;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	align-items: center;
 	font-size: 30rpx;
 	color: #333;
 	height: 100rpx;
 }
 .qunyuan_li.data-v-43bec42b{
 	width: 100%;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	align-items: center;
 	padding: 20rpx 0;
 	border-bottom: 1px solid #F1F1F1;
 }
@@ -39,9 +31,7 @@
 	border: 1px solid #999999;
 	border-radius: 50%;
 	margin-right: 47rpx;
-	-webkit-box-flex: 0;
-	-webkit-flex: none;
-	        flex: none;
+	flex: none;
 }
 .qunyuan_li_d1.active.data-v-43bec42b{
 	border: 1px solid #F54248;
@@ -52,14 +42,10 @@
 	height: 88rpx;
 	border-radius: 50%;
 	margin-right: 12rpx;
-	-webkit-box-flex: 0;
-	-webkit-flex: none;
-	        flex: none;
+	flex: none;
 }
 .qunyuan_li_d3.data-v-43bec42b{
-	-webkit-box-flex: 1;
-	-webkit-flex: 1;
-	        flex: 1;
+	flex: 1;
 	font-size: 32rpx;
 	color: #000;
 }
@@ -68,15 +54,9 @@
 	height: 100rpx;
 	color: #fff;
 	font-size: 32rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+	align-items: center;
+	justify-content: center;
 	background: #F54248;
 	position: fixed;
 	bottom: 0;

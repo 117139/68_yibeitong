@@ -9,12 +9,8 @@
 .tx_int.data-v-e210fd4a{
 	width: 100%;
 	padding: 35rpx 0;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: baseline;
-	-webkit-align-items: baseline;
-	        align-items: baseline;
+	align-items: baseline;
 	border-bottom: 1px solid #eee;
 	margin-bottom: 10rpx;
 }
@@ -32,12 +28,8 @@
 	color: #999999;
 	font-size: 38rpx;
 	height: 90rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	align-items: center;
 }
 .tx_btn.data-v-e210fd4a{
 	font-size: 30rpx;
@@ -47,14 +39,8 @@
 	background: #F84336;
 	border-radius: 43rpx;
 	margin: 600rpx auto 0;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+	align-items: center;
+	justify-content: center;
 }
 

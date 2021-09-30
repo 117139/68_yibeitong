@@ -1,0 +1,120 @@
+.border-box.data-v-06460446{
+	box-sizing: border-box;
+}
+.content-box.data-v-06460446{
+	box-sizing: content-box;
+}
+.wCon.data-v-06460446{
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0 30rpx;
+}
+.mb39.data-v-06460446{
+	margin-bottom: 39rpx;
+}
+.pl25.data-v-06460446{
+	padding-left: 25rpx;
+}
+.pr25.data-v-06460446{
+	padding-right: 25rpx;
+}
+.pl29.data-v-06460446{
+	padding-left: 29rpx;
+}
+.pr29.data-v-06460446{
+	padding-right: 29rpx;
+}
+.mb20.data-v-06460446{
+	margin-bottom: 20rpx;
+}
+.border-bottomf81.data-v-06460446{
+	border-bottom: 1px solid #F8F8F8;
+}
+page.data-v-06460446 {
+	background-color: #fff;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+.content.data-v-06460446 {
+	background-color: #fff;
+	width: 100%;
+	min-height: 100vh;
+	margin: 0;
+	padding: 0;
+}
+.contentRow.data-v-06460446 {
+	width: 100vw;
+	height: 140rpx;
+	background-color: #fff;
+	box-sizing: border-box;
+	padding: 22rpx 24rpx 20rpx 29rpx;
+	border-bottom: 1px solid #eee;
+	position: relative;
+}
+.contentRow.data-v-06460446:last-child {
+	border: none;
+}
+.headImg.data-v-06460446 {
+	width: 82rpx;
+	height: 82rpx;
+	border-radius: 50%;
+	min-width: 82rpx;
+	position: relative;
+}
+.dain.data-v-06460446 {
+	position: absolute;
+	width: 20rpx;
+	height: 20rpx;
+	background-color: #fff;
+	left: 92rpx;
+	top: 30rpx;
+	border-radius: 50%;
+}
+.conView.data-v-06460446 {
+	width: 490rpx;
+	/* flex:1; */
+	height: 100%;
+	min-width: 490rpx;
+	box-sizing: border-box;
+	padding-left: 19rpx;
+}
+.conView1.data-v-06460446 {
+	font-size: 34rpx;
+	font-family: PingFangSC;
+	font-weight: 400;
+	color: #333333;
+	line-height: 34rpx;
+	margin-top: 5rpx;
+	height: 34rpx;
+}
+.conView2.data-v-06460446 {
+	font-size: 28rpx;
+	font-family: PingFangSC;
+	font-weight: 400;
+	color: #999999;
+	line-height: 28rpx;
+	/* margin-top: 17rpx; */
+	height: 28rpx;
+	position: absolute;
+	bottom: 20rpx;
+	padding-right: 30rpx;
+}
+.conTime.data-v-06460446 {
+	/* width: 100%; */
+	height: 100%;
+	font-size: 24rpx;
+	font-family: PingFangSC;
+	font-weight: 400;
+	color: #999999;
+	line-height: 23rpx;
+	min-width: 100rpx;
+}
+.dianNew.data-v-06460446 {
+	position: absolute;
+	bottom: 2rpx;
+	right: 30rpx;
+	background-color: #007AFF;
+}
+

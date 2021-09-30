@@ -3,8 +3,8 @@ import TIM from 'tim-wx-sdk';
 import COS from "cos-wx-sdk-v5";
 // #endif
 // #ifdef H5
-import TIM from 'tim-js-sdk';
-import COS from "cos-js-sdk-v5"
+// import TIM from 'tim-js-sdk';
+// import COS from "cos-js-sdk-v5"
 // import TIMUploadPlugin from 'tim-upload-plugin';
 // #endif
 

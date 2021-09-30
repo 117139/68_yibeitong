@@ -5,25 +5,15 @@
 .qy_list.data-v-317f340b{
 	width: 100%;
 	padding: 0 30rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-flex-wrap: wrap;
-	        flex-wrap: wrap;
+	flex-wrap: wrap;
 	border-bottom: 10rpx solid #F1F1F1;
 }
 .qy_li.data-v-317f340b{
 	width: 20%;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	flex-direction: column;
+	align-items: center;
 	padding: 14rpx 0;
 	position: relative;
 }
@@ -43,32 +33,20 @@
 .qy_li view.data-v-317f340b{
 	margin-top: 20rpx;
 	height: 35rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	align-items: center;
 	font-size: 22rpx;
 	color: #000;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+	justify-content: center;
 }
 .quan_name.data-v-317f340b{
 	width: 100%;
 	padding: 0 30rpx;
 	font-size: 32rpx;
 	color: #333;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: justify;
-	-webkit-justify-content: space-between;
-	        justify-content: space-between;
+	align-items: center;
+	justify-content: space-between;
 	height: 100rpx;
 	font-weight: bold;
 }
@@ -77,15 +55,9 @@
 	height: 100rpx;
 	color: #fff;
 	font-size: 32rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+	align-items: center;
+	justify-content: center;
 	background: #F54248;
 	position: fixed;
 	bottom: 0;

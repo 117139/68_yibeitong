@@ -61,7 +61,7 @@
 					  <!-- <view>10元</view> -->
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >1235452151321</view>
+					  <view >{{datas.o_order_sernum}}</view>
 					</view>
 				</view>
 			  <view class="guige_li">
@@ -70,7 +70,7 @@
 					  <!-- <view>10元</view> -->
 					</view>
 					<view class="dis_flex aic guige_r">
-					  <view >2019-08-05 12:20:12</view>
+					  <view >{{filter.getDate_ymd(datas.create_time)}}</view>
 					</view>
 				</view>
 			  <view class="guige_li">
@@ -228,8 +228,7 @@
 			</view>
 			<view class="o_cz">
 				<view v-if="datas.s_status==2&&datas.type!=1&&datas.logistics_name==''"  class="qx" @tap="save_val">提交</view>
-				<view v-if="datas.merchant_logistics" class="qx" @tap.stop="jump" :data-url="'/pagesA/Order_wuliu/Order_wuliu?id='+item.id">查看物流</view>
-				
+				<view v-if="datas.merchant_logistics" class="qx" @tap.stop="jump" :data-url="'/pagesA/Order_wuliu/Order_wuliu?id='+oid">查看物流</view>
 			</view>
 			<!-- 底部占位 -->
 			<view class="o_cz" style="position: relative;z-index: 1;opacity: 0;">
@@ -266,7 +265,8 @@
 
 				datas: '',
 				wl_idx:0,
-				wl_num:''
+				wl_num:'',
+				oid:''
 			}
 		},
 		computed: {
@@ -296,6 +296,7 @@
 				// 	title:'正在加载中'
 				// })
 				that.id = option.id
+				that.oid=option.oid
 				that.h_type = option.type
 
 			}

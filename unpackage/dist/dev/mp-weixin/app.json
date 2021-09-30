@@ -2,7 +2,6 @@
   "pages": [
     "pages/index/index",
     "pages/xiaoxi_list/xiaoxi_list",
-    "pages/xiaoxi_list/room",
     "pages/my/my",
     "pages/login_tel/login_tel",
     "pages/login/login",
@@ -46,7 +45,20 @@
         "pl_list/pl_list",
         "order_pj/order_pj",
         "huafei_list/huafei_list",
-        "my_ytx/my_ytx"
+        "my_ytx/my_ytx",
+        "hehuo/hehuo"
+      ]
+    },
+    {
+      "root": "pagesLzc",
+      "pages": [
+        "deatil/deatil",
+        "baos/baos",
+        "orderLzc/orderLzc",
+        "orderPay/orderPay",
+        "orderPay1/orderPay1",
+        "newList/newList",
+        "newDetail/newDetail"
       ]
     }
   ],

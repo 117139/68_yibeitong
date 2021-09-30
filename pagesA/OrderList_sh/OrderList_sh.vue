@@ -7,7 +7,7 @@
 		<view class="container">
 			<!-- <view class="hengxian"></view> -->
 			<view class='dis_flex ju_a w100 pb40 pt20 bgfff tab_box'>
-				<block v-for="(item,idx) in datalist">
+				<block v-for="(item,idx) in datalist" :key="idx">
 					<view :class="type==idx?'typecur':'c9'" :data-type="idx" @tap='bindcur'>{{item}}</view>
 				</block>
 
@@ -16,49 +16,85 @@
 				<view class="zanwu" v-if="datas.length==0">暂无内容</view>
 
 				<view class="goodsBox contbox">
-					<view class="goods" v-for="(item,idx) in datas">
+					<view class="goods" v-for="(item,idx) in datas" :key="idx">
 						<!-- <view class="dianpu_tit">
 		          <image class="dp_logo" :src="filter.imgIP(item.order.head_portrait)"></image>
 		          <text>{{item.store_name}}</text>
 		        </view> -->
-						<block v-for="(item1,idx1) in item.order_goods">
-							<view v-if="type==0" class="goods1" @tap="jump" :data-url="'/pagesA/OrderDetails/OrderDetails?id='+item.order.o_id+'&type='+type">
+						<block v-for="(item1,idx1) in item.order_goods" :key="idx1">
+							<view v-if="type==0" class="goods1" @tap="jump"
+								:data-url="'/pagesA/OrderDetails/OrderDetails?id='+item.order.o_id+'&type='+type">
 								<view class="goodsImg">
-									<image v-if="item1.gd_vice_pic.length>0" class="goodsImg" :src="getimg(item1.gd_vice_pic[0])" mode="aspectFill"></image>
-									<image v-else class="goodsImg" :src="getimg(item1.gd_mastr_pic[0])" mode="aspectFill"></image>
+									<image v-if="item1.gd_vice_pic.length>0" class="goodsImg"
+										:src="getimg(item1.gd_mastr_pic[0])" mode="aspectFill"></image>
+									<image v-else class="goodsImg" :src="getimg(item1.gd_mastr_pic[0])"
+										mode="aspectFill"></image>
 								</view>
 								<view class="goodsinr">
 									<view class="goodsname fz30 c30 oh1">{{item1.gd_name}}</view>
-									<view class="goodspri"><text v-for="(item2,idx2) in item1.gd_attr">{{item2.value+' '}}</text></view>
+									<view class="goodspri"><text v-for="(item2,idx2) in item1.gd_attr"
+											:key="idx2">{{item2.value+' '}}</text></view>
 									<view class="goodspri1">
 										<text class="fz24 c6 ">数量：{{item1.may_retreat_number}}</text>
 										<text v-if="type==2">{{item1.s_status_value}}</text>
 									</view>
 								</view>
 							</view>
-							<view v-else class="goods1" @tap="jump_sh" :data-url="'/pagesA/OrderDetails_sh_xq/OrderDetails_sh_xq?id='+item1.id+'&type='+type">
-								<view class="goodsImg">
-									<image v-if="item1.gd_vice_pic.length>0" class="goodsImg" :src="getimg(item1.gd_vice_pic[0])" mode="aspectFill"></image>
-									<image v-else class="goodsImg" :src="getimg(item1.gd_mastr_pic[0])" mode="aspectFill"></image>
-								</view>
-								<view class="goodsinr">
-									<view class="goodsname fz30 c30 oh1">{{item1.gd_name}}</view>
-									<view class="goodspri"><text v-for="(item2,idx2) in item1.gd_attr">{{item2.value+' '}}</text></view>
-									<view class="goodspri1">
-										<text class="fz24 c6 ">数量：{{item1.may_retreat_number}}</text>
-										<text v-if="type!=0">{{item1.s_status_value}}</text>
+							<block v-else>
+								<view v-if="item.order.is_jd==0" class="goods1" @tap="jump_sh"
+									:data-url="'/pagesA/OrderDetails_sh_xq/OrderDetails_sh_xq?id='+item1.id+'&type='+type">
+									<view class="goodsImg">
+										<image v-if="item1.gd_vice_pic.length>0" class="goodsImg"
+											:src="getimg(item1.gd_vice_pic[0])" mode="aspectFill"></image>
+										<image v-else class="goodsImg" :src="getimg(item1.gd_mastr_pic[0])"
+											mode="aspectFill"></image>
+									</view>
+									<view class="goodsinr">
+										<view class="goodsname fz30 c30 oh1">{{item1.gd_name}}</view>
+										<view class="goodspri"><text v-for="(item2,idx2) in item1.gd_attr"
+												:key="idx2">{{item2.value+' '}}</text></view>
+										<view class="goodspri1">
+											<text class="fz24 c6 ">数量：{{item1.may_retreat_number}}</text>
+											<text v-if="type!=0">{{item1.s_status_value}}</text>
+										</view>
 									</view>
 								</view>
-							</view>
-							<block  v-if="type!=2">
-								<view  style="width: 100%;height: 1px;background: #eee;"></view>
-								<view class="o_cz">
-									<view v-if="type==0" @tap.stop="jump" class="qx" :data-url="'/pagesA/OrderDetails_sh_sq/OrderDetails_sh_sq?item='+JSON.stringify(item1)">申请售后</view>
-									<!-- <view v-if="type==1&&item1.s_status==1" @tap.stop='del_order(item1.id)'>取消售后</view> -->
-									<view v-if="type==1&&item1.s_status==2"  class="qx" @tap.stop='del_order(item1.id)'>取消售后</view>
-									<view v-if="type==1&&item1.s_status==2" @tap="jump_sh" :data-url="'/pagesA/OrderDetails_sh/OrderDetails_sh?id='+item1.id+'&type='+type">已同意</view>
+								<view v-else class="goods1" >
+									<view class="goodsImg">
+										<image v-if="item1.gd_vice_pic.length>0" class="goodsImg"
+											:src="getimg(item1.gd_vice_pic[0])" mode="aspectFill"></image>
+										<image v-else class="goodsImg" :src="getimg(item1.gd_mastr_pic[0])"
+											mode="aspectFill"></image>
+									</view>
+									<view class="goodsinr">
+										<view class="goodsname fz30 c30 oh1">{{item1.gd_name}}</view>
+										<view class="goodspri"><text v-for="(item2,idx2) in item1.gd_attr"
+												:key="idx2">{{item2.value+' '}}</text></view>
+										<view class="goodspri1">
+											<text class="fz24 c6 ">数量：{{item1.may_retreat_number}}</text>
+											<text v-if="type!=0">{{item1.s_status_value}}</text>
+										</view>
+									</view>
 								</view>
+								
+								<!-- :data-url="`/pagesA/OrderDetails_sh_sq/OrderDetails_sh_sq?item=${JSON.stringify(item1)}&is_jd=${item.order.is_jd}`" -->
+								<block v-if="type!=2">
+									<view style="width: 100%;height: 1px;background: #eee;"></view>
+									<view class="o_cz">
+										<view v-if="type==0" class="qx" @click.stop="jiaoShou(item1,item.order.is_jd)">
+											<!-- 申请售后{{item.order.is_jd}} -->
+											申请售后
+										</view>
+										<!-- <view v-if="type==1&&item1.s_status==1" @tap.stop='del_order(item1.id)'>取消售后</view> -->
+										<view v-if="type==1&&item1.s_status==2" class="qx" @tap.stop='del_order(item1.id)'>
+											取消售后</view>
+										<view v-if="type==1&&item1.s_status==2" @tap="jump_sh"
+											:data-url="'/pagesA/OrderDetails_sh/OrderDetails_sh?id='+item1.id+'&type='+type+'&oid='+item1.o_id">
+											已同意</view>
+									</view>
+								</block>
 							</block>
+							
 						</block>
 
 					</view>
@@ -76,7 +112,7 @@
 		mapState,
 		mapMutations
 	} from 'vuex'
-	var that 
+	var that
 	export default {
 		data() {
 			return {
@@ -121,10 +157,10 @@
 				}
 			}
 		},
-		
+
 		onLoad(option) {
-			that=this
-			
+			that = this
+
 			this.onRetry()
 		},
 		onShow() {
@@ -170,7 +206,7 @@
 			this.getdatalist()
 		},
 		methods: {
-			getimg(img){
+			getimg(img) {
 				return service.getimg(img)
 			},
 			onRetry() {
@@ -182,11 +218,10 @@
 				this.getdatalist()
 			},
 			getdatalist() {
-				
 				let that = this
-				var jkurl = '/afterSale'
+				var jkurl = 'jd.JdAfterSale/index'
 				var datas = {
-					token: that.$store.state.loginDatas.userToken||'',
+					token: that.$store.state.loginDatas.userToken || '',
 					type: that.type - 1 + 2,
 					page: that.page,
 					size: that.size
@@ -197,48 +232,30 @@
 				} else {
 					that.btnkg = 1
 				}
-				var page_that = that.page
 				service.P_get(jkurl, datas).then(res => {
-					that.btn_kg = 0
-					that.htmlReset = 0
-					// that.$refs.htmlLoading.htmlReset_fuc(0)
-					console.log(res)
+					that.btn_kg = 0;
+					that.htmlReset = 0;
 					if (res.code == 1) {
-						var datas = res.data
+						var datas = res.data;
+						console.log(datas,11111111111111111111)
+						// return
 						console.log(typeof datas)
-				
 						if (typeof datas == 'string') {
 							datas = JSON.parse(datas)
 						}
-						console.log(res)
-				
-						if (page_that == 1) {
-							that.datas = datas
+						console.log(datas);
+						if (that.page == 1) {
+							that.datas = res.data
 						} else {
 							if (datas.length == 0) {
-						
 								that.data_last = true
-						
 								return
 							}
 							that.datas = that.datas.concat(datas)
+							that.page++
 						}
-						that.page++
-				
 					} else {
-						that.htmlReset = 1
-					// that.$refs.htmlLoading.htmlReset_fuc(1)
-						if (res.msg) {
-							uni.showToast({
-								icon: 'none',
-								title: res.msg
-							})
-						} else {
-							uni.showToast({
-								icon: 'none',
-								title: '获取数据失败'
-							})
-						}
+
 					}
 				}).catch(e => {
 					that.htmlReset = 1
@@ -249,7 +266,105 @@
 						title: '获取数据失败，请检查您的网络连接'
 					})
 				})
-				
+				// if (that.data_last) return
+				// if (that.btnkg == 1) {
+				// 	return
+				// } else {
+				// 	that.btnkg = 1
+				// }
+				// var page_that = that.page
+				// service.P_get(jkurl, datas).then(res => {
+				// 	that.btn_kg = 0
+				// 	that.htmlReset = 0
+				// 	// that.$refs.htmlLoading.htmlReset_fuc(0)
+				// 	console.log(res)
+				// 	if (res.code == 1) {
+				// 		var datas = res.data
+				// 		console.log(typeof datas)
+
+				// 		if (typeof datas == 'string') {
+				// 			datas = JSON.parse(datas)
+				// 		}
+				// 		console.log(res)
+
+				// 		if (page_that == 1) {
+				// 			that.datas = datas
+				// 		} else {
+				// 			if (datas.length == 0) {
+
+				// 				that.data_last = true
+
+				// 				return
+				// 			}
+				// 			that.datas = that.datas.concat(datas)
+				// 		}
+				// 		that.page++
+
+				// 	} else {
+				// 		that.htmlReset = 1
+				// 		// that.$refs.htmlLoading.htmlReset_fuc(1)
+				// 		if (res.msg) {
+				// 			uni.showToast({
+				// 				icon: 'none',
+				// 				title: res.msg
+				// 			})
+				// 		} else {
+				// 			uni.showToast({
+				// 				icon: 'none',
+				// 				title: '获取数据失败'
+				// 			})
+				// 		}
+				// 	}
+				// }).catch(e => {
+				// 	that.htmlReset = 1
+				// 	that.btn_kg = 0
+				// 	console.log(e)
+				// 	uni.showToast({
+				// 		icon: 'none',
+				// 		title: '获取数据失败，请检查您的网络连接'
+				// 	})
+				// })
+
+			},
+			jiaoShou(item,isJd){
+				console.log(isJd)
+				if(isJd == 1){
+					var jkurl = "jd.JdAfterSale/getGoodsAttributes";
+					var data = {
+						order_id:item.o_id,
+						token: that.$store.state.loginDatas.userToken || '',
+					}
+					service.P_get(jkurl,data).then(res=>{
+						uni.redirectTo({
+							url:`/pagesA/OrderDetails_sh_sq/OrderDetails_sh_sq?item=${JSON.stringify(item)}&is_jd=${isJd}`
+						})
+						if(res.code == 1){
+							
+						}else{
+							if(res.msg){
+								uni.showToast({
+									title:res.msg,
+									icon:"none"
+								})
+							}else{
+								uni.showToast({
+									title:"请求异常",
+									icon:"none"
+								})
+							}
+						}
+					}).catch(e=>{
+						console.log(e)
+						uni.showToast({
+							title:"请求异常",
+							icon:"none"
+						})
+					})
+				}else{
+					uni.redirectTo({
+						url:`/pagesA/OrderDetails_sh_sq/OrderDetails_sh_sq?item=${JSON.stringify(item)}&is_jd=${isJd}`
+					})
+				}
 			},
 			del_order(id) {
 				var that = this
@@ -364,7 +479,7 @@
 
 			jump(e) {
 				var that = this
-				
+
 				if (that.btn_kg == 1) {
 					return
 				} else {
@@ -373,7 +488,7 @@
 						that.btn_kg = 0
 					}, 1000)
 				}
-			
+
 				service.jump(e)
 			},
 			jump_sh(e) {
@@ -426,9 +541,9 @@
 		text-align: center;
 	}
 
-	.typecur{
-	  padding-bottom: 12rpx;
-	  border-bottom: 6rpx solid #FE4141;
+	.typecur {
+		padding-bottom: 12rpx;
+		border-bottom: 6rpx solid #FE4141;
 		color: #FE4141;
 	}
 
@@ -500,7 +615,7 @@
 
 	.goods1 {
 		width: 100%;
-		padding: 20upx 28rpx ;
+		padding: 20upx 28rpx;
 		box-sizing: border-box;
 		display: flex;
 		align-items: center;

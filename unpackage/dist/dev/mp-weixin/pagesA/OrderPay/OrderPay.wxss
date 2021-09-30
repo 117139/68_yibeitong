@@ -14,15 +14,9 @@
 .top_msg.data-v-2f78f0eb{
 	width: 750rpx;
 	height: 246rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+	align-items: center;
+	justify-content: center;
 	font-size: 34rpx;
 	color: #FEFEFE;
 	position: relative;
@@ -35,36 +29,22 @@
 .guige_li.data-v-2f78f0eb{
 	width: 100%;
 	height: 90rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-pack: justify;
-	-webkit-justify-content: space-between;
-	        justify-content: space-between;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	justify-content: space-between;
+	align-items: center;
 	border-bottom: 1px solid #EEEEEE;
 }
 .guige_l.data-v-2f78f0eb{
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	align-items: center;
 	font-size: 28rpx;
 	color: #333;
 }
 .guige_l_name.data-v-2f78f0eb{
 	color: #333;
 	margin-right: 25rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	align-items: center;
 }
 .guige_l_name image.data-v-2f78f0eb{
 	width: 56rpx;
@@ -84,12 +64,8 @@
 	font-size: 28rpx;
 	width: 100%;
 	height: 100rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	align-items: center;
 }
 .xuanze1.data-v-2f78f0eb{
 	width: 30rpx;
@@ -98,18 +74,10 @@
 	border: 1px solid #C7C7C7;
 	border-radius: 50%;
 	box-sizing: border-box;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-flex:0;
-	-webkit-flex:none;
-	        flex:none;
+	justify-content: center;
+	align-items: center;
+	flex:none;
 }
 .xuanze2.data-v-2f78f0eb{
 	border: 0;
@@ -125,15 +93,9 @@
 	position: fixed;
 	bottom: 30px;
 	left: 30rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+	align-items: center;
+	justify-content: center;
 	font-size: 30rpx;
 	color: #fff;
 }

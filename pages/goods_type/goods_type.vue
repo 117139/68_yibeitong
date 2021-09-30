@@ -1,378 +1,922 @@
+<!-- 分类 -->
 <template>
-	<view class="minh100">
-		<view v-if="htmlReset==1" class="zanwu" @tap='onRetry'>请求失败，请点击重试</view>
-		<view v-if="htmlReset==-1" class="loading_def">
-			<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
+	<view class="contentSort">
+		<!-- 导航 -->
+		<view class="nav dis_flex aic ju_c">
+			<scroll-view scroll-x="true" class="navLeft" style="" :scroll-into-view="scrollId"
+				scroll-with-animation="true" show-scrollbar enable-flex>
+				<view class="dis_flex aic ju_b ">
+					<view class="navItem " :class="{'navItemA':active==0}" @click.stop="navTab(0)" id="id0">热门</view>
+					<view class="navItem" v-for="(item,index) in nav" :key="index" :class="{'navItemA':active==index+1}"
+						@click.stop="navTab(index+1,item.page_num)" :id="`id${index+1}`">{{item.name}}</view>
+				</view>
+			</scroll-view>
+			<view class="iconMore" @click.stop="filterClick">
+				<text class="iconfont icon-filter2-fill" style="color: #333; font-size: 40rpx;"></text>
+			</view>
 		</view>
-		<block v-if="htmlReset==0">
-			<scroll-view class="scroll_L" scroll-y="true" >
-				<view class="scroll_L_list">
-					<!-- <view class="l_remen" :class="l_active==-1?'active':''" @tap="l_active_fuc('item',-1)">热门推荐</view> -->
-					<view class="scroll_L_li" :class="l_active==-1?'active':''" @tap="l_active_fuc('item',-1)">热门推荐</view>
-					<view v-for="(item,index) in goods_type" class="scroll_L_li" :class="l_active==index?'active':''" @tap="l_active_fuc(item,index)">{{item.title}}</view>
-				</view>
+		<!-- 热门 -->
+		<!-- banner -->
+		<view class="banner" v-if="active==0">
+			<uni-swiper-dot :info="swiperImg" :current="swiperCurrent" field="content" :mode="mode" class="swiperOne"
+				:dotsStyles="dotsStyles">
+				<swiper class="swiper-box" @change="changeSwiper">
+					<swiper-item v-for="(item,index) in swiperImg" :key="index" class="swiperItem">
+						<image :src="getimg(item.img)" mode="aspectFill" alt="路径错误"></image>
+					</swiper-item>
+				</swiper>
+			</uni-swiper-dot>
+		</view>
 
-			</scroll-view>
-			<scroll-view class="scroll_R" scroll-y="true" refresher-enabled='true' :refresher-triggered="triggered"
-			 :refresher-threshold="100" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
-			 @refresherabort="onAbort" @scrolltolower="getdata" @scroll="scroll_fuc">
-				<view class="scroll_R_list">
-					<block v-if="l_active==-1">
-						<view v-if="datas.recommendData" class="goods_type_box clearfix">
-							<view class="goods_type_tit">
-								·<text>热门推荐</text>·
-							</view>
-							<view class="goods_type_list">
-								<view class="goods_type_li" v-for="(item,index) in datas.recommendData" @tap="jump" :data-url="'/pagesA/good_list/good_list?id='+item.id+'&name='+item.title">
-									<image class="goods_type_li_img" :src="getimg(item.img)" mode="aspectFit"></image>
-									<view class="goods_type_li_text text-cut">{{item.title}}</view>
-								</view>
-							</view>
-								<!-- <view v-if="datas.recommendData.length==0" class="zanwu">暂无数据</view> -->
-						</view>
-						<view class="goods_type_box clearfix">
-							<view class="goods_type_tit">
-								·<text>精选专区</text>·
-							</view>
-							<view class="goods_type_list">
-								<view class="goods_type_li" v-for="(item,index) in datas.choicenessData" @tap="jump" :data-url="'/pagesA/good_list/good_list?id='+item.id+'&name='+item.title">
-									<image class="goods_type_li_img" :src="getimg(item.img)" mode="aspectFit"></image>
-									<view class="goods_type_li_text text-cut">{{item.title}}</view>
-								</view>
-							</view>
-							<!-- <view v-if="datas.choicenessData.length==0" class="zanwu">暂无数据</view> -->
-						</view>
-					</block>
-					<block v-else>
-						
-						<view class="goods_type_box clearfix">
-							<view class="goods_type_tit">
-								·<text>{{goods_type[l_active].title}}</text>·
-							</view>
-							<view class="goods_type_list">
-								<view class="goods_type_li" v-for="(item,index) in datas" @tap="jump" :data-url="'/pagesA/good_list/good_list?id='+item.id+'&name='+item.title">
-									<image class="goods_type_li_img" :src="getimg(item.img)" mode="aspectFit"></image>
-									<view class="goods_type_li_text text-cut">{{item.title}}</view>
-								</view>
-								<view v-if="datas.length==0" class="zanwu">暂无数据</view>
-								<!-- <view v-if="data_last" class="data_last">我可是有底线的哟~~~</view> -->
-							</view>
-						</view>
-					</block>
-					
+		<!-- 超级爆品 -->
+		<view class="Explosive" v-if="active==0">
+			<view class="ExplosiveT dis_flex ju_b">
+				<text class="ExplosiveT1">超级爆品</text>
+				<view class="ExplosiveT2 dis_flex aic" @click.stop="jump" data-url="/pagesLzc/baos/baos?goods_type=1">
+					<text>查看更多</text>
+					<text class="iconfont icon-right"></text>
 				</view>
+			</view>
+			<view class="dis_flex ExplosiveItemG" style="flex-wrap: wrap;">
+				<view class="ExplosiveItem" v-for="(item,index) in baos" :key="index" @tap.stop="jump" :data-url="`/pagesA/details/details?id=${item.id}`">
+					<image :src=getimg(item.phono[0]) mode="aspectFill" class="exPimg"></image>
+					<view class="expView">
+						<text class="expView1 oh1">{{item.title}}</text>
+						<text class="expView2">￥{{item.basics_price}}</text>
+					</view>
+				</view>
+			</view>
+		</view>
+		<!-- 品牌爆款 -->
+		<view class="brand border-box wCon" v-if="active==0">
+			<view class="brandT dis_flex ju_b">
+				<text class="ExplosiveT1">品牌爆款</text>
+				<view class="ExplosiveT2 dis_flex aic" @click.stop="jump" data-url="/pagesLzc/baos/baos?goods_type=2">
+					<text>查看更多</text>
+					<text class="iconfont icon-right"></text>
+				</view>
+			</view>
+			
+			
+			<view class="qiItem" v-for="(item,index) in brandList" :key="index" @tap.stop="jump" :data-url="`/pagesA/details/details?id=${item.id}`">
+				<view class="qiItemI dis_flex">
+					<image :src="getimg(item.phono[0])" mode="aspectFill" class="qiImg"></image>
+					<view class="qiRight border-box dis_flex_c ju_b">
+						<view class="goods_tit oh2">
+							<text class="qiType">热品</text>
+							<text class="qiTit">{{item.title}}</text>
+						</view>
+						<!-- <view class="brandT2 border-box dis_flex aic" v-if="item.sec_title.length!=0">
+							<text class="border-box oh1" >{{item.sec_title}}</text>
+						</view>
+						<view class="brandT3 dis_flex" style="flex-wrap: wrap;">
+							<text class="border-box" v-for="(item1,index1) in item.brand_goods_type_tag.split(',')"
+								:key="index1" v-if="item.brand_goods_type_tag.length>0">{{item1}}</text>
+						</view> -->
+						<view class="qiP1">
+							<text>原价</text><text>￥{{item.basics_original_price}}</text>
+						</view>
+						<view class="dis_flex ju_b" style="align-items: flex-end;">
+							<view class="qiP2"><text>现价￥</text><text class="qiP3">{{item.basics_price}}</text></view>
+							<view class="qiP4 dis_flex aic ju_c">马上抢</view>
+						</view>
+					</view>
+				</view>
+			</view>
+			
+		</view>
 
-			</scroll-view>
-		</block>
+
+		<!-- 其他 -->
+		<view class="qiItem" v-if="active!=0" v-for="(item,index) in qishu" :key="index"
+			@click.stop="toDeatil(item.sku_id)">
+			<view class="qiItemI dis_flex">
+				<image :src="getimg(item.img[0])" mode="aspectFill" class="qiImg"></image>
+				<view class="qiRight border-box dis_flex_c ju_b">
+					<view class="goods_tit oh2">
+						<text class="qiType">京品</text>
+						<text class="qiTit">{{item.name}}</text>
+					</view>
+					<!-- <view class="qiPin">
+						<text class="qiPin1">{{item.ping}}条评价</text>
+						<text class="qiPin2">好评率{{item.lv}}</text>
+					</view> -->
+					<view class="qiP1">
+						<text>原价</text><text>￥{{item.market_price}}</text>
+					</view>
+					<view class="dis_flex ju_b" style="align-items: flex-end;">
+						<view class="qiP2"><text>现价￥</text><text class="qiP3">{{item.price}}</text></view>
+						<view class="qiP4 dis_flex aic ju_c">马上抢</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="moreSort" v-if="active!=0">{{more}}</view>
+		<!-- 筛选 -->
+		<view class="filterView" v-if="isShai" @click.stop="iconDelClick">
+			<view class="filterViewS dis_flex_c">
+				<view class="dis_flex aic ju_c fil_tit">
+					<text>全部分类</text>
+					<text class="iconDel iconfont icon-del" @click.stop="iconDelClick"></text>
+				</view>
+				<view class="filView1 dis_flex" style="flex-wrap: wrap;">
+					<view class="filViewI dis_flex aic ju_c" :class="{'filViewIA':active==0,'filViewIN':active!=0}"
+						@click.stop="shaiTab(0)">
+						热门</view>
+					<view class="filViewI dis_flex aic ju_c"
+						:class="{'filViewIA':active==index+1,'filViewIN':active!=index+1}" v-for="(item,index) in nav"
+						:key="index" @click.stop="shaiTab(index+1,item.page_num)">{{item.name}}</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
-	import Vue from 'vue'
 	import service from '../../service.js';
-	import {
-		mapState,
-		mapMutations
-	} from 'vuex'
-	var that
 	export default {
 		data() {
 			return {
-				htmlReset:-1,
-				goods_type:[],
-				l_active:-1,
-				datas: [],
-				page: 1,
-				size: 20,
-				data_last: false,
-				triggered: true, //设置当前下拉刷新状态
+				more: "上拉加载更多",
+				isBT: 0,
+				myPage: 1,
+				page_size: 20,
+				page_num: 0,
+				navTabS:false,
+				/* 对接接口 */
+				swiperImg: [],
+				none: true,
+				current: 0,
+				mode: 'round',
+				swiperCurrent: 0,
+				dotsStyles: {
+					width: 8,
+					bottom: 54,
+					backgroundColor: "rgba(255, 255, 255, 0.4)",
+					selectedBackgroundColor: "#FFFFFF",
+					selectedBorder: "none",
+					border: "none"
+				},
+				active: 0,
+				isShai: false,
+				scrollId: "id0",
+				nav: [],
+				baos: [],
+				brandList: [],
+				qishu: []
+
 			}
 		},
-		computed: {
-			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas', 'about_content']),
+		onLoad() {
+			this.getAllType();
+			this.getHotData();
 		},
-		onShareAppMessage() {
-			return {
-				title: '依辈通',
-				path: '/pages/goods_type/goods_type?pid=' + that.loginDatas.id,
-				success: function(res) {
-					console.log('成功', res)
-				}
+		onReachBottom() {
+			if (this.active == 0) {
+				return
 			}
-		},
-		onShareTimeline(){
-			return {
-				title:'依辈通',
-				query:'pid=' + that.loginDatas.id
-			}
-		},
-		onLoad(options) {
-			that = this
 			
-			if(options.pid){
-				console.log('pid>>>>>>>>>>>>')
-				
-				console.log(options.pid)
-				console.log('pid>>>>>>>>>>>>>>>>>')
-				uni.setStorageSync('pid',options.pid)
+			// this.chudi = true;
+			this.getTypeQi(this.page_num)
+		},
+		onPullDownRefresh() {
+			this.myPage = 1;
+			this.qishu = [];
+			console.log(this.active)
+			if(this.active == 0){
+				this.getAllType();
+				this.getHotData();
+			}else{
+				this.getTypeQi(this.page_num)
 			}
-			that.onRetry()
 		},
 		methods: {
-			onRetry() {
-				this.page = 1
-				this.datas = []
-				this.data_last = false
-				that.getcate(0)
-				// this.getdata()
-			},
-			l_active_fuc(item,index){
-				that.l_active=index
-				that.datas=[]
-				if(index==-1){
-					that.getcate(-1)
-				}else{
-					that.getcate(item.id)
-				}
-				
-			},
-			onPulling(e) {
-				console.log("onpulling", e);
-			},
-			onRefresh() {
-				if (this.btn_kg == 1) {
-					that.triggered = false
-					that._freshing = false
-					return
-				}
-				if (that._freshing) return;
-				that._freshing = true;
-				// this.onRetry()
-				setTimeout(() => {
-					that.triggered = false
-					that._freshing = false
-				}, 500)
-			},
-			onRestore() {
-				this.triggered = 'restore'; // 需要重置
-				console.log("onRestore");
-			},
-			onAbort() {
-				console.log("onAbort");
-			},
-			getcate(pid){
-				 var data = {
-					 pid:pid
-				 }
-				 			
-				 //selectSaraylDetailByUserCard
-				 var jkurl = '/cate/list'
-				
-				service.P_get(jkurl, data).then(res => {
-				 	that.btn_kg = 0
-				 	console.log(res)
-				 	if (res.code == 1) {
-				 		var datas = res.data
-				 		console.log(typeof datas)
-				 			
-				 		if (typeof datas == 'string') {
-				 			datas = JSON.parse(datas)
-				 		}
-				 			
-				 		if(pid==0){
-							that.goods_type = datas
-							that.l_active=-1
-							that.getcate(-1)
-							// if(datas.length>0){
-							// 	var cate_list=JSON.stringify(datas)
-							// 	uni.setStorageSync('cate_list',cate_list)
-							// }
-						}else{
-							that.htmlReset = 0
-							that.datas = datas
-						}
-						
-				 		console.log(datas)
-				 			
-				 			
-				 	} else {
-				 		if (res.msg) {
-				 			uni.showToast({
-				 				icon: 'none',
-				 				title: res.msg
-				 			})
-				 		} else {
-				 			uni.showToast({
-				 				icon: 'none',
-				 				title: '获取失败'
-				 			})
-				 		}
-				 	}
-				}).catch(e => {
-				 	that.btn_kg = 0
-					that.htmlReset = 1
-				 	console.log(e)
-				 	uni.showToast({
-				 		icon: 'none',
-				 		title: '获取数据失败'
-				 	})
-				})
-			},
-			
-			
 			getimg(img) {
-				console.log(service.getimg(img))
 				return service.getimg(img)
 			},
-			pveimg(e) {
-				service.pveimg(e)
-			},
 			jump(e) {
-				var that = this
-				// if(!that.hasLogin){
-				// 	uni.navigateTo({
-				// 		url:'/pages/login/login'
-				// 	})
-				// 	return
-				// }
-				if (that.btn_kg == 1) {
-					return
-				} else {
-					that.btn_kg = 1
-					setTimeout(function() {
-						that.btn_kg = 0
-					}, 1000)
-				}
-			
-				service.jump(e)
+				return service.jump(e)
 			},
+			navTab(index, page_num) {
+				
+				this.qishu = [];
+				this.baos = [];
+				this.brandList = [];
+				this.myPage = 1;
+				this.scrollId = `id${index}`
+				/* 热门 */
+				if (index == 0) {
+					this.getHotData()
+				} else {
+					this.getTypeQi(page_num)
+				}
+				this.active = index;
+				this.page_num = page_num;
+			},
+			/* 筛选 */
+			filterClick() {
+				this.setTit("筛选");
+				this.isShai = true
+			},
+			iconDelClick() {
+				this.setTit("分类");
+				this.isShai = false
+			},
+			setTit(title) {
+				uni.setNavigationBarTitle({
+					title: title,
+				})
+			},
+			shaiTab(index, page_num) {
+				// this.chudi = false;
+				this.myPage = 1;
+				this.qishu = [];
+				this.setTit("分类");
+				this.active = index;
+				this.isShai = false;
+				this.scrollId = `id${index}`
+				if (index == 0) {
+					this.getHotData()
+				} else {
+					this.getTypeQi(page_num)
+				}
+
+			},
+			toDeatil(sku_id) {
+				uni.navigateTo({
+					url: `/pagesLzc/deatil/deatil?sku_id=${sku_id}`
+				})
+			},
+			changeSwiper(e) {
+				this.swiperCurrent = e.detail.current;
+			},
+			gouBtnClick() {
+				console.log("购买")
+			},
+			/* 获取所有分类 */
+			getAllType() {
+				var myUrl = service.IP_lzc+"jd.JdGoods/getProductPool";
+				service.P_get(myUrl).then(res => {
+					console.log(res.data)
+					if (res.code == 1) {
+						this.nav = res.data;
+					}
+				}).catch(e => {
+					uni.showToast({
+						title: "服务器异常"
+					})
+				})
+			},
+			getHotData() {
+				this.getHotDataBanner();
+				this.getHotDataSuperExplosive(1)
+				this.getHotDataSuperExplosive(2)
+				this.isBT = 0;
+			},
+			/* 获取热门数据 banner */
+			getHotDataBanner() {
+				var myUrl = service.IP_lzc+"goods.Goods/banner";
+				service.P_get(myUrl).then(res => {
+					if (res.code == 1) {
+						console.log(res, "热门数据 banner")
+						this.swiperImg = res.data;
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+
+				}).catch(e => {
+					uni.showToast({
+						title: "服务器异常"
+					})
+				})
+			},
+			/* 获取热门数据 爆品 */
+			getHotDataSuperExplosive(goods_type) {
+				var myUrl = service.IP_lzc+"goods.Goods/goodsList";
+				service.P_get(myUrl, {
+					"goods_type": goods_type,
+					"page": 1,
+					"size": 4
+				}).then(res => {
+					if (res.code == 1) {
+						if (goods_type == 1) {
+							console.log(res, "热门数据 超级爆品 ")
+							this.baos = res.data;
+						} else {
+							console.log(res, "热门数据 品牌爆品 ")
+							this.brandList = res.data;
+						}
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					uni.showToast({
+						icon: 'none',
+						title: '操作失败'
+					})
+				})
+
+			},
+			/* 获取其他分类 */
+			getTypeQi(page_num) {
+				if (this.isBT == 1) {
+					return
+				}
+				this.isBT = 1;
+				var myUrl = service.IP_lzc+"jd.JdGoods/getSkuByPage";
+				service.P_get(myUrl, {
+					page_num,
+					page: this.myPage,
+					page_size: this.page_size
+				}).then(res => {
+					this.isBT = 0;
+					if (res.code == 1) {
+						var data = res.data;
+						if (typeof data == 'string') {
+							data = JSON.parse(data)
+						}
+						if (this.myPage == 1) {
+							if (data.length != 0) {
+								this.qishu = data;
+								this.myPage++
+							}
+						} else {
+							if (data.length != 0) {
+								this.qishu = this.qishu.concat(data)
+								this.myPage++
+							} else {
+								console.log("没有了")
+								this.more = "没有更多了"
+							}
+						}
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '请求成功,操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					this.isBT = 0;
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '操作失败'
+					})
+				})
+			}
+
+
 		}
 	}
 </script>
 
 <style scoped>
-	.minh100{
-		background: #F8F8F8;
+	@import url("/static/css/commin.css");
+	@import url("/commin_lzc/iconfont.css");
+
+	.moreSort {
+		font-size: 24rpx;
+		color: #999;
+		text-align: center;
+		margin-top: 20rpx;
 	}
-	.scroll_L{
-		position: fixed;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 180upx;
-		width: 180upx;
-		height: 100vh;
-		/* #ifdef H5 */
-		height:calc( 100vh - 44px);
-		top: 44px;
-		/* #endif */
-	}
-	.scroll_R{
-		position: fixed;
-		top: 0;
-		bottom: 0;
-		right: 0;
-		left: 180upx;
-		width: calc(100vw - 180upx);
-		height: 100vh;
-		/* #ifdef H5 */
-		height:calc( 100vh - 44px);
-		top: 44px;
-		/* #endif */
-	}
-	.scroll_L_list{
-		width: 165upx;
+
+	.contentSort {
+		width: 100vw;
+		height: 100%;
 		min-height: 100vh;
-		/* #ifdef H5 */
-		min-height:calc( 100vh - 44px);
-		/* #endif */
-		background: #FFFFFF;
-		box-shadow: 0px 0px 9px 0px rgba(172, 172, 172, 0.11);
-		/* padding-top: 100upx; */
+		box-sizing: border-box;
+		background-color: #f8f8f8;
+		padding-bottom: 10rpx;
+	}
+
+	.nav {
+		width: 100%;
+		height: 107rpx;
+		box-sizing: border-box;
+		padding: 49rpx 30rpx 0 30rpx;
 		position: relative;
+		background-color: #fff;
 	}
-	.l_remen{
-		width: 175upx;
-		height: 90upx;
-		background: #FE3C3D;
-		box-shadow: 1px 3px 5px 0px rgba(255, 30, 30, 0.35);
-		border-radius: 0 0 30upx 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 27upx;
-		color: #fff;
+
+	.iconMore {
 		position: absolute;
+		right: 30rpx;
 		top: 0;
-		left: 0;
+		box-sizing: border-box;
+		padding-top: 48rpx;
+		font-size: 30rpx;
+		color: #333333;
+
 	}
-	.scroll_L_li{
-		width: 165upx;
-		height: 91upx;
-		color: #666;
-		font-size: 28upx;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-	.scroll_L_li.active{
-		background: #FE3C3D;
-		color: #fff;
-	}
-	.scroll_R_list{
+
+	.navLeft {
 		width: 100%;
-		padding-top: 30upx;
-		padding-right: 30upx;
-		padding-left: 5upx;
+		box-sizing: border-box;
+		padding-right: 80rpx;
+		overflow: hidden;
+		white-space: nowrap;
 	}
-	.goods_type_box{
-		width: 100%;
-		background: #FFFFFF;
-		box-shadow: 0px 0px 9upx 0px rgba(172, 172, 172, 0.11);
-		border-radius: 5upx;
-		padding: 0 35upx;
-	}
-	.goods_type_box+.goods_type_box{
-		margin-top: 30upx;
-	}
-	.goods_type_tit{
-		display: flex;
-		width: 100%;
-		height: 100upx;
-		align-items: center;
-		justify-content: center;
-		font-size: 50upx;
-		color: #F88F59;
+
+	.navItem {
+		width: auto;
+		height: auto;
+		box-sizing: border-box;
+		padding-bottom: 15rpx;
+		/* font-size: 30rpx; */
+		font-size: 34rpx;
+		font-family: PingFang;
 		font-weight: bold;
+		color: #333333;
+		margin-right: 40rpx;
+		margin-bottom: 7rpx;
+
 	}
-	.goods_type_tit text{
-		font-size: 30upx;
-		margin: 0 10upx;
+
+	.navItemA {
+		color: #F54248;
+		font-size: 34rpx;
+		border-bottom: 2rpx solid #F54248;
 	}
-	.goods_type_list{
-		width: 100%;
-		display: flex;
-		flex-wrap: wrap;
+
+	/* 超级爆品 */
+
+	.Explosive {
+		box-sizing: border-box;
+		padding: 0 30rpx;
+		margin-top: 40rpx;
 	}
-	.goods_type_li{
-		width: 126upx;
-		margin-right: 40upx;
-		margin-bottom: 35upx;
+
+	.ExplosiveT1 {
+		font-size: 34rpx;
+		font-family: "PingFang";
+		font-weight: bold;
+		color: #333333;
 	}
-	.goods_type_li:nth-child(3n){
+
+	.ExplosiveT2 {
+		font-size: 26rpx;
+		font-family: "PingFang";
+		font-weight: 500;
+		color: #999999;
+	}
+
+	.ExplosiveItemG {
+		margin-top: 26rpx;
+	}
+
+	.ExplosiveItem {
+		width: 162rpx;
+		height: auto;
+		background: #FFFFFF;
+		border-radius: 8rpx;
+		margin-right: 14rpx;
+
+	}
+
+	.ExplosiveItem:nth-child(4n+4) {
 		margin-right: 0;
 	}
-	.goods_type_li_img{
-		width: 126upx;
-		height: 126upx;
+
+	.ExplosiveItem:nth-child(n+5) {
+		margin-top: 14rpx;
+	}
+
+	.exPimg {
+		width: 100%;
+		height: 160rpx;
+		object-fit: cover;
+		max-width: 100%;
+		max-height: 160rpx;
+		border-radius: 8rpx;
+	}
+
+	.expView {
+		width: 100%;
+		height: auto;
+		box-sizing: border-box;
+		padding: 4rpx 24rpx 6rpx 12rpx;
+	}
+
+	.expView1 {
+		font-size: 26rpx;
+		font-family: PingFang;
+		font-weight: 500;
+		color: #333333;
+		line-height: 26rpx;
+		height: 26rpx;
+		max-width: 100%;
+		margin-bottom: 22rpx;
+	}
+
+	.expView2 {
+		font-size: 26rpx;
+		font-family: PingFang;
+		font-weight: 500;
+		color: #F54248;
+		line-height: 26rpx;
+	}
+
+	/* 品牌爆款 */
+	.brand {
+		height: auto;
+		margin-top: 40rpx;
+	}
+
+	.brandT {
+		margin-bottom: 25rpx;
+	}
+
+	.brandB1 {
+		width: 100%;
+		height: auto;
+		background-color: #FFFFFF;
+		border-radius: 8rpx;
+		margin-bottom: 20rpx;
+		padding: 20rpx 0rpx 25rpx 20rpx;
+	}
+
+	.brandB1R {
+		width: 100%;
+		/* height: 220rpx; */
+		background-color: #fff;
+	}
+
+	.brandB1R2 {
+		width: 100%;
+		height: 50rpx;
+		position: relative;
+		margin-top: 25rpx;
+	}
+
+	.gouBtn {
+		width: 134rpx;
+		height: 50rpx;
 		background: #FFFFFF;
-		box-shadow: 0px 0px 10upx 0px rgba(192, 192, 192, 0.4);
-		border-radius: 5upx;
+		border: 1px solid #333333;
+		border-radius: 25rpx;
+		/* position: absolute;
+		right: 0;
+		bottom: 0rpx; */
+		font-size: 26rpx;
+		font-family: PingFang;
+		font-weight: 500;
+		color: #333333;
+		margin-left: 516rpx;
+
 	}
-	.goods_type_li_text{
-		font-size: 24upx;
-		color: 33px;
-		margin-top: 15upx;
-		text-align: center;
+
+	.brandB1RImg {
+		width: 220rpx;
+		height: 220rpx;
+		border-radius: 8rpx;
+		background-color: #f8f8f8;
+		min-width: 220rpx;
 	}
+
+	.brandB1RImg image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		max-width: 100%;
+		max-height: 100%;
+		border-radius: 8rpx;
+	}
+
+	.brandB1RDiv {
+		width: 100%;
+		/* height: 100%; */
+		padding-left: 25rpx;
+	}
+
+	.brandT1 {
+		font-size: 30rpx;
+		font-family: PingFang;
+		font-weight: bold;
+		color: #333333;
+		min-height: 30rpx;
+		line-height: 30rpx;
+
+	}
+
+	.brandT2 {
+		width: fit-content;
+		width: -moz-fit-content;
+		border-radius: 4rpx;
+		padding: 8rpx;
+		background-color: rgba(0, 120, 236, 0.1);
+		margin-top: 20rpx;
+	}
+
+	.brandT2 text {
+		font-size: 26rpx;
+		font-family: PingFang;
+		font-weight: 500;
+		color: #0078EC;
+		line-height: 22rpx;
+		margin-right: 0.25em;
+		height: 26rpx;
+	}
+
+	.brandT3 text {
+		background: rgba(153, 153, 153, 0.1);
+		border-radius: 4rpx;
+		font-size: 22rpx;
+		font-family: PingFang;
+		font-weight: 500;
+		color: #999999;
+		margin-right: 10rpx;
+		padding: 4rpx 8rpx;
+		line-height: 24rpx;
+		margin-top: 10rpx;
+	}
+
+	.brandT4 {
+		font-size: 20rpx;
+		font-family: PingFang;
+		font-weight: 500;
+		text-decoration: line-through;
+		color: #999999;
+		line-height: 22rpx;
+		margin-top: 12rpx;
+	}
+
+	.brandT5 {
+		font-size: 30rpx;
+		font-family: PingFang;
+		font-weight: 500;
+		color: #333333;
+		line-height: 38rpx;
+		margin-top: 12rpx;
+	}
+
+	.brandT6 {
+		font-size: 26rpx;
+		line-height: 26rpx;
+	}
+
+	/* 其他 */
+	.qiItem {
+		width: 750rpx;
+		max-width: 100%;
+		height: auto;
+		padding: 40rpx 30rpx;
+		/* margin: 0 30rpx; */
+		background-color: #ffffff;
+		border-bottom: 1px solid #eee;
+	}
+
+	.qiItemI {
+		width: 100%;
+		height: 220rpx;
+	}
+
+	.qiImg {
+		width: 220rpx;
+		height: 220rpx;
+		min-width: 220rpx;
+		object-fit: cover;
+		border-radius: 8rpx;
+	}
+
+	.qiRight {
+		width: 100%;
+		height: 100%;
+		padding-left: 25rpx;
+		position: relative;
+	}
+	.goods_tit{
+		height: 80rpx;
+	}
+	.qiType {
+		background: #F54248;
+		border-radius: 4rpx;
+		font-size: 22rpx;
+		font-family: PingFang;
+		font-weight: 500;
+		color: #FFFFFF;
+		padding: 3rpx 5rpx;
+	}
+
+	.qiTit {
+		font-size: 30rpx;
+		font-family: PingFang;
+		font-weight: bold;
+		color: #333333;
+		margin-left: 4rpx;
+		line-height: 40rpx;
+	}
+
+	.qiPin {
+		font-size: 24rpx;
+		font-family: PingFang;
+		font-weight: 500;
+		color: #999999;
+		line-height: 24rpx;
+		margin-top: 14rpx;
+	}
+
+	.qiPin2 {
+		margin-left: 0.25em;
+	}
+
+	.qiP1 {
+		font-size: 24rpx;
+		font-family: PingFang;
+		font-weight: 500;
+		text-decoration: line-through;
+		color: #999999;
+		line-height: 24rpx;
+		margin-top: 21rpx;
+	}
+
+	.qiP2 {
+		font-size: 26rpx;
+		font-family: PingFang;
+		font-weight: 500;
+		color: #F54248;
+		line-height: 26rpx;
+		margin-top: 22rpx;
+	}
+
+	.qiP3 {
+		font-size: 38rpx;
+		line-height: 34rpx;
+	}
+
+	.qiP4 {
+		width: 110rpx;
+		height: 42rpx;
+		background: #F54248;
+		border-radius: 6rpx;
+		font-size: 26rpx;
+		font-family: PingFang;
+		font-weight: 500;
+		color: #FFFFFF;
+		line-height: 22rpx;
+		/* position: absolute;
+		bottom: 0;
+		right: 0; */
+	}
+
+	/* 筛选 */
+	.filterView {
+		width: 100vw;
+		height: 100vh;
+		background-color: rgba(0, 0, 0, 0.4);
+		position: fixed;
+		top: 0;
+
+	}
+
+	.filterViewS {
+		width: 100vw;
+		height: auto;
+		box-sizing: border-box;
+		padding-bottom: 50rpx;
+		background-color: #fff;
+		z-index: 999;
+	}
+
+	.fil_tit {
+		width: 100vw;
+		height: 72rpx;
+		background-color: #fff;
+		font-size: 28rpx;
+		font-family: PingFang;
+		font-weight: bold;
+		color: #333333;
+		position: relative;
+		/* #ifdef H5 */
+		margin-top: 102rpx;
+		/* #endif */
+	}
+
+	.filView1 {
+		width: 100%;
+		height: auto;
+		box-sizing: border-box;
+		padding: 0 30rpx;
+	}
+
+	.filViewI {
+		/* width: 122rpx; */
+		min-width: 132rpx;
+		min-height: 44rpx;
+		box-shadow: 0px 5rpx 10rpx 2rpx rgba(245, 66, 72, 0.06);
+		border-radius: 22rpx;
+		margin-right: 20rpx;
+		margin-left: 20rpx;
+		font-size: 26rpx;
+		font-family: PingFang;
+		font-weight: 500;
+		margin-top: 30rpx;
+		padding: 0 15rpx;
+		box-sizing: border-box;
+		line-height: 2;
+
+
+	}
+
+	.filViewIA {
+		background-color: rgba(245, 66, 72, 1);
+		color: #fff;
+	}
+
+	.filViewIN {
+		color: #F54248;
+		background-color: rgba(255, 255, 255, 1);
+	}
+
+	/* .filViewI:nth-child(4n+4) {
+		margin-right: 0;
+	} */
+
+	/* .filViewI:nth-child(n+5) {
+		margin-top: 30rpx;
+	} */
+
+	.iconDel {
+		font-size: 30rpx;
+		color: rgba(245, 66, 72, 1);
+		position: absolute;
+		right: 36rpx;
+	}
+
+	/deep/::-webkit-scrollbar {
+		display: none;
+		width: 0;
+		height: 0;
+		color: transparent;
+		background: transparent;
+	}
+
+	.banner {
+		width: 690rpx;
+		height: 244rpx;
+		margin: 20rpx 30rpx 0 30rpx;
+	}
+
+	.swiperItem {
+		width: 690rpx;
+		height: 244rpx;
+		border-radius: 10rpx;
+	}
+
+	.swiperItem image {
+		width: 690rpx;
+		height: 244rpx;
+		border-radius: 10rpx;
+	}
+
+	swiper {
+		height: 244rpx;
+	}
+
+	/* #ifdef MP-WEIXIN */
+	/deep/.uni-swiper__dots-box {
+		justify-content: flex-end !important;
+		right: 20rpx !important;
+	}
+
+	/* #endif */
+	/* #ifdef H5 */
+	/deep/.uni-swiper__dots-box {
+		justify-content: flex-end;
+		right: 20rpx;
+	}
+
+	/* #endif */
+
+	/* .bannerI image {
+		width: 100%;
+		height: 244rpx;
+	} */
 </style>

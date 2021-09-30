@@ -8,6 +8,11 @@ const STATE_KEY = 'STATE_KEY';
 // const imgurl = 'https://datixcx.com.aa.800123456.top/';
 const imgurl = 'https://yibeitong.com.aa.800123456.top/';
 const IPurl = imgurl + 'api/'
+
+
+
+const IP_lzc = 'https://yibeitong.com.aa.800123456.top/api/';
+// const imgurlLac=""
 // const IPurl='http://192.168.129.246/api/'
 // const adminurl='https://datixcx.com.aa.800123456.top/admin/';
 // appid:wx4c41cc50c5a53df9
@@ -367,7 +372,7 @@ const wxlogin = function(num) {
 	if (num == 'token') {
 		var data = {
 			token: uni.getStorageSync('token'),
-			// token: '4e8047dd513ab474c10e2ce861b50763',
+			// token: '7a4f36e8695d20a87805967ad37bedfc',
 			// token: 'f95b9ebdddbe9d2fd12ff5115d5cc35c',
 			type: 4
 		}
@@ -1049,7 +1054,7 @@ const gettime = function(mj) {
 	n_date = n_date < 10 ? '0' + n_date : n_date
 	n_hour = n_hour < 10 ? '0' + n_hour : n_hour
 	n_minute = n_minute < 10 ? '0' + n_minute : n_minute
-	
+	return n_year + '-' + n_month + '-' + n_date
 	if (n_year == year) {
 
 		return {
@@ -1116,7 +1121,9 @@ const wxpay=function (datas,type){
 		mask:true,
 		title:'正在拉起支付'
 	})
-	datas=JSON.parse(datas)
+	datas=JSON.parse(datas);
+	console.log(datas)
+	// return
 	return new Promise((resolve,reject)=>{
 		uni.hideLoading()
 		uni.requestPayment({
@@ -1134,11 +1141,11 @@ const wxpay=function (datas,type){
 									icon: 'none',
 									title: '购买成功'
 								})
-								setTimeout(() => {
-									uni.redirectTo({
-										url: "/pages/my_fwb/my_fwb"
-									})
-								}, 1000)
+								// setTimeout(() => {
+								// 	uni.redirectTo({
+								// 		url: "/pages/my_fwb/my_fwb"
+								// 	})
+								// }, 1000)
 							}else{
 								resolve(res)
 							}
@@ -1183,6 +1190,7 @@ export default {
 	addUser,
 	get,
 	post,
+	IP_lzc,
 	IPurl,
 	imgurl,
 	gologin,

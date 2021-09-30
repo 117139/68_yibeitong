@@ -1,107 +1,132 @@
-
-.minh100.data-v-b0ce103c{
+.border-box.data-v-b0ce103c{
+	box-sizing: border-box;
+}
+.content-box.data-v-b0ce103c{
+	box-sizing: content-box;
+}
+.wCon.data-v-b0ce103c{
+	width: 100%;
+	box-sizing: border-box;
 	padding: 0 30rpx;
 }
-.jianqun_btn.data-v-b0ce103c{
-	width: 105rpx;
-	height: 105rpx;
-	background: #F54248;
-	box-shadow: 1px 3px 10px 0px rgba(0, 0, 0, 0.1);
-	border-radius: 50%;
-	position: fixed;
-	bottom: 150rpx;
-	right: 50rpx;
+.mb39.data-v-b0ce103c{
+	margin-bottom: 39rpx;
 }
-.list-box.data-v-b0ce103c {
+.pl25.data-v-b0ce103c{
+	padding-left: 25rpx;
+}
+.pr25.data-v-b0ce103c{
+	padding-right: 25rpx;
+}
+.pl29.data-v-b0ce103c{
+	padding-left: 29rpx;
+}
+.pr29.data-v-b0ce103c{
+	padding-right: 29rpx;
+}
+.mb20.data-v-b0ce103c{
+	margin-bottom: 20rpx;
+}
+.border-bottomf81.data-v-b0ce103c{
+	border-bottom: 1px solid #F8F8F8;
+}
+page.data-v-b0ce103c {
+	background-color: #fff;
 	width: 100%;
-	margin: 0rpx auto;
+	height: 100%;
+	margin: 0;
+	padding: 0;
 }
-.item-box.data-v-b0ce103c {
-	width: auto;
-	min-height: 130rpx;
-	padding: 20rpx;
-	overflow: hidden;
+.content.data-v-b0ce103c {
+	background-color: #fff;
+	width: 100%;
+	min-height: 100vh;
+	margin: 0;
+	padding: 0;
+}
+.contentRow.data-v-b0ce103c {
+	width: 100vw;
+	height: 140rpx;
+	background-color: #fff;
+	box-sizing: border-box;
+	padding: 22rpx 24rpx 20rpx 29rpx;
 	border-bottom: 1px solid #eee;
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-box-align: stretch;
-	-webkit-align-items: stretch;
-	        align-items: stretch;
-	-webkit-box-pack: justify;
-	-webkit-justify-content: space-between;
-	        justify-content: space-between;
+	position: relative;
 }
-.item-img.data-v-b0ce103c {
-	
-	width: 88rpx;
-	height: 88rpx;
-	-webkit-box-flex: 0;
-	-webkit-flex: none;
-	        flex: none;
-	margin-right: 18rpx;
+.contentRow.data-v-b0ce103c:last-child {
+	border: none;
 }
-.item-img ._img.data-v-b0ce103c {
-	width: 88rpx;
-	height: 88rpx;
+.headImg.data-v-b0ce103c {
+	width: 82rpx;
+	height: 82rpx;
+	border-radius: 50%;
+	min-width: 82rpx;
+	position: relative;
+}
+.dain.data-v-b0ce103c {
+	position: absolute;
+	width: 20rpx;
+	height: 20rpx;
+	background-color: #fff;
+	left: 92rpx;
+	top: 30rpx;
 	border-radius: 50%;
 }
-.item-text.data-v-b0ce103c {
-	-webkit-box-flex: 1;
-	-webkit-flex: 1;
-	        flex: 1;
-	height: 88rpx;
-	color: #999;
+.conView.data-v-b0ce103c {
+	/* width: 550rpx; */
+	flex:1;
+	height: 100%;
+	/* min-width: 550rpx; */
+	box-sizing: border-box;
+	padding-left: 19rpx;
+}
+.conView1.data-v-b0ce103c {
+	font-size: 34rpx;
+	font-family: PingFangSC;
+	font-weight: 400;
+	color: #333333;
+	line-height: 38rpx;
+	height: 38rpx;
+	margin-top: 5rpx;
+}
+.conView2.data-v-b0ce103c {
+	font-size: 28rpx;
+	font-family: PingFangSC;
+	font-weight: 400;
+	color: #999999;
+	line-height: 32rpx;
+	/* margin-top: 17rpx; */
+	height: 32rpx;
+	/* position: absolute;
+	bottom: 20rpx; */
+	padding-right: 30rpx;
+}
+.conView3.data-v-b0ce103c {
+	font-size: 28rpx;
+	font-family: PingFangSC;
+	font-weight: 400;
+	color: #999999;
+	line-height: 28rpx;
+	/* margin-top: 17rpx; */
+	height: 28rpx;
+}
+.conTime.data-v-b0ce103c {
+	/* width: 100%; */
+	height: 100%;
 	font-size: 24rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
-	-webkit-box-pack: justify;
-	-webkit-justify-content: space-between;
-	        justify-content: space-between;
-	-webkit-box-align: stretch;
-	-webkit-align-items: stretch;
-	        align-items: stretch;
+	font-family: PingFangSC;
+	font-weight: 400;
+	color: #999999;
+	line-height: 23rpx;
+	min-width: 100rpx;
 }
-.item-user.data-v-b0ce103c {
-	color: #000;
-	font-size: 32rpx;
-	font-weight: bold;
+.dianNew.data-v-b0ce103c {
+	position: absolute;
+	bottom: 2rpx;
+	right: 30rpx;
+	background-color: #007AFF;
 }
-.item-text-info.data-v-b0ce103c {
-	width: 475rpx;
-	height: 30rpx;
-	line-height: 30rpx;
-	color: #666;
-	font-szie: 24rpx;
+.contentRow1.data-v-b0ce103c{
+	width: 100%;
 }
-.weidu_num.data-v-b0ce103c{
-	width: 37rpx;
-	height: 37rpx;
-	background: #FF4F11;
-	border-radius: 50%;
-	color: #fff;
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
-}
-.user-box.data-v-b0ce103c {
-	width: auto;
-	height: 80rpx;
-	padding: 0 20rpx;
-}
-.clear-box.data-v-b0ce103c {
-	clear: both;
-}
-
 

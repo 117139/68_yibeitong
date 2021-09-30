@@ -19,10 +19,7 @@
 	border-bottom: 1px solid #ddd;
 }
 .wl_btn.data-v-244001bf {
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
+	flex-direction: column;
 	width: 10rpx;
 	font-size: 24rpx;
 	color: #999;
@@ -40,10 +37,7 @@
 .wl_tit_msg.data-v-244001bf {
 	font-size: 24rpx;
 	color: #000;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
+	flex-direction: column;
 }
 .wl_tit_msg ._span.data-v-244001bf {
 	width: 66rpx;

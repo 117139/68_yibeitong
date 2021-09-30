@@ -18,17 +18,10 @@
 	
 	color: rgba(0,0,0,0);
 	z-index: 99999;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+	align-items: center;
+	justify-content: center;
 	box-sizing: border-box;
-	-webkit-transition: all .5s;
 	transition: all .5s;
 
 
@@ -99,12 +92,8 @@
 	height: 80rpx;
 	font-size: 30rpx;
 	color: #333;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	align-items: center;
 }
 .vip_gz_box.data-v-0ff5dccb{
 	font-size: 26rpx;

@@ -11,12 +11,8 @@
 .pj_d1.data-v-019ef122 {
 	font-size: 28rpx;
 	color: #666;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	align-items: center;
 	margin-bottom: 10rpx;
 }
 .pj_d2.data-v-019ef122 {
