@@ -22,8 +22,9 @@
 		          <text>{{item.store_name}}</text>
 		        </view> -->
 						<block v-for="(item1,idx1) in item.order_goods" :key="idx1">
+							<!-- ?id=66&type=0&is_jd=1 -->
 							<view v-if="type==0" class="goods1" @tap="jump"
-								:data-url="'/pagesA/OrderDetails/OrderDetails?id='+item.order.o_id+'&type='+type">
+								:data-url="'/pagesA/OrderDetails/OrderDetails?id='+item.order.o_id+'&type='+type+'&is_jd='+item.order.is_jd">
 								<view class="goodsImg">
 									<image v-if="item1.gd_vice_pic.length>0" class="goodsImg"
 										:src="getimg(item1.gd_mastr_pic[0])" mode="aspectFill"></image>
@@ -31,18 +32,18 @@
 										mode="aspectFill"></image>
 								</view>
 								<view class="goodsinr">
-									<view class="goodsname fz30 c30 oh1">{{item1.gd_name}}</view>
+									<view class="goodsname fz30 c30 oh2">{{item1.gd_name}}</view>
 									<view class="goodspri"><text v-for="(item2,idx2) in item1.gd_attr"
 											:key="idx2">{{item2.value+' '}}</text></view>
 									<view class="goodspri1">
-										<text class="fz24 c6 ">数量：{{item1.may_retreat_number}}</text>
+										<text class="fz32 c6 ">数量：{{item1.may_retreat_number}}</text>
 										<text v-if="type==2">{{item1.s_status_value}}</text>
 									</view>
 								</view>
 							</view>
 							<block v-else>
 								<view v-if="item.order.is_jd==0" class="goods1" @tap="jump_sh"
-									:data-url="'/pagesA/OrderDetails_sh_xq/OrderDetails_sh_xq?id='+item1.id+'&type='+type">
+									:data-url="'/pagesA/OrderDetails_sh_xq/OrderDetails_sh_xq?id='+item1.id+'&type='+type+'&oid='+item1.o_id">
 									<view class="goodsImg">
 										<image v-if="item1.gd_vice_pic.length>0" class="goodsImg"
 											:src="getimg(item1.gd_vice_pic[0])" mode="aspectFill"></image>
@@ -50,16 +51,19 @@
 											mode="aspectFill"></image>
 									</view>
 									<view class="goodsinr">
-										<view class="goodsname fz30 c30 oh1">{{item1.gd_name}}</view>
+										<view class="goodsname fz30 c30 oh2">{{item1.gd_name}}</view>
 										<view class="goodspri"><text v-for="(item2,idx2) in item1.gd_attr"
 												:key="idx2">{{item2.value+' '}}</text></view>
 										<view class="goodspri1">
-											<text class="fz24 c6 ">数量：{{item1.may_retreat_number}}</text>
+											<text class="fz32 c6 ">数量：{{item1.may_retreat_number}}</text>
 											<text v-if="type!=0">{{item1.s_status_value}}</text>
 										</view>
 									</view>
 								</view>
-								<view v-else class="goods1" >
+								<view v-else class="goods1"  @tap="jump_sh"
+									:data-url="'/pagesLzc/OrderDetails_sh_xq/OrderDetails_sh_xq?id='+item1.id+'&type='+type+'&oid='+item1.o_id+'&is_jd='+item.order.is_jd+'&o_order_sernum='+item.order.o_order_sernum">
+									<!-- <view v-else class="goods1"  @tap="jump_sh"
+										:data-url="'/pagesA/OrderDetails_sh_xq/OrderDetails_sh_xq?id='+item1.id+'&type='+type+'&oid='+item1.o_id+'&is_jd='+item.order.is_jd"> -->
 									<view class="goodsImg">
 										<image v-if="item1.gd_vice_pic.length>0" class="goodsImg"
 											:src="getimg(item1.gd_vice_pic[0])" mode="aspectFill"></image>
@@ -67,34 +71,34 @@
 											mode="aspectFill"></image>
 									</view>
 									<view class="goodsinr">
-										<view class="goodsname fz30 c30 oh1">{{item1.gd_name}}</view>
+										<view class="goodsname fz30 c30 oh2">{{item1.gd_name}}</view>
 										<view class="goodspri"><text v-for="(item2,idx2) in item1.gd_attr"
 												:key="idx2">{{item2.value+' '}}</text></view>
 										<view class="goodspri1">
-											<text class="fz24 c6 ">数量：{{item1.may_retreat_number}}</text>
+											<text class="fz32 c6 ">数量：{{item1.may_retreat_number}}</text>
 											<text v-if="type!=0">{{item1.s_status_value}}</text>
 										</view>
 									</view>
 								</view>
 								
 								<!-- :data-url="`/pagesA/OrderDetails_sh_sq/OrderDetails_sh_sq?item=${JSON.stringify(item1)}&is_jd=${item.order.is_jd}`" -->
-								<block v-if="type!=2">
-									<view style="width: 100%;height: 1px;background: #eee;"></view>
-									<view class="o_cz">
-										<view v-if="type==0" class="qx" @click.stop="jiaoShou(item1,item.order.is_jd)">
-											<!-- 申请售后{{item.order.is_jd}} -->
-											申请售后
-										</view>
-										<!-- <view v-if="type==1&&item1.s_status==1" @tap.stop='del_order(item1.id)'>取消售后</view> -->
-										<view v-if="type==1&&item1.s_status==2" class="qx" @tap.stop='del_order(item1.id)'>
-											取消售后</view>
-										<view v-if="type==1&&item1.s_status==2" @tap="jump_sh"
-											:data-url="'/pagesA/OrderDetails_sh/OrderDetails_sh?id='+item1.id+'&type='+type+'&oid='+item1.o_id">
-											已同意</view>
-									</view>
-								</block>
+								
 							</block>
-							
+							<block v-if="type!=2">
+								<view style="width: 100%;height: 1px;background: #eee;"></view>
+								<view class="o_cz">
+									<view v-if="type==0" class="qx" @click.stop="jiaoShou(item1,item.order.is_jd)">
+										<!-- 申请售后{{item.order.is_jd}} -->
+										申请售后
+									</view>
+									<!-- <view v-if="type==1&&item1.s_status==1" @tap.stop='del_order(item1.id)'>取消售后</view> -->
+									<view v-if="type==1&&item1.s_status==2" class="qx" @tap.stop='del_order(item1.id,item.order.is_jd,item.order.o_order_sernum)'>
+										取消售后</view>
+									<view v-if="type==1&&item1.s_status==2" @tap="jump_sh"
+										:data-url="'/pagesA/OrderDetails_sh/OrderDetails_sh?id='+item1.id+'&type='+type+'&oid='+item1.o_id">
+										已同意</view>
+								</view>
+							</block>
 						</block>
 
 					</view>
@@ -335,7 +339,7 @@
 						token: that.$store.state.loginDatas.userToken || '',
 					}
 					service.P_get(jkurl,data).then(res=>{
-						uni.redirectTo({
+						uni.navigateTo({
 							url:`/pagesA/OrderDetails_sh_sq/OrderDetails_sh_sq?item=${JSON.stringify(item)}&is_jd=${isJd}`
 						})
 						if(res.code == 1){
@@ -366,7 +370,7 @@
 					})
 				}
 			},
-			del_order(id) {
+			del_order(id,is_jd,o_order_sernum) {
 				var that = this
 				uni.showModal({
 					title: '提示',
@@ -376,8 +380,15 @@
 							console.log('用户点击确定');
 							var jkurl = '/afterSale/cancelAfter'
 							var data = {
-								token: that.loginMsg.userToken,
+								token: that.$store.state.loginDatas.userToken || '',
 								id: id
+							}
+							if(is_jd=1){
+								jkurl = '/jd.JdAfterSale/cancelAfsApply'
+								data = {
+									token: that.$store.state.loginDatas.userToken || '',
+									o_order_sernum: o_order_sernum
+								}
 							}
 							service.post(jkurl, data,
 								function(res) {
@@ -396,7 +407,7 @@
 										})
 										that.onRetry()
 									} else {
-										that.htmlReset = 1
+										// that.htmlReset = 1
 										if (res.data.msg) {
 											uni.showToast({
 												icon: 'none',
@@ -520,7 +531,8 @@
 		top: calc(44px + env(safe-area-inset-top));
 		/* #endif */
 		z-index: 90;
-		font-size: 30rpx;
+		/* font-size: 30rpx; */
+		font-size: 34rpx;
 		width: 100%;
 		height: 76upx;
 		line-height: 76upx;
@@ -692,16 +704,21 @@
 	/*  */
 
 	.goodsname {
-		font-size: 28rpx;
+		/* font-size: 28rpx; */
+		font-size: 32rpx;
+		line-height: 36rpx;
+		height: 72rpx;
 		color: #333333;
-		margin-bottom: 10upx;
+		margin-bottom: 5upx;
 		font-weight: bold;
+		flex: none;
 	}
 
 	.goodspri {
+		/* font-size: 24rpx; */
 		font-size: 24rpx;
 		color: #666;
-		margin-bottom: 20upx;
+		margin-bottom: 5upx;
 	}
 
 	.scx {
@@ -718,7 +735,7 @@
 	}
 
 	.goodspri1 text {
-		font-size: 24upx;
+		font-size: 28upx;
 	}
 
 	.o_cz {

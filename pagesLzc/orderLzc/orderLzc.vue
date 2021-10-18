@@ -3,7 +3,7 @@
 
 		<view v-if="htmlReset==1" class="zanwu" @tap='onRetry'>请求失败，请点击重试</view>
 		<view v-if="htmlReset==-1" class="loading_def">
-			<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
+			<image class="loading_def_img" src="../../static/images/loading.gif" mode="aspectFit"></image>
 		</view>
 		<view v-if="htmlReset==0" class="container">
 
@@ -32,19 +32,19 @@
 			<view class="hengxian"></view>
 			<view class="goodsBox contbox">
 
-				<view class="goods1">
+				<view class="goods1" v-for="(item,index) in shujuLzc.goods">
 					<view class="goodsImg">
-						<image class="goodsImg" :src="getimg(shujuLzc.pic[0])" mode="aspectFill"></image>
+						<image class="goodsImg" :src="getimg(item.pic[0])" mode="aspectFill"></image>
 						<!-- <image class="goodsImg" :src="getimg(item1.photo[0])" mode="aspectFill"></image> -->
 					</view>
 					<view class="goodsinr">
-						<view class="goodsname oh2">{{shujuLzc.title}}</view>
+						<view class="goodsname oh2">{{item.title}}</view>
 						<view class="goodspri1">
 							<!-- <text class="fz36 cf6377a fwb">￥{{filter.moneyFormat('48')}}</text> -->
-							<view class="goods_pri"><text style="font-size: 22upx;">￥</text>{{shujuLzc.real_price}}
+							<view class="goods_pri"><text style="font-size: 22upx;">￥</text>{{item.real_price}}
 							</view>
 
-							<text class="goods_num"><text>×</text>{{sku_number}}</text>
+							<text class="goods_num"><text>×</text>{{item.sum}}</text>
 						</view>
 					</view>
 				</view>
@@ -58,7 +58,7 @@
 						<!-- <view>10元</view> -->
 					</view>
 					<view class="dis_flex aic guige_r">
-						<view>￥{{shujuLzc.real_price}}</view>
+						<view >￥{{get_goods_pri(shujuLzc)}}</view>
 					</view>
 				</view>
 				<view class="guige_li">
@@ -67,7 +67,7 @@
 						<!-- <view>10元</view> -->
 					</view>
 					<view class="dis_flex aic guige_r">
-						<view>{{shujuLzc.freight>0?shujuLzc.freight:'免运费'}}</view>
+						<view>{{shujuLzc.freight>0?'￥'+shujuLzc.freight:'免运费'}}</view>
 					</view>
 				</view>
 			</view>
@@ -96,7 +96,7 @@
 		data() {
 			return {
 				btnkg: 0,
-				htmlReset: 0,
+				htmlReset: -1,
 				type: 0, ///1 单品下单  2 购物车下单
 				sku_id: '', //规格
 				sku_number: '', //数量
@@ -148,7 +148,7 @@
 		onLoad(option) {
 			that = this
 			that.getShou();
-			console.log(that.$store.state.loginDatas.userToken)
+			// console.log(that.$store.state.loginDatas.userToken)
 			if (option.type == 1) {
 				that.type = option.type
 				that.sku_id = option.v_id
@@ -200,6 +200,16 @@
 		},
 		methods: {
 			...mapMutations(['order_ls']),
+			get_goods_pri(datas){
+				var g_pri=datas.all_price-datas.freight
+				g_pri=g_pri.toFixed(2)
+				if(g_pri>0){
+					return g_pri
+				}else{
+					return 0
+				}
+				
+			},
 			getimg(img) {
 				return service.getimg(img)
 			},
@@ -215,13 +225,23 @@
 					token: that.$store.state.loginDatas.userToken || '',
 					sku_id: that.sku_id,
 					address_id: that.address.id,
-					goods_sum: that.sku_number
+					goods_sum: that.sku_number,
+					make_type:that.type
+				}
+				if(that.type==2){
+					datas = {
+						token: that.$store.state.loginDatas.userToken || '',
+						sku_id: that.g_data,
+						address_id: that.address.id,
+						make_type:that.type
+					}
 				}
 				service.P_get(jkurl, datas).then(res => {
 					if (res.code == 1) {
 						this.htmlReset = 0;
 						that.shujuLzc = res.data;
 					} else {
+						this.htmlReset = 0;
 						if (res.msg) {
 							uni.showToast({
 								title: res.msg,
@@ -236,6 +256,7 @@
 
 					}
 				}).catch(e => {
+					this.htmlReset = 1;
 					console.log(e);
 					uni.showToast({
 						title: "请求异常",
@@ -472,7 +493,17 @@
 					address_id: that.address.id,
 					goods_sum: that.sku_number,
 					pay_type:0,
-					token:that.$store.state.loginDatas.userToken || ''
+					token:that.$store.state.loginDatas.userToken || '',
+					make_type:1
+				}
+				if(that.type==2){
+					datas = {
+						sku_id: that.g_data,
+						address_id: that.address.id,
+						pay_type:0,
+						token:that.$store.state.loginDatas.userToken || '',
+						make_type:2
+					}
 				}
 				uni.redirectTo({
 					url: `/pagesLzc/orderPay/orderPay?datas=${JSON.stringify(datas)}`

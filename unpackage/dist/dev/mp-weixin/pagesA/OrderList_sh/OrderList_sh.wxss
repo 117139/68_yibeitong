@@ -15,7 +15,8 @@ page.data-v-4f408d2b {
 
 
 	z-index: 90;
-	font-size: 30rpx;
+	/* font-size: 30rpx; */
+	font-size: 34rpx;
 	width: 100%;
 	height: 76rpx;
 	line-height: 76rpx;
@@ -157,15 +158,20 @@ background: #f75852; */
 
 /*  */
 .goodsname.data-v-4f408d2b {
-	font-size: 28rpx;
+	/* font-size: 28rpx; */
+	font-size: 32rpx;
+	line-height: 36rpx;
+	height: 72rpx;
 	color: #333333;
-	margin-bottom: 10rpx;
+	margin-bottom: 5rpx;
 	font-weight: bold;
+	flex: none;
 }
 .goodspri.data-v-4f408d2b {
+	/* font-size: 24rpx; */
 	font-size: 24rpx;
 	color: #666;
-	margin-bottom: 20rpx;
+	margin-bottom: 5rpx;
 }
 .scx.data-v-4f408d2b {
 	text-decoration: line-through;
@@ -179,7 +185,7 @@ background: #f75852; */
 	justify-content: space-between;
 }
 .goodspri1 text.data-v-4f408d2b {
-	font-size: 24rpx;
+	font-size: 28rpx;
 }
 .o_cz.data-v-4f408d2b {
 	width: 100%;

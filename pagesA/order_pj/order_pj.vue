@@ -24,7 +24,7 @@
 		      
 				</view>
 			</view>
-			<view class="fw_list">
+			<view class="fw_list" >
 				<view class="imgbox mb20">
 				  <view class="addimg1" v-for="(item,idx) in imgb" :data-idx="idx" @tap="imgdel">
 				    <!-- <image src="{{filter.imgIP(item)}}" data-src="{{filter.imgIP(item)}}" mode="aspectFill"></image> -->
@@ -33,13 +33,13 @@
 				
 				  <view v-if="imgb.length<9" class="addimg" @tap="scpic">
 				
-				    <image :src="filter.imgIP('/static_s/51daiyan/images/upimg1.jpg')"></image>
+				    <image :src="filter.imgIP('/static/images/upimg1.png')"></image>
 				  </view>
 				</view>
 		    
 			</view>
 		   
-			 <view class="sq_tx" @tap="save_val">发表</view>
+			 <view class="sq_tx" @tap="save_val">发 表</view>
 		</view>
 		
 	</view>
@@ -52,6 +52,7 @@
 		mapState,
 		mapMutations
 	} from 'vuex'
+	var that
 	export default {
 		data() {
 			return {
@@ -61,6 +62,7 @@
 				ov_id:'',
 				yname:'',
 				imgb:[],
+				is_jd:0
 			}
 		},
 		computed:{
@@ -81,12 +83,12 @@
 		},
 		
 		onLoad: function (option) {
-			
+			that=this
 			// this.getCate()
 			if(option.id){
 				this.ov_id=option.id
 			}
-			
+			that.is_jd=option.is_jd||0
 			
 			
 		},
@@ -178,8 +180,20 @@
 				}else{
 					that.btnkg=1
 				}
+				var jkurl='/order/appraiseGoods'
+				if(that.is_jd==1){
+					jkurl='/jd.JdGoods/appraiseGoods'
+					datas={
+						token: that.$store.state.loginDatas.userToken||'',
+						jd_o_goods_id:that.ov_id,
+						// tag:tag,
+						img:that.imgb.join(','),
+						content:that.yname,
+					}
+				}
 				// 单个请求
-				service.P_post('/order/appraiseGoods',datas).then(res => {
+				service.P_post(jkurl,datas).then(res => {
+					that.btnkg=0
 				  console.log(res)
 					if(res.code==1){
 						wx.showToast({
@@ -193,6 +207,7 @@
 						console.log(that.imgb)
 					}
 				}).catch(e => {
+					that.btnkg=0
 				  console.log(e)
 					uni.showToast({
 						icon:'none',
@@ -689,6 +704,7 @@ text{
 
 .fuwu_li text{
 	font-size: 24rpx;
+	/* font-size: 32rpx; */
 	color: #666;
 	margin-left: 10rpx;
 }
@@ -702,7 +718,8 @@ text{
 }
 .fuwu_li .d1{
 	flex: none;
-	font-size: 30rpx;
+	/* font-size: 30rpx; */
+	font-size: 38rpx;
 	color: #333;
 	margin-bottom: 10rpx;
 }
@@ -720,7 +737,8 @@ text{
 	padding: 12rpx;
 	box-sizing: border-box;
 	background: #fff;
-	font-size: 26rpx;
+	/* font-size: 26rpx; */
+	font-size: 34rpx;
 }
 .tk_text view{
 	border-bottom-right-radius: 12rpx;
@@ -770,7 +788,8 @@ text{
 	height:80rpx;
   border-radius: 12rpx;
 	background:#f47416;
-	font-size: 30rpx;
+	/* font-size: 30rpx; */
+	font-size: 38rpx;
 	color: #fff;
 	margin: 10rpx auto 50rpx;
 }

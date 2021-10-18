@@ -129,6 +129,10 @@
 				</view>
 			</view>
 		</view>
+		<!-- 购物车 -->
+		<!-- <view v-if="active!=0" class="jd_gwc" @click="jump" data-url="/pagesA/car_jd/car_jd">
+			<image class="jd_gwc_btn" src="/static/images/tabbar/tab3.png" mode="aspectFit"></image>
+		</view> -->
 	</view>
 </template>
 
@@ -919,4 +923,6 @@
 		width: 100%;
 		height: 244rpx;
 	} */
+	
+	
 </style>

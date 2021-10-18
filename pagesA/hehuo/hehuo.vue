@@ -3,7 +3,7 @@
 	<view class="content">
 		<view class="heR1 dis_flex ju_b aic">
 			<view class="heText1">
-				筛选
+				<!-- 筛选 -->时间
 			</view>
 			<picker class="dis_flex aic" mode="date" @change="shaiDataChange" fields="month">
 				<text class="heText1">{{shaiData}}</text>
@@ -15,7 +15,7 @@
 				总人数
 			</view>
 			<view class="dis_flex aic">
-				<text class="heR3R_1">{{shuju.allPeople||0}}</text>
+				<text class="heR3R_1" style="font-size: 36rpx;">{{shuju.allPeople||0}}人</text>
 			</view>
 		</view>
 		<view class="heR3 dis_flex ju_b aic">
@@ -24,8 +24,8 @@
 				<view class="heR3l_2">业绩分红</view>
 			</view>
 			<view class="heR3R">
-				<view class="heR3R_1">￥{{shuju.allOrderPayMoney||0}}</view>
-				<view class="heR3l_2">￥{{shuju.allOrderMoney||0}}</view>
+				<view class="heR3R_1">￥{{shuju.allOrderPayMoney||0}}元</view>
+				<view class="heR3l_2">￥{{shuju.allOrderMoney||0}}元</view>
 			</view>
 		</view>
 		<view class="heR3 dis_flex ju_b aic mb20">
@@ -34,8 +34,8 @@
 				<view class="heR3l_2">业绩分红</view>
 			</view>
 			<view class="heR3R">
-				<view class="heR3R_1">￥{{shuju.prepaidPayMoney||0}}</view>
-				<view class="heR3l_2">￥{{shuju.prepaidMoney||0}}</view>
+				<view class="heR3R_1">￥{{shuju.prepaidPayMoney||0}}元</view>
+				<view class="heR3l_2">￥{{shuju.prepaidMoney||0}}元</view>
 			</view>
 		</view>
 		<view class="heR2 dis_flex ju_b aic border-bottomf81">
@@ -43,7 +43,7 @@
 				公司奖励
 			</view>
 			<view class="dis_flex aic">
-				<text class="heR3R_1">￥{{shuju.record||0}}</text>
+				<text class="heR3R_1">￥{{shuju.record||0}}元</text>
 			</view>
 		</view>
 		<view class="heR2 dis_flex ju_b aic border-bottomf81">
@@ -51,7 +51,7 @@
 				账户余额
 			</view>
 			<view class="dis_flex aic">
-				<text class="heR3R_1">￥{{shuju.commission||0}}</text>
+				<text class="heR3R_1">￥{{shuju.commission||0}}元</text>
 			</view>
 		</view>
 		<!-- <view class="heR2 dis_flex ju_b aic border-bottomf81">
@@ -75,7 +75,7 @@
 				累计已提
 			</view>
 			<view class="dis_flex aic">
-				<text class="heR3R_1" style="color: #42BB32;">-￥{{shuju.submitted_commission||0}}</text>
+				<text class="heR3R_1" style="color: #42BB32;">-￥{{shuju.submitted_commission||0}}元</text>
 			</view>
 		</view>
 		<view class="heBtn dis_flex aic ju_c" @tap="jump" data-url="/pagesA/my_tx/my_tx?type=1">
@@ -141,7 +141,11 @@
 			shaiDataChange(e) {
 				var data = e.target.value.split("-");
 				that.shaiData = `${data[0]}-${data[1]}`
-				var time = new Date(data).getTime();
+				console.log(data)
+				// var data1=data.push('01')
+				// data1=data1.join('-')
+				var time = new Date(data[0],data[1],'01').getTime();
+				// console.log(time)
 				this.getShuJu(time)
 				
 			},
@@ -205,7 +209,8 @@
 	}
 
 	.heText1 {
-		font-size: 24rpx;
+		/* font-size: 24rpx; */
+		font-size: 32rpx;
 		font-family: PingFang;
 		font-weight: 500;
 		color: #333333;
@@ -241,20 +246,23 @@
 	}
 
 	.heR3l_2 {
-		font-size: 24rpx;
+		/* font-size: 24rpx; */
+		/* font-size: 30rpx; */
+		font-size: 32rpx;
 		font-family: PingFang;
 		font-weight: 500;
 		color: #666666;
-		line-height: 24rpx;
+		line-height: 34rpx;
 		margin-top: 23rpx;
 	}
 
 	.heR3R_1 {
-		font-size: 28rpx;
+		/* font-size: 28rpx; */
+		font-size: 34rpx;
 		font-family: PingFang;
 		font-weight: 500;
 		color: #F54248;
-		line-height: 28rpx;
+		line-height: 38rpx;
 	}
 
 	.heBtn {

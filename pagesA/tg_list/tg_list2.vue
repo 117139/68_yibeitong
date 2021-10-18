@@ -10,8 +10,8 @@
 					</view>
 					<image class="tg_icon" :src="getimg('/static/images/tg_num.png')" mode="aspectFit"></image>
 					<view class="top_l ">
-						<view class="top_l1">消费业绩<br><text>￥</text>{{datas_z.dd_consume_all?datas_z.dd_consume_all:0}}</view>
-						<view class="top_l1">话费业绩<br><text>￥</text>{{datas_z.cz_consume_all?datas_z.cz_consume_all:0}}</view>
+						<view class="top_l1">消费业绩<br><text>￥</text>{{datas_z.dd_consume_all?datas_z.dd_consume_all:0}}元</view>
+						<view class="top_l1">话费业绩<br><text>￥</text>{{datas_z.cz_consume_all?datas_z.cz_consume_all:0}}元</view>
 						<!-- <view class="top_l2 dis_flex ju_c"><text>￥</text>{{datas_z.dd_consume_all?datas_z.dd_consume_all:0}}</view> -->
 					</view>
 					<!-- <view class="top_l">
@@ -22,7 +22,9 @@
 			</view>
 			<picker mode="date" fields="month" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
 				<view class="dis_flex aic ju_b" style="width: 750upx; padding: 30upx">
-					<view>筛选</view>
+					<view class="li_time">
+						<!-- 筛选 -->时间
+					</view>
 					<view class="dis_flex aic li_tit">
 						<view class="li_time">{{gettime(date)}}</view>
 						<text class="iconfont iconoff" style="font-size: 20upx;margin-left: 10upx;"></text>
@@ -42,14 +44,14 @@
 							<view class="hy_li_msg1">
 								<view class="hy_name">{{item.nickname}}</view>
 								<!-- <view v-if="item.dd_consume">消费业绩：￥{{item.dd_consume*1}}元</view> -->
-								<view v-if="item.dd_consume" class="hy_r_d"><text>消费业绩：</text>￥{{item.dd_consume*1}}</view>
+								<view v-if="item.dd_consume" class="hy_r_d"><text>消费业绩：</text>￥{{item.dd_consume*1}}元</view>
 								
 							</view>
 							<view class="hy_li_msg2">
 								<!-- <view class="hy_time">{{item.time}}</view> -->
 								<view>推广人数：{{item.user_sum}}人</view>
 								<!-- <view v-if="item.cz_consume">话费业绩：￥{{item.cz_consume*1}}元</view> -->
-								<view v-if="item.cz_consume"class="hy_r_d"><text>话费业绩：</text>￥{{item.cz_consume*1}}</view>
+								<view v-if="item.cz_consume"class="hy_r_d"><text>话费业绩：</text>￥{{item.cz_consume*1}}元</view>
 							</view>
 						</view>
 					</view>
@@ -396,5 +398,11 @@
 	}
 	.hy_time{
 		font-size: 24upx;
+	}
+	.li_time{
+		font-size: 32rpx;
+	}
+	.hy_r_d{
+		text-align: right;
 	}
 </style>

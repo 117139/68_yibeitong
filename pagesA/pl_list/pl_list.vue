@@ -10,6 +10,11 @@
 			<view class="pj_d3">
 				<text v-for="(item1,idx1) in item.gd_attr">{{item1.value}}</text>
 			</view>
+			<view class="pj_d4">
+				<view class="pj_img" v-for="(item1,index1) in item.comment_pic" @tap="pveimg" :data-src="getimg(item1)">
+					<image  :src="getimg(item1)" mode="aspectFill"></image>
+				</view>
+			</view>
 		</view>
 		<view class="zanwu" v-if="datas.length==0">暂无内容</view>
 		<view v-if="data_last" class="data_last">我可是有底线的哟~</view>
@@ -64,6 +69,9 @@
 		methods: {
 			getimg(img){
 				return service.getimg(img)
+			},
+			pveimg(e){
+				return service.pveimg(e)
 			},
 			onRetry(){
 				
@@ -184,5 +192,24 @@
 
 	view.user_tx {
 		margin-right: 19rpx;
+	}
+	
+	
+	
+	.pj_d4{
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		
+	}
+	.pj_img{
+		width: 220rpx;
+		height: 220rpx;
+		padding: 5rpx;
+	}
+	.pj_img image{
+		width: 100%;
+		height: 100%;
+		
 	}
 </style>

@@ -179,6 +179,7 @@
 	min-height: 465rpx;
 	background: #FFFFFF;
 	border-radius: 10rpx;
+	position: relative;
 }
 .fuwu_tit.data-v-0be17cc6{
 	width: 100%;
@@ -247,5 +248,14 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+.fw_zzc.data-v-0be17cc6{
+	position: absolute;
+	z-index: 10000;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: #F8F8F8;
 }
 

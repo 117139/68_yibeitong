@@ -1,5 +1,6 @@
 <template>
 	<view class="minh100">
+		<z_text></z_text>
 		<image class="cz_bg" :src="getimg('/static/images/cz_bg_02.png')" mode="aspectFill"></image>
 		<view class="hd_box">
 			<view class="hd_box_bg">

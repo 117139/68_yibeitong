@@ -225,11 +225,14 @@
 						title: '微信支付失败'
 					})
 					// service.wxlogin('token')
-					setTimeout(() => {
-						uni.redirectTo({
-							url:'/pagesA/OrderList/OrderList'
-						})
-					}, 1000)
+					// setTimeout(() => {
+					// 	// uni.redirectTo({
+					// 	// 	url:'/pagesA/OrderList/OrderList'
+					// 	// })
+					// 	uni.navigateBack({
+					// 		delta:1
+					// 	})
+					// }, 1000)
 				})
 				return
 				
@@ -284,8 +287,8 @@
 			},
 			off_fuc(){
 				that.show_tk=false
-				uni.redirectTo({
-					url:'/pagesA/OrderList/OrderList'
+				uni.navigateBack({
+					delta:1
 				})
 			}
 		}

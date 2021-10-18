@@ -75,7 +75,7 @@
 					<ehPicker class="w100" @conceal="conceal" v-if="isPop"
 						style="height: 100vh !important;z-index: 1;left: 0;"></ehPicker>
 				</view>
-				<view class="w100" @click="cityChange" v-if="is_jd == 1">
+				<!-- <view class="w100" @click="cityChange" v-if="is_jd == 1">
 					<view class="fuwu_li bt0">
 						<view class="d1">取件地址</view>
 						<view class="fw_msg">
@@ -83,7 +83,16 @@
 						</view>
 						<text class="iconfont iconnext-m"></text>
 					</view>
-				</view>
+				</view> -->
+				<picker class="w100" @change="addChange" v-if="is_jd==1" mode="region">
+					<view class="fuwu_li bt0">
+						<view class="d1">取件地址</view>
+						<view class="fw_msg">
+							{{`${province}-${city}-${county}`}}
+						</view>
+						<text class="iconfont iconnext-m"></text>
+					</view>
+				</picker>
 				<view class="fuwu_li" v-if="is_jd == 1">
 					<view class="d1">详细地址:</view>
 					<input type="text" value="" class="fw_msg" v-model="address" placeholder="请输入详细地址" />
@@ -164,11 +173,6 @@
 			return {
 				btnkg: 0,
 				htmlReset: 0,
-				datalist: [
-					'售后申请',
-					'处理中',
-					'申请记录'
-				],
 				datas: '',
 				zhaungtai: [{
 						name: '没收到货,或与卖家协商同意不用退货',
@@ -189,10 +193,11 @@
 					}, {
 						name: "换货",
 						value: "20"
-					}, {
-						name: "维修",
-						value: "30"
 					}
+					// , {
+					// 	name: "维修",
+					// 	value: "30"
+					// }
 
 				],
 				BaoList: [{
@@ -232,7 +237,7 @@
 					},
 				],
 				index1: 0,
-				yname: '买多了',
+				yname: '',
 				imgb: [],
 				cnum: 1,
 
@@ -245,10 +250,10 @@
 				QiIndex: 0,
 				BaoIndex: 0,
 				isPop: false,
-				province: "山西省",
-				city: "太原市",
-				county: "小店区",
-				address: "创业路"
+				province: "",
+				city: "",
+				county: "",
+				address: ""
 			}
 		},
 		computed: {
@@ -288,6 +293,12 @@
 			// this.getOrderList('onshow')
 		},
 		methods: {
+			addChange(e){
+				console.log(e)
+				that.province = e.detail.value[0];
+				that.city = e.detail.value[1];
+				that.county = e.detail.value[2];
+			},
 			getimg(img) {
 				return service.getimg(img)
 			},
@@ -389,46 +400,32 @@
 				this.is_jd = 1;
 				var that = this
 				var imgs = that.imgb.join(',')
-				if (!that.yname) {
-					wx.showToast({
-						icon: 'none',
-						title: '请输入具体原因',
-					})
-					return
-				}
-				if (that.imgb.length == 0) {
-					wx.showToast({
-						icon: 'none',
-						title: '请上传凭证',
-					})
-					return
-				}
 				if (that.is_jd == 1) {
-					if (that.province.length == 0) {
+					if (!that.province) {
 						wx.showToast({
 							icon: 'none',
-							title: '请选择省份',
+							title: '请选择地址',
 						})
 						return
 					}
-					if (that.city.length == 0) {
-						wx.showToast({
-							icon: 'none',
-							title: '请选择市',
-						})
-						return
-					}
-					if (that.county.length == 0) {
-						wx.showToast({
-							icon: 'none',
-							title: '请选择区',
-						})
-						return
-					}
-					if (that.address.length == 0) {
+					if (!that.address) {
 						wx.showToast({
 							icon: 'none',
 							title: '请输入详细地址',
+						})
+						return
+					}
+					if (!that.yname) {
+						wx.showToast({
+							icon: 'none',
+							title: '请输入具体原因',
+						})
+						return
+					}
+					if (that.imgb.length == 0) {
+						wx.showToast({
+							icon: 'none',
+							title: '请上传凭证',
 						})
 						return
 					}
@@ -438,6 +435,7 @@
 						questionDesc: that.yname,
 						questionPic: imgs,
 						order_id: that.datas.o_id,
+						// jd_o_goods_id:
 						province: that.province,
 						city: that.city,
 						county: that.county,
@@ -486,7 +484,7 @@
 							uni.navigateBack()
 						}, 1000)
 					} else {
-						that.htmlReset = 1
+						// that.htmlReset = 1
 						// that.$refs.htmlLoading.htmlReset_fuc(1)
 						if (res.msg) {
 							uni.showToast({
@@ -501,7 +499,7 @@
 						}
 					}
 				}).catch(e => {
-					that.htmlReset = 1
+					// that.htmlReset = 1
 					that.btn_kg = 0
 					console.log(e)
 					uni.showToast({

@@ -24,7 +24,7 @@
 			<view v-if="datas.length==0" class="zanwu">暂无数据</view>
 			<view v-if="data_last" class="data_last">我可是有底线的哟~</view>
 			<view class="fixbottom">
-				<view class="addbtn addbtn1" @tap="del_add">删除</view>
+				<view class="addbtn addbtn1" @tap="del_add">删 除</view>
 				<navigator class="addbtn" url="/pagesA/my_addressEdit/my_addressEdit">
 
 					添加新地址
@@ -54,7 +54,7 @@
 				btnkg: 0,
 				moren: 1,
 				page: 1,
-				page_size: 20,
+				pagesize: 20,
 				data_last:false,
 				datas: [],
 				mridx: 0,
@@ -462,7 +462,8 @@
 	}
 
 	.addp1 {
-		font-size: 27upx;
+		/* font-size: 27upx; */
+		font-size: 32upx;
 		color: #333;
 		display: flex;
 		align-items: center;
@@ -473,9 +474,10 @@
 	}
 
 	.addp2 {
-		font-size: 22rpx;
+		/* font-size: 22rpx; */
+		font-size: 30rpx;
 		color: #666;
-		height: 80rpx;
+		min-height: 80rpx;
 		display: flex;
 		align-items: center;
 		margin-bottom: 20rpx;
@@ -541,7 +543,8 @@
 		justify-content: center;
 		align-items: center;
 		color: #fff;
-		font-size: 28rpx;
+		/* font-size: 28rpx; */
+		font-size: 32rpx;
 	}
 
 	.addbtn1 {

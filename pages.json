@@ -198,7 +198,7 @@
 		}, {
 			"path": "huafei_cz/huafei_cz",
 			"style": {
-				"navigationBarTitleText": "话费充值",
+				"navigationBarTitleText": "依辈通",
 				"enablePullDownRefresh": false
 			}
 
@@ -300,7 +300,25 @@
 				"enablePullDownRefresh": false
 			}
 
-		}]
+		}    ,{
+                    "path" : "car_jd/car_jd",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "购物车",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "goods_list/goods_list",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": true
+                }
+                
+                }
+            ]
 	}, {
 		"root": "pagesLzc",
 		"pages": [{
@@ -352,7 +370,25 @@
 				"enablePullDownRefresh": false
 			}
 
-		}]
+		}    ,{
+                    "path" : "pl_list/pl_list",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "商品评价",
+                    "enablePullDownRefresh": true
+                }
+                
+                }
+                ,{
+                    "path" : "OrderDetails_sh_xq/OrderDetails_sh_xq",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "售后详情",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
 	}],
 
 	"preloadRule": {

@@ -21,7 +21,8 @@
 	border-bottom: 1px solid #eee;
 }
 .addp1.data-v-6a84896a {
-	font-size: 27rpx;
+	/* font-size: 27upx; */
+	font-size: 32rpx;
 	color: #333;
 	display: flex;
 	align-items: center;
@@ -30,9 +31,10 @@
 	margin-right: 20rpx;
 }
 .addp2.data-v-6a84896a {
-	font-size: 22rpx;
+	/* font-size: 22rpx; */
+	font-size: 30rpx;
 	color: #666;
-	height: 80rpx;
+	min-height: 80rpx;
 	display: flex;
 	align-items: center;
 	margin-bottom: 20rpx;
@@ -91,7 +93,8 @@
 	justify-content: center;
 	align-items: center;
 	color: #fff;
-	font-size: 28rpx;
+	/* font-size: 28rpx; */
+	font-size: 32rpx;
 }
 .addbtn1.data-v-6a84896a {
 	margin-bottom: 20rpx;

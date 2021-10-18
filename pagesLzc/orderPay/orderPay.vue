@@ -101,7 +101,7 @@
 		data() {
 			return {
 				htmlReset: -1,
-				my_dou_xuan: 2,
+				my_dou_xuan: 1,
 				pay_data: '',
 				datas: '',
 				show_tk: false,
@@ -172,7 +172,7 @@
 					mask: true,
 					title: '正在生成订单'
 				})
-				var myUrl = service.IP_lzc + "jd.JdOrder/makeOrder";
+				var myUrl = service.IP_lzc + "/jd.JdOrder/makeOrder";
 				service.P_get(myUrl, datas).then(res => {
 					if (res.code == 1) {
 						var datas = res.data;
@@ -180,6 +180,7 @@
 							title: "生成订单成功",
 							success: () => {
 								that.datas = datas
+								that.hb_money=res.data.o_consumer_rebate_sum
 							}
 						})
 
@@ -192,10 +193,7 @@
 						} else {
 							uni.showToast({
 								title: "请求失败",
-								icon: "none",
-								success() {
-									that.htmlReset = 1;
-								}
+								icon: "none"
 							})
 						}
 					}
@@ -258,6 +256,7 @@
 				service.P_get(myUrl, datas).then(res => {
 					if (res.code == 1) {
 						this.isPay = 0;
+						that.show_tk=true
 						uni.showToast({
 							icon: 'none',
 							title: '支付成功'
@@ -332,7 +331,7 @@
 				// })
 			},
 			we_pay() {
-				var jUrl = "jd.JdOrder/makeOrder";
+				var jUrl = "/jd.JdOrder/makeOrder";
 				var data = {
 					jd_o_id: that.datas.o_id,
 					token: that.$store.state.loginDatas.userToken || ''
@@ -343,6 +342,8 @@
 							title: "支付成功",
 							icon: "none",
 							success() {
+								that.hb_money = res.data.o_consumer_rebate_sum
+								// that.show_tk=true
 								service.wxpay(res.payData).then(res => {
 									uni.showToast({
 										icon: 'none',

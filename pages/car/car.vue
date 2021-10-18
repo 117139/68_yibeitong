@@ -7,25 +7,25 @@
 					<view class="setting1 " :data-id="item.id" @tap="select_car(item,index)">
 						<text :class="item.active==1?'active':''" class="iconfont iconduigou-copy fz26 mr5"></text>
 					</view>
-					<image class="car_li_img" @tap="jump" :data-url="'/pagesA/details/details?id='+item.g_id" :src="getimg(item.g_pic[0])" mode="aspectFit"></image>
+					<image class="car_li_img" @tap="jump" :data-url="'/pageslzc/details/details?id='+item.sku_id" :src="getimg(item.info.pic[0])" mode="aspectFit"></image>
 					<view class="flex_1">
-						<view class="goods_name oh2"  @tap="jump" :data-url="'/pagesA/details/details?id='+item.g_id">{{item.g_title}}</view>
-						<view class="goods_gg"  @tap="jump" :data-url="'/pagesA/details/details?id='+item.g_id">
-							<text v-for="(item1,index1) in item.attr">{{item1.value+';'}}</text>
+						<view class="goods_name oh2"  @tap="jump" :data-url="'/pageslzc/details/details?id='+item.sku_id">{{item.info.title}}</view>
+						<view class="goods_gg"  @tap="jump" :data-url="'/pageslzc/details/details?id='+item.sku_id">
+							<!-- <text v-for="(item1,index1) in item.attr">{{item1.value+';'}}</text> -->
 						</view>
 						<view class="goods_pri_num dis_flex aic ju_b">
-							<view class="goods_pri">￥<text>{{item.g_price}}</text></view>
+							<view class="goods_pri">￥<text>{{item.info.real_price}}</text></view>
 							<view class="goods_num dis_flex">
-								<text v-if="item.num>1" class="iconfont iconiconset0187" @tap.stop="onNum(item,'-')"></text>
+								<text v-if="item.sum>1" class="iconfont iconiconset0187" @tap.stop="onNum(item,'-')"></text>
 								<text v-else class="iconfont iconiconset0187 no"></text>
-								<input type="text" v-model="item.number" disabled="">
+								<input type="text" v-model="item.sum" disabled="">
 								<text class="iconfont icon54" @tap.stop="onNum(item,'+')"></text>
 							</view>
 						</view>
 					</view>
 				</view>
 				<view class="move">
-					<view class="bg-red" @tap="del_car(item.c_id)">删除</view>
+					<view class="bg-red" @tap="del_car(item.jd_cart_id)">删除</view>
 				</view>
 			</view>
 		</view>
@@ -45,7 +45,7 @@
 				
 				<!-- <view class="fz22 c9">不含运费</view> -->
 			</view>
-			<view class="heji"><text class="hj_text">合计:</text><text class="hj_rmb">￥</text>{{sum}}</view>
+			<view class="heji"><text class="hj_text">共{{heji_num}}件，合计:</text><text class="hj_rmb">￥</text>{{sum}}</view>
 			<!-- <view class="jiesuan jiesuan1" @tap="cardel">删除</view> -->
 			<view class="jiesuan" @tap="openOrder">结算</view>
 		</view>
@@ -80,7 +80,8 @@
 				sum:0.00,
 				data_last:'',
 				
-				show_num:0
+				show_num:0,
+				heji_num:0
 			}
 		},
 		components: {
@@ -123,6 +124,8 @@
 				this.page=1
 				this.datas=[]
 				this.all=false
+				this.sum=0
+				this.heji_num=0
 				this.getdata()
 			}
 		},
@@ -136,6 +139,8 @@
 			this.page=1
 			this.datas=[]
 			this.all=false
+			this.sum=0
+			this.heji_num=0
 		  this.getdata()
 		},
 		
@@ -143,7 +148,7 @@
 		 * 页面上拉触底事件的处理函数
 		 */
 		onReachBottom: function () {
-			this.getdata()
+			// this.getdata()
 		},
 		methods: {
 			getimg(img){
@@ -219,16 +224,18 @@
 			/*计算价格*/
 			countpri() {
 			  let heji = 0
+			  let heji_num = 0
 			  let var2 = this.datas
 			  for (let i in var2) {
 			    if (var2[i].active == true) {
-			      heji += var2[i].number * (var2[i].g_price * 100)
-			
+			      heji += var2[i].sum * (var2[i].info.real_price * 100)
+						heji_num+=var2[i].sum
 			    }
 			  }
 			
 			  heji = (heji / 100).toFixed(2)
 				this.sum=heji
+				that.heji_num=heji_num
 			},
 			//加减
 			onNum(item,ad) {
@@ -239,7 +246,7 @@
 			  // let thisidx = e.currentTarget.dataset.idx
 			  // let thisidx1 = e.currentTarget.dataset.idx1
 			
-			  if (item.number < 2 && ad == '-') {
+			  if (item.sum < 2 && ad == '-') {
 			    console.log('禁止')
 			    return false;
 			
@@ -253,15 +260,14 @@
 				// }
 				// Vue.set(item, 'num', new_num)
 			 //  return
-			  var jkurl= '/cart/incOrDec'
+			  var jkurl= '/jd.JdCart/incOrDec'
 				var datas={
 					token: that.$store.state.loginDatas.userToken||'',
-					g_id:item.g_id,
-					v_id:item.v_id,
+					jd_cart_id:item.jd_cart_id,
 					type:ad == '-'?'dec':'inc',
 					sum:1
 				}
-			 service.P_post(jkurl, datas).then(res => {
+			 service.P_get(jkurl, datas).then(res => {
 			 	that.btn_kg=0
 			 	console.log(res)
 			 	if (res.code == 1) {
@@ -277,28 +283,15 @@
 			 		// } else {
 			 		//   that.datas[thisidx].number++
 			 		// }
-					var new_num=item.number--
+					var new_num=item.sum
 					if (ad == '-') {
 					  new_num--
 					} else {
-						if(item.sku_number==item.number){
-							uni.showToast({
-								icon:'none',
-								title:'库存不足'
-							})
-							return
-						}
-						if(item.sku_number<item.number){
-							uni.showToast({
-								icon:'none',
-								title:'库存不足'
-							})
-							Vue.set(item, 'number', item.sku_number)
-							return
-						}
+						
+						
 					  new_num++
 					}
-					Vue.set(item, 'number', new_num)
+					Vue.set(item, 'sum', new_num)
 			 	}
 			 }).catch(e => {
 			 	that.btn_kg=0
@@ -324,17 +317,11 @@
 			  // for (let i in xuanG) {
 				for(var i=0; i<xuanG.length;i++){
 			    if (xuanG[i].active) {
-						if(xuanG[i].number>xuanG[i].sku_number){
-							kc_tip=true
-							that.all=false
-							Vue.set(that.datas[i],'xuan',false)
-						}else{
-							if (idG == '') {
-							  idG = xuanG[i].c_id
-										
-							} else {
-							  idG += ',' + xuanG[i].c_id
-							}
+						if (idG == '') {
+						  idG = xuanG[i].sku_id
+									
+						} else {
+						  idG += ',' + xuanG[i].sku_id
 						}
 			     
 			      // xzarr.push(that.goods[i])
@@ -346,20 +333,10 @@
 			  // console.log(xzarr)
 			  console.log('idG------------------------------->')
 			  console.log(idG)
-				if(kc_tip&&idG !== ''){
-					uni.showToast({
-						icon:'none',
-						title:'部分商品库存不足已被取消选择'
+				if (idG !== '') {
+					wx.navigateTo({
+			     url: '/pagesLzc/orderLzc/orderLzc?type=2&g_data='+idG
 					})
-					setTimeout(()=>{
-						wx.navigateTo({
-						  url: '/pagesA/Order/Order?type=2&g_data='+idG
-						})
-					},1500)
-				}else if (idG !== '') {
-			   wx.navigateTo({
-			     url: '/pagesA/Order/Order?type=2&g_data='+idG
-			   })
 			  }else{
 					if(kc_tip){
 						uni.showToast({
@@ -391,7 +368,7 @@
 				}
 				that.btn_kg=1
 				//selectSaraylDetailByUserCard
-				var jkurl = '/cart'
+				var jkurl = '/jd.JdCart/index'
 				uni.showLoading({
 					title: '正在获取数据'
 				})
@@ -554,12 +531,12 @@
 				    success: function (res) {
 				        if (res.confirm) {
 				            console.log('用户点击确定');
-										var jkurl= '/cart/del'
+										var jkurl= '/jd.JdCart/del'
 										var datas={
 											token: that.$store.state.loginDatas.userToken||'',
 											c_ids:id
 										}
-										service.P_post(jkurl, datas).then(res => {
+										service.P_get(jkurl, datas).then(res => {
 											that.btn_kg=0
 											console.log(res)
 											if (res.code == 1) {
@@ -574,9 +551,10 @@
 													title:'操作成功'
 												})
 												setTimeout(()=>{
-													this.page=1
-													this.datas=[]
-													this.getdata()
+													that.btn_kg=0
+													that.page=1
+													that.datas=[]
+													that.getdata()
 												},1000)
 											}
 										}).catch(e => {
@@ -675,9 +653,12 @@
 		border-radius: 2px;
 	}
 	.goods_name{
-		font-size: 27upx;
-		color: #333333;
+		/* font-size: 27upx;
+		line-height: 42upx; */
+		font-size: 32upx;
 		line-height: 42upx;
+		max-height: 82rpx;
+		color: #333333;
 		margin-bottom: 10upx;
 	}
 	.goods_gg text{
@@ -686,14 +667,15 @@
 		margin-right: 8upx;
 	}
 	.goods_pri_num{
-		margin-top: 30upx;
+		margin-top: 12upx;
 	}
 	.goods_pri{
 		color: #FD383B;
-		font-size: 22upx;
+		/* font-size: 22upx; */
+		font-size: 26upx;
 	}
 	.goods_pri text{
-		font-size: 28upx;
+		font-size: 32upx;
 	}
 	.goods_num text{
 		font-size: 36upx;
@@ -766,7 +748,8 @@
 		align-items: center;
 	}
 	.heji{
-		font-size: 29upx;
+		/* font-size: 29upx; */
+		font-size: 32upx;
 		color: #FD383B;
 		font-weight: bold;
 	}

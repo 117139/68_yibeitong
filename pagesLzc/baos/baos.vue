@@ -44,6 +44,7 @@
 				</view>
 			</view>
 		</view>
+		
 		<view class="moreSort" v-if="isBt==1">{{more}}</view>
 	</view>
 </template>

@@ -189,6 +189,8 @@
 								icon: 'none',
 								title: '支付成功'
 							})
+							that.hb_money=res.data.o_consumer_rebate_sum
+							that.show_tk = true
 						} else {
 							this.isPay = 0;
 							if (res.msg) {
@@ -265,7 +267,7 @@
 
 			},
 			we_pay() {
-				var jUrl = "jd.JdOrder/makeOrder";
+				var jUrl = "/jd.JdOrder/makeOrder";
 				var data = {
 					jd_o_id: that.datas.o_id,
 					token: that.$store.state.loginDatas.userToken || ''
@@ -276,6 +278,7 @@
 							title: "支付成功",
 							icon: "none",
 							success() {
+								that.hb_money=res.data.o_consumer_rebate_sum
 								service.wxpay(res.payData).then(res => {
 									uni.showToast({
 										icon: 'none',
@@ -290,24 +293,30 @@
 										title: '微信支付失败'
 									})
 									// service.wxlogin('token')
-									setTimeout(() => {
-										uni.navigateBack({
-											delta:1
-										})
-									}, 1000)
+									// setTimeout(() => {
+									// 	uni.navigateBack({
+									// 		delta:1
+									// 	})
+									// }, 1000)
 								})
 								return
 							}
 						})
 					}
 				}).catch(e => {
-			
+					uni.showToast({
+						icon: 'none',
+						title: '系统错误'
+					})
 				})
 			},
 			off_fuc() {
 				that.show_tk = false
-				uni.redirectTo({
-					url: '/pagesA/OrderList/OrderList'
+				// uni.redirectTo({
+				// 	url: '/pagesA/OrderList/OrderList'
+				// })
+				uni.navigateBack({
+					delta:1
 				})
 			}
 		}

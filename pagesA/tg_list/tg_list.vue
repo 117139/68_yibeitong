@@ -25,7 +25,7 @@
 								<view class="hy_r_d"><text>消费业绩：</text>￥{{item.dd_consume}}元</view>
 							</view>
 							<view class="hy_li_msg1">
-								<view class="hy_name">{{item.nickname}}</view>
+								<view class="hy_name" style="opacity: 0;">{{item.nickname}}</view>
 								<view class="hy_r_d"><text>话费业绩：</text>￥{{item.cz_consume}}元</view>
 							</view>
 							<view class="hy_li_msg2">
@@ -44,7 +44,7 @@
 								<view class="hy_r_d"><text>消费业绩：</text>￥{{item.dd_consume}}元</view>
 							</view>
 							<view class="hy_li_msg1">
-								<view class="hy_name">{{item.nickname}}</view>
+								<view class="hy_name" style="opacity: 0;">{{item.nickname}}</view>
 								<view class="hy_r_d"><text>话费业绩：</text>￥{{item.cz_consume}}元</view>
 							</view>
 							<view class="hy_li_msg2">

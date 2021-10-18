@@ -40,15 +40,15 @@
 									<!-- <image class="goodsImg" :src="getimg(item1.photo)" mode="aspectFill"></image> -->
 								</view>
 								<view class="goodsinr">
-									<view class="goodsname fz30 c30">{{item1.gd_name}}</view>
+									<view class="goodsname fz30 c30 oh2">{{item1.gd_name}}</view>
 									<view class="goodspri"><text v-for="(item2,idx2) in item1.gd_attr"
 											:key="idx2">{{item2.value+' '}}</text></view>
 									<view class="goodspri1"><text>¥</text>{{item1.single_price}}</view>
 								</view>
 							</view>
-							<view v-if="item1.is_comment==2||item1.is_advocacy==2" class="o_cz">
+							<view v-if="item.order.o_ddstatus==1" class="o_cz">
 								<view v-if="item1.is_comment==2" @tap.stop="jump"
-									:data-url="'/pagesA/order_pj/order_pj?id='+item1.ov_id">评价</view>
+									:data-url="'/pagesA/order_pj/order_pj?id='+item1.ov_id+'&is_jd='+item.order.is_jd">评价</view>
 								<!-- <view v-if="item1.is_advocacy==2" @tap.stop="jump_fabu(item1)" data-url="/pagesA/daiyan_fabu/daiyan_fabu">我要代言</view> -->
 							</view>
 						</block>
@@ -65,26 +65,27 @@
 							<!-- <view v-if="type==0||type==4}}" @tap.stop="jump" data-url="/pages/daiyan_fabu/daiyan_fabu">我要代言</view> -->
 							<block v-if="item.order.o_paystatus==1">
 								<view class="qx" @tap.stop="order_pay(item.order)">立即付款</view>
-								<!-- <view  @tap.stop="cancelOrder(item.order.o_id)">取消订单</view> -->
+								<view  @tap.stop="cancelOrder(item.order)">取消订单</view>
 							</block>
 							<block v-else-if="item.order.o_ddstatus==1">
 								<!-- <view  class="qx" @tap.stop="del_order(item.order.o_id)">删除订单</view> -->
 								<!-- {{&is_jd='+item.order.is_jd"}} -->
 								<!-- "'/pagesA/Order_wuliu/Order_wuliu?id='+item.order.o_id+'&is_jd='+item.order.is_jd" -->
-								<view @tap.stop="jump"
-									:data-url="`/pagesA/Order_wuliu/Order_wuliu?id=${item.order.o_id}&is_jd=${item.order.is_jd}&num=${item.order.o_order_num}`">
-									查看物流{{item.order.o_order_num}}</view>
+								<!-- <view v-if="item.order.o_ddstatus==1"  @tap.stop="del_order(item.order.o_id)">删除订单</view> -->
+								<view @tap.stop="jump_wl(item)"
+									:data-url="`/pagesA/Order_wuliu/Order_wuliu?ztype=1&id=${item.order.o_id}&is_jd=${item.order.is_jd}&num=${item.order.o_order_num}`">
+									查看物流</view>
 							</block>
-							<block v-else>
+							<block v-if="item.order.o_ddstatus==4||item.order.o_ddstatus==5">
 								<view class="qx"
 									@tap.stop="get_goods(item.order.o_id,item.order.is_jd,item.order.o_order_num)">确认收货
 								</view>
-								<view @tap.stop="jump"
-									:data-url="`/pagesA/Order_wuliu/Order_wuliu?id=${item.order.o_id}&is_jd=${item.order.is_jd}&num=${item.order.o_order_num}`">
+								<view @tap.stop="jump_wl(item)"
+									:data-url="`/pagesA/Order_wuliu/Order_wuliu?ztype=1&id=${item.order.o_id}&is_jd=${item.order.is_jd}&num=${item.order.o_order_num}`">
 									查看物流</view>
 							</block>
 
-							<!-- <view v-if="item.order.o_paystatus==1" class="qx" @tap.stop='del_order(item.order.o_id)'>取消订单</view> -->
+							
 						</view>
 					</view>
 				</view>
@@ -191,6 +192,12 @@
 		},
 		methods: {
 			...mapMutations(['dy_fb_fuc']),
+			jump_wl(item){
+				console.log(item)
+				uni.navigateTo({
+					url:`/pagesA/Order_wuliu/Order_wuliu?ztype=1&id=${item.order.o_id}&is_jd=${item.order.is_jd}&num=${item.order.o_order_num}&datas1=`+JSON.stringify(item.order_goods)
+				})
+			},
 			getimg(img) {
 				return service.getimg(img)
 			},
@@ -202,10 +209,17 @@
 				this.data_last = false
 				this.getdatalist()
 			},
-			order_pay(datas) {
+			order_pay(datas1) {
 				var that = this
-				var datas = JSON.stringify(datas)
+				var datas = JSON.stringify(datas1)
 				console.log(datas);
+				if(datas1.is_jd==0){
+					// return
+					uni.navigateTo({
+						url:'/pagesA/OrderPay/OrderPay1?datas='+datas
+					})
+					return
+				}
 				uni.navigateTo({
 					url: "/pagesLzc/orderPay1/orderPay1?datas=" + datas
 				})
@@ -348,29 +362,73 @@
 			// 		}
 			// 	});
 			// },
-			//取消该订单
-			// cancelOrder(id) {
-			// 	let that = this
-			// 	// console.log('picker发送选择改变，携带值为', e.detail.value)
+			// 取消该订单
+			cancelOrder(order) {
+				let that = this
+				// console.log('picker发送选择改变，携带值为', e.detail.value)
 
-			// 	wx.showModal({
-			// 		title: '提示',
-			// 		content: '是否取消该订单?',
-			// 		success(res) {
-			// 			if (res.confirm) {
-			// 				console.log('用户点击确定')
-			// 				uni.showToast({
-			// 					icon: 'none',
-			// 					title: '操作成功'
-			// 				})
-			// 				return
-			// 			} else if (res.cancel) {
-			// 				console.log('用户点击取消')
-			// 			}
-			// 		}
-			// 	})
+				wx.showModal({
+					title: '提示',
+					content: '是否取消该订单?',
+					success(res) {
+						if (res.confirm) {
+							console.log('用户点击确定')
+							var jkurl = '/order/cancel'
+							var data = {
+								token: that.$store.state.loginDatas.userToken || '',
+								id: order.o_id
+							}
+							if(order.is_jd==1){
+								jkurl = '/jd.JdOrder/cancelOrder'
+								data = {
+									token: that.$store.state.loginDatas.userToken || '',
+									o_order_num: order.o_order_num
+								}
+							}
+							service.P_post(jkurl, data).then(res => {
+								if (res.code == 1) {
+									var datas = res.data
+									console.log(typeof datas)
+							
+									if (typeof datas == 'string') {
+										datas = JSON.parse(datas)
+									}
+									console.log(res)
+									uni.showToast({
+										icon: 'none',
+										title: '操作成功'
+									})
+									setTimeout(() => {
+										that.onRetry()
+									}, 1000)
+								} else {
+									if (res.msg) {
+										uni.showToast({
+											icon: 'none',
+											title: res.msg
+										})
+									} else {
+										uni.showToast({
+											icon: 'none',
+											title: '操作失败'
+										})
+									}
+								}
+							}).catch(e => {
+								that.btnkg = 0
+								console.log(e)
+								uni.showToast({
+									icon: 'none',
+									title: '操作失败'
+								})
+							})
+						} else if (res.cancel) {
+							console.log('用户点击取消')
+						}
+					}
+				})
 
-			// },
+			},
 			//确认收货
 			get_goods(id, isJd, o_order_num) {
 				var that = this
@@ -853,7 +911,8 @@
 		top: calc(44px + env(safe-area-inset-top));
 		/* #endif */
 		z-index: 90;
-		font-size: 30rpx;
+		/* font-size: 30rpx; */
+		font-size: 34rpx;
 		width: 100%;
 		height: 76upx;
 		line-height: 76upx;
@@ -1046,7 +1105,8 @@
 		align-items: center;
 		padding: 20rpx 28rpx;
 		box-sizing: border-box;
-		font-size: 22rpx;
+		/* font-size: 22rpx; */
+		font-size: 32rpx;
 		color: #666;
 	}
 
@@ -1145,7 +1205,10 @@
 	}
 
 	.goodsname {
-		font-size: 28rpx;
+		/* font-size: 28rpx; */
+		font-size: 32rpx;
+		line-height: 36rpx;
+		max-height: 72rpx;
 		color: #333333;
 		margin-bottom: 10upx;
 		font-weight: bold;
@@ -1246,7 +1309,8 @@
 		align-items: center;
 		justify-content: center;
 		color: #666666;
-		font-size: 22rpx;
+		/* font-size: 22rpx; */
+		font-size: 28rpx;
 		margin-left: 20rpx;
 	}
 

@@ -1,0 +1,16 @@
+
+.minh100_box.data-v-16a2bff8{
+	position: fixed;
+	height: 100vh;
+	top: 0;
+	z-index: 9999999999;
+}
+.details.data-v-16a2bff8 {
+	width: 100%;
+	padding: 0 30rpx 30rpx;
+	font-size: 30rpx;
+	color: #333;
+	
+	background: #fff;
+}
+

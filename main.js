@@ -13,7 +13,8 @@ import cuCustom from './colorui/components/cu-custom.vue'
 import uParse from '@/components/gaoyia-parse/parse.vue'
 Vue.component('cu-custom',cuCustom)
 Vue.component('u-parse',uParse)
-
+import z_text from './components/z_text/z_text.vue'
+Vue.component('z_text',z_text)
 // import service from './service.js'
 // Vue.mixin(service)
 

@@ -35,21 +35,27 @@
 						
 					</view>
 				</view>
-				<view class="huodong_tit dis_flex aic">
-					精彩活动
+				<view v-if="appstatus==1" :class="{block:appstatus==1}" style="display: none;">
+					<view class="huodong_tit dis_flex aic">
+						精彩活动
+					</view>
+					<view class="huodong_list">
+						<image class="huodong_li" :src="getimg('/static/images/index_03.jpg')" mode="aspectFit" @tap="jump"
+							data-url="/pagesA/huafei_cz/huafei_cz"></image>
+						<image class="huodong_li" :src="getimg('/static/images/index_05.jpg')" mode="aspectFit" @tap="jump"
+							data-url="/pagesA/share_index/share_index"></image>
+					</view>
 				</view>
-				<view class="huodong_list">
-					<image class="huodong_li" :src="getimg('/static/images/index_03.jpg')" mode="aspectFit" @tap="jump"
-						data-url="/pagesA/huafei_cz/huafei_cz"></image>
-					<image class="huodong_li" :src="getimg('/static/images/index_05.jpg')" mode="aspectFit" @tap="jump"
-						data-url="/pagesA/share_index/share_index"></image>
-				</view>
+				
 			</view>
 			<view class="index_zbox index_zbox1">
 				<block v-for="(item,index) in datas">
-					<view class="huodong_tit huodong_tit_good dis_flex aic">
-						{{item.name}}
-						<image class="huodong_tit_hot" :src="getimg('/static/images/HOT.png')" mode="aspectFit"></image>
+					<view class="huodong_tit huodong_tit_good dis_flex aic ju_b">
+						<view>
+							{{item.name}}
+							<image class="huodong_tit_hot" :src="getimg('/static/images/HOT.png')" mode="aspectFit"></image>
+						</view>
+						<view style="font-size: 26rpx;color: #999;" @tap="jump" :data-url="'/pagesA/goods_list/goods_list?id='+item.id+'&title='+item.name">更多</view>
 					</view>
 
 					<view class="huodong_list">
@@ -125,7 +131,7 @@
 			}
 		},
 		computed: {
-			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas', 'about_content','isSDKReady']),
+			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas', 'about_content','isSDKReady','appstatus']),
 		},
 
 		watch: {
@@ -440,5 +446,8 @@
 
 	.goods_li_money text {
 		font-size: 26upx;
+	}
+	.block{
+		display: block!important;
 	}
 </style>

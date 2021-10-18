@@ -4,5 +4,6 @@
 	padding: 30rpx;
 	box-sizing: border-box;
 	background: #fff;
+	min-height: 100vh;
 }
 

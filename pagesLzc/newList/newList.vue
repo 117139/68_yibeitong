@@ -7,7 +7,7 @@
 				<image src="/static/images/liu/sort/xi.png" mode="aspectFill" class="headImg" v-if="type==0">
 				</image>
 				<!-- <image src="/static/images/liu/sort/xi.png" mode="aspectFill" class="headImg" v-if="item.type==1"> -->
-				</image>
+				<!-- </image> -->
 				<view class="conView dis_flex aic">
 					<view class="conView1 oh1">{{item.title}}</view>
 					<!-- <view class="conView2 oh1">{{item}}</view> -->
@@ -20,10 +20,10 @@
 		</view>
 		<view class="contentRow" v-for="(item,index) in news" :key="index" v-if="news.length>0">
 			<view class="contentRow1 dis_flex ju_b aic">
-				<image src="../../static/images/liu/sort/newsIcon.png" mode="aspectFill" class="headImg" v-if="type==0">
-				</image>
+				<!-- <image src="../../static/images/liu/sort/newsIcon.png" mode="aspectFill" class="headImg" v-if="type==0">
+				</image> -->
 				<!-- <image src="/static/images/liu/sort/xi.png" mode="aspectFill" class="headImg" v-if="item.type==1"> -->
-				</image>
+				<!-- </image> -->
 				<view class="conView dis_flex aic">
 					<view class="conView1 oh1">{{item.content}}</view>
 					<!-- <view class="conView2 oh1">{{item}}</view> -->
@@ -287,14 +287,18 @@
 
 	.contentRow {
 		width: 100vw;
-		height: 140rpx;
+		height: 70rpx;
 		background-color: #fff;
 		box-sizing: border-box;
-		padding: 22rpx 24rpx 20rpx 29rpx;
+		padding: 10rpx 24rpx 10rpx 29rpx;
 		border-bottom: 1px solid #eee;
 		position: relative;
+		display: flex;
+		align-items: center;
 	}
-
+	.contentRow1{
+		width: 100%;
+	}
 	.contentRow:last-child {
 		border: none;
 	}

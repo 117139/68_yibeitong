@@ -34,11 +34,11 @@
 					<block  v-if="datas.goods">
 						<view class="goods1" @tap="jump" :data-url="'/pages/details/details?id='+datas.goods.g_id">
 							<view class="goodsImg">
-								<!-- <image v-if="item.gd_vice_pic.length>0" class="goodsImg" :src="getimg(item.gd_vice_pic[0])" mode="aspectFill"></image>
-								<image v-else class="goodsImg" :src="getimg(item.gd_mastr_pic[0])" mode="aspectFill"></image> -->
-								<image class="goodsImg" :src="getimg('/static/images/index_12.jpg')" mode="aspectFill"></image>
+								<image v-if="datas.goods.gd_vice_pic.length>0" class="goodsImg" :src="getimg(datas.goods.gd_vice_pic[0])" mode="aspectFill"></image>
+								<image v-else class="goodsImg" :src="getimg(datas.goods.gd_mastr_pic[0])" mode="aspectFill"></image>
+								<!-- <image class="goodsImg" :src="getimg('/static/images/index_12.jpg')" mode="aspectFill"></image> -->
 							</view>
-							<view class="goodsinr">
+							<view class="goodsinr flex_1">
 								<!-- <view class="goodsname fz30 c30 oh1">{{item.goods_name}}</view> -->
 								<view class="goodsname">{{datas.goods.gd_name}}</view>
 								<view class="goodspri"><text v-for="(item1,idx1) in datas.goods.gd_attr">{{item1.value+' '}}</text></view>
@@ -228,7 +228,7 @@
 			</view>
 			<view class="o_cz">
 				<view v-if="datas.s_status==2&&datas.type!=1&&datas.logistics_name==''"  class="qx" @tap="save_val">提交</view>
-				<view v-if="datas.merchant_logistics" class="qx" @tap.stop="jump" :data-url="'/pagesA/Order_wuliu/Order_wuliu?id='+oid">查看物流</view>
+				<view v-if="datas.merchant_logistics" class="qx" @tap.stop="jump_wl" :data-url="'/pagesA/Order_wuliu/Order_wuliu?id='+datas.id+'&datas='+JSON.stringify(datas.goods)">查看物流</view>
 			</view>
 			<!-- 底部占位 -->
 			<view class="o_cz" style="position: relative;z-index: 1;opacity: 0;">
@@ -318,6 +318,11 @@
 		},
 		methods: {
 			...mapMutations(['dy_fb_fuc']),
+			jump_wl(){
+				uni.navigateTo({
+					url:'/pagesA/Order_wuliu/Order_wuliu?id='+that.datas.id+'&datas='+JSON.stringify(that.datas.goods)
+				})
+			},
 			bindPickerChange(e){
 				console.log(e)
 				var datas=e.currentTarget.dataset
@@ -675,18 +680,18 @@
 					}
 				)
 			},
-			bindPickerChange(e) {
-				console.log('picker发送选择改变，携带值为', e.detail.value)
-				this.show0 = e.detail.value
-			},
-			bchange1(e) {
-				console.log('picker发送选择改变，携带值为', e.detail.value)
-				this.show1 = e.detail.value
-			},
-			bchange2(e) {
-				console.log('picker发送选择改变，携带值为', e.detail.value)
-				this.show2 = e.detail.value
-			},
+			// bindPickerChange(e) {
+			// 	console.log('picker发送选择改变，携带值为', e.detail.value)
+			// 	this.show0 = e.detail.value
+			// },
+			// bchange1(e) {
+			// 	console.log('picker发送选择改变，携带值为', e.detail.value)
+			// 	this.show1 = e.detail.value
+			// },
+			// bchange2(e) {
+			// 	console.log('picker发送选择改变，携带值为', e.detail.value)
+			// 	this.show2 = e.detail.value
+			// },
 
 			//取消订单
 			cancelOrder(e) {
@@ -1114,8 +1119,11 @@
 
 
 	.goodsname {
-		font-size: 27rpx;
-		line-height: 35upx;
+		/* font-size: 27rpx;
+		line-height: 35upx; */
+		font-size: 32rpx;
+		line-height: 42upx;
+		max-height: 84rpx;
 		color: #333333;
 		margin-bottom: 5rpx;
 		display: -webkit-box !important;
@@ -1182,7 +1190,8 @@
 	}
 
 	.ot_msg .d1 {
-		font-size: 30rpx;
+		/* font-size: 30rpx; */
+		font-size: 38rpx;
 	}
 
 	.ot_msg .d2 {
@@ -1262,13 +1271,14 @@
 		flex: 1;
 	}
 	
-	.goods_pri{
-		font-size: 22upx;
+	.goods_pri {
+		font-size: 26upx;
 		color: #FD383B;
 		font-weight: bold;
 	}
-	.goods_pri text{
-		font-size: 28upx;
+	
+	.goods_pri text {
+		font-size: 32upx;
 	}
 	.guige_list{
 		width: 100%;

@@ -35,4 +35,18 @@
 view.user_tx.data-v-019ef122 {
 	margin-right: 19rpx;
 }
+.pj_d4.data-v-019ef122{
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+.pj_img.data-v-019ef122{
+	width: 220rpx;
+	height: 220rpx;
+	padding: 5rpx;
+}
+.pj_img image.data-v-019ef122{
+	width: 100%;
+	height: 100%;
+}
 

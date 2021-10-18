@@ -1,5 +1,7 @@
 {
-  "navigationBarTitleText": "话费充值",
+  "navigationBarTitleText": "依辈通",
   "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "z_text": "/components/z_text/z_text"
+  }
 }

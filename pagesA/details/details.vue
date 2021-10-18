@@ -123,7 +123,7 @@
 					</view>
 					<view class="pj_d2">{{item.comment}}</view>
 					<view class="pj_d3">
-						<text v-for="(item1,idx1) in item.attr">{{item1.value}}</text>
+						<text v-for="(item1,idx1) in item.gd_attr">{{item1.value}}</text>
 					</view>
 				</view>
 			</view>
@@ -156,7 +156,7 @@
 					<text>客服</text>
 				</view>
 				<!-- #endif -->
-				<view v-if="goodsData.activity_id==0&&goodsData.is_pond_goods==1" class="buy_btn" @tap="sheetshow_fuc">加入购物车</view>
+				<!-- <view v-if="goodsData.activity_id==0&&goodsData.is_pond_goods==1" class="buy_btn" @tap="sheetshow_fuc">加入购物车</view> -->
 				<view class="buy_btn buy_btn1" @tap="sheetshow_fuc">{{goodsData.activity_id==0||goodsData.is_apply==2?'立即购买':'报名购买'}}</view>
 
 			</view>
@@ -255,7 +255,7 @@
 					<view class="b_view_o"></view>
 				</scroll-view>
 				<view class="czbtnG" style="background: #fff;z-index: 999;">
-					<view v-if="goodsData.activity_id==0&&goodsData.is_pond_goods==1" class="jrgwc" @tap="addwgc">加入购物车</view>
+					<!-- <view v-if="goodsData.activity_id==0&&goodsData.is_pond_goods==1" class="jrgwc" @tap="addwgc">加入购物车</view> -->
 					<view class="buybtn" @tap="nowbuy">立即购买</view>
 				</view>
 			</view>

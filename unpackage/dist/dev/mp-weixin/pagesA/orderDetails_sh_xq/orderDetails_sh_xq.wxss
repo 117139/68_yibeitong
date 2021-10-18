@@ -49,8 +49,11 @@ image.data-v-43b5cbeb {
 	position: relative;
 }
 .goodsname.data-v-43b5cbeb {
-	font-size: 27rpx;
-	line-height: 35rpx;
+	/* font-size: 27rpx;
+	line-height: 35upx; */
+	font-size: 32rpx;
+	line-height: 42rpx;
+	max-height: 84rpx;
 	color: #333333;
 	margin-bottom: 5rpx;
 	display: -webkit-box !important;
@@ -106,7 +109,8 @@ image.data-v-43b5cbeb {
 	color: #fff;
 }
 .ot_msg .d1.data-v-43b5cbeb {
-	font-size: 30rpx;
+	/* font-size: 30rpx; */
+	font-size: 38rpx;
 }
 .ot_msg .d2.data-v-43b5cbeb {
 	font-size: 24rpx;
@@ -180,13 +184,13 @@ image.data-v-43b5cbeb {
 	color: #999;
 	flex: 1;
 }
-.goods_pri.data-v-43b5cbeb{
-	font-size: 22rpx;
+.goods_pri.data-v-43b5cbeb {
+	font-size: 26rpx;
 	color: #FD383B;
 	font-weight: bold;
 }
-.goods_pri text.data-v-43b5cbeb{
-	font-size: 28rpx;
+.goods_pri text.data-v-43b5cbeb {
+	font-size: 32rpx;
 }
 .guige_list.data-v-43b5cbeb{
 	width: 100%;

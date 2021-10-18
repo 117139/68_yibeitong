@@ -372,7 +372,10 @@ const wxlogin = function(num) {
 	if (num == 'token') {
 		var data = {
 			token: uni.getStorageSync('token'),
-			// token: '7a4f36e8695d20a87805967ad37bedfc',
+			// #ifdef H5
+			// token: '740de0790077f2e6f56c5ff010e291bd',
+			// #endif
+			
 			// token: 'f95b9ebdddbe9d2fd12ff5115d5cc35c',
 			type: 4
 		}
@@ -1086,18 +1089,18 @@ const get_fwb = function(str) {
 		return
 	}
 	str = str // .replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
-		.replace(/<p([\s\w"-=\/\.:;]+)((?:(class="[^"]+")))/ig, '<p $1')
-		.replace(/<p([\s\w"-=\/\.:;]+)/ig, '<p$1 class="xcx_fwb_p"')
+		// .replace(/<p([\s\w"-=\/\.:;]+)((?:(class="[^"]+")))/ig, '<p $1')
+		// .replace(/<p([\s\w"-=\/\.:;]+)/ig, '<p$1 class="xcx_fwb_p"')
 		// .replace(/<div([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<div')
-		.replace(/<div([\s\w"-=\/\.:;]+)((?:(class="[^"]+")))/ig, '<div $1')
-		.replace(/<div([\s\w"-=\/\.:;]+)/ig, '<div$1 class="xcx_fwb_div"')
+		// .replace(/<div([\s\w"-=\/\.:;]+)((?:(class="[^"]+")))/ig, '<div $1')
+		// .replace(/<div([\s\w"-=\/\.:;]+)/ig, '<div$1 class="xcx_fwb_div"')
 
 		// .replace(/<img([\s\w"-=\/\.:;]+)((?:(height="[^"]+")))/ig, '<img $1')
 		// .replace(/<img([\s\w"-=\/\.:;]+)((?:(width="[^"]+")))/ig, '<img $1')
 		// .replace(/<img([\s\w"-=\/\.:;]+)((?:(style="[^"]+")))/ig, '<img $1')
 		.replace(/<img([\s\w"-=\/\.:;]+)((?:(alt="[^"]+")))/ig, '<img $1')
 		.replace(/<img([\s\w"-=\/\.:;]+)((?:(class="[^"]+")))/ig, '<img $1')
-		.replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img$1 class="xcx_fwb_img"')
+		.replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img $1 class="xcx_fwb_img"')
 	return str
 }
 const getTel = function(num, num1, num2) {

@@ -79,6 +79,7 @@
 			</view>
 			<!-- 服务 -->
 			<view class="fuwu_box">
+				<view class="fw_zzc" v-if="appstatus!=1"></view>
 				<view class="fuwu_tit">我的服务</view>
 				<view class="fuwu_list">
 					<view class="fuwu_li dis_flex_c aic ju_c" @tap="jump" data-url="/pagesA/vip_home/vip_home"  :data-login="true" :data-haslogin="hasLogin">
@@ -218,7 +219,7 @@
 			
 		},
 		computed: {
-			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas', 'serviceTel'])
+			...mapState(['hasLogin', 'forcedLogin', 'userName', 'loginDatas', 'serviceTel','appstatus'])
 		},
 		methods: {
 			...mapMutations(['login', 'logindata', 'logout', 'setplatform']),
@@ -484,6 +485,7 @@
 		min-height: 465upx;
 		background: #FFFFFF;
 		border-radius: 10upx;
+		position: relative;
 	}
 	.fuwu_tit{
 		width: 100%;
@@ -553,5 +555,14 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+	.fw_zzc{
+		position: absolute;
+		z-index: 10000;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: #F8F8F8;
 	}
 </style>

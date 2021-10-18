@@ -9,23 +9,27 @@
 				</image>
 				<view class="conView dis_flex_c ju_b">
 					<view class="conView1 dis_flex_c ju_c">系统消息</view>
-					<view class="conView2 oh1">系统消息</view>
+					<view class="conView2 oh1" v-if="news.length>0">{{news[0].content}}</view>
+					<view class="conView2 oh1" v-else>系统消息</view>
 				</view>
 				<view class="conTime">
 					
 				</view>
 			</view>
 		</view>
+		<!-- 
 		<view class="contentRow" v-for="(item,index) in shuju" :key="index" v-if="shuju.length>0" @click="jump"
-			:data-url="`/pagesLzc/newList/newList?id=${item.id}&type=${item.name}`">
+			:data-url="`/pagesLzc/newList/newList?id=${item.id}&type=${item.name}`"> -->
+		<view class="contentRow" v-for="(item,index) in shuju" :key="index" v-if="shuju.length>0" @click="jump"
+			:data-url="`/pagesLzc/newDetail/newDetail?id=${item.id}`"> 
 			<view class="contentRow1 dis_flex ju_b ais">
 				<image src="/static/images/liu/sort/xi.png" mode="aspectFill" class="headImg" v-if="type==0">
 				</image>
 				<!-- <image src="/static/images/liu/sort/xi.png" mode="aspectFill" class="headImg" v-if="item.type==1"> -->
 				</image>
 				<view class="conView  dis_flex_c ju_b">
-					<view class="conView1 dis_flex_c ju_c">{{item.name}}</view>
-					<view v-if="item.article" class="conView2 oh1">{{item.article.title}}</view>
+					<view class="conView1 dis_flex_c ju_c  oh1">{{item.title}}</view>
+					<view class="conView2 oh1">{{item.cate_name}}</view>
 				</view>
 				<!-- <view class="conTime">
 					{{item.time}}
@@ -76,14 +80,19 @@
 		},
 		onLoad() {
 			that = this;
-			that.getData();
+			that.onRetry();
 			that.getNew()
 
 		},
 		onShow() {
 
 		},
-
+		onPullDownRefresh() {
+			that.onRetry();
+		},
+		onReachBottom() {
+			that.getData()
+		},
 		computed: {
 			...mapState(['hasLogin', 'forcedLogin', 'userinfo'])
 		},
@@ -98,27 +107,92 @@
 			jump(e) {
 				return service.jump(e)
 			},
+			// getData() {
+			// 	var jkurl = "article.Article/cate";
+			// 	var data = {
+			// 		token: that.$store.state.loginDatas.userToken || '',
+			// 	}
+			// 	service.P_get(jkurl, data).then(res => {
+			// 		var data = res.data;
+			// 		console.log(data)
+			// 		this.shuju = [];
+			// 		if (res.code == 1) {
+			// 			this.shuju = res.data;
+			// 		}
+			// 	}).catch(e => {
+			// 		console.log(e)
+			// 	})
+			// },
+			onRetry(){
+				that.page=1
+				that.shuju=[]
+				that.getData()
+			},
 			getData() {
-				var jkurl = "article.Article/cate";
+				if (that.isBt == 1) {
+					return
+				}
+				that.isBt = 1;
+				var jkurl = "article.Article/lst";
 				var data = {
 					token: that.$store.state.loginDatas.userToken || '',
+					page: this.page,
+					size: this.size,
+					// cate_id: that.id
+			
 				}
+				var now_page=this.page
 				service.P_get(jkurl, data).then(res => {
+					that.isBt = 0;
 					var data = res.data;
 					console.log(data)
-					this.shuju = [];
 					if (res.code == 1) {
-						this.shuju = res.data;
+						if (typeof data == 'string') {
+							data = JSON.parse(data)
+						}
+						if (now_page == 1) {
+							this.shuju = res.data;
+							if (data.length != 0) {
+								this.page++
+							}
+						} else {
+							if (data.length != 0) {
+								that.shuju.concat(data)
+								this.page++
+							} else {
+								this.more = "到底了"
+								// that.data_last = true
+							}
+			
+						}
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								title: res.msg,
+								icon: "none"
+							})
+						} else {
+							uni.showToast({
+								title: "请求失败",
+								icon: "none"
+							})
+						}
 					}
 				}).catch(e => {
+					that.isBt = 0;
 					console.log(e)
+					uni.showToast({
+						title: "请求异常",
+						icon: "none"
+					})
 				})
 			},
+			
 			getNew() {
 				var jkurl = "User/message";
 				var data = {
 					token: that.$store.state.loginDatas.userToken || '',
-					page: that.page,
+					page: 1,
 					size: that.size
 				}
 				service.P_get(jkurl, data).then(res => {
@@ -129,20 +203,7 @@
 						if (typeof data == 'string') {
 							data = JSON.parse(data)
 						}
-						if (this.page == 1) {
-							this.news = data;
-							if (data.length != 0) {
-								this.page++
-							}
-						} else {
-							if (data.length != 0) {
-								that.news.concat(data)
-								this.myPage++
-							} else {
-								// this.more = "到底了"
-								// that.data_last = true
-							}
-						}
+						that.news = data;
 					}
 				}).catch(e => {
 					console.log(e)
@@ -213,26 +274,29 @@
 	}
 
 	.conView1 {
-		font-size: 34rpx;
+		/* font-size: 34rpx; */
+		font-size: 38rpx;
 		font-family: PingFangSC;
 		font-weight: 400;
 		color: #333333;
-		line-height: 38rpx;
-		height: 38rpx;
+		line-height: 45rpx;
+		height: 45rpx;
 		margin-top: 5rpx;
 	}
 
 	.conView2 {
-		font-size: 28rpx;
+		/* font-size: 28rpx; */
+		font-size: 32rpx;
 		font-family: PingFangSC;
 		font-weight: 400;
 		color: #999999;
-		line-height: 32rpx;
+		line-height: 35rpx;
 		/* margin-top: 17rpx; */
-		height: 32rpx;
+		height: 35rpx;
 		/* position: absolute;
 		bottom: 20rpx; */
 		padding-right: 30rpx;
+		margin-top: 10rpx;
 	}
 
 	.conView3 {

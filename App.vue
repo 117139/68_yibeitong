@@ -5,6 +5,7 @@
 		mapState,
 		mapMutations
 	} from 'vuex'
+	var that
 	export default {
 		data() {
 			return {
@@ -15,7 +16,7 @@
 		onLaunch: function() {
 			// BID()wx3a27346174beb872
 			// BSecret()5a4895d4aef1664e26393d31b7e20ade
-			var that =this
+			that =this
 			console.log('App Launch')
 			// #ifdef MP-WEIXIN
 			// service.wxlogin('token')
@@ -25,6 +26,7 @@
 			// service.wxlogin_ceshi_h5()
 			service.wxlogin('token')
 			// #endif
+			that.get_status()
 			uni.getSystemInfo({
 				success: function(e) {
 					console.log(e);
@@ -101,7 +103,21 @@
 				this.$store.commit("pushCurrentMessageList", messageList);
 			},
 			//根据消息列表请求聊天对象的用户信息 并完成数据拼接
-			
+			get_status(){
+				// api/Test/status
+				var myUrl ="/Test/status";
+				var data = {}
+				service.P_get(myUrl, data).then(res => {
+					if (res.code == 1) {
+						that.$store.commit('setstatus',res.msg)
+						console.log(res)
+					} else {
+						
+					}
+				}).catch(e => {
+					
+				})
+			}
 		}
 	}
 </script>
@@ -325,5 +341,27 @@
 	.hy_r_d text{
 		width: 5em;
 		display: inline-flex;
+	}
+	
+	
+	
+	
+	.jd_gwc{
+		position: fixed;
+		bottom: 100rpx;
+		right: 30rpx;
+		box-sizing: 100;
+		width: 100rpx;
+		height: 100rpx;
+		border-radius: 50%;
+		box-shadow: 0px 0rpx 19rpx 3rpx rgba(0, 0, 0, 0.2);
+		background: #fff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.jd_gwc_btn{
+		width: 60%;
+		height: 60%;
 	}
 </style>

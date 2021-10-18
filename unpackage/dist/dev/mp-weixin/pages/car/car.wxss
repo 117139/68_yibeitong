@@ -44,9 +44,12 @@
 	border-radius: 2px;
 }
 .goods_name.data-v-51e9b630{
-	font-size: 27rpx;
-	color: #333333;
+	/* font-size: 27upx;
+	line-height: 42upx; */
+	font-size: 32rpx;
 	line-height: 42rpx;
+	max-height: 82rpx;
+	color: #333333;
 	margin-bottom: 10rpx;
 }
 .goods_gg text.data-v-51e9b630{
@@ -55,14 +58,15 @@
 	margin-right: 8rpx;
 }
 .goods_pri_num.data-v-51e9b630{
-	margin-top: 30rpx;
+	margin-top: 12rpx;
 }
 .goods_pri.data-v-51e9b630{
 	color: #FD383B;
-	font-size: 22rpx;
+	/* font-size: 22upx; */
+	font-size: 26rpx;
 }
 .goods_pri text.data-v-51e9b630{
-	font-size: 28rpx;
+	font-size: 32rpx;
 }
 .goods_num text.data-v-51e9b630{
 	font-size: 36rpx;
@@ -134,7 +138,8 @@
 	align-items: center;
 }
 .heji.data-v-51e9b630{
-	font-size: 29rpx;
+	/* font-size: 29upx; */
+	font-size: 32rpx;
 	color: #FD383B;
 	font-weight: bold;
 }

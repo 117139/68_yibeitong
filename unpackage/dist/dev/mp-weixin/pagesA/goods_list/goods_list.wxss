@@ -1,0 +1,127 @@
+
+.minh100.data-v-54a368ea {
+	/* background: #F8F8F8; */
+}
+.index_top.data-v-54a368ea {
+	width: 100%;
+	padding: 15rpx 30rpx 0;
+}
+.index_top_srk.data-v-54a368ea {
+	width: 100%;
+	height: 64rpx;
+	background: #F4F4F4;
+	border-radius: 4rpx;
+	font-size: 28rpx;
+	color: #999;
+	padding: 0 20rpx;
+}
+.index_top_srk text.data-v-54a368ea {
+	font-size: 30rpx;
+	color: #bbb;
+	margin-right: 20rpx;
+}
+.index_zbox.data-v-54a368ea {
+	width: 100%;
+	padding: 0 30rpx 0;
+}
+.index_xxtz.data-v-54a368ea {
+	width: 100%;
+}
+.xxtz_img.data-v-54a368ea {
+	width: 54rpx;
+	height: 54rpx;
+	margin-right: 14rpx;
+	flex: none;
+}
+.xx_msg_box.data-v-54a368ea {
+	width: 614rpx;
+	height: 63rpx;
+	background: #FFFFFF;
+	box-shadow: 0px 0px 10rpx 0px rgba(0, 0, 0, 0.1);
+	padding: 15rpx 20rpx;
+	color: #666;
+	font-size: 24rpx;
+}
+.card-swiper1.data-v-54a368ea{
+	width: 100%;
+	height: 63rpx;
+}
+.xx_msg_box .iconfont.data-v-54a368ea {
+	margin-right: 15rpx;
+	flex: none;
+	color: #999;
+	position: relative;top: 1px;
+}
+.huodong_tit.data-v-54a368ea {
+	width: 100%;
+	font-size: 36rpx;
+	color: #333;
+	height: 100rpx;
+	font-weight: bold;
+}
+.huodong_tit_hot.data-v-54a368ea {
+	position: relative;
+	top: -20rpx;
+	width: 57rpx;
+	height: 30rpx;
+	margin-left: 8rpx;
+}
+.index_zbox1.data-v-54a368ea {
+
+	padding: 0 15rpx 15rpx;
+}
+.huodong_list.data-v-54a368ea {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+.huodong_li.data-v-54a368ea {
+	width: 338rpx;
+	height: 147rpx;
+	/* background: linear-gradient(42deg, #FE7D6A, #FF9D78); */
+	box-shadow: 0px 0px 10rpx 0px rgba(230, 34, 0, 0.05);
+	border-radius: 10rpx;
+	margin-right: 12rpx;
+	margin-bottom: 12rpx;
+}
+.huodong_li.data-v-54a368ea:nth-child(2n) {
+	margin-right: 0;
+}
+.huodong_tit_good.data-v-54a368ea {
+	padding: 0 15rpx;
+}
+.goods_li_box.data-v-54a368ea {
+	width: 50%;
+	padding: 15rpx;
+}
+.goods_li.data-v-54a368ea {
+	width: 100%;
+	/* margin-right: 35upx;
+	margin-bottom: 20upx; */
+}
+
+/* .goods_li:nth-child(2n){
+	margin-right: 0;
+} */
+.goods_li_img.data-v-54a368ea {
+	/* width: 327upx; */
+	width: 100%;
+	height: 404rpx;
+	border-radius: 4px;
+	display: block;
+}
+.goods_li_name.data-v-54a368ea {
+	font-size: 32rpx;
+	line-height: 58rpx;
+	color: #333;
+	margin-top: 15rpx;
+	margin-bottom: 15rpx;
+}
+.goods_li_money.data-v-54a368ea {
+	font-size: 32rpx;
+	color: #A8896D;
+}
+.goods_li_money text.data-v-54a368ea {
+	font-size: 26rpx;
+}
+

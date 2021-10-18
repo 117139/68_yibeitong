@@ -1,6 +1,7 @@
 <template>
-	<view class="contox xcx_fwb_img">
-		<rich-text :nodes="desc.content" ></rich-text>
+	<view class="contox xmfwb_box">
+		<!-- <rich-text :nodes="desc.content" ></rich-text> -->
+		<view v-html="get_fwb(desc.content)"></view>
 	</view>
 </template>
 
@@ -21,6 +22,9 @@
 			that.getData()
 		},
 		methods: {
+			get_fwb(str){
+				return service.get_fwb(str)
+			},
 			getData(){
 				var jkurl = "article.Article/info"
 				var data = {
@@ -60,5 +64,6 @@
 	padding: 30rpx;
 	box-sizing: border-box;
 	background: #fff;
+	min-height: 100vh;
 }
 </style>

@@ -124,4 +124,7 @@
 .goods_li_money text.data-v-57280228 {
 	font-size: 26rpx;
 }
+.block.data-v-57280228{
+	display: block!important;
+}
 

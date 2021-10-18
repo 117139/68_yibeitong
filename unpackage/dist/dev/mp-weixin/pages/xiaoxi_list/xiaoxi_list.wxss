@@ -81,25 +81,28 @@ page.data-v-b0ce103c {
 	padding-left: 19rpx;
 }
 .conView1.data-v-b0ce103c {
-	font-size: 34rpx;
+	/* font-size: 34rpx; */
+	font-size: 38rpx;
 	font-family: PingFangSC;
 	font-weight: 400;
 	color: #333333;
-	line-height: 38rpx;
-	height: 38rpx;
+	line-height: 45rpx;
+	height: 45rpx;
 	margin-top: 5rpx;
 }
 .conView2.data-v-b0ce103c {
-	font-size: 28rpx;
+	/* font-size: 28rpx; */
+	font-size: 32rpx;
 	font-family: PingFangSC;
 	font-weight: 400;
 	color: #999999;
-	line-height: 32rpx;
+	line-height: 35rpx;
 	/* margin-top: 17rpx; */
-	height: 32rpx;
+	height: 35rpx;
 	/* position: absolute;
 	bottom: 20rpx; */
 	padding-right: 30rpx;
+	margin-top: 10rpx;
 }
 .conView3.data-v-b0ce103c {
 	font-size: 28rpx;

@@ -27,8 +27,12 @@ const store = new Vuex.Store({
 		uuid:'',
 		order_ls_data:'',
 		serviceTel:'',
+		appstatus:2
 	},
 	mutations: {
+		setstatus(state, status) {
+			state.appstatus = status || 2;
+		},
 		login(state, userName) {
 			state.userName = userName || '新用户';
 			state.hasLogin = true;

@@ -46,7 +46,9 @@
         "order_pj/order_pj",
         "huafei_list/huafei_list",
         "my_ytx/my_ytx",
-        "hehuo/hehuo"
+        "hehuo/hehuo",
+        "car_jd/car_jd",
+        "goods_list/goods_list"
       ]
     },
     {
@@ -58,7 +60,9 @@
         "orderPay/orderPay",
         "orderPay1/orderPay1",
         "newList/newList",
-        "newDetail/newDetail"
+        "newDetail/newDetail",
+        "pl_list/pl_list",
+        "OrderDetails_sh_xq/OrderDetails_sh_xq"
       ]
     }
   ],
@@ -123,6 +127,7 @@
     "van-stepper": "./wxcomponents/vant/stepper/index",
     "cu-custom": "/colorui/components/cu-custom",
     "u-parse": "/components/gaoyia-parse/parse",
+    "z_text": "/components/z_text/z_text",
     "html-loading": "/components/html_loading/html_loading"
   },
   "sitemapLocation": "sitemap.json"

@@ -117,4 +117,10 @@
 .hy_time.data-v-910acf7e{
 	font-size: 24rpx;
 }
+.li_time.data-v-910acf7e{
+	font-size: 32rpx;
+}
+.hy_r_d.data-v-910acf7e{
+	text-align: right;
+}
 

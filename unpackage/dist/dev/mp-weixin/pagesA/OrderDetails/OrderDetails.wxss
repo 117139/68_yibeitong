@@ -49,8 +49,11 @@ image.data-v-2871c4ab {
 	position: relative;
 }
 .goodsname.data-v-2871c4ab {
-	font-size: 27rpx;
-	line-height: 35rpx;
+	/* font-size: 27rpx;
+	line-height: 35upx; */
+	font-size: 32rpx;
+	line-height: 42rpx;
+	max-height: 84rpx;
 	color: #333333;
 	margin-bottom: 5rpx;
 	display: -webkit-box !important;
@@ -61,7 +64,7 @@ image.data-v-2871c4ab {
 	-webkit-line-clamp: 2;
 }
 .goodspri.data-v-2871c4ab {
-	font-size: 22rpx;
+	font-size: 28rpx;
 	color: #999;
 	margin-bottom: 5rpx;
 }
@@ -106,7 +109,8 @@ image.data-v-2871c4ab {
 	color: #fff;
 }
 .ot_msg .d1.data-v-2871c4ab {
-	font-size: 30rpx;
+	/* font-size: 30rpx; */
+	font-size: 38rpx;
 }
 .ot_msg .d2.data-v-2871c4ab {
 	font-size: 24rpx;
@@ -181,12 +185,12 @@ image.data-v-2871c4ab {
 	flex: 1;
 }
 .goods_pri.data-v-2871c4ab {
-	font-size: 22rpx;
+	font-size: 26rpx;
 	color: #FD383B;
 	font-weight: bold;
 }
 .goods_pri text.data-v-2871c4ab {
-	font-size: 28rpx;
+	font-size: 32rpx;
 }
 .guige_list.data-v-2871c4ab {
 	width: 100%;
@@ -261,5 +265,17 @@ image.data-v-2871c4ab {
 	border: 0;
 	background: linear-gradient(-34deg, #FC3B27, #FF6D5A);
 	box-shadow: 0px 3rpx 6rpx 0px rgba(255, 30, 30, 0.35);
+}
+.pj_btn.data-v-2871c4ab{
+	width: 128rpx;
+	height: 59rpx;
+	background: #FFFFFF;
+	border: 1px solid #666666;
+	border-radius: 5rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #666666;
+	font-size: 22rpx;
 }
 

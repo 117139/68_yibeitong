@@ -48,7 +48,7 @@
 				<view class="goods">
 					<block v-for="(item,idx) in datas.order_goods" :key="idx">
 						<view class="goods1" :data-tab="idx" @tap="jump"
-							:data-url="'/pagesA/details/details?id='+item.g_id">
+							:data-url="isJd==1?'/pagesLzc/deatil/deatil?sku_id='+item.g_id:'/pagesA/details/details?id='+item.g_id" >
 							<view class="goodsImg">
 								<image v-if="item.gd_vice_pic.length>0" class="goodsImg"
 									:src="getimg(item.gd_vice_pic[0])" mode="aspectFill"></image>
@@ -70,10 +70,11 @@
 								</view>
 							</view>
 						</view>
-						<view v-if="item.is_comment==2||item.is_advocacy==2" class="o_cz"
+						<view v-if="datas.o_ddstatus==1" class="dis_flex aic ju_b"
 							style="padding: 0 28rpx 28rpx;">
+							<view></view>
 							<view v-if="item.is_comment==2" @tap.stop="jump"
-								:data-url="'/pagesA/order_pj/order_pj?id='+item.ov_id">评价</view>
+								:data-url="'/pagesA/order_pj/order_pj?id='+item.ov_id" class="pj_btn">评价</view>
 							<!-- <view v-if="item.is_advocacy==2" @tap.stop="jump_fabu(item)" data-url="/pagesA/daiyan_fabu/daiyan_fabu">我要代言</view> -->
 						</view>
 					</block>
@@ -191,10 +192,7 @@
 					<view class="qx" @tap="order_pay(datas)">立即付款</view>
 					<view @tap.stop='del_order(id,datas.o_order_num)'>取消订单</view>
 				</block>
-				<block v-if="datas.o_paystatus==2">
-					<!-- <view class="qx" @tap="order_pay(datas)">立即付款</view> -->
-					<view @tap.stop='del_order(id,datas.o_order_num)'>取消订单</view>
-				</block>
+			
 				<view v-if="datas.o_ddstatus==4||datas.o_ddstatus==5"
 					@tap.stop="get_goods(datas.o_id,datas.o_order_num)">确认收货</view>
 
@@ -1083,8 +1081,11 @@
 
 
 	.goodsname {
-		font-size: 27rpx;
-		line-height: 35upx;
+		/* font-size: 27rpx;
+		line-height: 35upx; */
+		font-size: 32rpx;
+		line-height: 42upx;
+		max-height: 84rpx;
 		color: #333333;
 		margin-bottom: 5rpx;
 		display: -webkit-box !important;
@@ -1096,7 +1097,7 @@
 	}
 
 	.goodspri {
-		font-size: 22rpx;
+		font-size: 28rpx;
 		color: #999;
 		margin-bottom: 5rpx;
 	}
@@ -1151,7 +1152,8 @@
 	}
 
 	.ot_msg .d1 {
-		font-size: 30rpx;
+		/* font-size: 30rpx; */
+		font-size: 38rpx;
 	}
 
 	.ot_msg .d2 {
@@ -1240,13 +1242,13 @@
 	}
 
 	.goods_pri {
-		font-size: 22upx;
+		font-size: 26upx;
 		color: #FD383B;
 		font-weight: bold;
 	}
 
 	.goods_pri text {
-		font-size: 28upx;
+		font-size: 32upx;
 	}
 
 	.guige_list {
@@ -1332,5 +1334,17 @@
 		border: 0;
 		background: linear-gradient(-34deg, #FC3B27, #FF6D5A);
 		box-shadow: 0px 3upx 6upx 0px rgba(255, 30, 30, 0.35);
+	}
+	.pj_btn{
+		width: 128upx;
+		height: 59upx;
+		background: #FFFFFF;
+		border: 1px solid #666666;
+		border-radius: 5upx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #666666;
+		font-size: 22rpx;
 	}
 </style>
