@@ -330,15 +330,24 @@
 								url:"/pagesA/my_address/my_address?type=1"
 							})
 						} else {
+							var add_i=0
 							for (var i = 0; i < address.length; i++) {
 
 								if (address[i].is_default == 1) {
-									that.address = address[i];
-									console.log(that.address)
-									that.huoAdd = 1
-									that.getdata()
+									add_i =i;
+									// console.log(that.address)
+									// that.huoAdd = 1
+									// that.getdata()
 								}
 							}
+							
+							
+							setTimeout(function(){
+								that.address = address[add_i];
+								console.log(that.address)
+								that.huoAdd = 1
+								that.getdata()
+							},100)
 						}
 					}
 				}).catch(e => {
