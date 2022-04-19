@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "依辈通",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "z_text": "/components/z_text/z_text"
-  }
-}

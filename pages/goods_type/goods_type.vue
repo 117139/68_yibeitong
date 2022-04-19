@@ -1,8 +1,15 @@
 <!-- 分类 -->
 <template>
 	<view class="contentSort">
+		<view class="index_top" @tap="jump" data-url="/pagesLzc/ss_jd/ss_jd">
+			<view class="index_top_srk dis_flex aic">
+				<text class="iconfont iconsousuo"></text>
+				<view>请输入关键词进行查找</view>
+			</view>
+		</view>
 		<!-- 导航 -->
 		<view class="nav dis_flex aic ju_c">
+			
 			<scroll-view scroll-x="true" class="navLeft" style="" :scroll-into-view="scrollId"
 				scroll-with-animation="true" show-scrollbar enable-flex>
 				<view class="dis_flex aic ju_b ">
@@ -924,5 +931,26 @@
 		height: 244rpx;
 	} */
 	
+	.index_top {
+		width: 100%;
+		padding: 15upx 30upx 0;
+		
+		background: #fff;
+	}
 	
+	.index_top_srk {
+		width: 100%;
+		height: 64upx;
+		background: #F4F4F4;
+		border-radius: 4upx;
+		font-size: 28upx;
+		color: #999;
+		padding: 0 20upx;
+	}
+	
+	.index_top_srk text {
+		font-size: 30upx;
+		color: #bbb;
+		margin-right: 20upx;
+	}
 </style>

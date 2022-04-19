@@ -292,6 +292,7 @@
 					  new_num++
 					}
 					Vue.set(item, 'sum', new_num)
+					that.countpri()
 			 	}
 			 }).catch(e => {
 			 	that.btn_kg=0

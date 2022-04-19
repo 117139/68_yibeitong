@@ -227,7 +227,7 @@ const wxlogin_ceshi_h5= function(num) {
 	}
 	if (num == 'token') {
 		var data = {
-			token: uni.getStorageSync('token'),
+			token: uni.getStorageSync('token')||'5233e2933e77ad27bdd160e1867ee8f6',
 			type: 4
 		}
 	

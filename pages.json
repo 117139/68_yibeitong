@@ -388,6 +388,15 @@
                 }
                 
                 }
+                ,{
+                    "path" : "ss_jd/ss_jd",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "搜索",
+                    "enablePullDownRefresh": true
+                }
+                
+                }
             ]
 	}],
 

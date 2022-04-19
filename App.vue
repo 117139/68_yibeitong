@@ -23,8 +23,8 @@
 			service.wxlogin()
 			// #endif
 			// #ifdef H5
-			// service.wxlogin_ceshi_h5()
-			service.wxlogin('token')
+			service.wxlogin_ceshi_h5('token')
+			// service.wxlogin('token')
 			// #endif
 			that.get_status()
 			uni.getSystemInfo({

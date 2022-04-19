@@ -102,6 +102,13 @@
 				</view>
 			</view>
 			<view class="hengxian"></view>
+			<view class="pj_box mt20" >
+				<view class="pj_box_tit">
+					<view class="p_tit_l">商品编号: <text style="margin-left:10rpx"> {{goodsData.g_goods_sn}}</text></view>
+					
+				</view>
+			</view>
+			<view class="hengxian"></view>
 			<!-- 评价 -->
 			<!-- <view class="pj_box mt20" v-if="goodsData.comment.comment.length>0"> -->
 			<view class="pj_box mt20" >
@@ -136,8 +143,12 @@
 					<view class="p_tit_r" ></view>
 				</view>
 				<!-- <view class="xq_box" v-html="goodsData.content"> -->
-				<view class="xq_box" v-html="goodsData.content">
-					<img :src="getimg('/static/images/goods_xq_04.jpg')" mode="aspectFill" style="width:750rpx;height:1264upx;display:block;" />
+				<!-- <view v-html="div"></view> -->
+				
+				<!-- <view class="xq_box" v-html="goodsData.content"> -->
+				<view class="xq_box">
+					<uParse  :content="goodsData.content"></uParse>
+					<!-- <img :src="getimg('/static/images/goods_xq_04.jpg')" mode="aspectFill" style="width:750rpx;height:1264upx;display:block;" /> -->
 				</view>
 			</view>
 			<!-- 底部 -->
@@ -277,6 +288,7 @@
 	export default {
 		data() {
 			return {
+				div:`<video src="https://yibeitong.com.aa.800123456.top/resource/platform/editor/video/20211112/9da50566ac32280054723248c2441889.mp4" style="min-width: 100%;height:300px" controls="controls"></video>`,
 				btn_kg: 0,
 				htmlReset: 0,
 				g_id: '',
@@ -1973,8 +1985,10 @@
 		padding: 0 30upx;
 	}
 
-	.xq_box img {
-		max-width: 100%;
+	.xq_box /deep/ img ,
+	.xq_box /deep/ video ,
+	.xq_box /deep/ table {
+		max-width: 100%!important;
 	}
 
 	/* bottom_box */

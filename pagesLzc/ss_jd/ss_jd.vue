@@ -1,57 +1,41 @@
 <template>
-	<view class="content">
-		<!-- <view class="brandB1" v-for="(item,index) in brandList" :key="index" @tap.stop="jump" :data-url="`/pagesA/details/details?id=${item.id}`">
-			<view class="brandB1R dis_flex ais">
-				<view class="brandB1RImg">
-					<image :src="getimg(item.phono[0])" mode="aspectFill"></image>
-				</view>
-				<view class="brandB1RDiv dis_flex_c border-box ju_b">
-					<view class="brandT1 oh1">{{item.title}}</view>
-					<view class="brandT2 border-box dis_flex aic" v-if="item.sec_title.length!=0">
-						
-						<text class="border-box">{{item.sec_title}}</text>
-					</view>
-					<view class="brandT3 dis_flex" style="flex-wrap: wrap;">
-						<text class="border-box" v-for="(item1,index1) in item.brand_goods_type_tag.split(',')"
-							:key="index1" v-if="item.brand_goods_type_tag.length>0">{{item1}}</text>
-					</view>
-					<text class="brandT4">￥{{item.basics_original_price}}</text>
-					<view class="brandT5"><text class="brandT6">￥</text>{{item.basics_price}}</view>
+	<view class="content1">
+			<view class="index_top">
+				<view class="index_top_srk dis_flex aic">
+					<text class="iconfont iconsousuo"></text>
+					<input type="text" v-model="search_key" placeholder="请输入关键词进行查找" @input="daiyan_sousuo" confirm-type='搜索'
+						 @confirm="onRetry">
+					<!-- <view>请输入关键词进行查找</view> -->
 				</view>
 			</view>
-			<view class="brandB1R2">
-				<view class="gouBtn dis_flex aic ju_c">
-					去购买
-				</view>
-			</view>
-		</view> -->
-		<view class="qiItem" v-for="(item,index) in brandList" :key="index" @tap.stop="jump" :data-url="`/pagesA/details/details?id=${item.id}`">
+			<view class="qiItem" v-for="(item,index) in datas" :key="index" @tap.stop="jump" :data-url="`/pagesLzc/deatil/deatil?sku_id=${item.sku_id}`">
 			<view class="qiItemI dis_flex">
-				<image :src="getimg(item.phono[0])" mode="aspectFill" class="qiImg"></image>
+				<image :src="getimg(item.imageUrl)" mode="aspectFill" class="qiImg"></image>
 				<view class="qiRight border-box dis_flex_c ju_b">
 					<view class="goods_tit oh2">
 						<text class="qiType">热品</text>
-						<text class="qiTit">{{item.title}}</text>
+						<text class="qiTit">{{item.wareName}}</text>
 					</view>
 					
 					<view class="qiP1">
-						<text>原价</text><text>￥{{item.basics_original_price}}</text>
+						<text>原价</text><text>￥{{item.market_price}}</text>
 					</view>
 					<view class="dis_flex ju_b" style="align-items: flex-end;">
-						<view class="qiP2"><text>现价￥</text><text class="qiP3">{{item.basics_price}}</text></view>
+						<view class="qiP2"><text>现价￥</text><text class="qiP3">{{item.price}}</text></view>
 						<view class="qiP4 dis_flex aic ju_c">马上抢</view>
 					</view>
 				</view>
 			</view>
 		</view>
 		
-		<view class="moreSort" v-if="isBt==1">{{more}}</view>
+		<!-- <view class="moreSort" v-if="isBt==1">{{more}}</view> -->
 	</view>
 </template>
 
 <script>
 	import service from '../../service.js';
 	var that
+	var inputt
 	import {
 		mapState,
 		mapMutations
@@ -65,7 +49,10 @@
 				page_size: 10,
 				more: "上拉加载更多",
 				isBt: 1,
-				data_last:false
+				data_last:false,
+				page:1,
+				size:20,
+				datas:[]
 			}
 		},
 		onHide() {
@@ -100,17 +87,116 @@
 		},
 		onReachBottom() {
 			console.log("触底了");
-			this.getHotDataSuperExplosive(this.goods_type)
+			this.getdata()
 		},
 		onPullDownRefresh() {
 			console.log("下拉了");
-			this.myPage = 1;
-			that.data_last=false;
-			that.more = "上拉加载更多"
-			this.getHotDataSuperExplosive(this.goods_type)
+			this.onRetry()
 		},
 		methods: {
 			...mapMutations(['logout', 'login']),
+			daiyan_sousuo(e) {
+				var that = this
+				console.log(e.detail.value)
+				// this.daiyan_ss=e.detail.value
+				clearInterval(inputt)
+				inputt = setTimeout(function() {
+					var kw = that.search_key
+					console.log(kw.length)
+					if (kw.length > 0) {
+			
+						that.onRetry()
+			
+					} else {
+						that.onRetry()
+						// that.qy_show = that.qy_arr3
+					}
+				}, 1000)
+			},
+			onRetry() {
+				this.page = 1
+				this.datas = []
+				this.data_last = false
+				this.getdata()
+			},
+			getdata() {
+				
+				if (that.data_last) {
+					return
+				}
+				var datas = {
+				
+					token: that.$store.state.loginDatas.userToken||'',
+					
+					page: that.page,
+					size: that.size,
+					keyword:that.search_key
+				}
+				if (that.btn_kg == 1) {
+					return
+				}
+				that.btn_kg = 1
+				//selectSaraylDetailByUserCard
+				var jkurl = '/jd.JdGoods/search'
+				uni.showLoading({
+					title: '正在获取数据',
+					mask: true
+				})
+				var page_that = that.page
+				service.P_get(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					// that.$refs.htmlLoading.htmlReset_fuc(0)
+					console.log(res)
+					if (res.code == 1) {
+						that.htmlReset = 0
+						var datas = res.data
+						console.log(typeof datas)
+				
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						console.log(res)
+				
+						if (page_that == 1) {
+				
+							that.datas = datas
+						} else {
+							if (datas.length == 0) {
+								that.data_last = true
+								return
+							}
+							that.datas = that.datas.concat(datas)
+						}
+						that.page++
+				
+					} else {
+						that.htmlReset = 1
+					// that.$refs.htmlLoading.htmlReset_fuc(1)
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '获取数据失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.htmlReset = 1
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败，请检查您的网络连接'
+					})
+				})
+			
+				
+			},
+			
 			getimg(img) {
 				return service.getimg(img)
 			},
@@ -132,7 +218,6 @@
 					"page": this.myPage,
 					"size": this.page_size
 				}
-				var nowpage=this.myPage
 				service.P_get(myUrl, data).then(res => {
 					if (res.code == 1) {
 						this.isBt = 1;
@@ -141,17 +226,17 @@
 						if (typeof data == 'string') {
 							data = JSON.parse(data)
 						}
-						if (nowpage == 1) {
+						if (this.myPage == 1) {
 							this.brandList = res.data;
 							if (data.length != 0) {
 								this.myPage++
 							}
 						} else {
 							if (data.length != 0) {
-								that.brandList = that.brandList.concat(data)
-								that.myPage++
+								that.brandList.concat(data)
+								this.myPage++
 							} else {
-								that.more = "到底了"
+								this.more = "到底了"
 								// that.data_last = true
 							}
 
@@ -581,4 +666,29 @@
 		width: 100%;
 		height: 244rpx;
 	} */
+	
+	
+	.index_top{
+		width: 100%;
+		padding: 15upx 30upx;
+		background: #fff;
+	}
+	.index_top_srk{
+		width: 100%;
+		height: 64upx;
+		background: #F4F4F4;
+		border-radius: 4upx;
+		font-size: 28upx;
+		color: #999;
+		padding: 0 20upx;
+	}
+	.index_top_srk text{
+		font-size: 30upx;
+		color: #bbb;
+		margin-right: 20upx;
+	}
+	.index_top_srk input{
+		flex:1;
+		font-size: 28upx;
+	}
 </style>

@@ -22,8 +22,6 @@ Vue.component('z_text',z_text)
 import htmlLoading from '@/components/html_loading/html_loading.vue'
 Vue.component('htmlLoading', htmlLoading)
 
-
-
 Vue.config.productionTip = false
 
 // Vue.prototype.tim = tim.tim  			//tim sdk 引入后生成的tim服务

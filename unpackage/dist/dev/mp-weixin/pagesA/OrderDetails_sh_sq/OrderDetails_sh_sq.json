@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "申请售后",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "eh-picker": "/components/erha-picker/erha-picker"
-  }
-}
