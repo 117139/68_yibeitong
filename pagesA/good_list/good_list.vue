@@ -20,7 +20,7 @@
 							<view class="text-cut goods_li_name">{{item.title}}</view>
 							<view class=" goods_li_money">
 								<text>￥</text>{{item.basics_price*1}}
-								<text v-if="item1.basics_original_price" class="scx" style="color: #999;margin-left: 10upx;">￥{{item1.basics_original_price*1}}</text>
+								<text v-if="item.basics_original_price" class="scx" style="color: #999;margin-left: 10upx;">￥{{item.basics_original_price*1}}</text>
 							</view>
 						</view>
 					</view>
