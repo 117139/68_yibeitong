@@ -81,7 +81,6 @@
 	</view>
 </template>
 
-<!-- <script module="filter" lang="wxs" src="../../utils/filter.wxs"></script> -->
 <script>
 	import Vue from 'vue'
 	import service from '../../service.js';
